@@ -37,9 +37,8 @@ main {
 /*green block*/
 .green-block {
     width: 780px;
-    height: 450px;
     background: var(--block);
-    padding: 40px;
+    padding: 20px 40px;
     border-radius: 25px;
     display: flex;
     align-items: center;
@@ -54,7 +53,7 @@ main {
     margin-top: 50px;
 }
 
-.green-block p {
+.green-block p.welcome-text {
     color: var(--block-p);
     letter-spacing: 0.4rem;
     margin-bottom: 0.7rem;
@@ -69,7 +68,7 @@ main {
 .form {
     background: var(--form-bg);
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    padding: 40px;
+    padding: 30px 40px;
     border-radius: 25px;
     z-index: 1;
 }
@@ -176,7 +175,7 @@ button, .secondary-btn{
     background: var(--primary);
     color: var(--text);
     font-weight: 600;
-    margin-top: 20px;
+    margin-top: 25px;
 }
 
 .primary-btn:hover{
@@ -206,5 +205,13 @@ button, .secondary-btn{
 
 .small-text {
     text-align: center;
+    color: var(--text);
+    font-size: 0.8rem;
+}
+
+.login-link {
+    color: var(--text);
+    font-weight: bold;
+    text-decoration: none;
 }
 /* end of login block */
