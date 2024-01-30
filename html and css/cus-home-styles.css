@@ -261,7 +261,7 @@ p.product {
 p.remaining {
     font-size: 0.8rem;
     font-style: italic;
-    margin-top: 4px;
+    margin-top: 3px;
 }
 
 .quantity-group {
@@ -270,6 +270,7 @@ p.remaining {
     justify-content: center;
     align-items: center;
     gap: 0.7rem;
+    margin: 0 auto;
 }
 
 p.amount {
@@ -285,11 +286,19 @@ p.amount {
 .circle {
     width: 20px;
     height: 20px;
-    background-color: green;
+    background-color: #F67761;
     color: var(--text);
     padding: 0;
     text-align: center;
     border-radius: 50%;
+}
+
+.circle:hover {
+    cursor: pointer;
+}
+
+.circle:active {
+    background-color: #D75039;
 }
 
 /*Order tracking section*/
