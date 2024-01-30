@@ -1,3 +1,12 @@
+<?php
+
+@include 'constants.php';
+
+if(!isset($_SESSION['prsn_id'])){
+	header('location:'.SITEURL.'admin/login_admin.php');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -27,7 +36,7 @@
                         <li><a href="#">Menu</a></li>
                         <li><a href="#">Orders</a></li>
                         <!-- Text below should change to 'Logout'once user logged in-->
-                        <li><a href="#">Logout</a></li>
+                        <li><a href="logout.php">Logout</a></li>
                     </ul>
                 </nav>
             </div>
