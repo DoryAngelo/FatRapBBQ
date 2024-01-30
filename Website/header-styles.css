@@ -39,7 +39,7 @@ header {
     background-color: var(--bg);
 }
 
-header {
+header.backend {
     color: #3A3F42;
     background-color: #FBFEFF;
 }
