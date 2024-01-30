@@ -1,0 +1,139 @@
+*, *::before, *::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+:root{
+    --bg:#EDE9D0;
+    --primary:#F5D636;
+    --active-primary:#EDCB1C;
+    --text:#3A001E;
+    --input-bg:#F7F3DC;
+    --form-bg: #FFFDEF;
+    --available:#A8D991;
+    --available-text:#304D23;
+    --fully-booked:#C13B24;
+    --fully-booked-text:var(--text);
+    --closed:#3B3B3B;
+    --closed-text:#A9A9A9;
+    --product-info-bg: #C13B24;
+    --light-text: #FEFBEA;
+}
+
+/* @media only screen and (min-width: 700px) {
+    .product-landing {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 3rem;
+    }
+    .PL-text {
+        width: 60%;
+    }
+    .button {
+        width: max(50%, 200px);
+    }
+
+    .product-landing h1 {
+        text-align: left;
+        font-size: 6rem;
+    }
+
+    .product-landing img {
+        width: min(30%, 300px);
+    }
+} */
+
+body{
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    min-height: 100vh;
+    color: #3A3F42;
+}
+
+main {
+    padding: 130px 20% 20% 10%;
+    height: 100vh;
+}
+
+.home { /*may be used in all admin and employee pages*/
+    display: flex;
+    justify-content: space-between;
+}
+
+.home .heading {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.inline {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.home .heading .dropdown {
+    background-color: rgb(224, 224, 224);
+    padding: 3px;
+    width: 6rem;
+}
+
+.home .grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.home .box {
+    width: 14rem;
+    height: 14rem;
+    background-color: rgb(152, 182, 218);
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 3.7rem;
+    padding: 0.8rem;
+}
+
+.home .box h1 {
+    font-size: 2.7rem;
+}
+
+.home .box p.notif {
+    background-color: red;
+    padding: 0.2rem;
+    border-radius: 45%;
+    margin-left: 10rem;
+    margin-top: -10px;
+}
+
+.side-menu {
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+}
+
+.side-menu .group h3 {
+    margin-bottom: 0.7rem;
+}
+
+.side-menu .inventory-box, a.view{
+    display: block;
+    background-color: blue;
+    border-radius: 1rem;
+    width: 14rem;
+    padding: 1rem;
+}
+
+.side-menu .inline {
+    justify-content: space-between;
+}
+
