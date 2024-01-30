@@ -1,0 +1,257 @@
+*, *::before, *::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+:root{
+    --bg:#F2FFE1;
+    --primary:#F5D636;
+    --text:#3A001E;
+    --text2: #FA3F1F;
+    --input-bg:#F7F3DC;
+    --eye-icon:#CEC699;
+    --block: #4ADE5D;
+    --block-p:#277B32;
+    --block-h1: #0F4C17;
+    --form-bg: #FFFDEF;
+
+}
+
+
+body{
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    min-height: 100vh;
+    background: var(--bg);
+}
+/*header*/
+header {
+    width: 100%;
+    height: 110px;
+    background-color: var(--primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+}
+
+nav {
+    width: 50%;
+    max-width: 300px;
+    height: 50px;
+}
+
+nav > ul {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-inline-start: 0;
+    margin-block: 0;
+    height: 100%;
+}
+
+nav > ul > li {
+    color: var(--text);
+    margin: 0 0.2rem;
+    padding: 0.2rem;
+    display: block;
+}
+
+nav > ul > li:hover {
+    background-color: #dfdfe2;
+    color: #1b1b32;
+    cursor: pointer;
+}
+
+li > a {
+    color: inherit;
+    text-decoration: none;
+}
+/*end of header*/
+main {
+    padding: 180px;
+    height: 750px;
+}
+
+/*green block*/
+.green-block {
+    width: 800px;
+    height: 450px;
+    background: var(--block);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 40px;
+    border-radius: 25px;
+    display: flex;
+    align-items: end;
+    position: relative;
+    z-index: 0;
+}
+
+.green-block-text {
+    display: inline-block;
+    width: 55%;
+}
+
+.green-block p {
+    color: var(--block-p);
+    letter-spacing: 0.4rem;
+    margin-bottom: 0.7rem;
+}
+
+.green-block-text h1 {
+    font-size: 3rem;
+    color: var(--block-h1);
+}
+
+/* login block */
+.form {
+    width: 425px; /*100% of parent's width, 425px minimum width (default size), */
+    background: var(--form-bg);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 40px;
+    border-radius: 25px;
+    z-index: 1;
+    position: relative;
+    top: -420px;
+    left: 400px;
+}
+
+.form-title{
+    position: relative;
+    /* padding-left: 15px; */
+    margin-bottom: 20px;
+}
+
+.form-title h1{
+    color: var(--text);
+}
+
+/* removed
+    .form-title p{
+    color: var(--text2);
+    font-size: .9rem;
+} */
+
+
+.form-field{
+    display: grid;
+    gap: .8rem;
+}
+
+.form-field-input{
+    position: relative;
+}
+
+input, button{
+    border-radius: 5px;
+    border: 2px solid transparent;
+    outline: none;
+    transition: .3s ease;
+}
+
+.form-field-input input{
+    width: 100%;
+    padding: 5px 13px;
+    background: var(--input-bg);
+    font-size: 1rem;
+}
+
+.form-field-input label{
+    /* position: absolute;
+    left: 15px;
+    top: 13px; */
+    color: var(--text);
+    /* pointer-events: none;
+    transition: .3s ease; */
+}
+
+.error{
+	color: #ff4757;
+}
+
+.form-field-input input:focus{
+    border: 2px solid var(--primary);
+}
+
+.hidepass, .showpass{
+    position: absolute;
+    right: 15px;
+    top: 26px;
+    font-size: 1.2rem;
+    color: var(--eye-icon);
+    cursor: pointer;
+}
+
+.remember-and-forgot-block {
+    font-size: .9rem;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+.checkbox {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.checkbox label {
+    margin-left: 10px;
+    white-space: nowrap;
+}
+
+.remember-and-forgot-block a {
+    text-decoration: none;
+    color: var(--text);
+}
+
+button{
+    border-radius: 50px;
+    border: 2px solid transparent;
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.primary-btn{
+    background: var(--primary);
+    color: #fff;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+.primary-btn:hover{
+    background: #fff;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+}
+
+.secondary-btn{
+    background: var(--form-bg);
+    color: var(--text);
+    border: 2px solid var(--text);
+    font-weight: 600;
+}
+
+.secondary-btn:hover{
+    background: var(--text);
+    color: #fff;
+    transition: .3s ease;
+}
+
+/* end of login block */
+
+/*footer*/
+footer {
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 80px 60px;
+}
