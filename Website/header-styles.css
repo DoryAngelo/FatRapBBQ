@@ -39,6 +39,11 @@ header {
     background-color: var(--bg);
 }
 
+header.backend {
+    color: #3A3F42;
+    background-color: #FBFEFF;
+}
+
 .header-container, .footer-container {
     width: 80%;
     display: flex;
