@@ -60,10 +60,7 @@ if(isset($_POST['submit'])){
         <div class="header-container">
             <div class="website-title">
                 <img id="logo" src="images/circle logo.png">
-                <div class="green-block-text">
-                    <p class="welcome-text">WELCOME TO </p>
-                    <h1>Fat Rap's Barbeque's Online Store</h1>
-                </div>
+                <h1>Fat Rap's Barbeque's Online Store</h1>
             </div>
             <nav>
                 <ul>
