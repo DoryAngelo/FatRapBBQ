@@ -2,6 +2,8 @@
 
 @include 'constants.php';
 
+$PRSN_ID = $_SESSION['prsn_id'];
+
 if(!isset($_SESSION['prsn_id'])){
 	header('location:'.SITEURL.'admin/login_admin.php');
 }
