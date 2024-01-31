@@ -1,14 +1,5 @@
-const user = document.querySelector(".js-user"),
+const cpass = document.querySelector(".js-cpass"),
 pass = document.querySelector(".js-pass");
-pass = document.querySelector(".js-cpass");
-
-user.addEventListener('focus', () => {
-    focus(user);
-})
-
-user.addEventListener('blur', () => {
-    blur(user);
-})
 
 pass.addEventListener('focus', () => {
     focus(pass);
@@ -16,6 +7,14 @@ pass.addEventListener('focus', () => {
 
 pass.addEventListener('blur', () => {
     blur(pass);
+})
+
+cpass.addEventListener('focus', () => {
+    focus(cpass);
+})
+
+cpass.addEventListener('blur', () => {
+    blur(cpass);
 })
 
 function focus(e){
@@ -31,38 +30,41 @@ function blur(e){
 }
 
 window.addEventListener('pageshow', () => {
-    focus(user);
-    blur(user);
     focus(pass);
     blur(pass);
+    focus(cpass);
+    blur(cpass);
 })
 
+//Password
 const showPass = document.querySelector('.showpass'),
 hidePass = document.querySelector('.hidepass');
 
-showPass.addEventListener('click', () => {
+showPass.addEventListener('mousedown', () => {
     showPass.style.display = "none";
     hidePass.style.display = "block";
     pass.type = "text";
 })
 
-hidePass.addEventListener('click', () => {
+hidePass.addEventListener('mouseup', () => {
     hidePass.style.display = "none";
     showPass.style.display = "block";
     pass.type = "password";
 })
 
-const showPass2 = document.querySelector('.showpass2'),
-hidePass2 = document.querySelector('.hidepass2');
+//Confirm Password
+const showcPass = document.querySelector('.showcpass'),
+hidecPass = document.querySelector('.hidecpass');
 
-showPass.addEventListener('click', () => {
-    showPass2.style.display = "none";
-    hidePass2.style.display = "block";
+showcPass.addEventListener('click', () => {
+    showcPass.style.display = "none";
+    hidecPass.style.display = "block";
     cpass.type = "text";
 })
 
-hidePass2.addEventListener('click', () => {
-    hidePass2style.display = "none";
-    showPass2.style.display = "block";
+hidecPass.addEventListener('click', () => {
+    hidecPass.style.display = "none";
+    showcPass.style.display = "block";
     cpass.type = "password";
 })
+
