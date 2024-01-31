@@ -22,7 +22,7 @@ if(isset($_POST['submit'])){
         if($PRSN_ROLE == "Customer"){
             header('location:cus-home-page.php');
         } else if ($PRSN_ROLE == "Admin") {
-            header('location:admin_page.php');
+            header('location:admin-home.php');
         } else{
             header('location:employee_page.php');
         }
