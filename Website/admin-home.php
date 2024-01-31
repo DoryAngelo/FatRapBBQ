@@ -26,7 +26,7 @@ if(!isset($_SESSION['prsn_id'])){
         <header class="backend">
             <div class="header-container">
                 <div class="website-title">
-                    <img id="logo" src="images/circle logo.png">
+                    <img id="logo" src="images/client-logo.jpg">
                     <h1>Fat Rap's Barbeque's Online Store</h1>
                 </div>
                 <nav>
