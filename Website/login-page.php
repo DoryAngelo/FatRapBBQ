@@ -24,7 +24,7 @@ if(isset($_POST['submit'])){
         } else if ($PRSN_ROLE == "Admin") {
             header('location:admin-home.php');
         } else{
-            header('location:employee_page.php');
+            header('location:employee-page.php');
         }
 
         
