@@ -96,6 +96,15 @@ input, button, .secondary-btn{
     border: 2px solid var(--primary);
 }
 
+.hidecpass, .showcpass{
+    position: absolute;
+    right: 15px;
+    top: 34px;
+    font-size: 1.2rem;
+    color: var(--eye-icon);
+    cursor: pointer;
+}
+
 .hidepass, .showpass{
     position: absolute;
     right: 15px;
