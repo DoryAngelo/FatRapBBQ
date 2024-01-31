@@ -57,7 +57,7 @@ header.backend {
 }
 
 header img {
-    width: 150px;
+    width: 100px;
     height: 100px;
     position: relative;
     right: 20px;
@@ -65,7 +65,6 @@ header img {
 
 header h1 {
     white-space: nowrap;
-    margin-left: -30px;
 }
 
 nav {
