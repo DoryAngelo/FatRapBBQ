@@ -56,13 +56,13 @@ hidePass.addEventListener('mouseup', () => {
 const showcPass = document.querySelector('.showcpass'),
 hidecPass = document.querySelector('.hidecpass');
 
-showcPass.addEventListener('click', () => {
+showcPass.addEventListener('mousedown', () => {
     showcPass.style.display = "none";
     hidecPass.style.display = "block";
     cpass.type = "text";
 })
 
-hidecPass.addEventListener('click', () => {
+hidecPass.addEventListener('mouseup', () => {
     hidecPass.style.display = "none";
     showcPass.style.display = "block";
     cpass.type = "password";
