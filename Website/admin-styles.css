@@ -56,6 +56,7 @@ body{
 main {
     padding: 130px 20% 20% 10%;
     height: 100vh;
+    background-color: red;
 }
 
 .section { /*may be used in all admin and employee pages*/
