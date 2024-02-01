@@ -9,7 +9,6 @@
     --bg:#EDE9D0;
     --primary:#F5D636;
     --active-primary:#EDCB1C;
-    --text:#3A001E;
     --input-bg:#F7F3DC;
     --form-bg: #FFFDEF;
     --available:#A8D991;
@@ -20,6 +19,15 @@
     --closed-text:#A9A9A9;
     --product-info-bg: #C13B24;
     --light-text: #FEFBEA;
+
+
+    --text:#3A3F42;
+    --table: #DEECF9;
+    --sidemenu-blue: #6EA4E4;
+}
+
+html {
+    color: var(--text);
 }
 
 /* @media only screen and (min-width: 700px) {
@@ -54,38 +62,57 @@ body{
 }
 
 main {
-    padding: 130px 20% 20% 10%;
+    padding-top: 130px;
     height: 100vh;
-    background-color: red;
 }
 
-.section { /*may be used in all admin and employee pages*/
+.section {
+    width: 80%;
+    margin: auto;
+    margin-top: 2.5rem;
+    margin-bottom: 7rem;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
 }
 
-.section .heading {
+.section-heading {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.8rem;
 }
 
-.section .heading h2 {
-    font-size: 2.5rem;
+.section-heading h2 {
+    font-size: 2.0625rem;
 }
 
 .inline {
+    font-size: 1rem;
     display: flex;
     align-items: center;
     gap: 1rem;
 }
 
-.section .heading .dropdown {
+.dropdown {
     background-color: rgb(224, 224, 224);
     padding: 3px;
-    width: 6rem;
+    width: 7rem;
+    border-radius: 3px;
+}
+.section-body {
+    display: flex;
+    gap:3rem;
+}
+
+.main-section {
+    width: 100%;
+    height: 50rem; /*should depend on content's height*/
+}
+
+.table {
+    background-color: var(--table);
+    border-radius: 1rem;
 }
 
 .section .grid-container {
@@ -120,25 +147,47 @@ main {
 }
 
 .side-menu {
-    margin-top: 5rem;
+    width: 30%;
     display: flex;
     flex-direction: column;
-    gap: 1.4rem;
+    gap: 2rem;
 }
 
-.side-menu .group h3 {
-    margin-bottom: 0.7rem;
+.side-menu h3 {
+    font-size: 1.625rem;
 }
 
 .side-menu .inventory-box, a.view{
     display: block;
-    background-color: blue;
-    border-radius: 1rem;
-    width: 14rem;
-    padding: 1rem;
+    background-color: var(--sidemenu-blue);
+    border-radius: 1.2rem;
+    padding: 0.8rem 1rem;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+}
+
+.side-menu .inventory-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.side-menu a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #3A3F42;
+}
+
+.side-menu .inventory-box a.edit {
+    font-size: 1rem;
+    padding: 0;
+    border-radius: 0;
+    margin: 0;
+    width: max-content;
 }
 
 .side-menu .inline {
     justify-content: space-between;
 }
+
 

@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!--change title-->
-        <title>Home | Admin</title>
+        <title>New Orders | Admin</title>
         <link rel="stylesheet" href="header-styles.css">
         <link rel="stylesheet" href="admin-styles.css"><!--change css file-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,7 +18,10 @@
             <div class="header-container">
                 <div class="website-title">
                     <img id="logo" src="images/client-logo.jpg">
-                    <h1>Fat Rap's Barbeque's Online Store</h1>
+                    <div class="text">
+                        <h1>Fat Rap's Barbeque's Online Store</h1>
+                        <p>ADMIN</p>
+                    </div>
                 </div>
                 <nav>
                     <ul>
@@ -34,77 +37,61 @@
         </header>
         <main>
             <section class="section">
-                <section class="left-section">
-                    <div class="heading">
-                        <h2>Dashboard</h2>
-                        <div class="inline">
-                            <p>Date range:</p>
-                            <p class="dropdown">Today</p>
-                        </div>
+                <div class="section-heading">
+                    <h2>New Orders</h2>
+                    <div class="inline">
+                        <p>Date range:</p>
+                        <p class="dropdown">Today</p>
                     </div>
-                    <section class="grid-container">
-                        <div class="box">
-                            <p>New Orders</p>
-                            <h1>100</h1>
-                            <p class="notif">+99</p>
+                </div> 
+                <section class="section-body">
+                    <section class="main-section table">
+                        <!-- <table>
+                            <tr>
+                              <th>Company</th>
+                              <th>Contact</th>
+                              <th>Country</th>
+                            </tr>
+                            <tr>
+                              <td>Alfreds Futterkiste</td>
+                              <td>Maria Anders</td>
+                              <td>Germany</td>
+                            </tr>
+                            <tr>
+                              <td>Centro comercial Moctezuma</td>
+                              <td>Francisco Chang</td>
+                              <td>Mexico</td>
+                            </tr>
+                          </table>  -->
+                    </section>
+                    <section class="side-menu">
+                        <div class="group inventory">
+                            <h3>Inventory</h3>
+                            <div class="inventory-box">
+                                <div class="inline">
+                                    <p>Pork BBQ</p>
+                                    <p class="number">10</p>
+                                </div>
+                                <a href="" class="edit">Edit</a>
+                            </div>
                         </div>
-                        <div class="box">
-                            <p>Paid Orders</p>
-                            <h1>100</h1>
-                            <p class="notif">+99</p>
+                        <div class="group">
+                            <h3>Calendar</h3>
+                            <a href="" class="view">View</a>
                         </div>
-                        <div class="box">
-                            <p>Preparing Orders</p>
-                            <h1>100</h1>
-                            <p class="notif">+99</p>
+                        <div class="group">
+                            <h3>Wholesale Users</h3>
+                            <a href="" class="view">View</a>
                         </div>
-                        <div class="box">
-                            <p>Packing Orders</p>
-                            <h1>100</h1>
-                            <p class="notif">+99</p>
-                        </div>
-                        <div class="box">
-                            <p>Shipped Orders</p>
-                            <h1>100</h1>
-                            <p class="notif">+99</p>
-                        </div>
-                        <div class="box">
-                            <p>Completed Orders</p>
-                            <h1>100</h1>
-                            <p class="notif">+99</p>
-                        </div>
-                        <div class="box">
-                            <p>Canceled Orders</p>
-                            <h1>100</h1>
-                            <p class="notif">+99</p>
+                        <div class="group">
+                            <h3>Employee</h3>
+                            <a href="" class="view">View</a>
                         </div>
                     </section>
                 </section>
-                <section class="side-menu">
-                    <div class="group inventory">
-                        <h3>Inventory</h3>
-                        <div class="inventory-box">
-                            <div class="inline">
-                                <p>Pork BBQ</p>
-                                <p class="number">10</p>
-                            </div>
-                            <a href="" class="edit">Edit</a>
-                        </div>
-                    </div>
-                    <div class="group">
-                        <h3>Calendar</h3>
-                        <a href="" class="view">View</a>
-                    </div>
-                    <div class="group">
-                        <h3>Wholesale Users</h3>
-                        <a href="" class="view">View</a>
-                    </div>
-                    <div class="group">
-                        <h3>Employee</h3>
-                        <a href="" class="view">View</a>
-                    </div>
-                </section>
             </section>
+            </section>
+           
             
         </main>
     </body>

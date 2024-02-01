@@ -36,6 +36,7 @@ header {
     z-index: 10;
     color: var(--header-text);
     padding-top: 30px;
+    padding-bottom: 10px;
     background-color: var(--bg);
 }
 
@@ -57,14 +58,21 @@ header.backend {
 }
 
 header img {
-    width: 100px;
-    height: 100px;
+    width: 80px;
     position: relative;
-    right: 20px;
+}
+
+header .text {
+    margin-left: 2rem;
 }
 
 header h1 {
     white-space: nowrap;
+    font-size: 1.5rem;
+}
+
+header .text p {
+    font-size: 0.8rem;
 }
 
 nav {
