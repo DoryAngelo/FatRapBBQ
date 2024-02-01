@@ -22,8 +22,9 @@
 
 
     --text:#3A3F42;
-    --table: #DEECF9;
+    --light-blue: #DEECF9;
     --sidemenu-blue: #6EA4E4;
+    --db-highlight-blue: #93CBFF;
 }
 
 html {
@@ -107,31 +108,42 @@ main {
 
 .main-section {
     width: 100%;
-    height: 50rem; /*should depend on content's height*/
 }
 
 .table {
-    background-color: var(--table);
+    background-color: var(--light-blue);
     border-radius: 1rem;
 }
 
-.section .grid-container {
+.grid-container {
+    width: 95%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    gap: 2rem;
 }
 
 .grid-container .box {
-    width: 14rem;
-    height: 14rem;
-    background-color: rgb(152, 182, 218);
+    width: 100%;
+    height: 100%;
+    background-color: var(--light-blue);
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    gap: 3.7rem;
-    padding: 0.8rem;
+    gap: 2rem;
+    padding: 1.25rem;
+    position: relative;
+    /* box-shadow: var(--db-highlight-blue) 0px 3px 4px 0px; pick a better color db-higlight0blue as shadow is good for lightblue but not for the same color */
+}
+
+.grid-container div.blue {
+    background-color: var(--db-highlight-blue);
+}
+
+.grid-container .box p {
+    font-weight: bold;
+    font-size: 0.9rem;
 }
 
 .grid-container .box h1 {
@@ -139,11 +151,12 @@ main {
 }
 
 .grid-container .box p.notif {
+    font-size: 0.75rem;
     background-color: red;
-    padding: 0.2rem;
-    border-radius: 45%;
-    margin-left: 10rem;
-    margin-top: -10px;
+    color: #fff;
+    padding: 0.4rem 0.2rem;
+    border-radius: 50%;
+    margin-right: -11rem;
 }
 
 .side-menu {
