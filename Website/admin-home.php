@@ -44,7 +44,7 @@ if(!isset($_SESSION['prsn_id'])){
             </div>
         </header>
         <main>
-            <section class="home">
+            <section class="section">
                 <section class="left-section">
                     <div class="heading">
                         <h2>Dashboard</h2>
@@ -99,7 +99,7 @@ if(!isset($_SESSION['prsn_id'])){
                                 <p>Pork BBQ</p>
                                 <p class="number">10</p>
                             </div>
-                            <a href="">Edit</a>
+                            <a href="" class="edit">Edit</a>
                         </div>
                     </div>
                     <div class="group">

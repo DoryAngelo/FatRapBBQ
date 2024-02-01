@@ -58,12 +58,12 @@ main {
     height: 100vh;
 }
 
-.home { /*may be used in all admin and employee pages*/
+.section { /*may be used in all admin and employee pages*/
     display: flex;
     justify-content: space-between;
 }
 
-.home .heading {
+.section .heading {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -71,7 +71,7 @@ main {
     margin-bottom: 2rem;
 }
 
-.heading h2 {
+.section .heading h2 {
     font-size: 2.5rem;
 }
 
@@ -81,19 +81,19 @@ main {
     gap: 1rem;
 }
 
-.home .heading .dropdown {
+.section .heading .dropdown {
     background-color: rgb(224, 224, 224);
     padding: 3px;
     width: 6rem;
 }
 
-.home .grid-container {
+.section .grid-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
 }
 
-.home .box {
+.grid-container .box {
     width: 14rem;
     height: 14rem;
     background-color: rgb(152, 182, 218);
@@ -106,11 +106,11 @@ main {
     padding: 0.8rem;
 }
 
-.home .box h1 {
+.grid-container .box h1 {
     font-size: 2.7rem;
 }
 
-.home .box p.notif {
+.grid-container .box p.notif {
     background-color: red;
     padding: 0.2rem;
     border-radius: 45%;
