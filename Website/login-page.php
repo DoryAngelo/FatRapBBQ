@@ -114,7 +114,7 @@ if(isset($_POST['submit'])){
                             <input id="remember-me" type="checkbox">
                             <label for="remember-me">Remember me</label>
                         </div>
-                        <a href="#">Forgot Password?</a>
+                        <a href="forgot-password.html">Forgot Password?</a>
                     </div>
                 </div>
                 <button name="submit" class="primary-btn">Login</button>

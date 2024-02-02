@@ -1,0 +1,195 @@
+/*css styles for success pages*/
+*, *::before, *::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+:root{
+    --bg:#F2FFE1;
+    --primary:#F5D636;
+    --active-primary:#EDCB1C;
+    --text:#3A001E;
+    --text2: #FA3F1F;
+    --input-bg:#F7F3DC;
+    --eye-icon:#CEC699;
+    --block: #4ADE5D;
+    --block-p:#277B32;
+    --block-h1: #0F4C17;
+    --form-bg: #FFFDEF;
+}
+
+body{
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    min-height: 100vh;
+}
+
+main {
+    padding-top: 210px;
+    padding-bottom: 120px;
+    background-color: var(--bg);
+    display: flex;
+    justify-content: center;
+}
+
+/* forgot-password block */
+.form {
+    background: var(--form-bg);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 30px 40px;
+    border-radius: 25px;
+    z-index: 1;
+}
+
+.forgot-pass-form {
+    width: 425px; /*100% of parent's width, 425px minimum width (default size), */
+    position: relative;
+    left: 70px;
+}
+
+.reg-form {
+    width: 800px; /*100% of parent's width, 425px minimum width (default size), */
+    position: relative;
+    top: -425px;
+}
+
+.form-title{
+    position: relative;
+    /* padding-left: 15px; */
+    margin-bottom: 20px;
+}
+
+.form-title h1{
+    color: var(--block);
+    text-align: center;
+}
+
+.title-desc{
+    color: var(--text);
+    font-size: 0.8rem;
+    margin-top: 8px;
+    text-align: center;
+}
+
+.form-field{
+    display: grid;
+    gap: .8rem;
+}
+
+.form-field-input{
+    position: relative;
+}
+
+input, button{
+    border-radius: 5px;
+    border: 2px solid transparent;
+    outline: none;
+    transition: .3s ease;
+}
+
+.form-field-input input {
+    width: 100%;
+    padding: 5px 13px;
+    background: var(--input-bg);
+    font-size: 1rem;
+    margin-top: 8px;
+}
+
+.form-field-input label{
+    color: var(--text);
+}
+
+.form-field-input input:focus{
+    border: 2px solid var(--primary);
+}
+
+.hidepass, .showpass{
+    position: absolute;
+    right: 15px;
+    top: 34px;
+    font-size: 1.2rem;
+    color: var(--eye-icon);
+    cursor: pointer;
+}
+
+.remember-and-forgot-block {
+    font-size: .9rem;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+}
+
+.checkbox {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.checkbox input {
+    margin-top: 0;
+}
+
+.checkbox label {
+    margin-left: 10px;
+    white-space: nowrap;
+}
+
+.remember-and-forgot-block a {
+    text-decoration: none;
+    color: var(--text);
+}
+
+button{
+    border-radius: 50px;
+    border: 2px solid transparent;
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.primary-btn{
+    background: var(--primary);
+    color: var(--text);
+    font-weight: 600;
+    margin-top: 25px;
+}
+
+.primary-btn:hover{
+    background: var(--active-primary);
+    color: var(--text);
+    border: 2px solid var(--active-primary);
+}
+
+.guest-btn {
+    width: 100%;
+}
+
+
+.back-btn{
+    color: var(--text);
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+}
+
+.secondary-btn:hover{
+    background: var(--text);
+    color: #fff;
+    transition: .3s ease;
+}
+
+.small-text {
+    text-align: center;
+    color: var(--text);
+    font-size: 0.8rem;
+}
+
+.login-link {
+    color: var(--text);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* end of login block */
