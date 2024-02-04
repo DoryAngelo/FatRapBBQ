@@ -5,7 +5,7 @@
 $PRSN_ID = $_SESSION['prsn_id'];
 
 if(!isset($_SESSION['prsn_id'])){
-	header('location:'.SITEURL.'admin/login_admin.php');
+	header('location:'.SITEURL.'login_admin.php');
 }
 ?>
 
