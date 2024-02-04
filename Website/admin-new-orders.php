@@ -4,11 +4,6 @@
 
 $PRSN_ID = $_SESSION['prsn_id'];
 
-$PRSN_ROLE = $_SESSION['prsn_role'];
-
-if($PRSN_ROLE !== 'Admin'){
-	header('location:'.SITEURL.'login-page.php');
-}
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +13,7 @@ if($PRSN_ROLE !== 'Admin'){
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!--change title-->
-        <title>Home | Admin</title>
+        <title>New Orders | Admin</title>
         <link rel="stylesheet" href="header-styles.css">
         <link rel="stylesheet" href="admin-styles.css"><!--change css file-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,21 +36,9 @@ if($PRSN_ROLE !== 'Admin'){
                         <!--TODO: ADD LINKS-->
                         <li><a href="#">Home</a></li>
                         <li><a href="#">Menu</a></li>
-                        <li><a href="<?php echo SITEURL ;?>admin-new-orders.php">Orders</a></li>
+                        <li><a href="#">Orders</a></li>
                         <!-- Text below should change to 'Logout'once user logged in-->
-                        <?php
-                            if(isset($_SESSION['prsn_id'])){
-                    ?>  
-                            <li><a href="<?php echo SITEURL ;?>logout.php">Logout</a><li>
-                    <?php
-                            } 
-                            else 
-                            {
-                    ?>
-                            <li><a href="<?php echo SITEURL ;?>login-page.php">Login</a></li>
-                    <?php
-                            }
-                    ?>
+                        <li><a href="logout.php">Logout</a></li>
                     </ul>
                 </nav>
             </div>
@@ -63,51 +46,60 @@ if($PRSN_ROLE !== 'Admin'){
         <main>
             <section class="section">
                 <div class="section-heading">
-                    <h2>Dashboard</h2>
+                    <h2>New Orders</h2>
                     <div class="inline">
                         <p>Date range:</p>
                         <p class="dropdown">Today</p>
                     </div>
                 </div> 
                 <section class="section-body">
-                    <section class="main-section">
-                        <div class="grid-container">
-                            <div class="box blue">
-                                <p>New Orders</p>
-                                <h1>100</h1>
-                                <p class="notif">+99</p>
-                            </div>
-                            <div class="box blue">
-                                <p>Paid Orders</p>
-                                <h1>100</h1>
-                                <p class="notif">+99</p>
-                            </div>
-                            <div class="box">
-                                <p>Preparing Orders</p>
-                                <h1>100</h1>
-                                <p class="notif">+99</p>
-                            </div>
-                            <div class="box">
-                                <p>Packing Orders</p>
-                                <h1>100</h1>
-                                <p class="notif">+99</p>
-                            </div>
-                            <div class="box">
-                                <p>Shipped Orders</p>
-                                <h1>100</h1>
-                                <p class="notif">+99</p>
-                            </div>
-                            <div class="box">
-                                <p>Completed Orders</p>
-                                <h1>100</h1>
-                                <p class="notif">+99</p>
-                            </div>
-                            <div class="box">
-                                <p>Canceled Orders</p>
-                                <h1>100</h1>
-                                <p class="notif">+99</p>
-                            </div>
-                        </div>
+                    <section class="main-section table">
+                        <table>
+                            <tr>
+                              <th>Date and Time</th>
+                              <th>Customer</th>
+                              <th>Order #</th>
+                              <th>Payment</th>
+                              <th>Confirmed</th>
+                            </tr>
+                            <?php
+                                $sql = "SELECT * FROM placed_order";
+                                $res = mysqli_query($conn, $sql);
+                                $count = mysqli_num_rows($res);
+
+                                if($count>0)
+                                {
+                                    while($row=mysqli_fetch_assoc($res))
+                                    {
+                                        $PLACED_ORDER_ID = $row['PLACED_ORDER_ID'];
+                                        $CUS_ID= $row['CUS_ID'];
+                                        $PLACED_ORDER_DATE = $row['PLACED_ORDER_DATE'];
+                                        $PLACED_ORDER_TOTAL = $row['PLACED_ORDER_TOTAL'];
+                                        $DELIVERY_ADDRESS = $row['DELIVERY_ADDRESS'];
+                                        $DELIVERY_ADDRESS = $row['DELIVERY_DATE'];
+                                        $PLACED_ORDER_CONFIRMATION = $row['PLACED_ORDER_CONFIRMATION'];
+                                        $PAYMENT_METHOD = $row['PAYMENT_METHOD'];
+                                        $PLACED_ORDER_TOTAL = $row['PLACED_ORDER_TOTAL'];
+                                        ?>
+                                            <tr>
+                                                <td><?php echo $PLACED_ORDER_DATE; ?></td>
+                                                <td><?php echo $CUS_ID; ?></td>
+                                                <td><a href=""><?php echo $PLACED_ORDER_ID; ?></a></td>
+                                                <td><?php echo $PLACED_ORDER_TOTAL; ?></td>
+                                                <td><?php echo $PLACED_ORDER_TOTAL; ?></td>
+                                                <td>
+                                                </td>
+                                            </tr>
+                                        <?php
+                                    }
+
+                                }
+                                else
+                                {
+                                    echo "<div class='error'>No Order Found</div>";  
+                                }
+                            ?>
+                          </table> 
                     </section>
                     <section class="side-menu">
                         <div class="group inventory">

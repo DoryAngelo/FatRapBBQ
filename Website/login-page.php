@@ -16,8 +16,9 @@ if(isset($_POST['submit'])){
 	if(mysqli_num_rows($result)>0){	
 
 		$row = mysqli_fetch_array($result);
-		$_SESSION['prsn_id'] = $row['PRSN_ID'];
         $PRSN_ROLE = $row['PRSN_ROLE'];
+        $_SESSION['prsn_id'] = $row['PRSN_ID'];
+        $_SESSION['prsn_role'] = $row['PRSN_ROLE'];
 
         if($PRSN_ROLE == "Customer"){
             header('location:cus-home-page.php');
