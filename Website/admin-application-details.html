@@ -1,0 +1,90 @@
+<?php
+
+@include 'constants.php';
+
+$PRSN_ID = $_SESSION['prsn_id'];
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--change title-->
+        <title>XXXX Application Details | Admin</title>
+        <link rel="stylesheet" href="header-styles.css">
+        <link rel="stylesheet" href="admin-styles.css"><!--change css file-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"> 
+        <script src="app.js" defer></script>
+    </head>
+    <body>
+        <header class="backend">
+            <div class="header-container">
+                <div class="website-title">
+                    <img id="logo" src="images/client-logo.jpg">
+                    <div class="text">
+                        <h1>Fat Rap's Barbeque's Online Store</h1>
+                        <p>ADMIN</p>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <!--TODO: ADD LINKS-->
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Menu</a></li>
+                        <li><a href="#">Orders</a></li>
+                        <!-- Text below should change to 'Logout'once user logged in-->
+                        <li><a href="logout.php">Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <main>
+            <section class="section">
+                <div class="section-heading row">
+                    <h2>Application Details</h2>
+                    <p>#XXXX</p>
+                </div> 
+                <section class="section-body">
+                    <section class="main-section column">
+                        <section class="table">
+                            <table>
+                                <tr>
+                                    <td class="bold-font">Name: </td>
+                                    <td>Juan Dela Cruz</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold-font">Email: </td>
+                                    <td>juandelacruz@email.com</td>
+                                </tr>
+                            </table> 
+                        </section>
+                        <section class="column valid-id">
+                            <p class="bold-font">Valid ID</p>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Philippine_passport_%282016_edition%29_data_page.jpg/190px-Philippine_passport_%282016_edition%29_data_page.jpg">
+                            <a href="">Open in new tab</a>
+                        </section>
+                    </section>
+                    <section class="side-menu">
+                        <div class="group">
+                            <h3>Wholesale Users</h3>
+                            <div class="position-notif">
+                                <a href="" class="view">Total Count</a>
+                               <p class="notif">+99</p>
+                            </div>
+                        </div>
+                        <div class="group">
+                            <h3>Actions</h3>
+                            <a href="" class="view accept">Accept</a>
+                            <a href="" class="view reject">Reject</a>
+                        </div>
+                    </section>
+                </section>
+            </section>
+        </main>
+    </body>
+</html>

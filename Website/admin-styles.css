@@ -26,6 +26,9 @@
     --sidemenu-blue: #6EA4E4;
     --sidemenu-blue-text: #163860;
     --db-highlight-blue: #93CBFF;
+    --gray: #878F94; /*used in application detail's section heading p*/
+    --accept-green: #78D35A;
+    --reject-red: #DA523B;
 }
 
 html {
@@ -85,6 +88,16 @@ main {
     margin-bottom: 1.8rem;
 }
 
+.row {
+    flex-direction: row;
+    align-items: center;
+}
+
+.row p {
+    margin-left: 1rem;
+    color: var(--gray);
+}
+
 .section-heading h2 {
     font-size: 2.0625rem;
 }
@@ -111,11 +124,31 @@ main {
     width: 100%;
 }
 
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+p.bold-font, td.bold-font {
+    font-weight: bold;
+    padding-right: 1.5rem;
+}
+
 .table {
     background-color: var(--light-blue);
     border-radius: 1rem;
+    padding: 1rem;
+    height: max-content;
 }
 
+.valid-id {
+    margin-top: 2rem;
+    gap: 1rem;
+}
+
+.valid-id img {
+    width: 60%;
+}
 .grid-container {
     width: 95%;
     display: grid;
@@ -226,4 +259,15 @@ a.big-font {
     left: 14.25rem;
     z-index: 1;
 }
+
+a.accept {
+    background-color: var(--accept-green);
+    color: black;
+}
+
+a.reject {
+    background-color: var(--reject-red);
+    color: black;
+}
+
 
