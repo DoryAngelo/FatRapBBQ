@@ -13,7 +13,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!--change title-->
-        <title>New Orders | Admin</title>
+        <title>Accepted Wholesale Users | Admin</title>
         <link rel="stylesheet" href="header-styles.css">
         <link rel="stylesheet" href="admin-styles.css"><!--change css file-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,9 +46,9 @@ $PRSN_ID = $_SESSION['prsn_id'];
         <main>
             <section class="section">
                 <div class="section-heading">
-                    <h2>New Orders</h2>
+                    <h2>Accepted Wholesale Users</h2>
                     <div class="inline">
-                        <p>Date range:</p>
+                        <p>Filter by date:</p>
                         <input type="date">
                     </div>
                 </div> 
@@ -101,23 +101,17 @@ $PRSN_ID = $_SESSION['prsn_id'];
                             ?>
                           </table> 
                     </section>
-                    <section class="side-menu">
+                    <section class="side-menu ws-side-margin">
                         <div class="group inventory">
-                            <h3>Inventory</h3>
-                            <div class="inventory-box">
-                                <div class="inline">
-                                    <p>Pork BBQ</p>
-                                    <p class="number">10</p>
-                                </div>
-                                <a href="" class="edit">Edit</a>
+                            <h3>Wholesale Users</h3>
+                            <div class="position-notif">
+                                <a href="" class="view">Accepted</a>
+                               <p class="notif">+99</p>
                             </div>
-                        </div>
-                        <div class="group">
-                            <a href="" class="view big-font">Paid Orders</a>
-                            <a href="" class="view big-font">Preparing Orders</a>
-                            <a href="" class="view big-font">For Delivery</a>
-                            <a href="" class="view big-font">Completed Orders</a>
-                            <a href="" class="view big-font">Cancelled Orders</a>
+                            <div class="position-notif">
+                                <a href="" class="view">New</a>
+                                <p class="notif">+99</p>
+                            </div>
                         </div>
                     </section>
                 </section>

@@ -24,6 +24,7 @@
     --text:#3A3F42;
     --light-blue: #DEECF9;
     --sidemenu-blue: #6EA4E4;
+    --sidemenu-blue-text: #163860;
     --db-highlight-blue: #93CBFF;
 }
 
@@ -150,8 +151,11 @@ main {
     font-size: 2.7rem;
 }
 
-.grid-container .box p.notif {
+p.notif {
+    width: max-content;
+    height: max-content;
     font-size: 0.75rem;
+    font-weight: bold;
     background-color: red;
     color: #fff;
     padding: 0.4rem 0.2rem;
@@ -176,6 +180,7 @@ main {
     padding: 0.9rem 1.1rem;
     margin-top: 0.6rem;
     font-size: 1rem;
+    color: var(--sidemenu-blue-text);
 }
 
 .side-menu .inventory-box {
@@ -188,7 +193,7 @@ main {
 .side-menu a {
     text-decoration: none;
     font-weight: bold;
-    color: #3A3F42;
+    color: var(--sidemenu-blue-text);
     border-radius: 1.2rem;
 }
 
@@ -204,4 +209,21 @@ main {
     justify-content: space-between;
 }
 
+a.big-font {
+    font-size: 1.25rem;
+    padding: 0.6rem 1.1rem;
+    border-radius: 2rem;
+}
+
+.side-menu .position-notif {
+    position: relative;
+    z-index: 0;
+}
+
+.side-menu p.notif {
+    position: absolute;
+    margin-top: -2.25rem;
+    left: 14.25rem;
+    z-index: 1;
+}
 
