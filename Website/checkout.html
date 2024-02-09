@@ -12,9 +12,9 @@ $PRSN_ID = $_SESSION['prsn_id'];
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Checkout</title>
     <link rel="stylesheet" href="header-styles.css">
-    <link rel="stylesheet" href="login-styles.css">
+    <link rel="stylesheet" href="customer-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -54,116 +54,140 @@ $PRSN_ID = $_SESSION['prsn_id'];
         </div>
     </header>
     <main>
-        <div>
-            <h1>Checkout</h1>
-            <p>You are about to place your order</p>
-        </div>
-        <div>
-            <table class="tbl-full">
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th>Price:</th>
-                    <th>Quantity:</th>
-                </tr>
+        <section class="section">
+            <div class="section-heading">
+                <h2>Checkout</h2>   
+                <p>You are about to place your order</p>             
+            </div> 
+            <section class="section-body">
+                <section class="block">
+                    <h3 class="block-heading">Order Summary</h2>
+                    <div class="block-body">
+                        <div class="table-wrap">
+                            <!-- <?php
 
-                <?php
+                            $CUS_ID = $_SESSION['prsn_id'];
 
-                $CUS_ID = $_SESSION['prsn_id'];
+                            $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, CUS_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
+                            FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered'";
 
-                $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, CUS_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
-                FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered'";
+                            $res = mysqli_query($conn, $sql);
 
-                $res = mysqli_query($conn, $sql);
+                            $count = mysqli_num_rows($res);
 
-                $count = mysqli_num_rows($res);
+                            if ($count > 0) {
+                                while ($row = mysqli_fetch_assoc($res)) {
+                                    if ($row['CUS_ID'] == $CUS_ID) {
+                                        $IN_ORDER_ID = $row['IN_ORDER_ID'];
+                                        $FOOD_NAME = $row['FOOD_NAME'];
+                                        $FOOD_PRICE = $row['FOOD_PRICE'];
+                                        $FOOD_IMG = $row['FOOD_IMG'];
+                                        $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
+                                        $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
+                            ?> -->
+                            <table>
+                                <thead>
+                                  <tr>
+                                    <td></td>
+                                    <th><span class="sr-only year">Quantity</span></th>
+                                    <th><span class="sr-only year">Price</span></th>
+                                    <th class="current"><span class="sr-only year">Sub Total</span></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    <div class="green">
+                                        <tr class="data">
+                                            <th>Food Name<span class="description"></span></th>
+                                            <td>100</td>
+                                            <td>₱25.00</td>
+                                            <td>₱2500.00</td>
+                                          </tr>
+                                    </div>
+                                  
+                                  <tr class="data">
+                                    <th>Food Name<span class="description"></span></th>
+                                    <td>100</td>
+                                    <td>₱25.00</td>
+                                    <td>₱2500.00</td>
+                                  </tr>
+                                  <tr class="data">
+                                    <th>Food Name<span class="description"></span></th>
+                                    <td>100</td>
+                                    <td>₱25.00</td>
+                                    <td>₱2500.00</td>
+                                  </tr>
+                                  <tr class="total">
+                                    <th></th>
+                                    <td></td>
+                                    <td>Total Payment:</td>
+                                    <td class="current">₱2500.00</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                        </div>
+                    </div>
+                </section>
+                <section class="block red-theme">
+                    <h3 class="block-heading">Contact Information</h2>
+                    <div class="block-body contact-info-blk ">
+                        <!-- <?php
 
-                if ($count > 0) {
-                    while ($row = mysqli_fetch_assoc($res)) {
-                        if ($row['CUS_ID'] == $CUS_ID) {
-                            $IN_ORDER_ID = $row['IN_ORDER_ID'];
-                            $FOOD_NAME = $row['FOOD_NAME'];
-                            $FOOD_PRICE = $row['FOOD_PRICE'];
-                            $FOOD_IMG = $row['FOOD_IMG'];
-                            $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
-                            $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
-                ?>
+                        $sql2 = "SELECT * FROM person WHERE PRSN_ID=$PRSN_ID";
 
-                            <tr>
-                                <td><?php
-                                    ?>
-                                    <img width="100px" src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG ?>">
-                                    <?php
-                                    ?>
-                                </td>
-                                <td><?php echo $FOOD_NAME; ?></td>
-                                <td><?php echo $FOOD_PRICE; ?></td>
-                                <td>
-                                    <?php echo $IN_ORDER_QUANTITY; ?>
-                                </td>
-                                <td><?php echo $IN_ORDER_TOTAL; ?></td>
-                            </tr>
-                <?php
-                        }
-                    }
-                } else {
-                    echo "<div class='error'>No Order Found</div>";
-                }
-                ?>
-            </table>
-        </div>
-        <div>
-            <?php
+                        $res2 = mysqli_query($conn, $sql2);
 
-            $sql2 = "SELECT * FROM person WHERE PRSN_ID=$PRSN_ID";
+                        $row2 = mysqli_fetch_assoc($res2);
 
-            $res2 = mysqli_query($conn, $sql2);
+                        //get individual values
+                        $PRSN_NAME = $row2['PRSN_NAME'];
+                        $PRSN_PHONE = $row2['PRSN_PHONE'];
+                        $PRSN_EMAIL = $row2['PRSN_EMAIL'];
 
-            $row2 = mysqli_fetch_assoc($res2);
-
-            //get individual values
-            $PRSN_NAME = $row2['PRSN_NAME'];
-            $PRSN_PHONE = $row2['PRSN_PHONE'];
-            $PRSN_EMAIL = $row2['PRSN_EMAIL'];
-
-            ?>
-            <h2>Contact Information</h2>
-            <table class="tbl-full">
-                <tr>
-                    <td>Name</td>
-                    <td>
-                        <input type="text" name="name" value="<?php echo $PRSN_NAME ?>">
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Contact Number</td>
-                    <td>
-                        <input type="text" name="name" value="<?php echo $PRSN_PHONE ?>">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Address</td>
-                    <td>
-                        <input type="text" name="name" value="">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Email</td>
-                    <td>
-                        <input type="text" name="name" value="<?php echo $PRSN_EMAIL ?>">
-                    </td>
-                </tr>
-
-            </table>
-
-        </div>
-
-        <div>
-            <a href="#" class="secondary-btn">Place Order</a>
-        </div>
+                        ?> -->
+                        <!-- TODO: validate inputs -->
+                        <div class="input-grp">
+                            <p>Name</p>
+                            <input type="text" name="name" placeholder=""> <!-- value="<?php echo $PRSN_NAME ?>" -->
+                        </div>
+                        <div class="input-grp">
+                            <p>Address</p>
+                            <input type="text" name="address" placeholder="Enter your address"> <!-- value="" -->
+                        </div>
+                        <div class="input-grp">
+                            <p>Contact Number</p>
+                            <input type="text" name="contact-number" placeholder="Enter your contact number"> <!-- value="<?php echo $PRSN_PHONE ?>" -->
+                        </div>
+                        <div class="input-grp">
+                            <p>Email</p>
+                            <input type="email" name="email" placeholder="Enter your email"> <!-- value="<?php echo $PRSN_EMAIL ?>" -->
+                        </div>
+                    </div>
+                </section>
+                <section class="wrapper red-theme">
+                    <div class="block left-side-dvd red-theme">
+                        <h3 class="block-heading">When do you want your order to be delivered?</h2>
+                        <div class="block-body radio">
+                            <label for=""><input id="" type="radio" name="date" class="" /> Today</label>
+                            <label for=""><input id="" type="radio" name="date" class="" /> Select a date:</label><input type="date">
+                        </div>
+                    </div>
+                    <div class="block time-slot">
+                        <h3 class="block-heading">Time Slot</h2>
+                            <div class="block-body">
+                                <input type="time">
+                            </div>
+                    </div>
+                </section>
+                <div class="block note">
+                    <p>Note: We can only deliver from 9AM to 5PM. Moreover, delivery will be shouldered by third-party couriers.</p>
+                </div>
+                <div class="btn-container center">
+                    <a href="" class="page-button clear-bg">Back</a>
+                    <a href="" class="page-button">Place Order</a>
+                </div>
+            </section>
+        </section>
     </main>
-
     <footer>
         <div class="footer-container">
             <div class="left-container">

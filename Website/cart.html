@@ -54,16 +54,73 @@ $PRSN_ID = $_SESSION['prsn_id'];
             </div>
         </header>
         <main>
-            <section class="section">
+            <section class="section cart">
                 <div class="section-heading">
                     <h2>Cart</h2>                
                 </div> 
                 <section class="section-body">
                     <section class="block">
-                        <h3 class="block-heading">Order Summary</h2>
-                        <div class="block-body"></div>
+                        <div class="block-body">
+                            <div class="table-wrap">
+                                <!-- <?php
+    
+                                $CUS_ID = $_SESSION['prsn_id'];
+    
+                                $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, CUS_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
+                                FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered'";
+    
+                                $res = mysqli_query($conn, $sql);
+    
+                                $count = mysqli_num_rows($res);
+    
+                                if ($count > 0) {
+                                    while ($row = mysqli_fetch_assoc($res)) {
+                                        if ($row['CUS_ID'] == $CUS_ID) {
+                                            $IN_ORDER_ID = $row['IN_ORDER_ID'];
+                                            $FOOD_NAME = $row['FOOD_NAME'];
+                                            $FOOD_PRICE = $row['FOOD_PRICE'];
+                                            $FOOD_IMG = $row['FOOD_IMG'];
+                                            $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
+                                            $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
+                                ?> -->
+                                <table>
+                                    <thead>
+                                      <tr>
+                                        <td></td>
+                                        <th><span class="sr-only year">Quantity</span></th>
+                                        <th><span class="sr-only year">Price</span></th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        <div class="green">
+                                            <tr class="data">
+                                                <th>Food Name<span class="description"></span></th>
+                                                <td>100</td>
+                                                <td>₱25.00</td>
+                                              </tr>
+                                        </div>
+                                      
+                                      <tr class="data">
+                                        <th>Food Name<span class="description"></span></th>
+                                        <td>100</td>
+                                        <td>₱25.00</td>
+                                      </tr>
+                                      <tr class="data">
+                                        <th>Food Name<span class="description"></span></th>
+                                        <td>100</td>
+                                        <td>₱25.00</td>
+                                      </tr>
+                                      <tr class="total">
+                                        <th></th>
+                                        <td>Total:</td>
+                                        <td class="current">₱2500.00</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                            </div>
+                        </div>
                     </section>
-                    <a href="checkout.php" class="page-button">Checkout</a>
+                    <a href="checkout.php" class="page-button center">Checkout</a>
                 </section>
             </section>
         </main>

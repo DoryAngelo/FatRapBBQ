@@ -21,6 +21,8 @@
     --block: #FEFBEA;
     --light-text: var(--block);
     --text: #3A001E;
+
+    --red: #C13B24;
 }
 
 /* @media only screen and (min-width: 700px) {
@@ -90,7 +92,7 @@ main {
 .section-body {
     display: flex;
     flex-direction: column;
-    gap: 4.5rem;
+    gap: 1rem;
 }
 
 .block {
@@ -99,13 +101,127 @@ main {
     padding: 1.5rem;
 }
 
-.cart .block {
-    height: 45vh;
+h3.block-heading {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
 }
 
 .block-body {
-    background-color: gray;
-    height: 100px;
+}
+
+/* table */
+table {
+    border-collapse: collapse;
+    border: 0;
+    width: 100%;
+    position: relative;
+}
+
+tbody td {
+    width: 100vw;
+    min-width: 4rem;
+    max-width: 9rem;
+}
+
+tbody th {
+    width: calc(100% - 12rem);
+}
+
+tr.data {
+    background-image: linear-gradient(to bottom, #94C77C 1.845rem, var(--block) 1.845rem);
+    vertical-align: center;
+}
+
+tr.data th {
+    text-align: left;
+    padding-left: 0.5rem;
+    vertical-align: center;
+}
+
+tr.data th .description {
+    display: block;
+    font-weight: normal;
+    font-style: italic;
+    padding: 0.5rem 0;
+    margin-right: -13.5rem;
+}
+
+td{
+    text-align: right;
+    padding-right: 0.5rem;
+}
+
+tr.total td {
+    text-align: right;
+    font-weight: bold;
+}
+  
+/* table */
+
+.cart div.block-body {
+    height: 250px;
+}
+
+.contact-info-blk {
+    min-height: max-content;
+    display: grid;
+    gap: 1.625rem;
+}
+
+.contact-info-blk p{
+    font-weight: bold;
+}
+
+.contact-info-blk input {
+    width: 50%;
+    background-color: #D95039;
+    border-radius: 5px;
+    border: 1px solid #8E2C1B;
+    outline: none;
+    padding: 5px 13px;
+    font-size: 1rem;
+    margin-top: 8px;
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    border-radius: 1rem;
+    justify-content: space-between;
+    background-color: var(--block);
+}
+
+.left-side-dvd {
+    width: 100%;
+}
+
+.time-slot {
+    background-color: #F8745E;
+    width: 40%;
+}
+
+.red-theme {
+    color: var(--light-text);
+    background-color: var(--red);
+}
+
+
+.note {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.85rem;
+    background-color: #FBE4A8;
+    border: 1px solid #F5D636;
+}
+
+.center {
+    margin: 0 auto;
+}
+
+div.btn-container {
+    margin-top: 2rem;
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
 }
 
 a.page-button {
@@ -119,12 +235,12 @@ a.page-button {
     font-weight: bold;
 }
 
-.cart a.page-button {
-    margin: 0 auto;
-}
-
 a.page-button:hover {
     background-color: var(--active-primary);
+}
+
+a.clear-bg, a.clear-bg:hover {
+    background-color: var(--bg);
 }
 
 
