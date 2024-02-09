@@ -40,49 +40,52 @@ main {
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     padding: 80px 40px;
     border-radius: 25px;
-    z-index: 1;
+    width: max(40%, 400px);
+     /*100% of parent's width, 425px minimum width (default size), */
+    position: relative;
+    margin: 0 auto;
 }
 
-.success-box {
-    width: 425px; /*100% of parent's width, 425px minimum width (default size), */
-    position: relative;
-    left: 70px;
+.reset-style {
+    padding: 60px 40px;
 }
 
-.reg-form {
-    width: 800px; /*100% of parent's width, 425px minimum width (default size), */
-    position: relative;
-    top: -425px;
+.center {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 .success-title{
-    position: relative;
-    /* padding-left: 15px; */
-    margin-bottom: 20px;
+    margin: auto;
+    text-align: center;
 }
 
 .success-title h1{
     color: var(--block);
-    text-align: center;
+    font-size: 4rem;
 }
 
 .title-desc{
     color: var(--text);
-    font-size: 0.8rem;
-    margin-top: 8px;
-    text-align: center;
+    margin-top: 1rem;
+    font-size: 1.25rem;
 }
 
 .small-text {
-    text-align: center;
     color: var(--text);
-    font-size: 0.6rem;
+    margin-top: 1.25rem;
 }
 
 .login-link {
     color: var(--text);
     font-weight: bold;
     text-decoration: none;
+}
+
+.login-link:hover {
+    text-decoration: underline;
 }
 
 /* end of success block */
