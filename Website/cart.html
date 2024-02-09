@@ -15,7 +15,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
         <!--change title-->
         <title>Cart</title>
         <link rel="stylesheet" href="header-styles.css">
-        <link rel="stylesheet" href="admin-styles.css"><!--change css file-->
+        <link rel="stylesheet" href="customer-styles.css"><!--change css file-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"> 
@@ -54,12 +54,16 @@ $PRSN_ID = $_SESSION['prsn_id'];
             </div>
         </header>
         <main>
-            <section class="section">
+            <section class="section cart">
                 <div class="section-heading">
                     <h2>Cart</h2>                
                 </div> 
                 <section class="section-body">
-                    <a href="checkout.php" class="secondary-btn">Checkout</a>
+                    <section class="block">
+                        <h3 class="block-heading">Order Summary</h2>
+                        <div class="block-body"></div>
+                    </section>
+                    <a href="checkout.php" class="page-button">Checkout</a>
                 </section>
             </section>
         </main>

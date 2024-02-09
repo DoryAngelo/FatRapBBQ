@@ -18,11 +18,9 @@
     --closed:#3B3B3B;
     --closed-text:#A9A9A9;
     --product-info-bg: #C13B24;
-    --light-text: #FEFBEA;
-}
-
-html {
-    color: var(--text);
+    --block: #FEFBEA;
+    --light-text: var(--block);
+    --text: #3A001E;
 }
 
 /* @media only screen and (min-width: 700px) {
@@ -53,19 +51,20 @@ body{
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     min-height: 100vh;
-    color: #3A3F42;
 }
 
 main {
     padding-top: 130px;
-    height: 100vh;
+    padding-bottom: 7rem;
+    height: max-content;
+    background-color: var(--bg);
+    color: var(--text);
 }
 
 .section {
     width: 80%;
     margin: auto;
     margin-top: 2.5rem;
-    margin-bottom: 7rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -78,25 +77,8 @@ main {
     margin-bottom: 1.8rem;
 }
 
-.row {
-    flex-direction: row;
-    align-items: center;
-}
-
-.row p {
-    margin-left: 1rem;
-    color: var(--gray);
-}
-
 .section-heading h2 {
     font-size: 2.0625rem;
-}
-
-.inline {
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
 }
 
 .dropdown {
@@ -107,157 +89,67 @@ main {
 }
 .section-body {
     display: flex;
+    flex-direction: column;
     gap: 4.5rem;
 }
 
-.main-section {
-    width: 100%;
-}
-
-.column {
-    display: flex;
-    flex-direction: column;
-}
-
-p.bold-font, td.bold-font {
-    font-weight: bold;
-    padding-right: 1.5rem;
-}
-
-.table {
-    background-color: var(--light-blue);
+.block {
+    background-color: var(--block);
     border-radius: 1rem;
-    padding: 1rem;
-    height: max-content;
+    padding: 1.5rem;
 }
 
-.valid-id {
-    margin-top: 2rem;
-    gap: 1rem;
+.cart .block {
+    height: 45vh;
 }
 
-.valid-id img {
-    width: 60%;
-}
-.grid-container {
-    width: 95%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+.block-body {
+    background-color: gray;
+    height: 100px;
 }
 
-.grid-container .box {
-    width: 100%;
-    height: 100%;
-    background-color: var(--light-blue);
-    border-radius: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 2rem;
-    padding: 1.25rem;
-    position: relative;
-    /* box-shadow: var(--db-highlight-blue) 0px 3px 4px 0px; pick a better color db-higlight0blue as shadow is good for lightblue but not for the same color */
-}
-
-.grid-container div.blue {
-    background-color: var(--db-highlight-blue);
-}
-
-.grid-container .box p {
-    font-weight: bold;
-    font-size: 0.9rem;
-}
-
-.grid-container .box h1 {
-    font-size: 2.7rem;
-}
-
-p.notif {
+a.page-button {
+    background-color: var(--primary);
     width: max-content;
-    height: max-content;
-    font-size: 0.75rem;
-    font-weight: bold;
-    background-color: red;
-    color: #fff;
-    padding: 0.4rem 0.2rem;
-    border-radius: 50%;
-    margin-right: -11rem;
-}
-
-.side-menu {
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.side-menu h3 {
-    font-size: 1.25rem;
-}
-
-.side-menu .inventory-box, a.view{
-    display: block;
-    background-color: var(--sidemenu-blue);
-    padding: 0.9rem 1.1rem;
-    margin-top: 0.6rem;
-    font-size: 1rem;
-    color: var(--sidemenu-blue-text);
-}
-
-.side-menu .inventory-box {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    border-radius: 1rem;
-}
-
-.side-menu a {
+    border-radius: 1.7rem;
+    padding: 1rem 2rem;
+    color: var(--text);
     text-decoration: none;
+    font-size: 1.33rem;
     font-weight: bold;
-    color: var(--sidemenu-blue-text);
-    border-radius: 1.2rem;
 }
 
-.side-menu .inventory-box a.edit {
-    font-size: 1rem;
-    padding: 0;
-    border-radius: 0;
-    margin: 0;
-    width: max-content;
+.cart a.page-button {
+    margin: 0 auto;
 }
 
-.side-menu .inline {
-    justify-content: space-between;
+a.page-button:hover {
+    background-color: var(--active-primary);
 }
 
-a.big-font {
-    font-size: 1.25rem;
-    padding: 0.6rem 1.1rem;
-    border-radius: 2rem;
-}
 
-.side-menu .position-notif {
-    position: relative;
-    z-index: 0;
-}
 
-.side-menu p.notif {
-    position: absolute;
-    margin-top: -2.25rem;
-    left: 14.25rem;
-    z-index: 1;
-}
 
-a.accept {
-    background-color: var(--accept-green);
-    color: black;
-}
 
-a.reject {
-    background-color: var(--reject-red);
-    color: black;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
