@@ -20,6 +20,8 @@ $PRSN_ID = $_SESSION['prsn_id'];
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"> 
         <script src="app.js" defer></script>
+        <!-- add the code below to load the icons -->
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     </head>
     <body>
         <header class="backend">
@@ -53,16 +55,48 @@ $PRSN_ID = $_SESSION['prsn_id'];
                     </div>
                 </div> 
                 <section class="section-body">
-                    <section class="main-section table">
-                        <table>
+                    <section class="main-section table-wrapper">
+                        <table class="alternating">
                             <tr>
-                              <th>Date and Time</th>
-                              <th>Customer</th>
-                              <th>Order #</th>
-                              <th>Payment</th>
-                              <th>Confirmed</th>
+                                <th class="header">Date and Time</th>
+                                <th class="header">Application #</th>
+                                <th class="header">Name</th>
+                                <th class="header">Email</th>
+                                <th class="header">Confirmed</th>
                             </tr>
-                            <?php
+                            <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
+                            <tr>
+                                <td data-cell="Date and Time">8/5/23 3:5:15 PM</td>
+                                <td data-cell="Application #">0325</td>
+                                <td data-cell="Name">John Doe</td>
+                                <td data-cell="Email">johndoe@email.com</td>
+                                <td data-cell="Confimed">
+                                    <div class="btn-wrapper">
+                                        <button class="btn-check"><i class='bx bxs-check-circle'></i></button>
+                                        <button class="btn-cross"><i class='bx bxs-x-circle'></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                                <td data-cell="Date and Time">8/5/23 3:5:15 PM</td>
+                                <td data-cell="Application #">0325</td>
+                                <td data-cell="Name">John Doe</td>
+                                <td data-cell="Email">johndoe@email.com</td>
+                                <td data-cell="Confimed"></td>
+                            </tr>
+                                <td data-cell="Date and Time">8/5/23 3:5:15 PM</td>
+                                <td data-cell="Application #">0325</td>
+                                <td data-cell="Name">John Doe</td>
+                                <td data-cell="Email">johndoe@email.com</td>
+                                <td data-cell="Confimed">
+                                </td>
+                            </tr>
+                                <td data-cell="Date and Time">8/5/23 3:5:15 PM</td>
+                                <td data-cell="Application #">0325</td>
+                                <td data-cell="Name">John Doe</td>
+                                <td data-cell="Email">johndoe@email.com</td>
+                                <td data-cell="Confimed"></td>
+                            </tr>
+                            <!-- <?php
                                 $sql = "SELECT * FROM placed_order";
                                 $res = mysqli_query($conn, $sql);
                                 $count = mysqli_num_rows($res);
@@ -98,7 +132,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                 {
                                     echo "<div class='error'>No Order Found</div>";  
                                 }
-                            ?>
+                            ?> -->
                           </table> 
                     </section>
                     <section class="side-menu">
@@ -117,5 +151,6 @@ $PRSN_ID = $_SESSION['prsn_id'];
                 </section>
             </section>
         </main>
+        <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
     </body>
 </html>
