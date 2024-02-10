@@ -368,5 +368,78 @@ a.page-btn {
     text-decoration: none;
 }
 
+.block {
+    background-color: var(--light-blue);
+    border-radius: 1rem;
+    padding: 1.5rem;
+}
+
+.form {
+    display: flex;
+    gap: 1rem;
+}
+
+.form section {
+    width: 50%;
+}
+
+.form-title{
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.form-title h1{
+    color: var(--text);
+    font-size: 1.25rem;
+}
+
+.form-field{
+    display: grid;
+    gap: 1.5rem;
+}
+
+.form-field-input{
+    position: relative;
+}
+
+form input {
+    border-radius: 5px;
+    border: 2px solid transparent;
+    outline: none;
+    transition: .3s ease;
+}
+
+.form-field-input input:not(.image) {
+    width: 100%;
+    padding: 5px 13px;
+    background: #BAD6EF;
+    font-size: 1rem;
+    margin-top: 8px;
+}
+
+.form-field-input p {
+    font-style: italic;
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 3px;
+    margin-bottom: 8px;
+}
+
+.form-field-input label{
+    color: var(--text);
+}
+
+.form-field-input input:focus{
+    border: 2px solid var(--sidemenu-blue);
+}
+
+.hidepass, .showpass{
+    position: absolute;
+    right: 15px;
+    top: 34px;
+    font-size: 1.2rem;
+    color: #8191c2;
+    cursor: pointer;
+}
 
 
