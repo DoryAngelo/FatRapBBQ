@@ -20,7 +20,6 @@
     --product-info-bg: #C13B24;
     --light-text: #FEFBEA;
 
-
     --text:#3A3F42;
     --light-blue: #DEECF9;
     --darker-row: #deecf94f;
@@ -219,7 +218,7 @@ table button {
 }
 
 .btn-cross i {
-    color: #DA523B;
+    color: var(--reject-red);
 }
 
 .valid-id {
@@ -440,6 +439,92 @@ form input {
     font-size: 1.2rem;
     color: #8191c2;
     cursor: pointer;
+}
+
+.calendar {
+    width: 100%;
+    height: 30rem;
+    background: #000;
+}
+
+.right-side {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.right-side h3{
+    font-size: 1.625rem;
+}
+
+.right-side .grid-container {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.right-side .grid-container .box {
+    gap: 1rem;
+    background-color: #fff;
+    box-shadow: #cfd9e3 0px 2px 4px 0px;
+}
+
+.right-side .grid-container .green {
+    color: #90BD7A;
+}
+
+.right-side .grid-container .red {
+    color: var(--reject-red);
+}
+
+.right-side .grid-container p {
+    font-weight: normal;
+    font-size: 0.9rem;
+}
+
+.right-side .block {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: #cfd9e3 0px 2px 4px 0px;
+}
+
+.right-side hr {
+    margin-top: 0.25rem;
+    margin-bottom: 1.25rem;
+    color: #B5D0EF;
+}
+
+.right-side button {
+    padding: 0.6rem 1.25rem;
+    border-radius: 1.5rem;
+}
+
+.right-side .button {
+    width: max-content;
+    font-size: 1rem;
+    color: black;
+}
+
+.right-side .green {
+    background-color: var(--available);
+}
+
+.right-side .red {
+    background-color: var(--reject-red);
+}
+
+.right-side .black {
+    background-color: #000;
+    color: white;
+}
+
+.save-btn {
+    width: 30%;
+    font-size: 1.25rem;
+    font-weight: bold;
+    background-color: #5FA9FF;
 }
 
 
