@@ -278,10 +278,47 @@ a.clear-bg, a.clear-bg:hover {
     background-color: var(--bg);
 }
 
+.menu .section-body {
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+    justify-content: space-between;
+}
 
+.menu .menu-item img {
+    width: 100%;
+    border-radius: 1rem;
+}
 
+.menu .menu-item {
+    background-color: var(--block);
+    border-radius: 1rem;
+    width: 20%;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 4px 0px;
+}
 
+.menu .menu-item .text {
+    margin: 0.8rem 1rem 1rem 1rem;
+}
 
+.menu .menu-item p.name{
+    margin-bottom: 6px;
+}
+
+.menu .menu-item .inline {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.menu .menu-item .inline p {
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+}
+
+.menu .menu-item .inline h2 {
+    font-size: 1.625rem;
+}
 
 
 
