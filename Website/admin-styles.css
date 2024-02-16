@@ -527,4 +527,72 @@ form input {
     background-color: #5FA9FF;
 }
 
+.order-details {
+    width: 40%;
+    margin: 0 auto;
+    padding-right: 0.5rem;
+}
+
+.order-details .scroll {
+    height: max-content;
+    max-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow: auto;
+    overflow-x: hidden;
+    padding-right: 1rem;
+}
+
+a.back {
+    width: 40%;
+    margin: 0 auto;
+    margin-bottom: 0.75rem;
+}
+
+.order-details table {
+    border-radius: 0;
+    border-top: 1px solid #B4CFE8;
+    border-bottom: 1px solid #B4CFE8;
+    background-color: var(--light-blue);
+}
+
+.order-details td, .order-details th {
+    padding: 0.5rem 0;
+    text-align: left;
+}
+
+.order-details table.contact-info td {
+    text-align: right;
+}
+
+.order-details .delivery-grp {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.order-details .text-grp h3{
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.order-details table .item-col {
+    width: 65%;
+}
+
+.order-details table .subtotal-col {
+    text-align: right;
+}
+
+.order-details .payment {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.order-details .payment h3:first-of-type{
+    margin-right: 1rem;
+    font-weight: normal;
+}
+
 

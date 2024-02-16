@@ -1,0 +1,116 @@
+<?php
+
+@include 'constants.php';
+
+$PRSN_ID = $_SESSION['prsn_id'];
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--change title-->
+        <title>Order Details | Admin</title>
+        <link rel="stylesheet" href="header-styles.css">
+        <link rel="stylesheet" href="admin-styles.css"><!--change css file-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"> 
+        <script src="app.js" defer></script>
+        <!-- add the code below to load the icons -->
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    </head>
+    <body>
+        <header class="backend">
+            <div class="header-container">
+                <div class="website-title">
+                    <img id="logo" src="images/client-logo.jpg">
+                    <div class="text">
+                        <h1>Fat Rap's Barbeque's Online Store</h1>
+                        <p>ADMIN</p>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <!--TODO: ADD LINKS-->
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Menu</a></li>
+                        <li><a href="#">Orders</a></li>
+                        <!-- Text below should change to 'Logout'once user logged in-->
+                        <li><a href="logout.php">Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <main>
+            <section class="section">
+                <a href="" class="back">Back</a>
+                <section class="block order-details">
+                    <div class="scroll">
+                        <h2>Order Details</h2>
+                        <div>
+                            <table class="contact-info">
+                                <tr>
+                                    <th>Order #:</th>
+                                    <td>1234</td>
+                                </tr>
+                                <tr>
+                                    <th>Date and time placed:</th>
+                                    <td>8/6/23 3:5:15 PM</td>
+                                </tr>
+                                <tr>
+                                    <th>Name:</th>
+                                    <td>John Doe</td>
+                                </tr>
+                                <tr>
+                                    <th>Contact number:</th>
+                                    <td>09123456789</td>
+                                </tr>
+                                <tr>
+                                    <th>Email:</th>
+                                    <td>johndoe@email.com</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="delivery-grp">
+                            <div class="text-grp">
+                                <h3>Delivery address:</h3>
+                                <p>123 Magaling St., Brgy. Something, Somewhere City</p>
+                            </div>
+                            <div class="text-grp">
+                                <h3>Delivery date:</h3>
+                                <p>Today, mm/dd/yyy</p>
+                            </div>
+                        </div>
+                        <div>
+                            <table class="order">
+                                <thead>
+                                    <tr>
+                                        <th class="item-col">Item</th>
+                                        <th>Quantity</th>
+                                        <th class="subtotal-col">Sub Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="item-col">Pork BBQ</td>
+                                        <td>10x</td>
+                                        <td class="subtotal-col">₱250.00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="payment">
+                            <h3>Total Payment:</h3>
+                            <h3>₱288.00</h3>
+                        </div>
+                    </div>
+                    
+                </section>
+            </section>
+        </main>
+    </body>
+</html>
