@@ -96,6 +96,10 @@ main {
     gap: 1rem;
 }
 
+.cart .section-body {
+    gap: 2.5rem;
+}
+
 .block {
     background-color: var(--block);
     border-radius: 1rem;
@@ -140,9 +144,6 @@ div.circle {
 
 h3.order-status {
     margin-bottom: 0.33rem;
-}
-
-.block-body {
 }
 
 /* order summary table in cart, checkout, and order tracking */
@@ -242,7 +243,10 @@ table.order tr:last-of-type {
 }
 
 .cart div.block-body {
-    height: 250px;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .contact-info-blk {
