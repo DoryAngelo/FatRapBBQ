@@ -54,7 +54,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
         </div>
     </header>
     <main>
-        <section class="section">
+        <section class="section checkout-page">
             <div class="section-heading">
                 <h2>Checkout</h2>   
                 <p>You are about to place your order</p>             
@@ -64,66 +64,56 @@ $PRSN_ID = $_SESSION['prsn_id'];
                     <h3 class="block-heading">Order Summary</h2>
                     <div class="block-body">
                         <div class="table-wrap">
-                            <!-- <?php
-
-                            $CUS_ID = $_SESSION['prsn_id'];
-
-                            $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, CUS_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
-                            FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered'";
-
-                            $res = mysqli_query($conn, $sql);
-
-                            $count = mysqli_num_rows($res);
-
-                            if ($count > 0) {
-                                while ($row = mysqli_fetch_assoc($res)) {
-                                    if ($row['CUS_ID'] == $CUS_ID) {
-                                        $IN_ORDER_ID = $row['IN_ORDER_ID'];
-                                        $FOOD_NAME = $row['FOOD_NAME'];
-                                        $FOOD_PRICE = $row['FOOD_PRICE'];
-                                        $FOOD_IMG = $row['FOOD_IMG'];
-                                        $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
-                                        $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
-                            ?> -->
-                            <table>
-                                <thead>
-                                  <tr>
-                                    <td></td>
-                                    <th><span class="sr-only year">Quantity</span></th>
-                                    <th><span class="sr-only year">Price</span></th>
-                                    <th class="current"><span class="sr-only year">Sub Total</span></th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                    <div class="green">
-                                        <tr class="data">
-                                            <th>Food Name<span class="description"></span></th>
-                                            <td>100</td>
-                                            <td>₱25.00</td>
-                                            <td>₱2500.00</td>
-                                          </tr>
-                                    </div>
-                                  
-                                  <tr class="data">
-                                    <th>Food Name<span class="description"></span></th>
-                                    <td>100</td>
-                                    <td>₱25.00</td>
-                                    <td>₱2500.00</td>
-                                  </tr>
-                                  <tr class="data">
-                                    <th>Food Name<span class="description"></span></th>
-                                    <td>100</td>
-                                    <td>₱25.00</td>
-                                    <td>₱2500.00</td>
-                                  </tr>
-                                  <tr class="total">
-                                    <th></th>
-                                    <td></td>
-                                    <td>Total Payment:</td>
-                                    <td class="current">₱2500.00</td>
-                                  </tr>
-                                </tbody>
-                              </table>
+                            <table  class="order">
+                            <thead>
+                                <tr>
+                                    <th class="header first-col"></th>
+                                    <th class="header">Quantity</th>
+                                    <th class="header">Price</th>
+                                    <th class="header">Sub Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
+                                <tr>
+                                    <td data-cell="customer" class="first-col">
+                                        <div class="pic-grp">
+                                            <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
+                                            <p>Pork BBQ</p>
+                                        </div>
+                                    </td> <!--Pic and Name-->
+                                    <td>1</td> <!--Quantity-->
+                                    <td>₱25.00</td><!--Price-->
+                                    <td>₱250.00</td><!--Sub Total-->
+                                </tr>
+                                <tr>
+                                    <td data-cell="customer" class="first-col">
+                                        <div class="pic-grp">
+                                            <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
+                                            <p>Pork BBQ</p>
+                                        </div>
+                                    </td> <!--Pic and Name-->
+                                    <td>1</td> <!--Quantity-->
+                                    <td>₱25.00</td><!--Price-->
+                                    <td>₱250.00</td><!--Sub Total-->
+                                </tr>
+                                <tr>
+                                    <td data-cell="customer" class="first-col">
+                                        <div class="pic-grp">
+                                            <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
+                                            <p>Pork BBQ</p>
+                                        </div>
+                                    </td> <!--Pic and Name-->
+                                    <td>1</td> <!--Quantity-->
+                                    <td>₱25.00</td><!--Price-->
+                                    <td>₱250.00</td><!--Sub Total-->
+                                </tr>
+                            </tbody>
+                            </table> 
+                        </div>
+                        <div class="payment">
+                            <h3>Total Payment:</h3>
+                            <h3>₱250.00</h3>
                         </div>
                     </div>
                 </section>
@@ -145,30 +135,39 @@ $PRSN_ID = $_SESSION['prsn_id'];
 
                         ?> -->
                         <!-- TODO: validate inputs -->
-                        <div class="input-grp">
-                            <p>Name</p>
-                            <input type="text" name="name" placeholder=""> <!-- value="<?php echo $PRSN_NAME ?>" -->
+                        <div class="left">
+                            <div class="input-grp">
+                                <p>Name</p>
+                                <input type="text" name="name"> <!-- value="<?php echo $PRSN_NAME ?>" -->
+                            </div>
+                            <div class="input-grp">
+                                <p>Address</p>
+                                <input type="text" name="address"> <!-- value="" -->
+                            </div>    
                         </div>
-                        <div class="input-grp">
-                            <p>Address</p>
-                            <input type="text" name="address" placeholder="Enter your address"> <!-- value="" -->
-                        </div>
-                        <div class="input-grp">
-                            <p>Contact Number</p>
-                            <input type="text" name="contact-number" placeholder="Enter your contact number"> <!-- value="<?php echo $PRSN_PHONE ?>" -->
-                        </div>
-                        <div class="input-grp">
-                            <p>Email</p>
-                            <input type="email" name="email" placeholder="Enter your email"> <!-- value="<?php echo $PRSN_EMAIL ?>" -->
-                        </div>
+                        <hr>
+                       <div class="right">
+                            <div class="input-grp">
+                                <p>Contact Number</p>
+                                <input type="text" name="contact-number"> <!-- value="<?php echo $PRSN_PHONE ?>" -->
+                            </div>
+                            <div class="input-grp">
+                                <p>Email</p>
+                                <input type="email" name="email"> <!-- value="<?php echo $PRSN_EMAIL ?>" -->
+                            </div>
+                       </div>
                     </div>
                 </section>
                 <section class="wrapper red-theme">
                     <div class="block left-side-dvd red-theme">
                         <h3 class="block-heading">When do you want your order to be delivered?</h2>
                         <div class="block-body radio">
-                            <label for=""><input id="" type="radio" name="date" class="" /> Today</label>
-                            <label for=""><input id="" type="radio" name="date" class="" /> Select a date:</label><input type="date">
+                            <label for="today">
+                                <input id="today" type="radio" name="date" class="" checked /> Today
+                            </label>
+                            <label for="selected-date">
+                                <input id="selected-date" type="radio" name="date" class="" /> Select a date: <input type="date" class="date">
+                            </label>
                         </div>
                     </div>
                     <div class="block time-slot">

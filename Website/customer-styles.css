@@ -23,6 +23,7 @@
     --text: #3A001E;
     --gray: #DFDCCB;
     --green: #6FDE4A;
+    --red: #C13B24;
 }
 
 /* @media only screen and (min-width: 700px) {
@@ -144,36 +145,36 @@ h3.order-status {
 .block-body {
 }
 
-/* table */
-table {
+/* order summary table in cart, checkout, and order tracking */
+/* table.order {
     border-collapse: collapse;
     border: 0;
     width: 100%;
     position: relative;
 }
 
-tbody td {
+table.order tbody td {
     width: 100vw;
     min-width: 4rem;
     max-width: 9rem;
 }
 
-tbody th {
+table.order tbody th {
     width: calc(100% - 12rem);
 }
 
-tr.data {
+table.order tr.data {
     background-image: linear-gradient(to bottom, #94C77C 1.845rem, var(--block) 1.845rem);
     vertical-align: center;
 }
 
-tr.data th {
+table.order tr.data th {
     text-align: left;
     padding-left: 0.5rem;
     vertical-align: center;
 }
 
-tr.data th .description {
+table.order tr.data th .description {
     display: block;
     font-weight: normal;
     font-style: italic;
@@ -181,26 +182,83 @@ tr.data th .description {
     margin-right: -13.5rem;
 }
 
-td{
+table.order td{
     text-align: right;
     padding-right: 0.5rem;
 }
 
-tr.total td {
+table.order tr.total td {
     text-align: right;
     font-weight: bold;
+} */
+
+table.order {
+    border-collapse: collapse;
+    width: 100%;
 }
-  
-/* table */
+
+table.order .header {
+    padding: 5px 0;
+    text-align: left;
+    border-bottom: 1px solid #DFDCCB;
+    font-size: 0.9rem;
+}
+
+table.order img {
+    width: 3.3rem;
+    height: 3.3rem;
+    border-radius: 5px;
+    margin-right: 2rem;
+    margin-left: 4rem;
+}
+
+table.order .pic-grp {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 5px 0;
+}
+
+table.order .first-col {
+    width: 65%;
+}
+
+table.order tr:last-of-type {
+    border-bottom: 1px solid #DFDCCB;
+}
+
+/* end of table */
+
+.payment {
+    width: 100%;
+    display: flex;
+    margin-top: 1.1rem;
+}
+
+.payment h3:first-of-type {
+    width: 86%;
+    text-align: right;
+    margin-right: 1rem;
+}
 
 .cart div.block-body {
     height: 250px;
 }
 
 .contact-info-blk {
+    width: 80%;
     min-height: max-content;
-    display: grid;
-    gap: 1.625rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 2.5rem;
+}
+
+.contact-info-blk .left, .contact-info-blk .right {
+    width: 100%;
+}
+
+.contact-info-blk hr {
+    color: #8E2C1B;
 }
 
 .contact-info-blk p{
@@ -208,14 +266,16 @@ tr.total td {
 }
 
 .contact-info-blk input {
-    width: 50%;
+    width: 100%;
+    color: white;
     background-color: #D95039;
     border-radius: 5px;
-    border: 1px solid #8E2C1B;
+    border: none;
     outline: none;
     padding: 5px 13px;
     font-size: 1rem;
     margin-top: 8px;
+    margin-bottom: 1.25rem;
 }
 
 .wrapper {
@@ -230,6 +290,15 @@ tr.total td {
     width: 100%;
 }
 
+.radio {
+    display: flex;
+    gap: 3rem;
+}
+
+.radio .date {
+    margin-left: 0.75rem;
+}
+
 .time-slot {
     background-color: #F8745E;
     width: 40%;
@@ -239,7 +308,6 @@ tr.total td {
     color: var(--light-text);
     background-color: var(--red);
 }
-
 
 .note {
     padding: 0.8rem 1.5rem;
