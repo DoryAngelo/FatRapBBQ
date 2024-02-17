@@ -147,51 +147,6 @@ h3.order-status {
 }
 
 /* order summary table in cart, checkout, and order tracking */
-/* table.order {
-    border-collapse: collapse;
-    border: 0;
-    width: 100%;
-    position: relative;
-}
-
-table.order tbody td {
-    width: 100vw;
-    min-width: 4rem;
-    max-width: 9rem;
-}
-
-table.order tbody th {
-    width: calc(100% - 12rem);
-}
-
-table.order tr.data {
-    background-image: linear-gradient(to bottom, #94C77C 1.845rem, var(--block) 1.845rem);
-    vertical-align: center;
-}
-
-table.order tr.data th {
-    text-align: left;
-    padding-left: 0.5rem;
-    vertical-align: center;
-}
-
-table.order tr.data th .description {
-    display: block;
-    font-weight: normal;
-    font-style: italic;
-    padding: 0.5rem 0;
-    margin-right: -13.5rem;
-}
-
-table.order td{
-    text-align: right;
-    padding-right: 0.5rem;
-}
-
-table.order tr.total td {
-    text-align: right;
-    font-weight: bold;
-} */
 
 table.order {
     border-collapse: collapse;
@@ -221,7 +176,24 @@ table.order .pic-grp {
 }
 
 table.order .first-col {
-    width: 65%;
+    width: 70%;
+}
+
+table.order .quantity-col {
+    width: max-content !important;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 0.9rem;
+}
+
+table.order .narrow-col {
+    width: 13%;
+}
+
+table.order .price-col {
+    width: 10%;
 }
 
 table.order tr:last-of-type {
@@ -229,6 +201,24 @@ table.order tr:last-of-type {
 }
 
 /* end of table */
+
+.cart i.trash {
+    color: var(--text);
+}
+
+.cart i.trash:hover {
+    cursor: pointer;
+}
+
+.cart i.trash:active {
+    color: var(--red);
+}
+
+.cart .quantity-col p.remaining{
+    font-size: 0.8rem;
+    font-style: italic;
+    margin-top: 6px;
+}
 
 .payment {
     width: 100%;
@@ -240,6 +230,10 @@ table.order tr:last-of-type {
     width: 86%;
     text-align: right;
     margin-right: 1rem;
+}
+
+.cart .payment h3:first-of-type {
+    width: 82%;
 }
 
 .cart div.block-body {
@@ -455,12 +449,16 @@ a.back {
     font-size: 1.5rem;
 }
 
+.cart .quantity-grp i {
+    font-size: 1.25rem;
+}
+
 .quantity-grp i:hover {
     color: var(--primary);
     cursor: pointer;
 }
 
-.product-info-page p.amount {
+p.amount {
     background-color: white;
     width: 2.7rem;
     height: max-content;
