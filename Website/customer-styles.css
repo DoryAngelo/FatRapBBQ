@@ -320,6 +320,104 @@ a.clear-bg, a.clear-bg:hover {
     font-size: 1.625rem;
 }
 
+a.back {
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 0.75rem;
+}
+
+.product-info-page .block {
+    padding: 0;
+    width: 80%;
+    max-height: 17rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    overflow: hidden;
+}
+.product-info-page img{
+    width: 40%;
+    border-radius: 1rem 0 0 1rem;
+}
+
+.product-info-page .right-grp {
+    width: 70%;
+    margin: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.product-info-page .right-grp h1 {
+    font-size: 1.625rem;
+}
+
+.product-info-page .top h1 {
+    margin-bottom: 8px;
+}
+
+.product-info-page .bottom {
+    width: 65%;
+}
+
+.product-info-page .inline {
+    margin-bottom: 0.8rem;
+}
+
+.inline {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.quantity-grp {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.product-info-page .quantity-grp i {
+    font-size: 1.5rem;
+}
+
+.quantity-grp i:hover {
+    color: var(--primary);
+    cursor: pointer;
+}
+
+.product-info-page p.amount {
+    background-color: white;
+    width: 2.7rem;
+    height: max-content;
+    border-radius: 3px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.product-info-page p.remaining {
+    font-size: 0.8rem;
+    font-style: italic;
+    margin-top: 3px;
+}
+
+.product-info-page button {
+    width: 100%;
+    font-size: 1.25rem;
+    padding: 8px;
+    background-color: var(--primary);
+    border: none;
+    font-weight: bold;
+    color: var(--text);
+    border-radius: 1rem;
+}
+
+.product-info-page button:hover {
+    background-color: var(--active-primary);
+    cursor: pointer;
+}
 
 
 
