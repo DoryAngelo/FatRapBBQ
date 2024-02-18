@@ -128,7 +128,7 @@ ul {
 
 /*section 2 - product landing*/
 .calendar {
-    background-color: green;
+    background-color: #549B3D;
     position: relative;
     padding-top: 3%;
     padding-bottom: 3%;
@@ -174,6 +174,10 @@ h1.section-heading {
     line-height: 4.5rem;
 }
 
+.calendar .left-text .section-heading {
+    color: white;
+}
+
 .legend ul {
     display: flex;
     flex-direction: column;
@@ -203,12 +207,96 @@ h1.section-heading {
     color: var(--closed-text);
 }
 
-.calendar .front .calendar-block {
+.calendar-block {
     background-color: #FEFBEA;
     width: 60%;
-    text-align: center;
+    height: auto;
     border-radius: 1.383rem;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    color: #304D23;
 }
+
+.monthYear {
+    text-align: center;
+    font-weight: 600;
+    font-size: 2.3rem;
+}
+
+.calendar-block .header {
+    height: 6.5rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+.calendar-block .header button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 1.625rem;
+    height: 1.625rem;
+    font-size: 1.625rem;
+    font-weight: bold;
+    background-color: #FEFBEA;
+    color: #304D23;
+}
+
+.calendar-block .header button:hover {
+    background-color: var(--bg);
+}
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+}
+
+.day {
+    text-align: center;
+    padding: 5px;
+    color: black;
+    font-weight: 500;
+}
+
+.dates {
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+}
+
+.date {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    /* cursor: pointer; */
+    font-weight: 600;
+    /* border-radius: 50%; */
+    width: 100%;
+    height: 5rem;
+    transition: 0.2s;
+    font-size: 1.625rem;
+}
+
+/* .date:hover,
+.date.active {
+    background: red;
+    color: white;
+} */
+
+.date.inactive {
+    color: var(--bg);
+}
+
+/* .date.inactive:hover {
+    color: white;
+} */
 
 .calendar .front .month-heading p {
     font-size: 1rem;
