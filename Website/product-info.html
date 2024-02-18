@@ -13,7 +13,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!--change title-->
-        <title>Cart</title>
+        <title>Product Information</title>
         <link rel="stylesheet" href="header-styles.css">
         <link rel="stylesheet" href="customer-styles.css"><!--change css file-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,7 +21,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"> 
         <script src="app.js" defer></script>
         <!-- add the code below to load the icons -->
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> <!-- from boxicons.com -->
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     </head>
     <body>
         <header>
@@ -56,53 +56,29 @@ $PRSN_ID = $_SESSION['prsn_id'];
             </div>
         </header>
         <main>
-            <section class="section cart">
-                <div class="section-heading">
-                    <h2>Cart</h2>                
-                </div> 
-                <section class="section-body">
-                    <section class="block">
-                        <div class="block-body">
-                            <div class="table-wrap">
-                                <table  class="order">
-                                    <thead>
-                                        <tr>
-                                            <th class="header first-col"></th>
-                                            <th class="header narrow-col">Quantity</th>
-                                            <th class="header narrow-col price-col">Price</th>
-                                            <th class="header narrow-col"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
-                                        <tr>
-                                            <td data-cell="customer" class="first-col">
-                                                <div class="pic-grp">
-                                                    <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
-                                                    <p>Pork BBQ</p>
-                                                </div>
-                                            </td> <!--Pic and Name-->
-                                            <td class="narrow-col quantity-col">
-                                                <div class="quantity-grp">
-                                                    <i class='bx bxs-minus-circle js-minus'></i>
-                                                    <p class="amount js-num">1</p>
-                                                    <i class='bx bxs-plus-circle js-plus'></i>
-                                                </div>
-                                                <p class="remaining">100 sticks remaining</p>
-                                            </td> <!--Quantity-->
-                                            <td class="narrow-col price-col">₱25.00</td><!--Price-->
-                                            <td class="narrow-col"><i class='bx bxs-trash-alt trash'></i></td><!--Action-->
-                                        </tr>
-                                    </tbody>
-                                </table> 
-                            </div>
-                            <div class="payment">
-                                <h3>Total Payment:</h3>
-                                <h3>₱250.00</h3>
-                            </div>
+            <section class="section product-info-page">
+                <div class="section-heading"></div> 
+                <a href="" class="back">Back</a>
+                <section class="block">
+                   <img src="https://myfoodbook.com.au/sites/default/files/styles/1x1/public/recipe_photo/Chicken_Pineapple_Summer_Skewers_web.jpg" alt="">
+                    <div class="right-grp">
+                         <div class="top">
+                            <h1>Pork BBQ</h1>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictum.</p>
                         </div>
-                    </section>
-                    <a href="checkout.php" class="page-button center">Checkout</a>
+                       <div class="bottom">
+                            <div class="inline">
+                                <h1>₱25.00</h1>
+                                <div class="quantity-grp">
+                                    <i class='bx bxs-minus-circle js-minus'></i>
+                                    <p class="amount js-num">1</p>
+                                    <i class='bx bxs-plus-circle js-plus'></i>
+                                </div>
+                                <p class="remaining">200 sticks available</p>
+                            </div>
+                            <button>Add to Cart</button> 
+                        </div>
+                    </div>
                 </section>
             </section>
         </main>

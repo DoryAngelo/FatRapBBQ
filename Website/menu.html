@@ -1,3 +1,4 @@
+<!-- customer menu page -->
 <?php
 
 @include 'constants.php';
@@ -13,15 +14,13 @@ $PRSN_ID = $_SESSION['prsn_id'];
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!--change title-->
-        <title>Cart</title>
+        <title>Menu</title>
         <link rel="stylesheet" href="header-styles.css">
         <link rel="stylesheet" href="customer-styles.css"><!--change css file-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"> 
         <script src="app.js" defer></script>
-        <!-- add the code below to load the icons -->
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> <!-- from boxicons.com -->
     </head>
     <body>
         <header>
@@ -56,53 +55,51 @@ $PRSN_ID = $_SESSION['prsn_id'];
             </div>
         </header>
         <main>
-            <section class="section cart">
+            <section class="section menu">
                 <div class="section-heading">
-                    <h2>Cart</h2>                
+                    <h2>Menu</h2>                
                 </div> 
                 <section class="section-body">
-                    <section class="block">
-                        <div class="block-body">
-                            <div class="table-wrap">
-                                <table  class="order">
-                                    <thead>
-                                        <tr>
-                                            <th class="header first-col"></th>
-                                            <th class="header narrow-col">Quantity</th>
-                                            <th class="header narrow-col price-col">Price</th>
-                                            <th class="header narrow-col"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
-                                        <tr>
-                                            <td data-cell="customer" class="first-col">
-                                                <div class="pic-grp">
-                                                    <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
-                                                    <p>Pork BBQ</p>
-                                                </div>
-                                            </td> <!--Pic and Name-->
-                                            <td class="narrow-col quantity-col">
-                                                <div class="quantity-grp">
-                                                    <i class='bx bxs-minus-circle js-minus'></i>
-                                                    <p class="amount js-num">1</p>
-                                                    <i class='bx bxs-plus-circle js-plus'></i>
-                                                </div>
-                                                <p class="remaining">100 sticks remaining</p>
-                                            </td> <!--Quantity-->
-                                            <td class="narrow-col price-col">₱25.00</td><!--Price-->
-                                            <td class="narrow-col"><i class='bx bxs-trash-alt trash'></i></td><!--Action-->
-                                        </tr>
-                                    </tbody>
-                                </table> 
-                            </div>
-                            <div class="payment">
-                                <h3>Total Payment:</h3>
-                                <h3>₱250.00</h3>
+                    <div class="menu-item">
+                        <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
+                        <div class="text">
+                            <p class="name">Pork BBQ</p>
+                            <div class="inline">
+                                <h2>₱25.00</h3>
+                                <p>1 stick</p>
                             </div>
                         </div>
-                    </section>
-                    <a href="checkout.php" class="page-button center">Checkout</a>
+                    </div>
+                    <div class="menu-item">
+                        <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
+                        <div class="text">
+                            <p class="name">Pork BBQ</p>
+                            <div class="inline">
+                                <h2>₱25.00</h3>
+                                <p>1 stick</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
+                        <div class="text">
+                            <p class="name">Pork BBQ</p>
+                            <div class="inline">
+                                <h2>₱25.00</h3>
+                                <p>1 stick</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
+                        <div class="text">
+                            <p class="name">Pork BBQ</p>
+                            <div class="inline">
+                                <h2>₱25.00</h3>
+                                <p>1 stick</p>
+                            </div>
+                        </div>
+                    </div>
                 </section>
             </section>
         </main>
@@ -142,28 +139,5 @@ $PRSN_ID = $_SESSION['prsn_id'];
                 </div>
             </div>
         </footer>
-        <script> /*js code for the increment and decrement buttons for the quantity*/
-            const plus = document.querySelector(".js-plus"),
-                minus = document.querySelector(".js-minus"),
-                num = document.querySelector(".js-num");
-
-            let a = 1;
-
-            plus.addEventListener("click", ()=>{
-                a++;
-                console.log(a);
-                num.innerText = a;
-            } 
-            );
-
-            minus.addEventListener("click", ()=>{
-                if(a > 1) {
-                    a--;
-                    console.log(a);
-                    num.innerText = a;
-                }
-            } 
-            );
-        </script>
     </body>
 </html>

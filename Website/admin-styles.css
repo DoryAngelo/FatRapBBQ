@@ -20,7 +20,6 @@
     --product-info-bg: #C13B24;
     --light-text: #FEFBEA;
 
-
     --text:#3A3F42;
     --light-blue: #DEECF9;
     --darker-row: #deecf94f;
@@ -219,7 +218,7 @@ table button {
 }
 
 .btn-cross i {
-    color: #DA523B;
+    color: var(--reject-red);
 }
 
 .valid-id {
@@ -368,5 +367,232 @@ a.page-btn {
     text-decoration: none;
 }
 
+.block {
+    background-color: var(--light-blue);
+    border-radius: 1rem;
+    padding: 1.5rem;
+}
+
+.form {
+    display: flex;
+    gap: 1rem;
+}
+
+.form section {
+    width: 50%;
+}
+
+.form-title{
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.form-title h1{
+    color: var(--text);
+    font-size: 1.25rem;
+}
+
+.form-field{
+    display: grid;
+    gap: 1.5rem;
+}
+
+.form-field-input{
+    position: relative;
+}
+
+form input {
+    border-radius: 5px;
+    border: 2px solid transparent;
+    outline: none;
+    transition: .3s ease;
+}
+
+.form-field-input input:not(.image) {
+    width: 100%;
+    padding: 5px 13px;
+    background: #BAD6EF;
+    font-size: 1rem;
+    margin-top: 8px;
+}
+
+.form-field-input p {
+    font-style: italic;
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 3px;
+    margin-bottom: 8px;
+}
+
+.form-field-input label{
+    color: var(--text);
+}
+
+.form-field-input input:focus{
+    border: 2px solid var(--sidemenu-blue);
+}
+
+.hidepass, .showpass{
+    position: absolute;
+    right: 15px;
+    top: 34px;
+    font-size: 1.2rem;
+    color: #8191c2;
+    cursor: pointer;
+}
+
+.calendar {
+    width: 100%;
+    height: 30rem;
+    background: #000;
+}
+
+.right-side {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.right-side h3{
+    font-size: 1.625rem;
+}
+
+.right-side .grid-container {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.right-side .grid-container .box {
+    gap: 1rem;
+    background-color: #fff;
+    box-shadow: #cfd9e3 0px 2px 4px 0px;
+}
+
+.right-side .grid-container .green {
+    color: #90BD7A;
+}
+
+.right-side .grid-container .red {
+    color: var(--reject-red);
+}
+
+.right-side .grid-container p {
+    font-weight: normal;
+    font-size: 0.9rem;
+}
+
+.right-side .block {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: #cfd9e3 0px 2px 4px 0px;
+}
+
+.right-side hr {
+    margin-top: 0.25rem;
+    margin-bottom: 1.25rem;
+    color: #B5D0EF;
+}
+
+.right-side button {
+    padding: 0.6rem 1.25rem;
+    border-radius: 1.5rem;
+}
+
+.right-side .button {
+    width: max-content;
+    font-size: 1rem;
+    color: black;
+}
+
+.right-side .green {
+    background-color: var(--available);
+}
+
+.right-side .red {
+    background-color: var(--reject-red);
+}
+
+.right-side .black {
+    background-color: #000;
+    color: white;
+}
+
+.save-btn {
+    width: 30%;
+    font-size: 1.25rem;
+    font-weight: bold;
+    background-color: #5FA9FF;
+}
+
+.order-details {
+    width: 40%;
+    margin: 0 auto;
+    padding-right: 0.5rem;
+}
+
+.order-details .scroll {
+    height: max-content;
+    max-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow: auto;
+    overflow-x: hidden;
+    padding-right: 1rem;
+}
+
+a.back {
+    width: 40%;
+    margin: 0 auto;
+    margin-bottom: 0.75rem;
+}
+
+.order-details table {
+    border-radius: 0;
+    border-top: 1px solid #B4CFE8;
+    border-bottom: 1px solid #B4CFE8;
+    background-color: var(--light-blue);
+}
+
+.order-details td, .order-details th {
+    padding: 0.5rem 0;
+    text-align: left;
+}
+
+.order-details table.contact-info td {
+    text-align: right;
+}
+
+.order-details .delivery-grp {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.order-details .text-grp h3{
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.order-details table .item-col {
+    width: 65%;
+}
+
+.order-details table .subtotal-col {
+    text-align: right;
+}
+
+.order-details .payment {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.order-details .payment h3:first-of-type{
+    margin-right: 1rem;
+    font-weight: normal;
+}
 
 
