@@ -4,6 +4,9 @@
 
 $PRSN_ID = $_SESSION['prsn_id'];
 
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -83,14 +86,16 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                 $PLACED_ORDER_STATUS = $row['PLACED_ORDER_STATUS'];
                         ?>
                                 <tr>
-                                    <td data-cell="Date and Time"><?php echo $PLACED_ORDER_DATE?></td>
-                                    <td data-cell="customer"><?php echo $CUS_NAME?></td>
-                                    <td data-cell="Order #"><?php echo $PLACED_ORDER_ID?></td>
-                                    <td data-cell="Payment">₱<?php echo $PLACED_ORDER_TOTAL?></td>
+                                    <td data-cell="Date and Time"><?php echo $PLACED_ORDER_DATE ?></td>
+                                    <td data-cell="customer"><?php echo $CUS_NAME ?></td>
+                                    <td data-cell="Order #"><a href="<?php echo SITEURL?>admin-order-details.php?CUS_ID=<?php echo $CUS_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
+                                    <td data-cell="Payment">₱<?php echo $PLACED_ORDER_TOTAL ?></td>
                                     <td data-cell="Confimed">
                                         <div class="btn-wrapper">
-                                            <button class="btn-check"><i class='bx bxs-check-circle'></i></button>
-                                            <button class="btn-cross"><i class='bx bxs-x-circle'></i></button>
+                                            <form method="POST">
+                                                <button class="btn-check" name="confirmed"><i class='bx bxs-check-circle'></i></button>
+                                                <button class="btn-cross" name="not-confirmed"><i class='bx bxs-x-circle'></i></button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
@@ -127,3 +132,28 @@ $PRSN_ID = $_SESSION['prsn_id'];
 </body>
 
 </html>
+
+<?php
+if (isset($_POST['confirmed'])) {
+
+    $PLACED_ORDER_CONFIRMATION = "Confirmed";
+
+    $sql = "UPDATE placed_order SET
+	PLACED_ORDER_CONFIRMATION = '$PLACED_ORDER_CONFIRMATION'
+	WHERE CUS_ID = '$CUS_ID'
+	";
+
+	$res = mysqli_query($conn, $sql);
+
+} else if (isset($_POST['not-confirmed'])){
+    $PLACED_ORDER_CONFIRMATION = "Not Confirmed";
+
+    $sql = "UPDATE placed_order SET
+	PLACED_ORDER_CONFIRMATION = '$PLACED_ORDER_CONFIRMATION'
+	WHERE CUS_ID = '$CUS_ID'
+	";
+
+	$res = mysqli_query($conn, $sql);
+
+}
+?>
