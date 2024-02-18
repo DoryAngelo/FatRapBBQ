@@ -75,17 +75,16 @@ $PRSN_ID = $_SESSION['prsn_id'];
                             while ($row = mysqli_fetch_assoc($res)) {
                                 $PLACED_ORDER_ID = $row['PLACED_ORDER_ID'];
                                 $CUS_ID = $row['CUS_ID'];
+                                $CUS_NAME = $row['CUS_NAME'];
                                 $PLACED_ORDER_DATE = $row['PLACED_ORDER_DATE'];
                                 $PLACED_ORDER_TOTAL = $row['PLACED_ORDER_TOTAL'];
                                 $DELIVERY_ADDRESS = $row['DELIVERY_ADDRESS'];
                                 $DELIVERY_DATE = $row['DELIVERY_DATE'];
-                                $PLACED_ORDER_CONFIRMATION = $row['PLACED_ORDER_CONFIRMATION'];
-                                $PAYMENT_METHOD = $row['PAYMENT_METHOD'];
                                 $PLACED_ORDER_STATUS = $row['PLACED_ORDER_STATUS'];
                         ?>
                                 <tr>
                                     <td data-cell="Date and Time"><?php echo $PLACED_ORDER_DATE?></td>
-                                    <td data-cell="customer">John Doe</td>
+                                    <td data-cell="customer"><?php echo $CUS_NAME?></td>
                                     <td data-cell="Order #"><?php echo $PLACED_ORDER_ID?></td>
                                     <td data-cell="Payment">₱<?php echo $PLACED_ORDER_TOTAL?></td>
                                     <td data-cell="Confimed">

@@ -54,6 +54,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
         </div>
     </header>
     <main>
+    <form method="POST">
         <section class="section">
             <div class="section-heading">
                 <h2>Checkout</h2>
@@ -151,11 +152,11 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
                             </div>
                             <div class="input-grp">
                                 <p>Contact Number</p>
-                                <input type="text" name="contact-number" placeholder="Enter your contact number" value="<?php echo $PRSN_PHONE ?>" >  
+                                <input type="text" name="contact-number" placeholder="Enter your contact number" value="<?php echo $PRSN_PHONE ?>">
                             </div>
                             <div class="input-grp">
                                 <p>Email</p>
-                                <input type="email" name="email" placeholder="Enter your email" value="<?php echo $PRSN_EMAIL ?>">  
+                                <input type="email" name="email" placeholder="Enter your email" value="<?php echo $PRSN_EMAIL ?>">
                             </div>
                         </div>
                 </section>
@@ -163,14 +164,15 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
                     <div class="block left-side-dvd red-theme">
                         <h3 class="block-heading">When do you want your order to be delivered?</h2>
                             <div class="block-body radio">
-                                <label for=""><input id="" type="radio" name="date" class="" /> Today</label>
-                                <label for=""><input id="" type="radio" name="date" class="" /> Select a date:</label><input type="date">
+                                <label for=""><input id="" type="radio" name="" class="" /> Today</label>
+                                <label for=""><input id="" type="radio" name="" class="" /> Select a date:</label>
+                                <input type="date" name="date">
                             </div>
                     </div>
                     <div class="block time-slot">
                         <h3 class="block-heading">Time Slot</h2>
                             <div class="block-body">
-                                <input type="time">
+                                <input type="time" name="time">
                             </div>
                     </div>
                 </section>
@@ -179,10 +181,12 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
                 </div>
                 <div class="btn-container center">
                     <a href="" class="page-button clear-bg">Back</a>
-                    <a href="" class="page-button">Place Order</a>
+                    <button name="submit" class="primary-btn">Place Order</button>
+                    <!-- <a href="place_order.php" class="page-button">Place Order</a> -->
                 </div>
             </section>
         </section>
+    </form>
     </main>
     <footer>
         <div class="footer-container">
@@ -223,3 +227,34 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
 </body>
 
 </html>
+
+<?php
+if(isset($_POST['submit']))
+{
+    $CUS_ID = $PRSN_ID;
+    $CUS_NAME = $_POST['name'];
+    $CUS_NUMBER= $_POST['contact-number'];
+    $CUS_EMAIL = $_POST['email'];
+    $PLACED_ORDER_DATE = date("Y-m-d h:i:sa");
+    $PLACED_ORDER_TOTAL = $total;
+    $DELIVERY_ADDRESS = $_POST['address'];
+    $date = $_POST['date'];
+    $time = $_POST['time'];
+    $DELIVERY_DATE = $date . " " . $time;
+    $PLACED_ORDER_STATUS = "Ordered";
+
+    $sql3 = "INSERT INTO placed_order SET
+    CUS_ID = '$CUS_ID',
+    CUS_NAME = '$CUS_NAME',
+    CUS_NUMBER = '$CUS_NUMBER',
+    CUS_EMAIL= '$CUS_EMAIL',
+    PLACED_ORDER_DATE = '$PLACED_ORDER_DATE',
+    PLACED_ORDER_TOTAL = $PLACED_ORDER_TOTAL,
+    DELIVERY_ADDRESS = '$DELIVERY_ADDRESS',
+    DELIVERY_DATE = '$DELIVERY_DATE',
+    PLACED_ORDER_STATUS = '$PLACED_ORDER_STATUS'
+    ";
+
+    $res3 = mysqli_query($conn, $sql3);
+}
+?>
