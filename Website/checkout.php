@@ -240,7 +240,20 @@ if (isset($_POST['submit'])) {
     $date = $_POST['date'];
     $time = $_POST['time'];
     $DELIVERY_DATE = $date . " " . $time;
-    $PLACED_ORDER_STATUS = "Ordered";
+    $PLACED_ORDER_STATUS = "Placed";
+    $random = random_bytes(16);
+    $PLACED_ORDER_TRACKER = bin2hex($random);
+
+    $select = " SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'";
+
+    $result = mysqli_query($conn, $select);
+
+    while (mysqli_num_rows($result) > 0) {
+        $random = random_bytes(16);
+        $PLACED_ORDER_TRACKER = bin2hex($random);
+        $select = "SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'";
+        $result = mysqli_query($conn, $select);
+    }
 
     $sql3 = "INSERT INTO placed_order SET
     CUS_ID = '$CUS_ID',
@@ -251,7 +264,8 @@ if (isset($_POST['submit'])) {
     PLACED_ORDER_TOTAL = $PLACED_ORDER_TOTAL,
     DELIVERY_ADDRESS = '$DELIVERY_ADDRESS',
     DELIVERY_DATE = '$DELIVERY_DATE',
-    PLACED_ORDER_STATUS = '$PLACED_ORDER_STATUS'
+    PLACED_ORDER_STATUS = '$PLACED_ORDER_STATUS',
+    PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'
     ";
 
     $res3 = mysqli_query($conn, $sql3);

@@ -78,7 +78,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                     $CUS_ID = $_SESSION['prsn_id'];
 
                                     $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, CUS_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
-                                FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered'";
+                                FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND CUS_ID = $CUS_ID";
 
                                     $res = mysqli_query($conn, $sql);
 
@@ -86,23 +86,23 @@ $PRSN_ID = $_SESSION['prsn_id'];
 
                                     if ($count > 0) {
                                         while ($row = mysqli_fetch_assoc($res)) {
-                                            if ($row['CUS_ID'] == $CUS_ID) {
-                                                $IN_ORDER_ID = $row['IN_ORDER_ID'];
-                                                $FOOD_NAME = $row['FOOD_NAME'];
-                                                $FOOD_PRICE = $row['FOOD_PRICE'];
-                                                $FOOD_IMG = $row['FOOD_IMG'];
-                                                $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
-                                                $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
+
+                                            $IN_ORDER_ID = $row['IN_ORDER_ID'];
+                                            $FOOD_NAME = $row['FOOD_NAME'];
+                                            $FOOD_PRICE = $row['FOOD_PRICE'];
+                                            $FOOD_IMG = $row['FOOD_IMG'];
+                                            $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
+                                            $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
                                     ?>
-                                                <div class="green">
-                                                    <tr class="data">
-                                                        <th><?php echo $FOOD_NAME ?><span class="description"></span></th>
-                                                        <td><?php echo $IN_ORDER_QUANTITY ?></td>
-                                                        <td>₱<?php echo $FOOD_PRICE ?></td>
-                                                    </tr>
-                                                </div>
+                                            <div class="green">
+                                                <tr class="data">
+                                                    <th><?php echo $FOOD_NAME ?><span class="description"></span></th>
+                                                    <td><?php echo $IN_ORDER_QUANTITY ?></td>
+                                                    <td>₱<?php echo $FOOD_PRICE ?></td>
+                                                </tr>
+                                            </div>
                                     <?php
-                                            }
+
                                         }
                                     }
                                     $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE CUS_ID = $CUS_ID";
@@ -113,7 +113,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                     <tr class="total">
                                         <th></th>
                                         <td>Total:</td>
-                                        <td class="current">₱<?php echo $total?></td>
+                                        <td class="current">₱<?php echo $total ?></td>
                                     </tr>
 
 
