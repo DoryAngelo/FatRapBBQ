@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 30, 2024 at 04:35 PM
+-- Generation Time: Feb 23, 2024 at 11:48 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -93,15 +93,18 @@ CREATE TABLE `in_order` (
   `CUS_ID` int(18) NOT NULL,
   `IN_ORDER_QUANTITY` int(11) NOT NULL,
   `IN_ORDER_TOTAL` decimal(10,2) NOT NULL,
-  `IN_ORDER_STATUS` varchar(21) NOT NULL
+  `IN_ORDER_STATUS` varchar(21) NOT NULL,
+  `PLACED_ORDER_ID` int(18) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `in_order`
 --
 
-INSERT INTO `in_order` (`IN_ORDER_ID`, `FOOD_ID`, `CUS_ID`, `IN_ORDER_QUANTITY`, `IN_ORDER_TOTAL`, `IN_ORDER_STATUS`) VALUES
-(2, 1, 15, 1, 25.00, 'Ordered');
+INSERT INTO `in_order` (`IN_ORDER_ID`, `FOOD_ID`, `CUS_ID`, `IN_ORDER_QUANTITY`, `IN_ORDER_TOTAL`, `IN_ORDER_STATUS`, `PLACED_ORDER_ID`) VALUES
+(2, 1, 15, 1, 25.00, 'Ordered', NULL),
+(3, 1, 15, 1, 25.00, 'Ordered', NULL),
+(4, 1, 15, 1, 25.00, 'Ordered', NULL);
 
 -- --------------------------------------------------------
 
@@ -130,21 +133,29 @@ INSERT INTO `person` (`PRSN_ID`, `PRSN_NAME`, `PRSN_EMAIL`, `PRSN_PASSWORD`, `PR
 -- --------------------------------------------------------
 
 --
--- Table structure for table `placed order`
+-- Table structure for table `placed_order`
 --
 
-CREATE TABLE `placed order` (
+CREATE TABLE `placed_order` (
   `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL,
   `CUS_ID` int(18) NOT NULL,
-  `PALCED_ORDER_DATE` date NOT NULL,
+  `CUS_NAME` varchar(20) NOT NULL,
+  `CUS_NUMBER` int(11) NOT NULL,
+  `CUS_EMAIL` varchar(35) NOT NULL,
+  `PLACED_ORDER_DATE` varchar(50) NOT NULL,
   `PLACED_ORDER_TOTAL` decimal(10,2) NOT NULL,
   `DELIVERY_ADDRESS` varchar(255) NOT NULL,
-  `DELIVERY_DATE` date NOT NULL,
-  `PLACED_ORDER_CONFIRMATION` varchar(10) NOT NULL,
-  `PAYMENT_METHOD` varchar(21) NOT NULL,
-  `PALCED_ORDER_STATUS` varchar(50) NOT NULL,
-  `IN_ORDER_ID` int(18) NOT NULL
+  `DELIVERY_DATE` varchar(50) NOT NULL,
+  `PLACED_ORDER_STATUS` varchar(50) NOT NULL,
+  `PLACED_ORDER_CONFIRMATION` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `placed_order`
+--
+
+INSERT INTO `placed_order` (`PLACED_ORDER_ID`, `CUS_ID`, `CUS_NAME`, `CUS_NUMBER`, `CUS_EMAIL`, `PLACED_ORDER_DATE`, `PLACED_ORDER_TOTAL`, `DELIVERY_ADDRESS`, `DELIVERY_DATE`, `PLACED_ORDER_STATUS`, `PLACED_ORDER_CONFIRMATION`) VALUES
+(5, 15, 'User', 2147483647, 'user@gmail.com', '2024-02-18 05:43:29am', 75.00, 'Test Address', '2024-02-20 01:44', 'Ordered', 'Not Confirmed');
 
 -- --------------------------------------------------------
 
@@ -200,9 +211,9 @@ ALTER TABLE `person`
   ADD PRIMARY KEY (`PRSN_ID`);
 
 --
--- Indexes for table `placed order`
+-- Indexes for table `placed_order`
 --
-ALTER TABLE `placed order`
+ALTER TABLE `placed_order`
   ADD PRIMARY KEY (`PLACED_ORDER_ID`);
 
 --
@@ -243,7 +254,7 @@ ALTER TABLE `food`
 -- AUTO_INCREMENT for table `in_order`
 --
 ALTER TABLE `in_order`
-  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `person`
@@ -252,10 +263,10 @@ ALTER TABLE `person`
   MODIFY `PRSN_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT for table `placed order`
+-- AUTO_INCREMENT for table `placed_order`
 --
-ALTER TABLE `placed order`
-  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `placed_order`
+  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `wholesaler`
