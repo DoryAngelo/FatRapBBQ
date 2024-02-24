@@ -111,6 +111,10 @@ h3.block-heading {
     margin-bottom: 1rem;
 }
 
+.order h3.block-heading {
+    margin-bottom: 0;
+}
+
 .circles-container {
     width: 100%;
     display: flex;
@@ -143,8 +147,42 @@ div.circle {
     margin-bottom: 1.25rem;
 }
 
-h3.order-status {
+.track-order h3.order-status {
     margin-bottom: 0.33rem;
+    font-size: 1rem;
+}
+
+.track-order p.order-status-desc {
+    font-size: 0.85rem;
+}
+
+.track-order #payment-section {
+    display: none;
+    background: #E3FFD6;
+}
+
+.track-order #payment-section .block-body {
+    display: flex;
+    gap: 5rem;
+}
+
+.track-order #payment-section button {
+    background-color: var(--primary);
+    border: none;
+    padding: 3px 6px;
+    border-radius: 4px;
+}
+
+.track-order #payment-section button:hover {
+    background-color: var(--active-primary);
+}
+
+.track-order #payment-section p.prompt {
+    display: none;
+    font-size: 0.9rem;
+    font-style: italic;
+    margin-top: 1rem;
+    color: var(--available);
 }
 
 /* order summary table in cart, checkout, and order tracking */
@@ -264,10 +302,8 @@ table.order tr:last-of-type {
     font-weight: bold;
 }
 
-.contact-info-blk input {
+.contact-info-blk input, .track-order input{
     width: 100%;
-    color: white;
-    background-color: #D95039;
     border-radius: 5px;
     border: none;
     outline: none;
@@ -275,6 +311,16 @@ table.order tr:last-of-type {
     font-size: 1rem;
     margin-top: 8px;
     margin-bottom: 1.25rem;
+}
+
+.contact-info-blk input {
+    background-color: #D95039;
+    color: white;
+}
+
+.track-order #payment-section input {
+    background-color: #D7F5CA;
+    color: var(--text);
 }
 
 .wrapper {
@@ -497,7 +543,9 @@ p.amount {
     align-items: center;
     gap: 40px;
     width: 100%;
+    padding: 2rem 0;
   }
+  
   .container .steps {
     display: flex;
     width: 90%;
@@ -505,12 +553,20 @@ p.amount {
     justify-content: space-between;
     position: relative;
   }
+
+  .steps .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .steps .circle {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 50px;
-    width: 50px;
+    height: 2.5rem;
+    width: 2.5rem;
     color: #DFDCCB;
     font-size: 22px;
     font-weight: 500;
@@ -520,6 +576,23 @@ p.amount {
     transition-delay: 0s;
     z-index: 10;
   }
+
+  .steps .circle i {
+    font-size: 2rem;
+    font-weight: 600;
+  }
+
+  .steps .label {
+    color: #DFDCCB; /* Set the initial label color to gray */
+    font-size: 1rem;
+    margin-top: 8px;
+    font-weight: bold;
+  }
+
+  .steps .circle.active + .label {
+    color: #6FDE4A;
+  }
+
   .steps .circle.active {
     transition-delay: 100ms;
     border-color: #6FDE4A;
@@ -529,13 +602,15 @@ p.amount {
   .steps .progress-bar {
     position: absolute;
     height: 0.5rem;
-    width: 100%;
+    width: 95%;
     background: #DFDCCB;
+    bottom: 58%;
+    margin-left: 8px;
   }
   .progress-bar .indicator {
     position: absolute;
     height: 100%;
-    width: 100%;
+    width: 0%;
     background: #6FDE4A;
     transition: all 300ms ease;
   }
