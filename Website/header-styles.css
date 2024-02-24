@@ -33,7 +33,7 @@ header {
     align-items: center;
     position: fixed;
     top: 0;
-    z-index: 10;
+    z-index: 100;
     color: var(--header-text);
     padding-top: 30px;
     padding-bottom: 10px;

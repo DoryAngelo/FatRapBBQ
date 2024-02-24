@@ -12,13 +12,13 @@ $PRSN_ID = $_SESSION['prsn_id'];
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Track Order</title>
+    <title>Track Order | Fat Rap's BBQ</title>
     <link rel="stylesheet" href="header-styles.css">
     <link rel="stylesheet" href="customer-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="app.js" defer></script>
+    <script src="order-status-progress-bar.js" defer></script>
 </head>
 
 <body>
@@ -62,7 +62,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                 <section class="block">
                     <h3 class="block-heading">Order code: 9999999999</h3>
                     <div class="block-body">
-                        <div class="circles-container">
+                        <!-- <div class="circles-container">
                             <div class="circle-grp">
                                 <div class="green circle"></div>
                                 <p>Status</p>
@@ -82,9 +82,28 @@ $PRSN_ID = $_SESSION['prsn_id'];
                             <div class="circle-grp">
                                 <div class="green circle"></div>
                                 <p>Status</p>
+                            </div>
+                            <div class="progress-bar">
+                                <span class="indicator"></span>
+                            </div>
+                        </div> -->
+                        <div class="container">
+                            <div class="steps">
+                              <span class="circle active">1</span>
+                              <span class="circle">2</span>
+                              <span class="circle">3</span>
+                              <span class="circle">4</span>
+                              <span class="circle">5</span>
+                              <div class="progress-bar">
+                                <span class="indicator"></span>
+                              </div>
+                            </div>
+                            <div class="buttons">
+                                <button id="prev" disabled>Prev</button>
+                                <button id="next">Next</button>
                             </div>
                         </div>
-                        <p>Order status: PLACED</p> <!--this line is used for backend testing and will be removed later on -->
+                        <p>Order status: PLACED (for testing)</p> <!--this line is used for backend testing and will be removed later on -->
                         <h3 class="block-heading order-status">Your order has been approved</h2>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing </p>
                     </div>
