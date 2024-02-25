@@ -27,7 +27,6 @@ if ($count2 > 0) {
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,13 +34,15 @@ if ($count2 > 0) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Track Order</title>
+    <title>Track Order | Fat Rap's BBQ</title>
     <link rel="stylesheet" href="header-styles.css">
     <link rel="stylesheet" href="customer-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="app.js" defer></script>
+    <script src="order-status-progress-bar.js" defer></script>
+    <!-- add the code below to load the icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> <!-- from boxicons.com -->
 </head>
 
 <body>
@@ -58,7 +59,7 @@ if ($count2 > 0) {
                     <!--TODO: ADD LINKS-->
                     <li><a href="cus-home-page.php">Home</a></li>
                     <li><a href="#">Menu</a></li>
-                    <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
+                    <li><a href="<?php echo SITEURL ;?>cart.php">Cart</a></li>
                     <!-- Text below should change to 'Logout'once user logged in-->
                     <?php
                     if (isset($_SESSION['prsn_id'])) {
@@ -77,52 +78,81 @@ if ($count2 > 0) {
         </div>
     </header>
     <main>
-        <section class="section">
+    <section class="section track-order">
             <div class="section-heading">
-                <h2>Track your Order</h2>
-            </div>
+                <h2>Track your Order</h2>           
+            </div> 
             <section class="section-body">
                 <section class="block">
-                    <h3 class="block-heading">Order code: <?php echo $PLACED_ORDER_ID ?></h3>
+                    <h3 class="block-heading">Order code: 9999999999</h3>
                     <div class="block-body">
-                        <div class="circles-container">
-                            <div class="circle-grp">
-                                <div class="green circle"></div>
-                                <p>Status</p>
+                        <div class="container">
+                            <div class="steps">
+                                <div class="step">
+                                    <span class="circle active">
+                                        <i class='bx bx-check'></i>
+                                    </span>
+                                    <span class="label">Placed</span>
+                                </div>
+                                <div class="step">
+                                    <span class="circle">
+                                        <i class='bx bx-check'></i>
+                                    </span>
+                                    <span class="label">Approved</span>
+                                </div>
+                                <div class="step">
+                                    <span class="circle">
+                                        <i class='bx bx-check'></i>
+                                    </span>
+                                    <span class="label">Paid</span>
+                                </div>
+                                <div class="step">
+                                    <span class="circle">
+                                        <i class='bx bx-check'></i>
+                                    </span>
+                                    <span class="label">Packed</span>
+                                </div>
+                                <div class="step">
+                                    <span class="circle">
+                                        <i class='bx bx-check'></i>
+                                    </span>
+                                    <span class="label">Shipped</span>
+                                </div>
+                                <div class="step">
+                                    <span class="circle">
+                                        <i class='bx bx-check'></i>
+                                    </span>
+                                    <span class="label">Delivered</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <span class="indicator"></span>
+                                </div>
                             </div>
-                            <div class="circle-grp">
-                                <div class="green circle"></div>
-                                <p>Status</p>
-                            </div>
-                            <div class="circle-grp">
-                                <div class="green circle"></div>
-                                <p>Status</p>
-                            </div>
-                            <div class="circle-grp">
-                                <div class="green circle"></div>
-                                <p>Status</p>
-                            </div>
-                            <div class="circle-grp">
-                                <div class="green circle"></div>
-                                <p>Status</p>
+                            <!-- admin buttons controlling the progress bar -->
+                            <div class="buttons">
+                                <button id="prev" disabled>Prev</button>
+                                <button id="next">Next</button>
                             </div>
                         </div>
-                        <p>Order status: <?php echo $PLACED_ORDER_STATUS ?></p> <!--this line is used for backend testing and will be removed later on -->
+                        <!-- <p>Order status: PLACED (for testing)</p> this line is used for backend testing and will be removed later on -->
                         <h3 class="block-heading order-status">Your order has been approved</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing </p>
+                        <p class="order-status-desc">Lorem ipsum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit amet</p>
                     </div>
                 </section>
                 <!-- section directly below this will only appear if order status is approved -->
-                <section class="block">
-                    <h3 class="block-heading">Payment</h3>
-                    <div class="block-body">
-                        <div style="width: 10rem; height: 10rem; background-color: white;"></div>
-                    </div>
-                    <div>
-                        <p>Reference number</p>
-                        <input type="text">
-                        <button>Submit</button>
-                    </div>
+                <section class="block" id="payment-section">
+                    <form action="">
+                        <h3 class="block-heading">Payment</h3>
+                        <div class="block-body">
+                            <div style="width: 10rem; height: 10rem; background-color: white;"></div>
+                            <div>
+                                <p class="ref-label">Reference number</p>
+                                <input type="text">
+                                <button id="submit">Submit</button>
+                                <p class="prompt">Thanks for submitting!</p>
+                            </div>
+                        </div>
+                    </form>
                 </section>
                 <section class="block">
                     <h3 class="block-heading">Order Summary</h3>

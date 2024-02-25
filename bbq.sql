@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 23, 2024 at 11:48 AM
+-- Generation Time: Feb 25, 2024 at 03:58 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -33,6 +33,13 @@ CREATE TABLE `category` (
   `CTGY_ACTIVE` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`CTGY_ID`, `CTGY_NAME`, `CTGY_ACTIVE`) VALUES
+(1, 'BBQ', 'Yes');
+
 -- --------------------------------------------------------
 
 --
@@ -54,8 +61,16 @@ CREATE TABLE `customer` (
 CREATE TABLE `employee` (
   `EMP_ID` int(18) UNSIGNED NOT NULL,
   `PRSN_ID` int(18) NOT NULL,
-  `EMP_ROLE` varchar(11) NOT NULL
+  `EMP_NAME` varchar(50) NOT NULL,
+  `EMP_IMAGE` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `employee`
+--
+
+INSERT INTO `employee` (`EMP_ID`, `PRSN_ID`, `EMP_NAME`, `EMP_IMAGE`) VALUES
+(5, 25, 'Fname Lname', 'EMP_IMAGE_Lname.jpg');
 
 -- --------------------------------------------------------
 
@@ -102,7 +117,7 @@ CREATE TABLE `in_order` (
 --
 
 INSERT INTO `in_order` (`IN_ORDER_ID`, `FOOD_ID`, `CUS_ID`, `IN_ORDER_QUANTITY`, `IN_ORDER_TOTAL`, `IN_ORDER_STATUS`, `PLACED_ORDER_ID`) VALUES
-(2, 1, 15, 1, 25.00, 'Ordered', NULL),
+(2, 1, 99, 1, 25.00, 'Ordered', NULL),
 (3, 1, 15, 1, 25.00, 'Ordered', NULL),
 (4, 1, 15, 1, 25.00, 'Ordered', NULL);
 
@@ -128,7 +143,8 @@ CREATE TABLE `person` (
 INSERT INTO `person` (`PRSN_ID`, `PRSN_NAME`, `PRSN_EMAIL`, `PRSN_PASSWORD`, `PRSN_PHONE`, `PRSN_ROLE`) VALUES
 (15, 'User', 'user@gmail.com', '7dc715960b177f323db34eacd63048f7', '09123456789', 'Customer'),
 (16, 'Admin', 'admin@gmail.com', '21232f297a57a5a743894a0e4a801fc3', '09123456789', 'Admin'),
-(17, 'Employee', 'employee@gmail.com', 'fa5473530e4d1a5a1e1eb53d2fedb10c', '09123456789', 'Employee');
+(17, 'Employee', 'employee@gmail.com', 'fa5473530e4d1a5a1e1eb53d2fedb10c', '09123456789', 'Employee'),
+(25, 'Test', 'test@gmail.com', '147538da338b770b61e592afc92b1ee6', '09123456789', 'Employee');
 
 -- --------------------------------------------------------
 
@@ -140,22 +156,23 @@ CREATE TABLE `placed_order` (
   `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL,
   `CUS_ID` int(18) NOT NULL,
   `CUS_NAME` varchar(20) NOT NULL,
-  `CUS_NUMBER` int(11) NOT NULL,
+  `CUS_NUMBER` varchar(11) NOT NULL,
   `CUS_EMAIL` varchar(35) NOT NULL,
   `PLACED_ORDER_DATE` varchar(50) NOT NULL,
   `PLACED_ORDER_TOTAL` decimal(10,2) NOT NULL,
   `DELIVERY_ADDRESS` varchar(255) NOT NULL,
   `DELIVERY_DATE` varchar(50) NOT NULL,
   `PLACED_ORDER_STATUS` varchar(50) NOT NULL,
-  `PLACED_ORDER_CONFIRMATION` varchar(50) NOT NULL
+  `PLACED_ORDER_CONFIRMATION` varchar(50) NOT NULL,
+  `PLACED_ORDER_TRACKER` varchar(16) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `placed_order`
 --
 
-INSERT INTO `placed_order` (`PLACED_ORDER_ID`, `CUS_ID`, `CUS_NAME`, `CUS_NUMBER`, `CUS_EMAIL`, `PLACED_ORDER_DATE`, `PLACED_ORDER_TOTAL`, `DELIVERY_ADDRESS`, `DELIVERY_DATE`, `PLACED_ORDER_STATUS`, `PLACED_ORDER_CONFIRMATION`) VALUES
-(5, 15, 'User', 2147483647, 'user@gmail.com', '2024-02-18 05:43:29am', 75.00, 'Test Address', '2024-02-20 01:44', 'Ordered', 'Not Confirmed');
+INSERT INTO `placed_order` (`PLACED_ORDER_ID`, `CUS_ID`, `CUS_NAME`, `CUS_NUMBER`, `CUS_EMAIL`, `PLACED_ORDER_DATE`, `PLACED_ORDER_TOTAL`, `DELIVERY_ADDRESS`, `DELIVERY_DATE`, `PLACED_ORDER_STATUS`, `PLACED_ORDER_CONFIRMATION`, `PLACED_ORDER_TRACKER`) VALUES
+(13, 15, 'User', '09123456789', 'user@gmail.com', '2024-02-23 03:16:05pm', 75.00, 'Test Address', '2024-02-23 04:22', 'Approved', '', '432ab3662d43ef4f');
 
 -- --------------------------------------------------------
 
@@ -230,7 +247,7 @@ ALTER TABLE `wholesaler`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `CTGY_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `CTGY_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -242,7 +259,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `EMP_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `EMP_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `food`
@@ -260,13 +277,13 @@ ALTER TABLE `in_order`
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `PRSN_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `PRSN_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `placed_order`
 --
 ALTER TABLE `placed_order`
-  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `wholesaler`
