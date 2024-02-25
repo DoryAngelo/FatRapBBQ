@@ -44,10 +44,12 @@ const updateCalendar = () => {
 
 prevBtn.addEventListener('click', () => {
     currentDate.setMonth(currentDate.getMonth() - 1);
+    updateCalendar(); // Call the function to update the calendar
 });
 
 nextBtn.addEventListener('click', () => {
     currentDate.setMonth(currentDate.getMonth() + 1);
+    updateCalendar(); // Call the function to update the calendar
 });
 
 updateCalendar();
