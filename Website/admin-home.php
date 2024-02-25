@@ -117,20 +117,20 @@ if($PRSN_ROLE !== 'Admin'){
                                     <p>Pork BBQ</p>
                                     <p class="number">10</p>
                                 </div>
-                                <a href="" class="edit">Edit</a>
+                                <a href="<?php echo SITEURL ;?>admin-edit-menu.php" class="edit">Edit</a>
                             </div>
                         </div>
                         <div class="group">
                             <h3>Calendar</h3>
-                            <a href="" class="view">View</a>
+                            <a href="<?php echo SITEURL ;?>admin-edit-calendar.php" class="view">View</a>
                         </div>
                         <div class="group">
                             <h3>Wholesale Users</h3>
-                            <a href="" class="view">View</a>
+                            <a href="<?php echo SITEURL ;?>admin-application-details.php" class="view">View</a>
                         </div>
                         <div class="group">
                             <h3>Employee</h3>
-                            <a href="" class="view">View</a>
+                            <a href="<?php echo SITEURL ;?>admin-add-employee.php" class="view">View</a>
                         </div>
                     </section>
                 </section>
