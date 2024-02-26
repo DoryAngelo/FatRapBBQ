@@ -1,0 +1,81 @@
+/* js for calendar and quantity buttons in customer home page */
+
+/* for calendar section */
+/* reference: https://www.youtube.com/watch?v=OcncrLyddAs */
+
+const monthYearElement = document.getElementById('monthYear');
+const datesElement = document.getElementById('dates');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+let currentDate = new Date();
+
+const updateCalendar = () => {
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+
+    const firstDay = new Date(currentYear, currentMonth,0);
+    const lastDay = new Date(currentYear, currentMonth +1, 0);
+    const totalDays = lastDay.getDate();
+    const firstDayIndex = firstDay.getDay();
+    const lastDayIndex = lastDay.getDay();
+
+    const monthYearString = currentDate.toLocaleString
+    ('default', {month: 'long', year: 'numeric'});
+    monthYearElement.textContent = monthYearString;
+
+    let datesHTML = '';
+
+    for(let i = firstDayIndex; i >0; i--) {
+        const prevDate = new Date(currentYear, currentMonth, 0 - i + 1);
+        datesHTML += `<div class="date inactive">${prevDate.getDate()}</div>`;
+    }
+
+    for(let i = 1; i <= totalDays; i++) {
+        const date = new Date(currentYear, currentMonth, i);
+        const activeClass = date.toDateString === new Date().toDateString() ? 'active' : '';
+        datesHTML += `<div class="date ${activeClass}">${i}</div>`;
+    }
+
+    for(let i = 1; i <= 7 - lastDayIndex; i++) {
+        const nextDate = new Date(currentYear, currentMonth + 1, i);
+        datesHTML += `<div class="date inactive">${nextDate.getDate()}</div>`;
+    }
+
+    datesElement.innerHTML = datesHTML;
+}
+
+prevBtn.addEventListener('click', () => {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    updateCalendar(); // Call the function to update the calendar
+});
+
+nextBtn.addEventListener('click', () => {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    updateCalendar(); // Call the function to update the calendar
+});
+
+updateCalendar();
+
+/*quantity buttons in product section*/
+const plus = document.querySelector(".js-plus"),
+            minus = document.querySelector(".js-minus"),
+            num = document.querySelector(".js-num");
+
+let a = 1;
+
+plus.addEventListener("click", ()=>{
+    a++;
+    console.log(a);
+    num.innerText = a;
+} 
+);
+
+minus.addEventListener("click", ()=>{
+    if(a > 1) {
+        a--;
+        console.log(a);
+        num.innerText = a;
+    }
+} 
+);

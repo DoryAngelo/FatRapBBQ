@@ -156,11 +156,22 @@ footer {
 
 .icons-block {
     display: flex;
-    justify-content: flex-start;
+    gap: 1rem;
 }
 
-.icons-block img{
-    width: 80px;
-    height: auto;
-    margin-left: -20px;
+.icons-block a {
+    color: #fff;
+}
+
+.icons-block a:hover {
+    cursor: pointer;
+}
+
+.icons-block i{
+    font-size: 2rem;
+}
+
+.list-items {
+    display: flex;
+    gap: 10px;
 }

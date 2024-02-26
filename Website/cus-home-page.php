@@ -51,13 +51,16 @@ if (isset($_POST['submit'])) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="app.js" defer></script>
+    <!-- add the code below to load the icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
 </head>
 
 <body>
     <header>
         <div class="header-container">
             <div class="website-title">
-                <img id="logo" src="images/client-logo.jpg">
+                <img id="logo" src="images/client-logo.png">
                 <div class="text">
                     <h1>Fat Rap's Barbeque's Online Store</h1>
                 </div>
@@ -66,7 +69,7 @@ if (isset($_POST['submit'])) {
                 <ul>
                     <!--TODO: ADD LINKS-->
                     <li><a href="#">Home</a></li>
-                    <li><a href="#">Menu</a></li>
+                    <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
                     <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
                     <!-- Text below should change to 'Logout'once user logged in-->
                     <?php
@@ -90,68 +93,67 @@ if (isset($_POST['submit'])) {
             <div class="PL-text">
                 <h1>Order our best-selling BBQ</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictumsum dolor sit amet</p>
-                <a href="" class="button">Order Now</a>
+                <a href="#product-info-section" class="button">Order Now</a>
             </div>
-            <div class="featured-pic"></div>
+            <img class="featured-pic" src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
         </section>
         <!-- section 2 - calendar -->
         <section class="calendar section">
-            <div class="front">
-                <section class="left-text">
+                <div class="front">
+                   <section class="left-text">
                     <h1 class="section-heading">See our available dates</h1>
                     <div class="legend">
-                        <ul>
+                       <ul>
                             <li class="available button">Available</li>
                             <li class="fully-booked button">Fully Booked</li>
                             <li class="closed button">Closed</li>
                         </ul>
                     </div>
-                </section>
-                <section class="calendar-block">
-                    <div class="month-heading">
-                        <p>2023</p>
-                        <div>
-                            <h2>November</h2>
+                    </section>
+                    <section class="calendar-block"> <!-- reference code: https://www.youtube.com/watch?v=OcncrLyddAs-->
+                        <div class="header">
+                            <button id="prevBtn">
+                                <i class='bx bx-chevron-left'></i>
+                            </button>
+                            <div class="monthYear" id="monthYear"></div>
+                            <button id="nextBtn">
+                                <i class='bx bx-chevron-right'></i>
+                            </button>
                         </div>
-                    </div>
-                    <div class="weekday-container">
-                        <ul>
-                            <li class="weekday width">SUN</li>
-                            <li class="weekday width">MON</li>
-                            <li class="weekday width">TUES</li>
-                            <li class="weekday width">WED</li>
-                            <li class="weekday width">THUR</li>
-                            <li class="weekday width">FRI</li>
-                            <li class="weekday width">SAT</li>
-                        </ul>
-                    </div>
-                    <div class="days-container">
-
-                    </div>
-                </section>
-            </div>
-            </div>
-            <div class="back">
-                <div class="green-block"></div>
-                <div class="cream-block"></div>
-            </div>
-        </section>
+                        <div class="days">
+                            <div class="day">Mon</div>
+                            <div class="day">Tue</div>
+                            <div class="day">Wed</div>
+                            <div class="day">Thur</div>
+                            <div class="day">Fri</div>
+                            <div class="day">Sat</div>
+                            <div class="day">Sun</div>
+                        </div>
+                        <div class="dates" id="dates"></div>
+                    </section>  
+                  </div>
+                </div>
+                <div class="back">
+                    <div class="green-block"></div>
+                    <div class="cream-block"></div>
+                </div>
+            </section>
         <!-- section 3 - product info -->
-        <section class="product-landing info section">
-            <div class="featured-pic"></div>
+        <section class="product-landing info section" id="product-info-section">
+            <img class="featured-pic" src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
             <div class="PL-text">
                 <h1 class="product-name"><?php echo $FOOD_NAME; ?></h1>
                 <p class="product"><?php echo $FOOD_PRICE; ?></p>
                 <p class="product"><?php echo $FOOD_DESC; ?></p>
                 <form class="button-group">
-                    <a href="add_food.php?FOOD_ID=<?php echo $FOOD_ID; ?>&FOOD_PRICE=<?php echo $FOOD_PRICE; ?>&PRSN_ID=<?php echo $PRSN_ID; ?>" class="button">Order Now</a>
+                    <button name="submit" type="submit" class="button" href="add_food.php?FOOD_ID=<?php echo $FOOD_ID; ?>&FOOD_PRICE=<?php echo $FOOD_PRICE; ?>&PRSN_ID=<?php echo $PRSN_ID; ?>">Order Now</button>
                     <div class="right-contents">
                         <div class="quantity-group">
-                            <div class="circle">-</div>
-                            <p class="amount">9999</p>
-                            <div class="circle">+</div>
+                            <i class='bx bxs-minus-circle js-minus circle'></i>
+                            <p class="amount js-num">1</p>
+                            <i class='bx bxs-plus-circle js-plus circle'></i>
                         </div>
-                        <p class="remaining"><?php echo $FOOD_STOCK; ?></p>
+                        <p class="remaining"><?php echo $FOOD_STOCK; ?> sticks remaining</p>
                     </div>
                 </form>
             </div>
@@ -174,7 +176,7 @@ if (isset($_POST['submit'])) {
         <!-- section 5 - wholesale-->
         <section class="product-landing wholesale section">
             <h1 class="other-sections">Looking for wholesale deals?</h1>
-            <a href="" class="button">Sign up as a Wholesale Customer</a>
+            <a href="<?php echo SITEURL ;?>wc-register.php" class="button">Sign up as a Wholesale Customer</a>
         </section>
     </main>
     <footer>
@@ -184,35 +186,41 @@ if (isset($_POST['submit'])) {
                 <div class="list">
                     <ul>
                         <li><a href="#">Home</a></li>
-                        <li><a href="#">Menu</a></li>
-                        <li><a href="#">Cart</a></li>
-                        <li><a href="#">Track order</a></li>
+                        <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
+                        <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
+                        <li><a href="<?php echo SITEURL; ?>track-order.php">Track order</a></li>
                     </ul>
                 </div>
             </div>
             <div class="right-container">
                 <div class="icons-block">
-                    <img id="logo" src="images/circle logo.png">
-                    <img id="logo" src="images/circle logo.png">
-                    <img id="logo" src="images/circle logo.png">
+                    <a href="https://www.youtube.com/">
+                        <i class='bx bxl-facebook-circle'></i>
+                    </a>
+                    <a href="https://www.youtube.com/">
+                        <i class='bx bxl-tiktok'></i>
+                    </a>
+                    <a href="https://www.youtube.com/">
+                        <i class='bx bxl-instagram' ></i>
+                    </a>
                 </div>
                 <div class="list">
                     <div class="list-items">
-                        <!--insert icon-->
+                        <i class='bx bxs-envelope' ></i>
                         <p>email@gmail.com</p>
                     </div>
                     <div class="list-items">
-                        <!--insert icon-->
+                        <i class='bx bxs-phone'></i>
                         <p>0912 345 6789 | 912 1199</p>
                     </div>
                     <div class="list-items">
-                        <!--insert icon-->
+                        <i class='bx bxs-map' ></i>
                         <p>123 Magaling St., Brgy. Something, Somewhere City</p>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
+    <script src="home.js"></script>
 </body>
-
 </html>
