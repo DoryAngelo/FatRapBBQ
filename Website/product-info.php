@@ -27,7 +27,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
         <header>
             <div class="header-container">
                 <div class="website-title">
-                    <img id="logo" src="images/client-logo.jpg">
+                    <img id="logo" src="images/client-logo.png">
                     <div class="text">
                         <h1>Fat Rap's Barbeque's Online Store</h1>
                     </div>
@@ -58,7 +58,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
         <main>
             <section class="section product-info-page">
                 <div class="section-heading"></div> 
-                <a href="" class="back">Back</a>
+                <a href="<?php echo SITEURL; ?>menu.php" class="back">Back</a>
                 <section class="block">
                    <img src="https://myfoodbook.com.au/sites/default/files/styles/1x1/public/recipe_photo/Chicken_Pineapple_Summer_Skewers_web.jpg" alt="">
                     <div class="right-grp">
@@ -66,7 +66,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                             <h1>Pork BBQ</h1>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictum.</p>
                         </div>
-                       <div class="bottom">
+                       <form class="bottom" method="POST">
                             <div class="inline">
                                 <h1>₱25.00</h1>
                                 <div class="quantity-grp">
@@ -76,8 +76,8 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                 </div>
                                 <p class="remaining">200 sticks available</p>
                             </div>
-                            <button>Add to Cart</button> 
-                        </div>
+                            <button name="submit" type="submit">Add to Cart</button> 
+                        </form>
                     </div>
                 </section>
             </section>
@@ -88,30 +88,36 @@ $PRSN_ID = $_SESSION['prsn_id'];
                     <h1>Fat Rap's Barbeque's Online Store</h1>
                     <div class="list">
                         <ul>
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">Menu</a></li>
-                            <li><a href="#">Cart</a></li>
-                            <li><a href="#">Track order</a></li>
+                            <li><a href="<?php echo SITEURL; ?>cus-home-page.php">Home</a></li>
+                            <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
+                            <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
+                            <li><a href="<?php echo SITEURL; ?>track-order.php">Track order</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="right-container">
                     <div class="icons-block">
-                        <img id="logo" src="images/circle logo.png">
-                        <img id="logo" src="images/circle logo.png">
-                        <img id="logo" src="images/circle logo.png">
+                        <a href="https://www.youtube.com/">
+                            <i class='bx bxl-facebook-circle'></i>
+                        </a>
+                        <a href="https://www.youtube.com/">
+                            <i class='bx bxl-tiktok'></i>
+                        </a>
+                        <a href="https://www.youtube.com/">
+                            <i class='bx bxl-instagram' ></i>
+                        </a>
                     </div>
                     <div class="list">
                         <div class="list-items">
-                            <!--insert icon-->
+                            <i class='bx bxs-envelope' ></i>
                             <p>email@gmail.com</p>
                         </div>
                         <div class="list-items">
-                            <!--insert icon-->
+                            <i class='bx bxs-phone'></i>
                             <p>0912 345 6789 | 912 1199</p>
                         </div>
                         <div class="list-items">
-                            <!--insert icon-->
+                            <i class='bx bxs-map' ></i>
                             <p>123 Magaling St., Brgy. Something, Somewhere City</p>
                         </div>
                     </div>

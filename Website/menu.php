@@ -101,7 +101,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                     <h1>Fat Rap's Barbeque's Online Store</h1>
                     <div class="list">
                         <ul>
-                            <li><a href="#">Home</a></li>
+                            <li><a href="<?php echo SITEURL; ?>cus-home-page.php">Home</a></li>
                             <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
                             <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
                             <li><a href="<?php echo SITEURL; ?>track-order.php">Track order</a></li>
