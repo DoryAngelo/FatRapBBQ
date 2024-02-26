@@ -392,10 +392,15 @@ a.clear-bg, a.clear-bg:hover {
 }
 
 .menu .section-body {
-    display: flex;
+    /* display: flex;
     flex-direction: row;
     gap: 3rem;
-    justify-content: space-between;
+    justify-content: space-between; */
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Creates 4 columns with equal width */
+    gap: 3rem;
+
 }
 
 .menu .menu-item img {
@@ -406,8 +411,16 @@ a.clear-bg, a.clear-bg:hover {
 .menu .menu-item {
     background-color: var(--block);
     border-radius: 1rem;
-    width: 20%;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 4px 0px;
+}
+
+.menu .menu-item {
+    text-decoration: none;
+    color: var(--text);
+}
+
+.menu .menu-item:hover {
+    cursor: pointer;
 }
 
 .menu .menu-item .text {
