@@ -66,7 +66,7 @@ main {
 
 .form-field{
     display: grid;
-    gap: .8rem;
+    gap: 1rem;
 }
 
 .form-field-input{
@@ -82,10 +82,18 @@ input, button, .secondary-btn{
 
 .form-field-input input {
     width: 100%;
-    padding: 5px 13px;
     background: var(--input-bg);
+    padding: 5px 13px;
     font-size: 1rem;
     margin-top: 8px;
+}
+
+.form-field-input input[type="file"] {
+    width: max-content;
+    background-color: transparent;
+    padding: 0;
+    color: var(--text);
+    font-size: 0.9rem;
 }
 
 .form-field-input label{
@@ -94,6 +102,13 @@ input, button, .secondary-btn{
 
 .form-field-input input:focus{
     border: 2px solid var(--primary);
+}
+
+p.label-desc {
+    font-style: italic;
+    font-size: 0.8rem;
+    margin-top: 3px;
+    color: #A8A4A6;
 }
 
 .hidecpass, .showcpass{
@@ -144,7 +159,7 @@ button, .secondary-btn{
     border-radius: 50px;
     border: 2px solid transparent;
     padding: 10px;
-    font-size: 1rem;
+    font-size: 1.25rem;
     cursor: pointer;
     transition: .3s ease;
 }
@@ -153,7 +168,7 @@ button, .secondary-btn{
     background: var(--primary);
     color: var(--text);
     font-weight: 600;
-    margin-top: 20px;
+    margin-top: 0.8rem;
 }
 
 .primary-btn:hover{
