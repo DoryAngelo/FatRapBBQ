@@ -49,7 +49,7 @@ if ($count2 > 0) {
     <header>
         <div class="header-container">
             <div class="website-title">
-                <img id="logo" src="images/client-logo.jpg">
+                <img id="logo" src="images/client-logo.png">
                 <div class="text">
                     <h1>Fat Rap's Barbeque's Online Store</h1>
                 </div>
@@ -221,29 +221,35 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
                 <div class="list">
                     <ul>
                         <li><a href="#">Home</a></li>
-                        <li><a href="#">Menu</a></li>
-                        <li><a href="#">Cart</a></li>
-                        <li><a href="#">Track order</a></li>
+                        <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
+                        <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
+                        <li><a href="<?php echo SITEURL; ?>track-order.php">Track order</a></li>
                     </ul>
                 </div>
             </div>
             <div class="right-container">
                 <div class="icons-block">
-                    <img id="logo" src="images/circle logo.png">
-                    <img id="logo" src="images/circle logo.png">
-                    <img id="logo" src="images/circle logo.png">
+                    <a href="https://www.youtube.com/">
+                        <i class='bx bxl-facebook-circle'></i>
+                    </a>
+                    <a href="https://www.youtube.com/">
+                        <i class='bx bxl-tiktok'></i>
+                    </a>
+                    <a href="https://www.youtube.com/">
+                        <i class='bx bxl-instagram' ></i>
+                    </a>
                 </div>
                 <div class="list">
                     <div class="list-items">
-                        <!--insert icon-->
+                        <i class='bx bxs-envelope' ></i>
                         <p>email@gmail.com</p>
                     </div>
                     <div class="list-items">
-                        <!--insert icon-->
+                        <i class='bx bxs-phone'></i>
                         <p>0912 345 6789 | 912 1199</p>
                     </div>
                     <div class="list-items">
-                        <!--insert icon-->
+                        <i class='bx bxs-map' ></i>
                         <p>123 Magaling St., Brgy. Something, Somewhere City</p>
                     </div>
                 </div>
