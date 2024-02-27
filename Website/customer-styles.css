@@ -377,7 +377,7 @@ div.btn-container {
     justify-content: space-between;
 }
 
-a.page-button {
+.page-button {
     background-color: var(--primary);
     width: max-content;
     border-radius: 1.7rem;
@@ -386,9 +386,11 @@ a.page-button {
     text-decoration: none;
     font-size: 1.33rem;
     font-weight: bold;
+    border: none;
 }
 
-a.page-button:hover {
+.page-button:hover {
+    cursor: pointer;
     background-color: var(--active-primary);
 }
 
