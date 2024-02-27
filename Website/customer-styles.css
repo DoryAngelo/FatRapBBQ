@@ -199,6 +199,10 @@ table.order .header {
     font-size: 0.9rem;
 }
 
+table.order tr:nth-last-of-type(2n) {
+    background: #FBF7E3;
+}
+
 table.order img {
     width: 3.3rem;
     height: 3.3rem;
@@ -211,7 +215,7 @@ table.order .pic-grp {
     display: flex;
     align-items: center;
     width: 100%;
-    margin: 5px 0;
+    margin: 10px 0;
 }
 
 table.order .first-col {
@@ -225,6 +229,7 @@ table.order .quantity-col {
     flex-direction: column;
     align-items: center;
     padding-top: 0.9rem;
+    background-color: red;
 }
 
 table.order .narrow-col {
@@ -256,7 +261,7 @@ table.order tr:last-of-type {
 .cart .quantity-col p.remaining{
     font-size: 0.8rem;
     font-style: italic;
-    margin-top: 6px;
+    margin-top: 4px;
 }
 
 .payment {

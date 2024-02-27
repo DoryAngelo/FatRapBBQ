@@ -125,6 +125,42 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                         <td class="narrow-col price-col">₱25.00</td><!--Price-->
                                         <td class="narrow-col"><i class='bx bxs-trash-alt trash'></i></td><!--Action-->
                                     </tr>
+                                    <tr> <!-- one row for a product-->
+                                        <td data-cell="customer" class="first-col">
+                                            <div class="pic-grp">
+                                                <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
+                                                <p>Pork BBQ</p>
+                                            </div>
+                                        </td> <!--Pic and Name-->
+                                        <td class="narrow-col quantity-col">
+                                            <div class="quantity-grp">
+                                                <i class='bx bxs-minus-circle js-minus'></i>
+                                                <p class="amount js-num">1</p>
+                                                <i class='bx bxs-plus-circle js-plus'></i>
+                                            </div>
+                                            <p class="remaining">100 sticks remaining</p>
+                                        </td> <!--Quantity-->
+                                        <td class="narrow-col price-col">₱25.00</td><!--Price-->
+                                        <td class="narrow-col"><i class='bx bxs-trash-alt trash'></i></td><!--Action-->
+                                    </tr>
+                                    <tr> <!-- one row for a product-->
+                                        <td data-cell="customer" class="first-col">
+                                            <div class="pic-grp">
+                                                <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
+                                                <p>Pork BBQ</p>
+                                            </div>
+                                        </td> <!--Pic and Name-->
+                                        <td class="narrow-col quantity-col">
+                                            <div class="quantity-grp">
+                                                <i class='bx bxs-minus-circle js-minus'></i>
+                                                <p class="amount js-num">1</p>
+                                                <i class='bx bxs-plus-circle js-plus'></i>
+                                            </div>
+                                            <p class="remaining">100 sticks remaining</p>
+                                        </td> <!--Quantity-->
+                                        <td class="narrow-col price-col">₱25.00</td><!--Price-->
+                                        <td class="narrow-col"><i class='bx bxs-trash-alt trash'></i></td><!--Action-->
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
