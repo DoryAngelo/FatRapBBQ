@@ -27,7 +27,7 @@ body{
 }
 
 main {
-    padding-top: 210px;
+    padding-top: 140px;
     padding-bottom: 120px;
     background-color: var(--bg);
     display: flex;
@@ -162,6 +162,14 @@ input, button, .secondary-btn{
     color: var(--text);
 }
 
+.prompt {
+    font-size: 0.8rem;
+    color: var(--text2);
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: -3px;
+}
+
 button, .secondary-btn{
     border-radius: 50px;
     border: 2px solid transparent;
@@ -175,7 +183,6 @@ button, .secondary-btn{
     background: var(--primary);
     color: var(--text);
     font-weight: 600;
-    margin-top: 25px;
 }
 
 .primary-btn:hover{
@@ -195,6 +202,7 @@ button, .secondary-btn{
     font-weight: 600;
     text-decoration: none;
     text-align: center;
+    margin-top: -5px;
 }
 
 .secondary-btn:hover{
