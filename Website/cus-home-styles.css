@@ -124,7 +124,8 @@ ul {
 
 .product-landing .button:hover {
     background-color: var(--active-primary);
-    color: var(--text)
+    color: var(--text);
+    cursor: pointer;
 }
 
 .product-landing .featured-pic {
@@ -260,6 +261,7 @@ h1.section-heading {
 
 .calendar-block .header button:hover {
     background-color: var(--bg);
+    cursor: pointer;
 }
 
 .days {
