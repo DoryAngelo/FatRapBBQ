@@ -257,10 +257,17 @@ table button {
     gap: 2rem;
     padding: 1.25rem;
     position: relative;
+    color: var(--text);
+    text-decoration: none;
     /* box-shadow: var(--db-highlight-blue) 0px 3px 4px 0px; pick a better color db-higlight0blue as shadow is good for lightblue but not for the same color */
 }
 
-.grid-container div.blue {
+.grid-container .box:hover {
+    cursor: pointer;
+    box-shadow: #cfd9e3 0px 2px 4px 0px;
+}
+
+.grid-container .blue {
     background-color: var(--db-highlight-blue);
 }
 
@@ -305,6 +312,10 @@ p.notif {
     color: var(--sidemenu-blue-text);
 }
 
+.side-menu a.view:hover {
+    background-color: var(--db-highlight-blue);
+}
+
 .side-menu .inventory-box {
     display: flex;
     flex-direction: column;
@@ -325,6 +336,10 @@ p.notif {
     border-radius: 0;
     margin: 0;
     width: max-content;
+}
+
+.side-menu .inventory-box a.edit:hover {
+    text-decoration: underline;
 }
 
 .side-menu .inline {

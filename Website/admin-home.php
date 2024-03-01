@@ -30,7 +30,7 @@ if($PRSN_ROLE !== 'Admin'){
         <header class="backend">
             <div class="header-container">
                 <div class="website-title">
-                    <img id="logo" src="images/client-logo.jpg">
+                    <img id="logo" src="images/client-logo.png">
                     <div class="text">
                         <h1>Fat Rap's Barbeque's Online Store</h1>
                         <p>ADMIN</p>
@@ -40,7 +40,7 @@ if($PRSN_ROLE !== 'Admin'){
                     <ul>
                         <!--TODO: ADD LINKS-->
                         <li><a href="#">Home</a></li>
-                        <li><a href="#">Menu</a></li>
+                        <li><a href="<?php echo SITEURL ;?>admin-edit-menu.php">Menu</a></li>
                         <li><a href="<?php echo SITEURL ;?>admin-new-orders.php">Orders</a></li>
                         <!-- Text below should change to 'Logout'once user logged in-->
                         <?php
@@ -66,47 +66,48 @@ if($PRSN_ROLE !== 'Admin'){
                     <h2>Dashboard</h2>
                     <div class="inline">
                         <p>Date range:</p>
-                        <p class="dropdown">Today</p>
+                        <!-- <p class="dropdown">Today</p> -->
+                        <input type="date">
                     </div>
                 </div> 
                 <section class="section-body">
                     <section class="main-section">
                         <div class="grid-container">
-                            <div class="box blue">
+                            <a class="box blue" href="<?php echo SITEURL ;?>admin-new-orders.php">
                                 <p>New Orders</p>
                                 <h1>100</h1>
                                 <p class="notif">+99</p>
-                            </div>
-                            <div class="box blue">
+                            </a>
+                            <a class="box blue" href="<?php echo SITEURL ;?>admin-new-orders.php">
                                 <p>Paid Orders</p>
                                 <h1>100</h1>
                                 <p class="notif">+99</p>
-                            </div>
-                            <div class="box">
+                            </a>
+                            <a class="box" href="<?php echo SITEURL ;?>admin-new-orders.php">
                                 <p>Preparing Orders</p>
                                 <h1>100</h1>
                                 <p class="notif">+99</p>
-                            </div>
-                            <div class="box">
+                            </a>
+                            <a class="box" href="<?php echo SITEURL ;?>admin-new-orders.php">
                                 <p>Packing Orders</p>
                                 <h1>100</h1>
                                 <p class="notif">+99</p>
-                            </div>
-                            <div class="box">
+                            </a>
+                            <a class="box" href="<?php echo SITEURL ;?>admin-new-orders.php">
                                 <p>Shipped Orders</p>
                                 <h1>100</h1>
                                 <p class="notif">+99</p>
-                            </div>
-                            <div class="box">
+                            </a>
+                            <a class="box" href="<?php echo SITEURL ;?>admin-new-orders.php">
                                 <p>Completed Orders</p>
                                 <h1>100</h1>
                                 <p class="notif">+99</p>
-                            </div>
-                            <div class="box">
+                            </a>
+                            <a class="box" href="<?php echo SITEURL ;?>admin-new-orders.php">
                                 <p>Canceled Orders</p>
                                 <h1>100</h1>
                                 <p class="notif">+99</p>
-                            </div>
+                            </a>
                         </div>
                     </section>
                     <section class="side-menu">
@@ -126,7 +127,10 @@ if($PRSN_ROLE !== 'Admin'){
                         </div>
                         <div class="group">
                             <h3>Wholesale Users</h3>
-                            <a href="<?php echo SITEURL ;?>admin-accepted-wholesale-users.php" class="view">View</a>
+                            <div class="position-notif">
+                                <a href="<?php echo SITEURL ;?>admin-accepted-wholesale-users.php" class="view">New</a>
+                               <p class="notif">+99</p>
+                            </div>
                         </div>
                         <div class="group">
                             <h3>Employee</h3>

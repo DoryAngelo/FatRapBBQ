@@ -104,6 +104,10 @@ nav > ul > li:hover {
     cursor: pointer;
 }
 
+header.backend nav > ul > li:hover {
+    color: #6EA4E4;
+    cursor: pointer;
+}
 li > a {
     color: inherit;
     text-decoration: none;
