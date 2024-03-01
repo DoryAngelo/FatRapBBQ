@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 25, 2024 at 03:58 PM
+-- Generation Time: Mar 01, 2024 at 03:21 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -105,7 +105,7 @@ INSERT INTO `food` (`FOOD_ID`, `CTGY_ID`, `FOOD_NAME`, `FOOD_PRICE`, `FOOD_DESC`
 CREATE TABLE `in_order` (
   `IN_ORDER_ID` int(18) UNSIGNED NOT NULL,
   `FOOD_ID` int(18) NOT NULL,
-  `CUS_ID` int(18) NOT NULL,
+  `PRSN_ID` int(18) NOT NULL,
   `IN_ORDER_QUANTITY` int(11) NOT NULL,
   `IN_ORDER_TOTAL` decimal(10,2) NOT NULL,
   `IN_ORDER_STATUS` varchar(21) NOT NULL,
@@ -116,10 +116,9 @@ CREATE TABLE `in_order` (
 -- Dumping data for table `in_order`
 --
 
-INSERT INTO `in_order` (`IN_ORDER_ID`, `FOOD_ID`, `CUS_ID`, `IN_ORDER_QUANTITY`, `IN_ORDER_TOTAL`, `IN_ORDER_STATUS`, `PLACED_ORDER_ID`) VALUES
+INSERT INTO `in_order` (`IN_ORDER_ID`, `FOOD_ID`, `PRSN_ID`, `IN_ORDER_QUANTITY`, `IN_ORDER_TOTAL`, `IN_ORDER_STATUS`, `PLACED_ORDER_ID`) VALUES
 (2, 1, 99, 1, 25.00, 'Ordered', NULL),
-(3, 1, 15, 1, 25.00, 'Ordered', NULL),
-(4, 1, 15, 1, 25.00, 'Ordered', NULL);
+(10, 1, 15, 12, 300.00, 'Ordered', NULL);
 
 -- --------------------------------------------------------
 
@@ -144,7 +143,8 @@ INSERT INTO `person` (`PRSN_ID`, `PRSN_NAME`, `PRSN_EMAIL`, `PRSN_PASSWORD`, `PR
 (15, 'User', 'user@gmail.com', '7dc715960b177f323db34eacd63048f7', '09123456789', 'Customer'),
 (16, 'Admin', 'admin@gmail.com', '21232f297a57a5a743894a0e4a801fc3', '09123456789', 'Admin'),
 (17, 'Employee', 'employee@gmail.com', 'fa5473530e4d1a5a1e1eb53d2fedb10c', '09123456789', 'Employee'),
-(25, 'Test', 'test@gmail.com', '147538da338b770b61e592afc92b1ee6', '09123456789', 'Employee');
+(25, 'Test', 'test@gmail.com', '147538da338b770b61e592afc92b1ee6', '09123456789', 'Employee'),
+(33, 'Wholesaler', 'wholesaler@gmail.com', '340df6ec49a0d5d9ef39693712986569', '09123456789', 'Wholesaler');
 
 -- --------------------------------------------------------
 
@@ -154,7 +154,7 @@ INSERT INTO `person` (`PRSN_ID`, `PRSN_NAME`, `PRSN_EMAIL`, `PRSN_PASSWORD`, `PR
 
 CREATE TABLE `placed_order` (
   `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL,
-  `CUS_ID` int(18) NOT NULL,
+  `PRSN_ID` int(18) NOT NULL,
   `CUS_NAME` varchar(20) NOT NULL,
   `CUS_NUMBER` varchar(11) NOT NULL,
   `CUS_EMAIL` varchar(35) NOT NULL,
@@ -171,8 +171,8 @@ CREATE TABLE `placed_order` (
 -- Dumping data for table `placed_order`
 --
 
-INSERT INTO `placed_order` (`PLACED_ORDER_ID`, `CUS_ID`, `CUS_NAME`, `CUS_NUMBER`, `CUS_EMAIL`, `PLACED_ORDER_DATE`, `PLACED_ORDER_TOTAL`, `DELIVERY_ADDRESS`, `DELIVERY_DATE`, `PLACED_ORDER_STATUS`, `PLACED_ORDER_CONFIRMATION`, `PLACED_ORDER_TRACKER`) VALUES
-(13, 15, 'User', '09123456789', 'user@gmail.com', '2024-02-23 03:16:05pm', 75.00, 'Test Address', '2024-02-23 04:22', 'Approved', '', '432ab3662d43ef4f');
+INSERT INTO `placed_order` (`PLACED_ORDER_ID`, `PRSN_ID`, `CUS_NAME`, `CUS_NUMBER`, `CUS_EMAIL`, `PLACED_ORDER_DATE`, `PLACED_ORDER_TOTAL`, `DELIVERY_ADDRESS`, `DELIVERY_DATE`, `PLACED_ORDER_STATUS`, `PLACED_ORDER_CONFIRMATION`, `PLACED_ORDER_TRACKER`) VALUES
+(13, 15, 'User', '09123456789', 'user@gmail.com', '2024-02-23 03:16:05pm', 75.00, 'Test Address', '2024-02-23 04:22', 'Approved', 'Not Confirmed', '432ab3662d43ef4f');
 
 -- --------------------------------------------------------
 
@@ -182,10 +182,19 @@ INSERT INTO `placed_order` (`PLACED_ORDER_ID`, `CUS_ID`, `CUS_NAME`, `CUS_NUMBER
 
 CREATE TABLE `wholesaler` (
   `WHL_ID` int(18) UNSIGNED NOT NULL,
-  `CUS_ID` int(18) NOT NULL,
+  `PRSN_ID` int(18) NOT NULL,
   `WHL_DISC` decimal(2,2) NOT NULL,
-  `ADD_INFO` varchar(255) NOT NULL
+  `WHL_IMAGE` varchar(250) NOT NULL,
+  `DATE_OF_REGISTRATION` varchar(250) NOT NULL,
+  `WHL_STATUS` varchar(18) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `wholesaler`
+--
+
+INSERT INTO `wholesaler` (`WHL_ID`, `PRSN_ID`, `WHL_DISC`, `WHL_IMAGE`, `DATE_OF_REGISTRATION`, `WHL_STATUS`) VALUES
+(6, 33, 0.05, 'WHL_IMAGE_Wholesaler.jpg', '2024-03-01 09:09:55pm', 'Rejected');
 
 --
 -- Indexes for dumped tables
@@ -259,7 +268,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `EMP_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `EMP_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `food`
@@ -271,13 +280,13 @@ ALTER TABLE `food`
 -- AUTO_INCREMENT for table `in_order`
 --
 ALTER TABLE `in_order`
-  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `PRSN_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `PRSN_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `placed_order`
@@ -289,7 +298,7 @@ ALTER TABLE `placed_order`
 -- AUTO_INCREMENT for table `wholesaler`
 --
 ALTER TABLE `wholesaler`
-  MODIFY `WHL_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `WHL_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
