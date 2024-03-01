@@ -29,7 +29,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
     <header class="backend">
         <div class="header-container">
             <div class="website-title">
-                <img id="logo" src="images/client-logo.jpg">
+                <img id="logo" src="images/client-logo.png">
                 <div class="text">
                     <h1>Fat Rap's Barbeque's Online Store</h1>
                     <p>ADMIN</p>
@@ -37,12 +37,23 @@ $PRSN_ID = $_SESSION['prsn_id'];
             </div>
             <nav>
                 <ul>
-                    <!--TODO: ADD LINKS-->
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Menu</a></li>
-                    <li><a href="#">Orders</a></li>
+                    <li><a href="<?php echo SITEURL ;?>admin-home.php">Home</a></li>
+                    <li><a href="<?php echo SITEURL ;?>admin-edit-menu.php">Menu</a></li>
+                    <li><a href="<?php echo SITEURL ;?>admin-new-orders.php">Orders</a></li>
                     <!-- Text below should change to 'Logout'once user logged in-->
-                    <li><a href="logout.php">Logout</a></li>
+                    <?php
+                        if(isset($_SESSION['prsn_id'])){
+                    ?>  
+                        <li><a href="<?php echo SITEURL ;?>logout.php">Logout</a><li>
+                    <?php
+                        } 
+                        else 
+                        {
+                    ?>
+                        <li><a href="<?php echo SITEURL ;?>login-page.php">Login</a></li>
+                    <?php
+                        }
+                    ?>
                 </ul>
             </nav>
         </div>
@@ -51,11 +62,10 @@ $PRSN_ID = $_SESSION['prsn_id'];
         <section class="section">
             <div class="section-heading row">
                 <h2>Edit Menu</h2>
-                <input type="date">
-                <!-- <div class="inline">
-                        <p>Date range:</p>
-                        <input type="date">
-                    </div> -->
+                <select name="customer-type" id="customer-type" class="dropdown">
+                    <option value="regular">REGULAR</option>
+                    <option value="wholesale">WHOLESALE</option>
+                </select> 
             </div>
             <section class="section-body">
                 <section class="main-section column">
@@ -71,37 +81,47 @@ $PRSN_ID = $_SESSION['prsn_id'];
                             </tr>
                             <?php
 
-                            $CUS_ID = $_SESSION['prsn_id'];
+                                $CUS_ID = $_SESSION['prsn_id'];
 
-                            $sql = "SELECT * 
-                                FROM food
-                                JOIN category ON food.ctgy_id = category.ctgy_id";
+                                $sql = "SELECT * 
+                                    FROM food
+                                    JOIN category ON food.ctgy_id = category.ctgy_id";
 
-                            $res = mysqli_query($conn, $sql);
+                                $res = mysqli_query($conn, $sql);
 
-                            $count = mysqli_num_rows($res);
+                                $count = mysqli_num_rows($res);
 
-                            if ($count > 0) {
-                                while ($row = mysqli_fetch_assoc($res)) {
+                                if ($count > 0) {
+                                    while ($row = mysqli_fetch_assoc($res)) {
 
-                                    $FOOD_NAME = $row['FOOD_NAME'];
-                                    $FOOD_PRICE = $row['FOOD_PRICE'];
-                                    $FOOD_IMG = $row['FOOD_IMG'];
-                                    $CTGY_NAME = $row['CTGY_NAME'];
-                                    $FOOD_ACTIVE = $row['FOOD_ACTIVE'];
+                                        $FOOD_NAME = $row['FOOD_NAME'];
+                                        $FOOD_PRICE = $row['FOOD_PRICE'];
+                                        $FOOD_IMG = $row['FOOD_IMG'];
+                                        $CTGY_NAME = $row['CTGY_NAME'];
+                                        $FOOD_ACTIVE = $row['FOOD_ACTIVE'];
                             ?>
 
+                                        <tr>
+                                            <td data-cell="Image">
+                                                <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
+                                            </td>
+                                            <td data-cell="Product Name"><?php echo $FOOD_NAME?></td>
+                                            <td data-cell="Category"><?php echo $CTGY_NAME?></td>
+                                            <td data-cell="Price">₱<?php echo $FOOD_PRICE?></td>
+                                            <td data-cell="Display"><?php echo $FOOD_ACTIVE?></td>
+                                            <td data-cell="Action"><a href="">Edit</a></td>
+                                        </tr>
+                            <?php
+                                    }
+                                } else {
+                            ?>
+                                    <!-- <div class="error">No new orders</div> -->
                                     <tr>
-                                        <td data-cell="Image"><img class="prod-img" src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt=""></td>
-                                        <td data-cell="Product Name"><?php echo $FOOD_NAME?></td>
-                                        <td data-cell="Category"><?php echo $CTGY_NAME?></td>
-                                        <td data-cell="Price">₱<?php echo $FOOD_PRICE?></td>
-                                        <td data-cell="Display"><?php echo $FOOD_ACTIVE?></td>
-                                        <td data-cell="Action"><a href="">Edit</a></td>
+                                        <td colspan="5" class="error">No items added</td>
                                     </tr>
                             <?php
+
                                 }
-                            }
                             ?>
                         </table>
                     </div>
