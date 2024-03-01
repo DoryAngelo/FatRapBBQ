@@ -92,8 +92,8 @@ if($PRSN_ROLE !== 'Admin'){
                                 <h1>100</h1>
                                 <p class="notif">+99</p>
                             </a>
-                            <a class="box" href="<?php echo SITEURL ;?>admin-shipped-orders.php">
-                                <p>Shipped Orders</p>
+                            <a class="box" href="<?php echo SITEURL ;?>admin-delivery-orders.php">
+                                <p>For Delivery Orders</p>
                                 <h1>100</h1>
                                 <p class="notif">+99</p>
                             </a>

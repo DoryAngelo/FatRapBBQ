@@ -17,7 +17,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--change title-->
-    <title>New Orders | Admin</title>
+    <title>Completed Orders | Admin</title>
     <link rel="stylesheet" href="header-styles.css">
     <link rel="stylesheet" href="admin-styles.css"><!--change css file-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -65,7 +65,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
     <main>
         <section class="section">
             <div class="section-heading">
-                <h2>New Orders</h2>
+                <h2>Completed Orders</h2>
                 <div class="inline">
                     <p>Date range:</p>
                     <input type="date">
