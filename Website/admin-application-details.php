@@ -33,12 +33,22 @@ $PRSN_ID = $_SESSION['prsn_id'];
                 </div>
                 <nav>
                     <ul>
-                        <!--TODO: ADD LINKS-->
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Menu</a></li>
-                        <li><a href="#">Orders</a></li>
-                        <!-- Text below should change to 'Logout'once user logged in-->
-                        <li><a href="logout.php">Logout</a></li>
+                        <li><a href="<?php echo SITEURL ;?>admin-home.php">Home</a></li>
+                        <li><a href="<?php echo SITEURL ;?>admin-edit-menu.php">Menu</a></li>
+                        <li><a href="<?php echo SITEURL ;?>admin-new-orders.php">Orders</a></li>
+                        <?php
+                            if(isset($_SESSION['prsn_id'])){
+                        ?>  
+                            <li><a href="<?php echo SITEURL ;?>logout.php">Logout</a><li>
+                        <?php
+                            } 
+                            else 
+                            {
+                        ?>
+                            <li><a href="<?php echo SITEURL ;?>login-page.php">Login</a></li>
+                        <?php
+                            }
+                        ?>
                     </ul>
                 </nav>
             </div>
