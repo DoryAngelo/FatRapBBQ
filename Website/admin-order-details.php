@@ -2,9 +2,7 @@
 
 @include 'constants.php';
 
-$PRSN_ID = $_SESSION['prsn_id'];
-
-$CUS_ID = $_GET['CUS_ID'];
+$PRSN_ID = $_GET['PRSN_ID'];
 
 ?>
 
@@ -39,21 +37,20 @@ $CUS_ID = $_GET['CUS_ID'];
             </div>
             <nav>
                 <ul>
-                    <li><a href="<?php echo SITEURL ;?>admin-home.php">Home</a></li>
-                    <li><a href="<?php echo SITEURL ;?>admin-edit-menu.php">Menu</a></li>
-                    <li><a href="<?php echo SITEURL ;?>admin-new-orders.php">Orders</a></li>
+                    <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
+                    <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
+                    <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
                     <?php
-                        if(isset($_SESSION['prsn_id'])){
-                    ?>  
-                        <li><a href="<?php echo SITEURL ;?>logout.php">Logout</a><li>
-                    <?php
-                        } 
-                        else 
-                        {
+                    if (isset($_SESSION['prsn_id'])) {
                     ?>
-                        <li><a href="<?php echo SITEURL ;?>login-page.php">Login</a></li>
+                        <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
+                        <li>
+                        <?php
+                    } else {
+                        ?>
+                        <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
                     <?php
-                        }
+                    }
                     ?>
                 </ul>
             </nav>
@@ -66,13 +63,13 @@ $CUS_ID = $_GET['CUS_ID'];
                 <div class="scroll">
                     <h2>Order Details</h2>
                     <?php
-                    $sql = "SELECT * FROM placed_order WHERE CUS_ID = $CUS_ID";
+                    $sql = "SELECT * FROM placed_order WHERE PRSN_ID = $PRSN_ID";
                     $res = mysqli_query($conn, $sql);
                     $count = mysqli_num_rows($res);
                     if ($count > 0) {
                         while ($row = mysqli_fetch_assoc($res)) {
                             $PLACED_ORDER_ID = $row['PLACED_ORDER_ID'];
-                            $CUS_ID = $row['CUS_ID'];
+                            $PRSN_ID = $row['PRSN_ID'];
                             $CUS_NAME = $row['CUS_NAME'];
                             $CUS_NUMBER = $row['CUS_NUMBER'];
                             $CUS_EMAIL = $row['CUS_EMAIL'];
@@ -127,7 +124,7 @@ $CUS_ID = $_GET['CUS_ID'];
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_PRICE, CUS_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
+                                        $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_PRICE, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
 FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered'";
 
                                         $res = mysqli_query($conn, $sql);
@@ -136,7 +133,7 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
 
                                         if ($count > 0) {
                                             while ($row = mysqli_fetch_assoc($res)) {
-                                                if ($row['CUS_ID'] == $CUS_ID) {
+                                                if ($row['PRSN_ID'] == $PRSN_ID) {
                                                     $IN_ORDER_ID = $row['IN_ORDER_ID'];
                                                     $FOOD_NAME = $row['FOOD_NAME'];
                                                     $FOOD_PRICE = $row['FOOD_PRICE'];
@@ -154,20 +151,17 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
                                                 }
                                             }
                                         }
-                                        $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE CUS_ID = $CUS_ID";
+                                        $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE PRSN_ID = $PRSN_ID";
                                         $res2 = mysqli_query($conn, $sql2);
                                         $row2 = mysqli_fetch_assoc($res2);
                                         $total = $row2['Total'];
-
                                         ?>
                                     </tbody>
-
-
                                 </table>
                             </div>
                             <div class="payment">
                                 <h3>Total Payment:</h3>
-                                <h3>₱<?php echo $total?></h3>
+                                <h3>₱<?php echo $total ?></h3>
                             </div>
                 </div>
         <?php
