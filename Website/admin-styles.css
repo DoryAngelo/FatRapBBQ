@@ -173,6 +173,11 @@ table .error {
     padding: 1.5rem 0;
 }
 
+table .edit {
+    color: var(--sidemenu-blue-text);
+    font-weight: bold;
+}
+
 .app-det-tbl {
     background: var(--light-blue);
 }
@@ -714,4 +719,25 @@ a.back {
 .date.inactive:hover {
     color: white;
 }
+
+/* for admin inventory*/
+span.warning {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+span.warning p {
+    width: max-content;
+    background-color: #f42121;
+    padding: 4px 12px;
+    border-radius: 1rem;
+    color: white;
+}
+
+span.warning i {
+    font-size: 1.33rem;
+    color: #f42121;
+}
+
 

@@ -117,7 +117,7 @@ if($PRSN_ROLE !== 'Admin'){
                                     <p>Pork BBQ</p>
                                     <p class="number">10</p>
                                 </div>
-                                <a href="<?php echo SITEURL ;?>admin-edit-menu.php" class="edit">Edit</a>
+                                <a href="<?php echo SITEURL ;?>admin-inventory.php" class="edit">Edit</a>
                             </div>
                         </div>
                         <div class="group">
