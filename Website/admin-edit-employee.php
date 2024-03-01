@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--change title-->
-    <title>Add Employee | Admin</title>
+    <title>Edit Employee | Admin</title>
     <link rel="stylesheet" href="header-styles.css">
     <link rel="stylesheet" href="admin-styles.css"><!--change css file-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -122,7 +122,7 @@ if (isset($_POST['submit'])) {
     <main>
         <section class="section">
             <div class="section-heading row back">
-                <h2>Add a New Employee</h2>
+                <h2>Edit Employee Information</h2>
                 <a href="<?php echo SITEURL ;?>admin-employee-accounts.php">Back</a>
             </div>
             <section class="section-body">
@@ -190,7 +190,7 @@ if (isset($_POST['submit'])) {
                                 </div>
                             </section>
                     </section>
-                    <button name="submit" class="big-btn">Add Employee</button>
+                    <button name="submit" class="big-btn">Save</button>
                     </form>
                     <!-- <a href="" class="page-btn"></a> -->
                 </section>
