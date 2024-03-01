@@ -23,7 +23,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
     <script src="app.js" defer></script>
     <!-- add the code below to load the icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    
+
 </head>
 
 <body>
@@ -67,7 +67,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                 <section class="block">
                     <div class="block-body">
                         <div class="table-wrap">
-                            <table  class="order">
+                            <table class="order">
                                 <thead>
                                     <tr>
                                         <th class="header first-col"></th>
@@ -78,95 +78,55 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                 </thead>
                                 <tbody>
                                     <?php
-                                    // $CUS_ID = $_SESSION['prsn_id'];
-                                    // $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, CUS_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
-                                    // FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND CUS_ID = $CUS_ID";
-                                    // $res = mysqli_query($conn, $sql);
-                                    // $count = mysqli_num_rows($res);
-                                    // if ($count > 0) {
-                                    //     while ($row = mysqli_fetch_assoc($res)) {
-                                    //         $IN_ORDER_ID = $row['IN_ORDER_ID'];
-                                    //         $FOOD_NAME = $row['FOOD_NAME'];
-                                    //         $FOOD_PRICE = $row['FOOD_PRICE'];
-                                    //         $FOOD_IMG = $row['FOOD_IMG'];
-                                    //         $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
-                                    //         $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
+                                    $CUS_ID = $_SESSION['prsn_id'];
+                                    $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, FOOD_STOCK, CUS_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
+                                    FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND CUS_ID = $CUS_ID";
+                                    $res = mysqli_query($conn, $sql);
+                                    $count = mysqli_num_rows($res);
+                                    if ($count > 0) {
+                                        while ($row = mysqli_fetch_assoc($res)) {
+                                            $IN_ORDER_ID = $row['IN_ORDER_ID'];
+                                            $FOOD_NAME = $row['FOOD_NAME'];
+                                            $FOOD_PRICE = $row['FOOD_PRICE'];
+                                            $FOOD_IMG = $row['FOOD_IMG'];
+                                            $FOOD_STOCK = $row['FOOD_STOCK'];
+                                            $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
+                                            $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
                                     ?>
-                                            <!-- <div class="green">
-                                                <tr class="data">
-                                                    <th><?php echo $FOOD_NAME ?><span class="description"></span></th>
-                                                    <td><?php echo $IN_ORDER_QUANTITY ?></td>
-                                                    <td>₱<?php echo $FOOD_PRICE ?></td>
-                                                </tr>
-                                            </div> -->
+                                            <tr> <!-- one row for a product-->
+                                                <td data-cell="customer" class="first-col">
+                                                    <div class="pic-grp">
+                                                        <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
+                                                        <p><?php echo $FOOD_NAME ?></p>
+                                                    </div>
+                                                </td> <!--Pic and Name-->
+                                                <td class="narrow-col quantity-col">
+                                                    <div class="quantity-grp">
+                                                        <i class='bx bxs-minus-circle js-minus'></i>
+                                                        <p class="amount js-num">1</p>
+                                                        <i class='bx bxs-plus-circle js-plus'></i>
+                                                    </div>
+                                                    <p class="remaining"><?php echo $FOOD_STOCK ?> sticks remaining</p>
+                                                </td> <!--Quantity-->
+                                                <td class="narrow-col price-col">₱<?php echo $FOOD_PRICE ?></td><!--Price-->
+                                                <td class="narrow-col">
+                                                    <a href="delete_in_order.php?IN_ORDER_ID=<?php echo $IN_ORDER_ID; ?>" class="bx bxs-trash-alt trash"></a><!-- pa remove na lang ng underline sa link -->
+                                                </td><!--Action-->
+                                            </tr>
                                     <?php
-                                    //     }
-                                    // }
-                                    // $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE CUS_ID = $CUS_ID";
-                                    // $res2 = mysqli_query($conn, $sql2);
-                                    // $row2 = mysqli_fetch_assoc($res2);
-                                    // $total = $row2['Total'];
+                                        }
+                                    }
+                                    $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE CUS_ID = $CUS_ID";
+                                    $res2 = mysqli_query($conn, $sql2);
+                                    $row2 = mysqli_fetch_assoc($res2);
+                                    $total = $row2['Total'];
                                     ?>
-                                    <tr> <!-- one row for a product-->
-                                        <td data-cell="customer" class="first-col">
-                                            <div class="pic-grp">
-                                                <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
-                                                <p>Pork BBQ</p>
-                                            </div>
-                                        </td> <!--Pic and Name-->
-                                        <td class="narrow-col quantity-col">
-                                            <div class="quantity-grp">
-                                                <i class='bx bxs-minus-circle js-minus'></i>
-                                                <p class="amount js-num">1</p>
-                                                <i class='bx bxs-plus-circle js-plus'></i>
-                                            </div>
-                                            <p class="remaining">100 sticks remaining</p>
-                                        </td> <!--Quantity-->
-                                        <td class="narrow-col price-col">₱25.00</td><!--Price-->
-                                        <td class="narrow-col"><i class='bx bxs-trash-alt trash'></i></td><!--Action-->
-                                    </tr>
-                                    <tr> <!-- one row for a product-->
-                                        <td data-cell="customer" class="first-col">
-                                            <div class="pic-grp">
-                                                <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
-                                                <p>Pork BBQ</p>
-                                            </div>
-                                        </td> <!--Pic and Name-->
-                                        <td class="narrow-col quantity-col">
-                                            <div class="quantity-grp">
-                                                <i class='bx bxs-minus-circle js-minus'></i>
-                                                <p class="amount js-num">1</p>
-                                                <i class='bx bxs-plus-circle js-plus'></i>
-                                            </div>
-                                            <p class="remaining">100 sticks remaining</p>
-                                        </td> <!--Quantity-->
-                                        <td class="narrow-col price-col">₱25.00</td><!--Price-->
-                                        <td class="narrow-col"><i class='bx bxs-trash-alt trash'></i></td><!--Action-->
-                                    </tr>
-                                    <tr> <!-- one row for a product-->
-                                        <td data-cell="customer" class="first-col">
-                                            <div class="pic-grp">
-                                                <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
-                                                <p>Pork BBQ</p>
-                                            </div>
-                                        </td> <!--Pic and Name-->
-                                        <td class="narrow-col quantity-col">
-                                            <div class="quantity-grp">
-                                                <i class='bx bxs-minus-circle js-minus'></i>
-                                                <p class="amount js-num">1</p>
-                                                <i class='bx bxs-plus-circle js-plus'></i>
-                                            </div>
-                                            <p class="remaining">100 sticks remaining</p>
-                                        </td> <!--Quantity-->
-                                        <td class="narrow-col price-col">₱25.00</td><!--Price-->
-                                        <td class="narrow-col"><i class='bx bxs-trash-alt trash'></i></td><!--Action-->
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="payment">
                             <h3>Total Payment:</h3>
-                            <h3>₱250.00</h3>
+                            <h3>₱<?php echo $total ?></h3>
                         </div>
                     </div>
                 </section>
@@ -196,12 +156,12 @@ $PRSN_ID = $_SESSION['prsn_id'];
                         <i class='bx bxl-tiktok'></i>
                     </a>
                     <a href="https://www.youtube.com/">
-                        <i class='bx bxl-instagram' ></i>
+                        <i class='bx bxl-instagram'></i>
                     </a>
                 </div>
                 <div class="list">
                     <div class="list-items">
-                        <i class='bx bxs-envelope' ></i>
+                        <i class='bx bxs-envelope'></i>
                         <p>email@gmail.com</p>
                     </div>
                     <div class="list-items">
@@ -209,35 +169,35 @@ $PRSN_ID = $_SESSION['prsn_id'];
                         <p>0912 345 6789 | 912 1199</p>
                     </div>
                     <div class="list-items">
-                        <i class='bx bxs-map' ></i>
+                        <i class='bx bxs-map'></i>
                         <p>123 Magaling St., Brgy. Something, Somewhere City</p>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
-    <script> /*js code for the increment and decrement buttons for the quantity*/
-            const plus = document.querySelector(".js-plus"),
-                minus = document.querySelector(".js-minus"),
-                num = document.querySelector(".js-num");
+    <script>
+        /*js code for the increment and decrement buttons for the quantity*/
+        const plus = document.querySelector(".js-plus"),
+            minus = document.querySelector(".js-minus"),
+            num = document.querySelector(".js-num");
 
-            let a = 1;
+        let a = 1;
 
-            plus.addEventListener("click", ()=>{
-                a++;
+        plus.addEventListener("click", () => {
+            a++;
+            console.log(a);
+            num.innerText = a;
+        });
+
+        minus.addEventListener("click", () => {
+            if (a > 1) {
+                a--;
                 console.log(a);
                 num.innerText = a;
-            } 
-            );
-
-            minus.addEventListener("click", ()=>{
-                if(a > 1) {
-                    a--;
-                    console.log(a);
-                    num.innerText = a;
-                }
-            } 
-            );
-        </script>
+            }
+        });
+    </script>
 </body>
+
 </html>

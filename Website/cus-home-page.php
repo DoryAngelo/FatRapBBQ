@@ -2,7 +2,6 @@
 
 @include 'constants.php';
 
-session_start();
 $PRSN_ID = $_SESSION['prsn_id'];
 
 $sql = "SELECT * FROM food WHERE FOOD_ACTIVE='Yes'";
@@ -31,6 +30,18 @@ if (isset($_POST['submit'])) {
     header('location:track-order.php');
 }
 
+if (isset($_POST['order'])) {
+    $sql = "INSERT INTO in_order SET
+        FOOD_ID = '$FOOD_ID',
+        CUS_ID = '$PRSN_ID',
+        IN_ORDER_QUANTITY = 1,
+        IN_ORDER_TOTAL = $FOOD_PRICE,
+        IN_ORDER_STATUS = 'Ordered'
+        ";
+    
+        $res2 = mysqli_query($conn,$sql);
+        header('location:cus-home-page.php');
+}
 
 
 
@@ -53,7 +64,7 @@ if (isset($_POST['submit'])) {
     <script src="app.js" defer></script>
     <!-- add the code below to load the icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    
+
 </head>
 
 <body>
@@ -99,45 +110,45 @@ if (isset($_POST['submit'])) {
         </section>
         <!-- section 2 - calendar -->
         <section class="calendar section">
-                <div class="front">
-                   <section class="left-text">
+            <div class="front">
+                <section class="left-text">
                     <h1 class="section-heading">See our available dates</h1>
                     <div class="legend">
-                       <ul>
+                        <ul>
                             <li class="available button">Available</li>
                             <li class="fully-booked button">Fully Booked</li>
                             <li class="closed button">Closed</li>
                         </ul>
                     </div>
-                    </section>
-                    <section class="calendar-block"> <!-- reference code: https://www.youtube.com/watch?v=OcncrLyddAs-->
-                        <div class="header">
-                            <button id="prevBtn">
-                                <i class='bx bx-chevron-left'></i>
-                            </button>
-                            <div class="monthYear" id="monthYear"></div>
-                            <button id="nextBtn">
-                                <i class='bx bx-chevron-right'></i>
-                            </button>
-                        </div>
-                        <div class="days">
-                            <div class="day">Mon</div>
-                            <div class="day">Tue</div>
-                            <div class="day">Wed</div>
-                            <div class="day">Thur</div>
-                            <div class="day">Fri</div>
-                            <div class="day">Sat</div>
-                            <div class="day">Sun</div>
-                        </div>
-                        <div class="dates" id="dates"></div>
-                    </section>  
-                  </div>
-                </div>
-                <div class="back">
-                    <div class="green-block"></div>
-                    <div class="cream-block"></div>
-                </div>
-            </section>
+                </section>
+                <section class="calendar-block"> <!-- reference code: https://www.youtube.com/watch?v=OcncrLyddAs-->
+                    <div class="header">
+                        <button id="prevBtn">
+                            <i class='bx bx-chevron-left'></i>
+                        </button>
+                        <div class="monthYear" id="monthYear"></div>
+                        <button id="nextBtn">
+                            <i class='bx bx-chevron-right'></i>
+                        </button>
+                    </div>
+                    <div class="days">
+                        <div class="day">Mon</div>
+                        <div class="day">Tue</div>
+                        <div class="day">Wed</div>
+                        <div class="day">Thur</div>
+                        <div class="day">Fri</div>
+                        <div class="day">Sat</div>
+                        <div class="day">Sun</div>
+                    </div>
+                    <div class="dates" id="dates"></div>
+                </section>
+            </div>
+            </div>
+            <div class="back">
+                <div class="green-block"></div>
+                <div class="cream-block"></div>
+            </div>
+        </section>
         <!-- section 3 - product info -->
         <section class="product-landing info section" id="product-info-section">
             <img class="featured-pic" src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
@@ -145,8 +156,8 @@ if (isset($_POST['submit'])) {
                 <h1 class="product-name"><?php echo $FOOD_NAME; ?></h1>
                 <p class="product"><?php echo $FOOD_PRICE; ?></p>
                 <p class="product"><?php echo $FOOD_DESC; ?></p>
-                <form class="button-group">
-                    <button name="submit" type="submit" class="button" href="add_food.php?FOOD_ID=<?php echo $FOOD_ID; ?>&FOOD_PRICE=<?php echo $FOOD_PRICE; ?>&PRSN_ID=<?php echo $PRSN_ID; ?>">Order Now</button>
+                <form class="button-group" method="POST">
+                    <button name="order" type="submit" class="button">Order Now</button>
                     <div class="right-contents">
                         <div class="quantity-group">
                             <i class='bx bxs-minus-circle js-minus circle'></i>
@@ -176,7 +187,7 @@ if (isset($_POST['submit'])) {
         <!-- section 5 - wholesale-->
         <section class="product-landing wholesale section">
             <h1 class="other-sections">Looking for wholesale deals?</h1>
-            <a href="<?php echo SITEURL ;?>wc-register.php" class="button">Sign up as a Wholesale Customer</a>
+            <a href="<?php echo SITEURL; ?>wc-register.php" class="button">Sign up as a Wholesale Customer</a>
         </section>
     </main>
     <footer>
@@ -201,12 +212,12 @@ if (isset($_POST['submit'])) {
                         <i class='bx bxl-tiktok'></i>
                     </a>
                     <a href="https://www.youtube.com/">
-                        <i class='bx bxl-instagram' ></i>
+                        <i class='bx bxl-instagram'></i>
                     </a>
                 </div>
                 <div class="list">
                     <div class="list-items">
-                        <i class='bx bxs-envelope' ></i>
+                        <i class='bx bxs-envelope'></i>
                         <p>email@gmail.com</p>
                     </div>
                     <div class="list-items">
@@ -214,7 +225,7 @@ if (isset($_POST['submit'])) {
                         <p>0912 345 6789 | 912 1199</p>
                     </div>
                     <div class="list-items">
-                        <i class='bx bxs-map' ></i>
+                        <i class='bx bxs-map'></i>
                         <p>123 Magaling St., Brgy. Something, Somewhere City</p>
                     </div>
                 </div>
@@ -223,4 +234,5 @@ if (isset($_POST['submit'])) {
     </footer>
     <script src="home.js"></script>
 </body>
+
 </html>

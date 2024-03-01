@@ -16,7 +16,4 @@ $sql = "INSERT INTO in_order SET
 
     $res2 = mysqli_query($conn,$sql);
     header('location:cus-home-page.php');
-
-
-
 ?>

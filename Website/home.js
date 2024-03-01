@@ -78,4 +78,5 @@ minus.addEventListener("click", ()=>{
         num.innerText = a;
     }
 } 
+
 );
