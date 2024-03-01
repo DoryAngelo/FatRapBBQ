@@ -59,7 +59,7 @@ if ($count2 > 0) {
                     <!--TODO: ADD LINKS-->
                     <li><a href="cus-home-page.php">Home</a></li>
                     <li><a href="#">Menu</a></li>
-                    <li><a href="<?php echo SITEURL ;?>cart.php">Cart</a></li>
+                    <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
                     <!-- Text below should change to 'Logout'once user logged in-->
                     <?php
                     if (isset($_SESSION['prsn_id'])) {
@@ -78,10 +78,10 @@ if ($count2 > 0) {
         </div>
     </header>
     <main>
-    <section class="section track-order">
+        <section class="section track-order">
             <div class="section-heading">
-                <h2>Track your Order</h2>           
-            </div> 
+                <h2>Track your Order</h2>
+            </div>
             <section class="section-body">
                 <section class="block">
                     <h3 class="block-heading">Order code: 9999999999</h3>
@@ -136,7 +136,7 @@ if ($count2 > 0) {
                         </div>
                         <!-- <p>Order status: PLACED (for testing)</p> this line is used for backend testing and will be removed later on -->
                         <h3 class="block-heading order-status">Your order has been approved</h2>
-                        <p class="order-status-desc">Lorem ipsum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit amet</p>
+                            <p class="order-status-desc">Lorem ipsum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit amet</p>
                     </div>
                 </section>
                 <!-- section directly below this will only appear if order status is approved -->
@@ -207,7 +207,7 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
                         </div>
                         <div class="payment">
                             <h3>Total Payment:</h3>
-                            <h3>₱<?php echo $total?></h3>
+                            <h3>₱<?php echo $total ?></h3>
                         </div>
                     </div>
                 </section>
@@ -236,12 +236,12 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
                         <i class='bx bxl-tiktok'></i>
                     </a>
                     <a href="https://www.youtube.com/">
-                        <i class='bx bxl-instagram' ></i>
+                        <i class='bx bxl-instagram'></i>
                     </a>
                 </div>
                 <div class="list">
                     <div class="list-items">
-                        <i class='bx bxs-envelope' ></i>
+                        <i class='bx bxs-envelope'></i>
                         <p>email@gmail.com</p>
                     </div>
                     <div class="list-items">
@@ -249,7 +249,7 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
                         <p>0912 345 6789 | 912 1199</p>
                     </div>
                     <div class="list-items">
-                        <i class='bx bxs-map' ></i>
+                        <i class='bx bxs-map'></i>
                         <p>123 Magaling St., Brgy. Something, Somewhere City</p>
                     </div>
                 </div>

@@ -13,6 +13,7 @@ if (isset($_POST['submit'])) {
     $PRSN_CPASSWORD = md5($_POST['cpassword']);
     $PRSN_ROLE = 'Wholesaler';
 
+
     if (isset($_FILES['image']['name'])) {
         $WHL_IMG = $_FILES['image']['name'];
 
@@ -51,9 +52,9 @@ if (isset($_POST['submit'])) {
                        VALUES('$PRSN_NAME', '$PRSN_EMAIL', '$PRSN_PASSWORD', '$PRSN_PHONE', '$PRSN_ROLE')";
             if (mysqli_query($conn, $insert)) {
                 $PRSN_ID = mysqli_insert_id($conn);
-
-                $insert2 = "INSERT INTO wholesaler(PRSN_ID, WHL_DISC, WHL_IMAGE) 
-                            VALUES('$PRSN_ID', '00.05', '$WHL_IMG')";
+                $DATE_OF_REGISTRATION = date("Y-m-d h:i:sa");
+                $insert2 = "INSERT INTO wholesaler(PRSN_ID, WHL_DISC, WHL_IMAGE, DATE_OF_REGISTRATION) 
+                            VALUES('$PRSN_ID', '00.05', '$WHL_IMG', '$DATE_OF_REGISTRATION')";
                 if (!mysqli_query($conn, $insert2)) {
                     $error[] = "Error inserting data into wholesaler table: " . mysqli_error($conn);
                 }

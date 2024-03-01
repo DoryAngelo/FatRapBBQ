@@ -79,46 +79,47 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
+                                <?php
+                                    $CUS_ID = $_SESSION['prsn_id'];
+                                    $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, FOOD_STOCK, CUS_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
+                                    FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND CUS_ID = $CUS_ID";
+                                    $res = mysqli_query($conn, $sql);
+                                    $count = mysqli_num_rows($res);
+                                    if ($count > 0) {
+                                        while ($row = mysqli_fetch_assoc($res)) {
+                                            $IN_ORDER_ID = $row['IN_ORDER_ID'];
+                                            $FOOD_NAME = $row['FOOD_NAME'];
+                                            $FOOD_PRICE = $row['FOOD_PRICE'];
+                                            $FOOD_IMG = $row['FOOD_IMG'];
+                                            $FOOD_STOCK = $row['FOOD_STOCK'];
+                                            $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
+                                            $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
+                                    ?>
                                     <tr>
                                         <td data-cell="customer" class="first-col">
                                             <div class="pic-grp">
-                                                <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
-                                                <p>Pork BBQ</p>
+                                                <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
+                                                <p><?php echo $FOOD_NAME; ?></p>
                                             </div>
                                         </td> <!--Pic and Name-->
-                                        <td>1</td> <!--Quantity-->
-                                        <td>₱25.00</td><!--Price-->
-                                        <td>₱250.00</td><!--Sub Total-->
+                                        <td><?php echo $IN_ORDER_QUANTITY?></td> <!--Quantity-->
+                                        <td>₱<?php echo $FOOD_PRICE; ?></td><!--Price-->
+                                        <td>₱<?php echo $IN_ORDER_TOTAL; ?></td><!--Sub Total-->
                                     </tr>
-                                    <tr>
-                                        <td data-cell="customer" class="first-col">
-                                            <div class="pic-grp">
-                                                <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
-                                                <p>Pork BBQ</p>
-                                            </div>
-                                        </td> <!--Pic and Name-->
-                                        <td>1</td> <!--Quantity-->
-                                        <td>₱25.00</td><!--Price-->
-                                        <td>₱250.00</td><!--Sub Total-->
-                                    </tr>
-                                    <tr>
-                                        <td data-cell="customer" class="first-col">
-                                            <div class="pic-grp">
-                                                <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
-                                                <p>Pork BBQ</p>
-                                            </div>
-                                        </td> <!--Pic and Name-->
-                                        <td>1</td> <!--Quantity-->
-                                        <td>₱25.00</td><!--Price-->
-                                        <td>₱250.00</td><!--Sub Total-->
-                                    </tr>
+                                    <?php
+                                        }
+                                    }
+                                    $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE CUS_ID = $CUS_ID";
+                                    $res2 = mysqli_query($conn, $sql2);
+                                    $row2 = mysqli_fetch_assoc($res2);
+                                    $total = $row2['Total'];
+                                    ?>
                                 </tbody>
                                 </table> 
                             </div>
                             <div class="payment">
                                 <h3>Total Payment:</h3>
-                                <h3>₱250.00</h3>
+                                <h3>₱<?php echo $total; ?></h3>
                             </div>
                         </div>
                     </section>
