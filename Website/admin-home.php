@@ -126,7 +126,7 @@ if($PRSN_ROLE !== 'Admin'){
                         <div class="group">
                             <h3>Wholesale Users</h3>
                             <div class="position-notif">
-                                <a href="<?php echo SITEURL ;?>admin-accepted-wholesale-users.php" class="view">New</a>
+                                <a href="<?php echo SITEURL ;?>admin-new-wholesale-users.php" class="view">New</a>
                                <p class="notif">+99</p>
                             </div>
                         </div>

@@ -176,6 +176,15 @@ table {
     width: 100%;
 }
 
+table .link {
+    color: var(--text);
+    font-weight: 500;
+}
+
+table .link:hover {
+    color: var(--sidemenu-blue-hover);
+}
+
 table .error {
     color: var(--gray);
     text-align: center;
