@@ -170,8 +170,8 @@ if ($count2 > 0) {
                                 <tbody>
                                     <?php
 
-                                    $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, CUS_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
-FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND CUS_ID = $CUS_ID";
+                                    $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
+FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND PRSN_ID = $PRSN_ID";
                                     $res = mysqli_query($conn, $sql);
                                     $count = mysqli_num_rows($res);
                                     if ($count > 0) {
@@ -197,7 +197,7 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
                                     <?php
                                         }
                                     }
-                                    $sql3 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE CUS_ID = $CUS_ID";
+                                    $sql3 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE PRSN_ID = $PRSN_ID";
                                     $res3 = mysqli_query($conn, $sql3);
                                     $row3 = mysqli_fetch_assoc($res3);
                                     $total = $row3['Total'];
