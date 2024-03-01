@@ -38,24 +38,23 @@ if($PRSN_ROLE !== 'Admin'){
                 </div>
                 <nav>
                     <ul>
-                        <!--TODO: ADD LINKS-->
-                        <li><a href="#">Home</a></li>
+                        <li><a href="<?php echo SITEURL ;?>admin-home.php">Home</a></li>
                         <li><a href="<?php echo SITEURL ;?>admin-edit-menu.php">Menu</a></li>
                         <li><a href="<?php echo SITEURL ;?>admin-new-orders.php">Orders</a></li>
                         <!-- Text below should change to 'Logout'once user logged in-->
                         <?php
                             if(isset($_SESSION['prsn_id'])){
-                    ?>  
+                        ?>  
                             <li><a href="<?php echo SITEURL ;?>logout.php">Logout</a><li>
-                    <?php
+                        <?php
                             } 
                             else 
                             {
-                    ?>
+                        ?>
                             <li><a href="<?php echo SITEURL ;?>login-page.php">Login</a></li>
-                    <?php
+                        <?php
                             }
-                    ?>
+                        ?>
                     </ul>
                 </nav>
             </div>
@@ -78,32 +77,32 @@ if($PRSN_ROLE !== 'Admin'){
                                 <h1>100</h1>
                                 <p class="notif">+99</p>
                             </a>
-                            <a class="box blue" href="<?php echo SITEURL ;?>admin-new-orders.php">
+                            <a class="box blue" href="<?php echo SITEURL ;?>admin-paid-orders.php">
                                 <p>Paid Orders</p>
                                 <h1>100</h1>
                                 <p class="notif">+99</p>
                             </a>
-                            <a class="box" href="<?php echo SITEURL ;?>admin-new-orders.php">
+                            <a class="box" href="<?php echo SITEURL ;?>admin-preparing-orders.php">
                                 <p>Preparing Orders</p>
                                 <h1>100</h1>
                                 <p class="notif">+99</p>
                             </a>
-                            <a class="box" href="<?php echo SITEURL ;?>admin-new-orders.php">
+                            <a class="box" href="<?php echo SITEURL ;?>admin-packing-orders.php">
                                 <p>Packing Orders</p>
                                 <h1>100</h1>
                                 <p class="notif">+99</p>
                             </a>
-                            <a class="box" href="<?php echo SITEURL ;?>admin-new-orders.php">
+                            <a class="box" href="<?php echo SITEURL ;?>admin-shipped-orders.php">
                                 <p>Shipped Orders</p>
                                 <h1>100</h1>
                                 <p class="notif">+99</p>
                             </a>
-                            <a class="box" href="<?php echo SITEURL ;?>admin-new-orders.php">
+                            <a class="box" href="<?php echo SITEURL ;?>admin-completed-orders.php">
                                 <p>Completed Orders</p>
                                 <h1>100</h1>
                                 <p class="notif">+99</p>
                             </a>
-                            <a class="box" href="<?php echo SITEURL ;?>admin-new-orders.php">
+                            <a class="box" href="<?php echo SITEURL ;?>admin-canceled-orders.php">
                                 <p>Canceled Orders</p>
                                 <h1>100</h1>
                                 <p class="notif">+99</p>

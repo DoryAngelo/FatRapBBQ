@@ -166,6 +166,13 @@ table {
     width: 100%;
 }
 
+table .error {
+    color: var(--gray);
+    text-align: center;
+    font-style: italic;
+    padding: 1.5rem 0;
+}
+
 .app-det-tbl {
     background: var(--light-blue);
 }

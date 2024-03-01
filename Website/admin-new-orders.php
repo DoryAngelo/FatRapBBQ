@@ -32,7 +32,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
     <header class="backend">
         <div class="header-container">
             <div class="website-title">
-                <img id="logo" src="images/client-logo.jpg">
+                <img id="logo" src="images/client-logo.png">
                 <div class="text">
                     <h1>Fat Rap's Barbeque's Online Store</h1>
                     <p>ADMIN</p>
@@ -41,11 +41,23 @@ $PRSN_ID = $_SESSION['prsn_id'];
             <nav>
                 <ul>
                     <!--TODO: ADD LINKS-->
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Menu</a></li>
-                    <li><a href="#">Orders</a></li>
+                    <li><a href="<?php echo SITEURL ;?>admin-home.php">Home</a></li>
+                    <li><a href="<?php echo SITEURL ;?>admin-edit-menu.php">Menu</a></li>
+                    <li><a href="<?php echo SITEURL ;?>admin-new-orders.php">Orders</a></li>
                     <!-- Text below should change to 'Logout'once user logged in-->
-                    <li><a href="logout.php">Logout</a></li>
+                    <?php
+                        if(isset($_SESSION['prsn_id'])){
+                    ?>  
+                        <li><a href="<?php echo SITEURL ;?>logout.php">Logout</a><li>
+                    <?php
+                        } 
+                        else 
+                        {
+                    ?>
+                        <li><a href="<?php echo SITEURL ;?>login-page.php">Login</a></li>
+                    <?php
+                        }
+                    ?>
                 </ul>
             </nav>
         </div>
@@ -71,39 +83,45 @@ $PRSN_ID = $_SESSION['prsn_id'];
                         </tr>
                         <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
                         <?php
-                        $sql = "SELECT * FROM placed_order";
-                        $res = mysqli_query($conn, $sql);
-                        $count = mysqli_num_rows($res);
-                        if ($count > 0) {
-                            while ($row = mysqli_fetch_assoc($res)) {
-                                $PLACED_ORDER_ID = $row['PLACED_ORDER_ID'];
-                                $CUS_ID = $row['CUS_ID'];
-                                $CUS_NAME = $row['CUS_NAME'];
-                                $PLACED_ORDER_DATE = $row['PLACED_ORDER_DATE'];
-                                $PLACED_ORDER_TOTAL = $row['PLACED_ORDER_TOTAL'];
-                                $DELIVERY_ADDRESS = $row['DELIVERY_ADDRESS'];
-                                $DELIVERY_DATE = $row['DELIVERY_DATE'];
-                                $PLACED_ORDER_STATUS = $row['PLACED_ORDER_STATUS'];
+                            $sql = "SELECT * FROM placed_order";
+                            $res = mysqli_query($conn, $sql);
+                            $count = mysqli_num_rows($res);
+                            if ($count > 0) {
+                                while ($row = mysqli_fetch_assoc($res)) {
+                                    $PLACED_ORDER_ID = $row['PLACED_ORDER_ID'];
+                                    $CUS_ID = $row['CUS_ID'];
+                                    $CUS_NAME = $row['CUS_NAME'];
+                                    $PLACED_ORDER_DATE = $row['PLACED_ORDER_DATE'];
+                                    $PLACED_ORDER_TOTAL = $row['PLACED_ORDER_TOTAL'];
+                                    $DELIVERY_ADDRESS = $row['DELIVERY_ADDRESS'];
+                                    $DELIVERY_DATE = $row['DELIVERY_DATE'];
+                                    $PLACED_ORDER_STATUS = $row['PLACED_ORDER_STATUS'];
                         ?>
+                                    <tr>
+                                        <td data-cell="Date and Time"><?php echo $PLACED_ORDER_DATE ?></td>
+                                        <td data-cell="customer"><?php echo $CUS_NAME ?></td>
+                                        <td data-cell="Order #"><a href="<?php echo SITEURL?>admin-order-details.php?CUS_ID=<?php echo $CUS_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
+                                        <td data-cell="Payment">₱<?php echo $PLACED_ORDER_TOTAL ?></td>
+                                        <td data-cell="Confimed">
+                                            <div class="btn-wrapper">
+                                                <form method="POST">
+                                                    <button class="btn-check" name="confirmed"><i class='bx bxs-check-circle'></i></button>
+                                                    <button class="btn-cross" name="not-confirmed"><i class='bx bxs-x-circle'></i></button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                        <?php
+                                }
+                            } else {
+                        ?>
+                                <!-- <div class="error">No new orders</div> -->
                                 <tr>
-                                    <td data-cell="Date and Time"><?php echo $PLACED_ORDER_DATE ?></td>
-                                    <td data-cell="customer"><?php echo $CUS_NAME ?></td>
-                                    <td data-cell="Order #"><a href="<?php echo SITEURL?>admin-order-details.php?CUS_ID=<?php echo $CUS_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
-                                    <td data-cell="Payment">₱<?php echo $PLACED_ORDER_TOTAL ?></td>
-                                    <td data-cell="Confimed">
-                                        <div class="btn-wrapper">
-                                            <form method="POST">
-                                                <button class="btn-check" name="confirmed"><i class='bx bxs-check-circle'></i></button>
-                                                <button class="btn-cross" name="not-confirmed"><i class='bx bxs-x-circle'></i></button>
-                                            </form>
-                                        </div>
-                                    </td>
+                                    <td colspan="5" class="error">No new orders</td>
                                 </tr>
                         <?php
+
                             }
-                        } else {
-                            echo "<div class='error'>No Order Found</div>";
-                        }
                         ?>
                     </table>
                 </section>
@@ -115,15 +133,16 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                 <p>Pork BBQ</p>
                                 <p class="number">10</p>
                             </div>
-                            <a href="" class="edit">Edit</a>
+                            <a href="<?php echo SITEURL ;?>admin-edit-inventory.php" class="edit">Edit</a>
                         </div>
                     </div>
                     <div class="group">
-                        <a href="" class="view big-font">Paid Orders</a>
-                        <a href="" class="view big-font">Preparing Orders</a>
-                        <a href="" class="view big-font">For Delivery</a>
-                        <a href="" class="view big-font">Completed Orders</a>
-                        <a href="" class="view big-font">Cancelled Orders</a>
+                        <a href="<?php echo SITEURL ;?>admin-new-orders.php" class="view big-font">New Orders</a>
+                        <a href="<?php echo SITEURL ;?>admin-paid-orders.php" class="view big-font">Paid Orders</a>
+                        <a href="<?php echo SITEURL ;?>admin-preparing-orders.php" class="view big-font">Preparing Orders</a>
+                        <a href="<?php echo SITEURL ;?>admin-new-orders.php" class="view big-font">For Delivery</a>
+                        <a href="<?php echo SITEURL ;?>admin-completed-orders.php" class="view big-font">Completed Orders</a>
+                        <a href="<?php echo SITEURL ;?>admin-canceled-orders.php" class="view big-font">Canceled Orders</a>
                     </div>
                 </section>
             </section>
