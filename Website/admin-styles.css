@@ -334,7 +334,7 @@ p.notif {
     font-size: 1.25rem;
 }
 
-.side-menu .inventory-box, a.view, .big-btn{
+.side-menu .inventory-box, .view, .big-btn{
     display: block;
     background-color: var(--sidemenu-blue);
     padding: 0.9rem 1.1rem;
@@ -343,7 +343,7 @@ p.notif {
     color: var(--sidemenu-blue-text);
 }
 
-.side-menu a.view:hover {
+.side-menu .view:hover {
     background-color: var(--db-highlight-blue);
 }
 
@@ -395,14 +395,29 @@ a.big-font {
     z-index: 1;
 }
 
-a.accept {
+button.view {
+    width: 100%;
+    text-align: left;
+    font-weight: bold;
+    border-radius: 1.2rem;
+}
+
+.accept {
     background-color: var(--accept-green);
     color: black;
 }
 
-a.reject {
+button.accept:hover {
+    background-color: #78D35A;
+}
+
+.reject {
     background-color: var(--reject-red);
     color: black;
+}
+
+button.reject:hover {
+    background-color: #78D35A;
 }
 
 .big-btn {
@@ -759,4 +774,79 @@ span.warning i {
     color: #f42121;
 }
 
+.green-block {
+    width: 50%;
+    background: var(--block);
+    border-radius: 25px;
+    z-index: 0;
+    box-shadow: rgba(175, 255, 173, 1) 0px 0px 80px 0px;
+}
+
+/* register block */
+.form {
+    width: 100%;
+    background: var(--form-bg);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 40px;
+    border-radius: 25px;
+    z-index: 1;
+    margin-top: 20px;
+}
+
+.form-title{
+    position: relative;
+    /* padding-left: 15px; */
+    margin-bottom: 20px;
+}
+
+.form-title h1{
+    color: var(--text);
+}
+
+.form-field{
+    display: grid;
+    gap: 1rem;
+}
+
+.form-field-input{
+    position: relative;
+}
+
+input, button, .secondary-btn{
+    border-radius: 5px;
+    border: 2px solid transparent;
+    outline: none;
+    transition: .3s ease;
+}
+
+.form-field-input input {
+    width: 100%;
+    background: var(--input-bg);
+    padding: 5px 13px;
+    font-size: 1rem;
+    margin-top: 8px;
+}
+
+.form-field-input input[type="file"] {
+    width: max-content;
+    background-color: transparent;
+    padding: 0;
+    color: var(--text);
+    font-size: 0.9rem;
+}
+
+.form-field-input label{
+    color: var(--text);
+}
+
+.form-field-input input:focus{
+    border: 2px solid var(--primary);
+}
+
+p.label-desc {
+    font-style: italic;
+    font-size: 0.8rem;
+    margin-top: 3px;
+    color: #A8A4A6;
+}
 

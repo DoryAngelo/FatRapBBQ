@@ -109,7 +109,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                             <td data-cell="Category"><?php echo $CTGY_NAME?></td>
                                             <td data-cell="Price">₱<?php echo $FOOD_PRICE?></td>
                                             <td data-cell="Display"><?php echo $FOOD_ACTIVE?></td>
-                                            <td data-cell="Action"><a href=""  class="edit">Edit</a></td>
+                                            <td data-cell="Action"><a href="<?php echo SITEURL ;?>admin-edit-product.php"  class="edit">Edit</a></td>
                                         </tr>
                             <?php
                                     }
