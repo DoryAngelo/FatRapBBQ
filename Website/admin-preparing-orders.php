@@ -79,6 +79,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                             <th class="header">Customer</th>
                             <th class="header">Order #</th>
                             <th class="header">Payment</th>
+                            <th class="header">Status</th>
                             <th class="header">Confirmed</th>
                         </tr>
                         <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
@@ -102,6 +103,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                         <td data-cell="customer"><?php echo $CUS_NAME ?></td>
                                         <td data-cell="Order #"><a href="<?php echo SITEURL?>admin-order-details.php?PRSN_ID=<?php echo $PRSN_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
                                         <td data-cell="Payment">₱<?php echo $PLACED_ORDER_TOTAL ?></td>
+                                        <td data-cell="Status"><?php echo $PLACED_ORDER_STATUS?></td>
                                         <td data-cell="Confimed">
                                             <div class="btn-wrapper">
                                                 <form method="POST">
@@ -155,24 +157,47 @@ $PRSN_ID = $_SESSION['prsn_id'];
 <?php
 if (isset($_POST['confirmed'])) {
 
+    $PLACED_ORDER_STATUS = "";
     $PLACED_ORDER_CONFIRMATION = "Confirmed";
 
-    $sql = "UPDATE placed_order SET
-	PLACED_ORDER_CONFIRMATION = '$PLACED_ORDER_CONFIRMATION'
-	WHERE CUS_ID = '$CUS_ID'
-	";
+    switch ($PLACED_ORDER_STATUS) {
+        case "Ordered":
+            $PLACED_ORDER_STATUS = "Awaiting Payment";
+            break;
+        case "Awaiting Payment":
+            $PLACED_ORDER_STATUS = "Paid";
+            break;
+        case "Paid":
+            $PLACED_ORDER_STATUS = "Preparing";
+            break;
+        case "Preparing":
+            $PLACED_ORDER_STATUS = "For Delivery";
+            break;
+        case "For Delivery":
+            $PLACED_ORDER_STATUS = "Completed";
+            break;
+    }
+    
+    $sql = "UPDATE placed_order 
+            SET PLACED_ORDER_STATUS = '$PLACED_ORDER_STATUS',
+                PLACED_ORDER_CONFIRMATION = '$PLACED_ORDER_CONFIRMATION'
+            WHERE PRSN_ID = '$PRSN_ID'";
+    
+    $res = mysqli_query($conn, $sql);
+    
+}
 
-	$res = mysqli_query($conn, $sql);
-
-} else if (isset($_POST['not-confirmed'])){
+if (isset($_POST['not-confirmed'])) {
     $PLACED_ORDER_CONFIRMATION = "Not Confirmed";
+    $PLACED_ORDER_STATUS = "Cancelled";
+
 
     $sql = "UPDATE placed_order SET
+    PLACED_ORDER_STATUS = '$PLACED_ORDER_STATUS',
 	PLACED_ORDER_CONFIRMATION = '$PLACED_ORDER_CONFIRMATION'
-	WHERE CUS_ID = '$CUS_ID'
+	WHERE PRSN_ID = '$PRSN_ID'
 	";
 
-	$res = mysqli_query($conn, $sql);
-
+    $res = mysqli_query($conn, $sql);
 }
 ?>

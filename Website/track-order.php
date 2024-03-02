@@ -3,9 +3,7 @@
 @include 'constants.php';
 $PRSN_ID = $_SESSION['prsn_id'];
 
-$CUS_ID = $_SESSION['prsn_id'];
-
-$sql2 = "SELECT * FROM placed_order WHERE CUS_ID = $CUS_ID";
+$sql2 = "SELECT * FROM placed_order WHERE PRSN_ID = $PRSN_ID";
 
 $res2 = mysqli_query($conn, $sql2);
 
@@ -15,7 +13,7 @@ $row2 = mysqli_fetch_assoc($res2);
 
 if ($count2 > 0) {
     $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
-    $CUS_ID = $row2['CUS_ID'];
+    $PRSN_ID = $row2['PRSN_ID'];
     $CUS_NAME = $row22['CUS_NAME'];
     $CUS_NUMBER = $row2['CUS_NUMBER'];
     $CUS_EMAIL = $row2['CUS_EMAIL'];
@@ -141,14 +139,14 @@ if ($count2 > 0) {
                 </section>
                 <!-- section directly below this will only appear if order status is approved -->
                 <section class="block" id="payment-section">
-                    <form action="">
+                    <form action="" method="post">
                         <h3 class="block-heading">Payment</h3>
                         <div class="block-body">
                             <div style="width: 10rem; height: 10rem; background-color: white;"></div>
                             <div>
                                 <p class="ref-label">Reference number</p>
-                                <input type="text">
-                                <button id="submit">Submit</button>
+                                <input name="reference-number" type="text">
+                                <button name="submit">Submit</button>
                                 <p class="prompt">Thanks for submitting!</p>
                             </div>
                         </div>
@@ -259,3 +257,20 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
 </body>
 
 </html>
+
+<?php
+
+
+if (isset($_POST['submit'])) {
+
+    $REFERENCE_NUMBER =  mysqli_real_escape_string($conn, $_POST['reference-number']);
+
+    $update = "UPDATE placed_order 
+    SET REFERENCE_NUMBER = '$REFERENCE_NUMBER' 
+    WHERE PLACED_ORDER_ID = '$PLACED_ORDER_ID'";
+
+    mysqli_query($conn, $update);
+    // header('location:track-order.php');
+}
+
+?>

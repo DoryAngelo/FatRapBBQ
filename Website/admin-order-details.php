@@ -78,6 +78,7 @@ $PRSN_ID = $_GET['PRSN_ID'];
                             $DELIVERY_ADDRESS = $row['DELIVERY_ADDRESS'];
                             $DELIVERY_DATE = $row['DELIVERY_DATE'];
                             $PLACED_ORDER_STATUS = $row['PLACED_ORDER_STATUS'];
+                            $REFERENCE_NUMBER = $row['REFERENCE_NUMBER'];
                     ?>
                             <div>
                                 <table class="contact-info">
@@ -115,6 +116,10 @@ $PRSN_ID = $_GET['PRSN_ID'];
                                 <div class="text-grp">
                                     <h3>Delivery date:</h3>
                                     <p><?php echo $DELIVERY_DATE ?></p>
+                                </div>
+                                <div class="text-grp">
+                                    <h3>Reference Number:</h3>
+                                    <p><?php echo $REFERENCE_NUMBER ?></p>
                                 </div>
                             </div>
                             <div>
