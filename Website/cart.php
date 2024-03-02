@@ -102,7 +102,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                                 <td class="narrow-col quantity-col">
                                                     <div class="quantity-grp">
                                                         <i class='bx bxs-minus-circle js-minus'></i>
-                                                        <p class="amount js-num">1</p>
+                                                        <p class="amount js-num"><?php echo $IN_ORDER_QUANTITY?></p>
                                                         <i class='bx bxs-plus-circle js-plus'></i>
                                                     </div>
                                                     <p class="remaining"><?php echo $FOOD_STOCK ?> sticks remaining</p>

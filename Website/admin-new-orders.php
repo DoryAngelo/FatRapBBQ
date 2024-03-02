@@ -73,11 +73,12 @@
                             <th class="header">Customer</th>
                             <th class="header">Order #</th>
                             <th class="header">Payment</th>
+                            <th class="header">Status</th>
                             <th class="header">Confirmed</th>
                         </tr>
                         <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
                         <?php
-                            $sql = "SELECT * FROM placed_order";
+                            $sql = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'Ordered'";
                             $res = mysqli_query($conn, $sql);
                             $count = mysqli_num_rows($res);
                             if ($count > 0) {
@@ -96,6 +97,7 @@
                                         <td data-cell="customer"><?php echo $CUS_NAME ?></td>
                                         <td data-cell="Order #"><a href="<?php echo SITEURL?>admin-order-details.php?PRSN_ID=<?php echo $PRSN_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
                                         <td data-cell="Payment">₱<?php echo $PLACED_ORDER_TOTAL ?></td>
+                                        <td data-cell="Payment"><?php echo $PLACED_ORDER_STATUS ?></td>
                                         <td data-cell="Confimed">
                                             <div class="btn-wrapper">
                                                 <form method="POST">

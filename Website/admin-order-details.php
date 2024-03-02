@@ -86,6 +86,10 @@ $PRSN_ID = $_GET['PRSN_ID'];
                                         <td><?php echo $PLACED_ORDER_ID ?></td>
                                     </tr>
                                     <tr>
+                                        <th>Order Status:</th>
+                                        <td><?php echo $PLACED_ORDER_STATUS ?></td>
+                                    </tr>
+                                    <tr>
                                         <th>Date and time placed:</th>
                                         <td><?php echo $PLACED_ORDER_DATE ?></td>
                                     </tr>
