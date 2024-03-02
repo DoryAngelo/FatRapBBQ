@@ -37,22 +37,21 @@ $PRSN_ID = $_SESSION['prsn_id'];
             </div>
             <nav>
                 <ul>
-                    <li><a href="<?php echo SITEURL ;?>admin-home.php">Home</a></li>
-                    <li><a href="<?php echo SITEURL ;?>admin-edit-menu.php">Menu</a></li>
-                    <li><a href="<?php echo SITEURL ;?>admin-new-orders.php">Orders</a></li>
+                    <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
+                    <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
+                    <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
                     <!-- Text below should change to 'Logout'once user logged in-->
                     <?php
-                        if(isset($_SESSION['prsn_id'])){
-                    ?>  
-                        <li><a href="<?php echo SITEURL ;?>logout.php">Logout</a><li>
-                    <?php
-                        } 
-                        else 
-                        {
+                    if (isset($_SESSION['prsn_id'])) {
                     ?>
-                        <li><a href="<?php echo SITEURL ;?>login-page.php">Login</a></li>
+                        <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
+                        <li>
+                        <?php
+                    } else {
+                        ?>
+                        <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
                     <?php
-                        }
+                    }
                     ?>
                 </ul>
             </nav>
@@ -74,48 +73,48 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                 <th class="header">Contact #</th>
                                 <th class="header">Username</th>
                                 <th class="header">Email</th>
-                                <th class="header">Password</th>
                                 <th class="header">Action</th>
                             </tr>
-                            <tr>
-                                <td data-cell="Image">
-                                    <img src="https://i.imgflip.com/1lbeyi.jpg?a474552" alt="">
-                                </td>
-                                <td data-cell="First Name">John John John John</td>
-                                <td data-cell="Last Name">Doe dsjlkfjsalds</td>
-                                <td data-cell="Contact #">09123456789</td>
-                                <td data-cell="Username">jando1jando1jando1</td>
-                                <td data-cell="Email">johndoejohndoejohndoe@gmail.com</td>
-                                <td data-cell="Password">johndoe123</td>
-                                <td data-cell="Action"><a href="<?php echo SITEURL ;?>admin-edit-employee.php" class="edit">Edit</a></td>
-                            </tr>
-                            <tr>
-                                <td data-cell="Image">
-                                    <img src="https://i.imgflip.com/1lbeyi.jpg?a474552" alt="">
-                                </td>
-                                <td data-cell="First Name">John</td>
-                                <td data-cell="Last Name">Doe</td>
-                                <td data-cell="Contact #">09123456789</td>
-                                <td data-cell="Username">jando1</td>
-                                <td data-cell="Email">johndoe@gmail.com</td>
-                                <td data-cell="Password">johndoe123</td>
-                                <td data-cell="Action"><a href="<?php echo SITEURL ;?>admin-edit-employee.php" class="edit">Edit</a></td>
-                            </tr>
-                            <tr>
-                                <td data-cell="Image">
-                                    <img src="https://i.imgflip.com/1lbeyi.jpg?a474552" alt="">
-                                </td>
-                                <td data-cell="First Name">John</td>
-                                <td data-cell="Last Name">Doe</td>
-                                <td data-cell="Contact #">09123456789</td>
-                                <td data-cell="Username">jando1</td>
-                                <td data-cell="Email">johndoe@gmail.com</td>
-                                <td data-cell="Password">johndoe123</td>
-                                <td data-cell="Action"><a href="<?php echo SITEURL ;?>admin-edit-employee.php" class="edit">Edit</a></td>
-                            </tr>
+                            <?php
+                            $sql = "SELECT * FROM person, employee WHERE employee.PRSN_ID = person.PRSN_ID AND PRSN_ROLE = 'Employee'";
+                            $res = mysqli_query($conn, $sql);
+                            $count = mysqli_num_rows($res);
+                            if ($count > 0) {
+                                while ($row = mysqli_fetch_assoc($res)) {
+                                    $PRSN_ID = $row['PRSN_ID'];
+                                    $EMP_ID = $row['EMP_ID'];
+                                    $EMP_IMAGE = $row['EMP_IMAGE'];
+                                    $EMP_FNAME = $row['EMP_FNAME'];
+                                    $EMP_LNAME = $row['EMP_LNAME'];
+                                    $PRSN_NUMBER = $row['PRSN_PHONE'];
+                                    $PRSN_NAME = $row['PRSN_NAME'];
+                                    $PRSN_EMAIL = $row['PRSN_EMAIL'];
+                            ?>
+                                    <tr>
+                                        <td data-cell="Image">
+                                            <img src="<?php echo SITEURL; ?>images/<?php echo $EMP_IMAGE; ?>"  alt="">
+                                        </td>
+                                        <td data-cell="Name"><?php echo $EMP_FNAME?></td>
+                                        <td data-cell="Name"><?php echo $EMP_LNAME?></td>
+                                        <td data-cell="Contact #"><?php echo $PRSN_NUMBER?></td>
+                                        <td data-cell="Username"><?php echo $PRSN_NAME?></td>
+                                        <td data-cell="Email"><?php echo $PRSN_EMAIL?></td>
+                                        <td data-cell="Action"><a href="<?php echo SITEURL; ?>admin-edit-employee.php?PRSN_ID=<?php echo $PRSN_ID?>&EMP_ID=<?php echo $EMP_ID?>" class="edit">Edit</a></td>
+                                    </tr>
+                                <?php
+                                }
+                            } else {
+                                ?>
+                                <tr>
+                                    <td colspan="5" class="error">Empty</td>
+                                </tr>
+                            <?php
+
+                            }
+                            ?>
                         </table>
                     </div>
-                    <a href="<?php echo SITEURL ;?>admin-add-employee.php" class="page-btn"><button class="big-btn">Add a new employee</button></a>
+                    <a href="<?php echo SITEURL; ?>admin-add-employee.php" class="page-btn"><button class="big-btn">Add a new employee</button></a>
                 </section>
             </section>
         </section>

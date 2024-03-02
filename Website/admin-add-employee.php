@@ -52,10 +52,8 @@ if (isset($_POST['submit'])) {
                        VALUES('$PRSN_UNAME', '$PRSN_EMAIL', '$PRSN_PASSWORD', '$PRSN_PHONE', '$PRSN_ROLE')";
             if (mysqli_query($conn, $insert)) {
                 $PRSN_ID = mysqli_insert_id($conn);
-                $EMP_NAME = $PRSN_FNAME . " " . $PRSN_LNAME;
-
-                $insert2 = "INSERT INTO employee(PRSN_ID, EMP_NAME, EMP_IMAGE) 
-                            VALUES('$PRSN_ID', '$EMP_NAME', '$EMP_IMG')";
+                $insert2 = "INSERT INTO employee(PRSN_ID, EMP_FNAME, EMP_LNAME, EMP_IMAGE) 
+                            VALUES('$PRSN_ID', '$PRSN_FNAME', '$PRSN_LNAME', '$EMP_IMG')";
                 if (!mysqli_query($conn, $insert2)) {
                     $error[] = "Error inserting data into employee table: " . mysqli_error($conn);
                 }

@@ -6,7 +6,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
 
 $PRSN_ROLE = $_SESSION['prsn_role'];
 
-if($PRSN_ROLE !== 'Admin'){
+if($PRSN_ROLE !== 'Employee'){
 	header('location:'.SITEURL.'login-page.php');
 }
 ?>

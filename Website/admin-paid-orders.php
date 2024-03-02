@@ -83,13 +83,13 @@ $PRSN_ID = $_SESSION['prsn_id'];
                         </tr>
                         <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
                         <?php
-                            $sql = "SELECT * FROM placed_order";
+                            $sql = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'Paid'";
                             $res = mysqli_query($conn, $sql);
                             $count = mysqli_num_rows($res);
                             if ($count > 0) {
                                 while ($row = mysqli_fetch_assoc($res)) {
                                     $PLACED_ORDER_ID = $row['PLACED_ORDER_ID'];
-                                    $CUS_ID = $row['CUS_ID'];
+                                    $PRSN_ID = $row['PRSN_ID'];
                                     $CUS_NAME = $row['CUS_NAME'];
                                     $PLACED_ORDER_DATE = $row['PLACED_ORDER_DATE'];
                                     $PLACED_ORDER_TOTAL = $row['PLACED_ORDER_TOTAL'];
@@ -100,7 +100,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                     <tr>
                                         <td data-cell="Date and Time"><?php echo $PLACED_ORDER_DATE ?></td>
                                         <td data-cell="customer"><?php echo $CUS_NAME ?></td>
-                                        <td data-cell="Order #"><a href="<?php echo SITEURL?>admin-order-details.php?CUS_ID=<?php echo $CUS_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
+                                        <td data-cell="Order #"><a href="<?php echo SITEURL?>admin-order-details.php?PRSN_ID=<?php echo $PRSN_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
                                         <td data-cell="Payment">₱<?php echo $PLACED_ORDER_TOTAL ?></td>
                                         <td data-cell="Confimed">
                                             <div class="btn-wrapper">

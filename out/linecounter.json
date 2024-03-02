@@ -1,0 +1,460 @@
+{
+    "extension": "linecounter",
+    "version": "0.2.7",
+    "workspace": "c:\\xampp\\htdocs\\FatRapBBQ",
+    "linecount": [
+        {
+            "version": "0.2.7",
+            "counttime": "2024-03-01 22:27:36",
+            "filesum": 68,
+            "codesum": 8575,
+            "commentsum": 538,
+            "blanksum": 1056,
+            "statistics": {
+                ".sql": {
+                    "code": 120,
+                    "comment": 125,
+                    "blank": 68
+                },
+                ".md": {
+                    "code": 2,
+                    "comment": 0,
+                    "blank": 0
+                },
+                ".html": {
+                    "code": 1817,
+                    "comment": 243,
+                    "blank": 69
+                },
+                ".php": {
+                    "code": 4018,
+                    "comment": 8,
+                    "blank": 384
+                },
+                ".css": {
+                    "code": 2428,
+                    "comment": 135,
+                    "blank": 477
+                },
+                ".js": {
+                    "code": 190,
+                    "comment": 27,
+                    "blank": 58
+                }
+            },
+            "filelist": [
+                {
+                    "blank": 68,
+                    "code": 120,
+                    "comment": 125,
+                    "filename": "bbq (3).sql"
+                },
+                {
+                    "blank": 4,
+                    "code": 110,
+                    "comment": 42,
+                    "filename": "html copies\\admin-accepted-wholesale-users.html"
+                },
+                {
+                    "blank": 4,
+                    "code": 109,
+                    "comment": 4,
+                    "filename": "html copies\\admin-add-employee.html"
+                },
+                {
+                    "blank": 4,
+                    "code": 83,
+                    "comment": 3,
+                    "filename": "html copies\\admin-application-details.html"
+                },
+                {
+                    "blank": 4,
+                    "code": 108,
+                    "comment": 4,
+                    "filename": "html copies\\admin-edit-calendar.html"
+                },
+                {
+                    "blank": 5,
+                    "code": 97,
+                    "comment": 38,
+                    "filename": "html copies\\admin-edit-menu.html"
+                },
+                {
+                    "blank": 0,
+                    "code": 115,
+                    "comment": 3,
+                    "filename": "html copies\\admin-home.html"
+                },
+                {
+                    "blank": 5,
+                    "code": 83,
+                    "comment": 39,
+                    "filename": "html copies\\admin-inventory.html"
+                },
+                {
+                    "blank": 5,
+                    "code": 117,
+                    "comment": 38,
+                    "filename": "html copies\\admin-new-orders.html"
+                },
+                {
+                    "blank": 5,
+                    "code": 107,
+                    "comment": 4,
+                    "filename": "html copies\\admin-order-details.html"
+                },
+                {
+                    "blank": 6,
+                    "code": 201,
+                    "comment": 21,
+                    "filename": "html copies\\checkout.html"
+                },
+                {
+                    "blank": 7,
+                    "code": 154,
+                    "comment": 9,
+                    "filename": "html copies\\done\\cart.html"
+                },
+                {
+                    "blank": 5,
+                    "code": 177,
+                    "comment": 25,
+                    "filename": "html copies\\done\\cus-home-page.html"
+                },
+                {
+                    "blank": 4,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "html copies\\track-order.html"
+                },
+                {
+                    "blank": 0,
+                    "code": 2,
+                    "comment": 0,
+                    "filename": "README.md"
+                },
+                {
+                    "blank": 8,
+                    "code": 23,
+                    "comment": 0,
+                    "filename": "Website\\add_food.php"
+                },
+                {
+                    "blank": 14,
+                    "code": 136,
+                    "comment": 0,
+                    "filename": "Website\\admin-accepted-wholesale-users.php"
+                },
+                {
+                    "blank": 18,
+                    "code": 182,
+                    "comment": 0,
+                    "filename": "Website\\admin-add-employee.php"
+                },
+                {
+                    "blank": 12,
+                    "code": 112,
+                    "comment": 0,
+                    "filename": "Website\\admin-application-details.php"
+                },
+                {
+                    "blank": 19,
+                    "code": 153,
+                    "comment": 0,
+                    "filename": "Website\\admin-canceled-orders.php"
+                },
+                {
+                    "blank": 19,
+                    "code": 153,
+                    "comment": 0,
+                    "filename": "Website\\admin-completed-orders.php"
+                },
+                {
+                    "blank": 19,
+                    "code": 153,
+                    "comment": 0,
+                    "filename": "Website\\admin-delivery-orders.php"
+                },
+                {
+                    "blank": 4,
+                    "code": 122,
+                    "comment": 1,
+                    "filename": "Website\\admin-edit-calendar.php"
+                },
+                {
+                    "blank": 18,
+                    "code": 182,
+                    "comment": 0,
+                    "filename": "Website\\admin-edit-employee.php"
+                },
+                {
+                    "blank": 15,
+                    "code": 118,
+                    "comment": 0,
+                    "filename": "Website\\admin-edit-menu.php"
+                },
+                {
+                    "blank": 7,
+                    "code": 118,
+                    "comment": 0,
+                    "filename": "Website\\admin-employee-accounts.php"
+                },
+                {
+                    "blank": 5,
+                    "code": 137,
+                    "comment": 0,
+                    "filename": "Website\\admin-home.php"
+                },
+                {
+                    "blank": 15,
+                    "code": 123,
+                    "comment": 1,
+                    "filename": "Website\\admin-inventory.php"
+                },
+                {
+                    "blank": 14,
+                    "code": 152,
+                    "comment": 0,
+                    "filename": "Website\\admin-new-orders.php"
+                },
+                {
+                    "blank": 14,
+                    "code": 163,
+                    "comment": 0,
+                    "filename": "Website\\admin-order-details.php"
+                },
+                {
+                    "blank": 19,
+                    "code": 153,
+                    "comment": 0,
+                    "filename": "Website\\admin-paid-orders.php"
+                },
+                {
+                    "blank": 19,
+                    "code": 153,
+                    "comment": 0,
+                    "filename": "Website\\admin-preparing-orders.php"
+                },
+                {
+                    "blank": 122,
+                    "code": 603,
+                    "comment": 28,
+                    "filename": "Website\\admin-styles.css"
+                },
+                {
+                    "blank": 14,
+                    "code": 54,
+                    "comment": 2,
+                    "filename": "Website\\app.js"
+                },
+                {
+                    "blank": 13,
+                    "code": 41,
+                    "comment": 3,
+                    "filename": "Website\\calendar.js"
+                },
+                {
+                    "blank": 11,
+                    "code": 189,
+                    "comment": 1,
+                    "filename": "Website\\cart.php"
+                },
+                {
+                    "blank": 18,
+                    "code": 255,
+                    "comment": 1,
+                    "filename": "Website\\checkout.php"
+                },
+                {
+                    "blank": 4,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "Website\\constants.php"
+                },
+                {
+                    "blank": 19,
+                    "code": 229,
+                    "comment": 3,
+                    "filename": "Website\\cus-home-page.php"
+                },
+                {
+                    "blank": 67,
+                    "code": 371,
+                    "comment": 39,
+                    "filename": "Website\\cus-home-styles.css"
+                },
+                {
+                    "blank": 27,
+                    "code": 157,
+                    "comment": 5,
+                    "filename": "Website\\cus-reg-styles.css"
+                },
+                {
+                    "blank": 10,
+                    "code": 132,
+                    "comment": 0,
+                    "filename": "Website\\cus-register-page.php"
+                },
+                {
+                    "blank": 117,
+                    "code": 531,
+                    "comment": 30,
+                    "filename": "Website\\customer-styles.css"
+                },
+                {
+                    "blank": 7,
+                    "code": 8,
+                    "comment": 0,
+                    "filename": "Website\\delete_in_order.php"
+                },
+                {
+                    "blank": 1,
+                    "code": 68,
+                    "comment": 3,
+                    "filename": "Website\\email-success.html"
+                },
+                {
+                    "blank": 5,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "Website\\employee-page.php"
+                },
+                {
+                    "blank": 29,
+                    "code": 148,
+                    "comment": 4,
+                    "filename": "Website\\forgot-password-styles.css"
+                },
+                {
+                    "blank": 1,
+                    "code": 76,
+                    "comment": 4,
+                    "filename": "Website\\forgot-password.html"
+                },
+                {
+                    "blank": 30,
+                    "code": 148,
+                    "comment": 3,
+                    "filename": "Website\\header-styles.css"
+                },
+                {
+                    "blank": 19,
+                    "code": 59,
+                    "comment": 6,
+                    "filename": "Website\\home.js"
+                },
+                {
+                    "filename": "Website\\images\\barbeque.jpg",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Website\\images\\client-logo.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "Website\\images\\WHL_IMAGE_Wholesaler.jpg",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 13,
+                    "code": 91,
+                    "comment": 0,
+                    "filename": "Website\\login-page.php"
+                },
+                {
+                    "blank": 35,
+                    "code": 193,
+                    "comment": 5,
+                    "filename": "Website\\login-styles.css"
+                },
+                {
+                    "blank": 5,
+                    "code": 16,
+                    "comment": 0,
+                    "filename": "Website\\login_error.php"
+                },
+                {
+                    "blank": 5,
+                    "code": 7,
+                    "comment": 0,
+                    "filename": "Website\\logout.php"
+                },
+                {
+                    "blank": 4,
+                    "code": 137,
+                    "comment": 0,
+                    "filename": "Website\\menu.php"
+                },
+                {
+                    "blank": 12,
+                    "code": 36,
+                    "comment": 16,
+                    "filename": "Website\\order-status-progress-bar.js"
+                },
+                {
+                    "blank": 6,
+                    "code": 18,
+                    "comment": 0,
+                    "filename": "Website\\order_food.php"
+                },
+                {
+                    "blank": 7,
+                    "code": 51,
+                    "comment": 0,
+                    "filename": "Website\\password.html"
+                },
+                {
+                    "blank": 7,
+                    "code": 144,
+                    "comment": 0,
+                    "filename": "Website\\product-info.php"
+                },
+                {
+                    "blank": 1,
+                    "code": 71,
+                    "comment": 3,
+                    "filename": "Website\\reset-pass-success.html"
+                },
+                {
+                    "blank": 1,
+                    "code": 79,
+                    "comment": 3,
+                    "filename": "Website\\reset-password.html"
+                },
+                {
+                    "blank": 37,
+                    "code": 203,
+                    "comment": 17,
+                    "filename": "Website\\styles.css"
+                },
+                {
+                    "blank": 13,
+                    "code": 74,
+                    "comment": 4,
+                    "filename": "Website\\success-styles.css"
+                },
+                {
+                    "blank": 12,
+                    "code": 240,
+                    "comment": 1,
+                    "filename": "Website\\track-order.php"
+                },
+                {
+                    "blank": 19,
+                    "code": 193,
+                    "comment": 0,
+                    "filename": "Website\\wc-register.php"
+                }
+            ]
+        }
+    ]
+}

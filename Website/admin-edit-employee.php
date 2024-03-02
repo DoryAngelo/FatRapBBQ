@@ -2,69 +2,8 @@
 
 @include 'constants.php';
 
-$PRSN_ID = $_SESSION['prsn_id'];
-
-if (isset($_POST['submit'])) {
-    $PRSN_FNAME = mysqli_real_escape_string($conn, $_POST['first-name']);
-    $PRSN_LNAME = mysqli_real_escape_string($conn, $_POST['last-name']);
-    $PRSN_EMAIL = mysqli_real_escape_string($conn, $_POST['email']);
-    $PRSN_PHONE = $_POST['phone-number'];
-    $PRSN_UNAME = mysqli_real_escape_string($conn, $_POST['username']);
-    $PRSN_PASSWORD = md5($_POST['password']);
-    $PRSN_CPASSWORD = md5($_POST['cpassword']);
-    $PRSN_ROLE = 'Employee';
-
-    if (isset($_FILES['image']['name'])) {
-        $EMP_IMG = $_FILES['image']['name'];
-
-        if ($EMP_IMG != "") {
-            $image_info = explode(".", $EMP_IMG);
-            $ext = end($image_info);
-
-            $EMP_IMG = "EMP_IMAGE_" . $PRSN_LNAME . "." . $ext;
-
-            $src = $_FILES['image']['tmp_name'];
-            $dst = "images/" . $EMP_IMG;
-
-            $upload    = move_uploaded_file($src, $dst);
-
-            if ($upload = false) {
-                $_SESSION['upload'] = "<div class='error'>Failed To Upload Image</div>";
-                header('location:' . SITEURL . 'admin-home.php');
-                die();
-            }
-        }
-    } else {
-        $EMP_IMG = "";
-    }
-
-    $select = "SELECT * FROM `person` WHERE PRSN_EMAIL = '$PRSN_EMAIL'";
-
-    $result = mysqli_query($conn, $select);
-
-    if (mysqli_num_rows($result) > 0) {
-        $error[] = "User already exists";
-    } else {
-        if ($PRSN_PASSWORD != $PRSN_CPASSWORD) {
-            $error[] = "Password not matched";
-        } else {
-            $insert = "INSERT INTO person(PRSN_NAME, PRSN_EMAIL, PRSN_PASSWORD, PRSN_PHONE, PRSN_ROLE) 
-                       VALUES('$PRSN_UNAME', '$PRSN_EMAIL', '$PRSN_PASSWORD', '$PRSN_PHONE', '$PRSN_ROLE')";
-            if (mysqli_query($conn, $insert)) {
-                $PRSN_ID = mysqli_insert_id($conn);
-                $EMP_NAME = $PRSN_FNAME . " " . $PRSN_LNAME;
-
-                $insert2 = "INSERT INTO employee(PRSN_ID, EMP_NAME, EMP_IMAGE) 
-                            VALUES('$PRSN_ID', '$EMP_NAME', '$EMP_IMG')";
-                if (!mysqli_query($conn, $insert2)) {
-                    $error[] = "Error inserting data into employee table: " . mysqli_error($conn);
-                }
-            } else {
-                $error[] = "Error inserting data into person table: " . mysqli_error($conn);
-            }
-        }
-    }
-}
+$PRSN_ID = $_GET['PRSN_ID'];
+$EMP_ID = $_GET['EMP_ID'];
 
 ?>
 
@@ -99,21 +38,20 @@ if (isset($_POST['submit'])) {
             </div>
             <nav>
                 <ul>
-                    <li><a href="<?php echo SITEURL ;?>admin-home.php">Home</a></li>
-                    <li><a href="<?php echo SITEURL ;?>admin-edit-menu.php">Menu</a></li>
-                    <li><a href="<?php echo SITEURL ;?>admin-new-orders.php">Orders</a></li>
+                    <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
+                    <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
+                    <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
                     <?php
-                        if(isset($_SESSION['prsn_id'])){
-                    ?>  
-                        <li><a href="<?php echo SITEURL ;?>logout.php">Logout</a><li>
-                    <?php
-                        } 
-                        else 
-                        {
+                    if (isset($_SESSION['prsn_id'])) {
                     ?>
-                        <li><a href="<?php echo SITEURL ;?>login-page.php">Login</a></li>
+                        <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
+                        <li>
+                        <?php
+                    } else {
+                        ?>
+                        <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
                     <?php
-                        }
+                    }
                     ?>
                 </ul>
             </nav>
@@ -123,76 +61,103 @@ if (isset($_POST['submit'])) {
         <section class="section">
             <div class="section-heading row back">
                 <h2>Edit Employee Information</h2>
-                <a href="<?php echo SITEURL ;?>admin-employee-accounts.php">Back</a>
+                <a href="<?php echo SITEURL; ?>admin-employee-accounts.php">Back</a>
             </div>
             <section class="section-body">
                 <section class="main-section column">
                     <section class="block">
-                        <form action="#" class="form" method="post" enctype="multipart/form-data">
-                            <section>
-                                <div class="form-title">
-                                    <h1>Contact Information</h1>
-                                </div>
-                                <div class="form-field">
-                                    <div class="form-field-input">
-                                        <label for="first-name">First Name</label>
-                                        <input name="first-name" id="first-name" class="js-user" type="text" required>
-                                    </div>
-                                    <div class="form-field-input">
-                                        <label for="last-name">Last Name</label>
-                                        <input name="last-name" id="last-name" class="js-user" type="text" required>
-                                    </div>
-                                    <div class="form-field-input">
-                                        <label for="phone-number">Phone Number</label>
-                                        <input class="js-user" type="text" id="phone-number" name="phone-number" required pattern="^(09)[0-9]{9}$"><!-- numbers only, starts with 09, must have 11-digits -->
-                                    </div>
-                                    <div class="form-field-input">
-                                        <label for="email">Email</label>
-                                        <input name="email" id="email" class="js-user" type="text" required>
-                                    </div>
-                                    <div class="form-field-input">
-                                        <label for="image">Image</label>
-                                        <p>(accepted files: .jpg, .png)</p>
-                                        <input name="image" id="image" class="image" type="file" required>
-                                    </div>
-                                </div>
-                            </section>
-                            <div class="line"></div>
-                            <section>
-                                <div class="form-title">
-                                    <h1>Login Credentials</h1>
-                                </div>
-                                <div class="form-field">
-                                    <div class="form-field-input">
-                                        <label for="username">Username</label>
-                                        <input name="username" id="username" class="js-user" type="text" required>
-                                    </div>
-                                    <div class="form-field-input">
-                                        <label for="password">Password</label>
-                                        <input class="js-pass" type="password" id="password" name="password" required>
-                                        <svg class="showpass" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                            <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z" />
-                                        </svg>
-                                        <svg class="hidepass" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                            <path fill="currentColor" d="M11.83 9L15 12.16V12a3 3 0 0 0-3-3h-.17m-4.3.8l1.55 1.55c-.05.21-.08.42-.08.65a3 3 0 0 0 3 3c.22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53a5 5 0 0 1-5-5c0-.79.2-1.53.53-2.2M2 4.27l2.28 2.28l.45.45C3.08 8.3 1.78 10 1 12c1.73 4.39 6 7.5 11 7.5c1.55 0 3.03-.3 4.38-.84l.43.42L19.73 22L21 20.73L3.27 3M12 7a5 5 0 0 1 5 5c0 .64-.13 1.26-.36 1.82l2.93 2.93c1.5-1.25 2.7-2.89 3.43-4.75c-1.73-4.39-6-7.5-11-7.5c-1.4 0-2.74.25-4 .7l2.17 2.15C10.74 7.13 11.35 7 12 7Z" />
-                                        </svg>
-                                    </div>
-                                    <div class="form-field-input">
-                                        <label for="cpassword">Re-enter Password</label>
-                                        <input class="js-cpass" type="password" id="cpassword" name="cpassword" required>
-                                        <svg class="showcpass" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                            <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z" />
-                                        </svg>
-                                        <svg class="hidecpass" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                            <path fill="currentColor" d="M11.83 9L15 12.16V12a3 3 0 0 0-3-3h-.17m-4.3.8l1.55 1.55c-.05.21-.08.42-.08.65a3 3 0 0 0 3 3c.22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53a5 5 0 0 1-5-5c0-.79.2-1.53.53-2.2M2 4.27l2.28 2.28l.45.45C3.08 8.3 1.78 10 1 12c1.73 4.39 6 7.5 11 7.5c1.55 0 3.03-.3 4.38-.84l.43.42L19.73 22L21 20.73L3.27 3M12 7a5 5 0 0 1 5 5c0 .64-.13 1.26-.36 1.82l2.93 2.93c1.5-1.25 2.7-2.89 3.43-4.75c-1.73-4.39-6-7.5-11-7.5c-1.4 0-2.74.25-4 .7l2.17 2.15C10.74 7.13 11.35 7 12 7Z" />
-                                        </svg>
-                                    </div>
-                                </div>
-                            </section>
+                        <?php
+
+                        $sql = "SELECT * FROM person, employee WHERE employee.PRSN_ID = person.PRSN_ID AND EMP_ID = $EMP_ID";
+                        $res = mysqli_query($conn, $sql);
+                        $count = mysqli_num_rows($res);
+                        if ($count > 0) {
+                            while ($row = mysqli_fetch_assoc($res)) {
+                                $PRSN_ID = $row['PRSN_ID'];
+                                $EMP_IMAGE = $row['EMP_IMAGE'];
+                                $EMP_FNAME = $row['EMP_FNAME'];
+                                $EMP_LNAME = $row['EMP_LNAME'];
+                                $PRSN_NUMBER = $row['PRSN_PHONE'];
+                                $PRSN_NAME = $row['PRSN_NAME'];
+                                $PRSN_EMAIL = $row['PRSN_EMAIL'];
+                        ?>
+                                <form action="#" class="form" method="post" enctype="multipart/form-data">
+                                    <section>
+                                        <div class="form-title">
+                                            <h1>Contact Information</h1>
+                                        </div>
+                                        <div class="form-field">
+                                            <div class="form-field-input">
+                                                <label for="first-name">First Name</label>
+                                                <input value="<?php echo $EMP_FNAME ?> " name="first-name" id="first-name" class="js-user" type="text" required>
+                                            </div>
+                                            <div class="form-field-input">
+                                                <label for="last-name">Last Name</label>
+                                                <input value="<?php echo $EMP_LNAME ?>" name="last-name" id="last-name" class="js-user" type="text" required>
+                                            </div>
+                                            <div class="form-field-input">
+                                                <label for="phone-number">Phone Number</label>
+                                                <input value="<?php echo $PRSN_NUMBER ?>" class="js-user" type="text" id="phone-number" name="phone-number" required pattern="^(09)[0-9]{9}$"><!-- numbers only, starts with 09, must have 11-digits -->
+                                            </div>
+                                            <div class="form-field-input">
+                                                <label for="email">Email</label>
+                                                <input value="<?php echo $PRSN_EMAIL ?>" name="email" id="email" class="js-user" type="text" required>
+                                            </div>
+                                            <div class="form-field-input">
+                                                <label for="image">Image</label>
+                                                <p>(accepted files: .jpg, .png)</p>
+                                                <input name="image" id="image" class="image" type="file" required>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    <div class="line"></div>
+                                    <section>
+                                        <div class="form-title">
+                                            <h1>Login Credentials</h1>
+                                        </div>
+                                        <div class="form-field">
+                                            <div class="form-field-input">
+                                                <label for="username">Username</label>
+                                                <input value="<?php echo $PRSN_NAME ?>" name="username" id="username" class="js-user" type="text" required>
+                                            </div>
+                                            <div class="form-field-input">
+                                                <label for="password">Password</label>
+                                                <input class="js-pass" type="password" id="password" name="password" required>
+                                                <svg class="showpass" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                                    <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z" />
+                                                </svg>
+                                                <svg class="hidepass" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                                    <path fill="currentColor" d="M11.83 9L15 12.16V12a3 3 0 0 0-3-3h-.17m-4.3.8l1.55 1.55c-.05.21-.08.42-.08.65a3 3 0 0 0 3 3c.22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53a5 5 0 0 1-5-5c0-.79.2-1.53.53-2.2M2 4.27l2.28 2.28l.45.45C3.08 8.3 1.78 10 1 12c1.73 4.39 6 7.5 11 7.5c1.55 0 3.03-.3 4.38-.84l.43.42L19.73 22L21 20.73L3.27 3M12 7a5 5 0 0 1 5 5c0 .64-.13 1.26-.36 1.82l2.93 2.93c1.5-1.25 2.7-2.89 3.43-4.75c-1.73-4.39-6-7.5-11-7.5c-1.4 0-2.74.25-4 .7l2.17 2.15C10.74 7.13 11.35 7 12 7Z" />
+                                                </svg>
+                                            </div>
+                                            <div class="form-field-input">
+                                                <label for="cpassword">Re-enter Password</label>
+                                                <input class="js-cpass" type="password" id="cpassword" name="cpassword" required>
+                                                <svg class="showcpass" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                                    <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z" />
+                                                </svg>
+                                                <svg class="hidecpass" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                                    <path fill="currentColor" d="M11.83 9L15 12.16V12a3 3 0 0 0-3-3h-.17m-4.3.8l1.55 1.55c-.05.21-.08.42-.08.65a3 3 0 0 0 3 3c.22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53a5 5 0 0 1-5-5c0-.79.2-1.53.53-2.2M2 4.27l2.28 2.28l.45.45C3.08 8.3 1.78 10 1 12c1.73 4.39 6 7.5 11 7.5c1.55 0 3.03-.3 4.38-.84l.43.42L19.73 22L21 20.73L3.27 3M12 7a5 5 0 0 1 5 5c0 .64-.13 1.26-.36 1.82l2.93 2.93c1.5-1.25 2.7-2.89 3.43-4.75c-1.73-4.39-6-7.5-11-7.5c-1.4 0-2.74.25-4 .7l2.17 2.15C10.74 7.13 11.35 7 12 7Z" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </section>
                     </section>
                     <button name="submit" class="big-btn">Save</button>
                     </form>
-                    <!-- <a href="" class="page-btn"></a> -->
+                <?php
+                            }
+                        } else {
+                ?>
+                <tr>
+                    <td colspan="5" class="error">Empty</td>
+                </tr>
+            <?php
+
+                        }
+            ?>
+
+            <!-- <a href="" class="page-btn"></a> -->
                 </section>
             </section>
         </section>
@@ -200,3 +165,87 @@ if (isset($_POST['submit'])) {
 </body>
 
 </html>
+
+<?php
+
+if (isset($_POST['submit'])) {
+    $EMP_FNAME = mysqli_real_escape_string($conn, $_POST['first-name']);
+    $EMP_LNAME = mysqli_real_escape_string($conn, $_POST['last-name']);
+    $PRSN_EMAIL = mysqli_real_escape_string($conn, $_POST['email']);
+    $PRSN_PHONE = $_POST['phone-number'];
+    $PRSN_UNAME = mysqli_real_escape_string($conn, $_POST['username']);
+    $PRSN_PASSWORD = md5($_POST['password']);
+    $PRSN_CPASSWORD = md5($_POST['cpassword']);
+    $PRSN_ROLE = 'Employee';
+    $current_image = $EMP_IMAGE;
+
+    if (isset($_FILES['image']['name'])) {
+        //get the image details
+        $EMP_IMG = $_FILES['image']['name'];
+
+        //check whether image is available
+        if ($EMP_IMG != "") {
+            $image_info = explode(".", $EMP_IMG);
+            $ext = end($image_info);
+
+            $EMP_IMG = "EMP_IMAGE_" . $EMP_LNAME . "." . $ext;
+
+            $src = $_FILES['image']['tmp_name'];
+            $dst = "images/" . $EMP_IMG;
+
+            $upload    = move_uploaded_file($src, $dst);
+
+            //check whether the image is uploaded
+            if ($upload == false) {
+                $_SESSION['upload'] = "<div class='error'>Failed To Upload Image</div>";
+                header('loaction:' . SITEURL . 'admin/manage_food.php');
+                die();
+            }
+            //remove current image if available
+            if ($current_image != "") {
+                $remove_path = "images/" . $EMP_IMAGE;
+                $remove = unlink($remove_path);
+                //check whether image is removed
+                if ($remove == false) {
+                    $_SESSION['failed-remove'] = "<div class='error'>Failed To Remove Current Image</div>";
+                    header('location:' . SITEURL . 'admin-home.php');
+                    die();
+                }
+            }
+        } else {
+            $image_name = $current_image;
+        }
+    } else {
+        $image_name = $current_image;
+    }
+
+
+    if ($PRSN_PASSWORD != $PRSN_CPASSWORD) {
+        $error[] = "Password not matched";
+    } else {
+        $update = "UPDATE person 
+        SET PRSN_NAME = '$PRSN_UNAME',
+            PRSN_EMAIL = '$PRSN_EMAIL',
+            PRSN_PASSWORD = '$PRSN_PASSWORD',
+            PRSN_PHONE = '$PRSN_PHONE'
+        WHERE PRSN_ID = $PRSN_ID";
+
+        if (mysqli_query($conn, $update)) {
+            $update2 = "UPDATE employee SET
+                                        EMP_FNAME = '$EMP_FNAME',
+                                        EMP_LNAME = '$EMP_LNAME',
+                                        EMP_IMAGE = '$EMP_IMG'
+                                        WHERE EMP_ID = $EMP_ID
+                                        ";
+            if (!mysqli_query($conn, $update2)) {
+                $error[] = "Error updating data into employee table: " . mysqli_error($conn);
+            }
+        } else {
+            $error[] = "Error updating data into person table: " . mysqli_error($conn);
+        }
+    }
+}
+
+
+
+?>

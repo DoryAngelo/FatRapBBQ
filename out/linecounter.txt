@@ -1,0 +1,90 @@
+===============================================================================
+EXTENSION NAME : linecounter
+EXTENSION VERSION : 0.2.7
+-------------------------------------------------------------------------------
+count time : 2024-03-01 22:27:36
+count workspace : c:\xampp\htdocs\FatRapBBQ
+total files : 68
+total code lines : 8575
+total comment lines : 538
+total blank lines : 1056
+
+    statistics
+   |      extension|     total code|  total comment|    total blank|percent|
+   -------------------------------------------------------------------------
+   |           .sql|            120|            125|             68|    1.4|
+   |            .md|              2|              0|              0|  0.023|
+   |          .html|           1817|            243|             69|     21|
+   |           .php|           4018|              8|            384|     47|
+   |           .css|           2428|            135|            477|     28|
+   |            .js|            190|             27|             58|    2.2|
+   -------------------------------------------------------------------------
+bbq (3).sql, code is 120, comment is 125, blank is 68.
+html copies\admin-accepted-wholesale-users.html, code is 110, comment is 42, blank is 4.
+html copies\admin-add-employee.html, code is 109, comment is 4, blank is 4.
+html copies\admin-application-details.html, code is 83, comment is 3, blank is 4.
+html copies\admin-edit-calendar.html, code is 108, comment is 4, blank is 4.
+html copies\admin-edit-menu.html, code is 97, comment is 38, blank is 5.
+html copies\admin-home.html, code is 115, comment is 3, blank is 0.
+html copies\admin-inventory.html, code is 83, comment is 39, blank is 5.
+html copies\admin-new-orders.html, code is 117, comment is 38, blank is 5.
+html copies\admin-order-details.html, code is 107, comment is 4, blank is 5.
+html copies\checkout.html, code is 201, comment is 21, blank is 6.
+html copies\done\cart.html, code is 154, comment is 9, blank is 7.
+html copies\done\cus-home-page.html, code is 177, comment is 25, blank is 5.
+html copies\track-order.html, code is 11, comment is 0, blank is 4.
+README.md, code is 2, comment is 0, blank is 0.
+Website\add_food.php, code is 23, comment is 0, blank is 8.
+Website\admin-accepted-wholesale-users.php, code is 136, comment is 0, blank is 14.
+Website\admin-add-employee.php, code is 182, comment is 0, blank is 18.
+Website\admin-application-details.php, code is 112, comment is 0, blank is 12.
+Website\admin-canceled-orders.php, code is 153, comment is 0, blank is 19.
+Website\admin-completed-orders.php, code is 153, comment is 0, blank is 19.
+Website\admin-delivery-orders.php, code is 153, comment is 0, blank is 19.
+Website\admin-edit-calendar.php, code is 122, comment is 1, blank is 4.
+Website\admin-edit-employee.php, code is 182, comment is 0, blank is 18.
+Website\admin-edit-menu.php, code is 118, comment is 0, blank is 15.
+Website\admin-employee-accounts.php, code is 118, comment is 0, blank is 7.
+Website\admin-home.php, code is 137, comment is 0, blank is 5.
+Website\admin-inventory.php, code is 123, comment is 1, blank is 15.
+Website\admin-new-orders.php, code is 152, comment is 0, blank is 14.
+Website\admin-order-details.php, code is 163, comment is 0, blank is 14.
+Website\admin-paid-orders.php, code is 153, comment is 0, blank is 19.
+Website\admin-preparing-orders.php, code is 153, comment is 0, blank is 19.
+Website\admin-styles.css, code is 603, comment is 28, blank is 122.
+Website\app.js, code is 54, comment is 2, blank is 14.
+Website\calendar.js, code is 41, comment is 3, blank is 13.
+Website\cart.php, code is 189, comment is 1, blank is 11.
+Website\checkout.php, code is 255, comment is 1, blank is 18.
+Website\constants.php, code is 11, comment is 0, blank is 4.
+Website\cus-home-page.php, code is 229, comment is 3, blank is 19.
+Website\cus-home-styles.css, code is 371, comment is 39, blank is 67.
+Website\cus-reg-styles.css, code is 157, comment is 5, blank is 27.
+Website\cus-register-page.php, code is 132, comment is 0, blank is 10.
+Website\customer-styles.css, code is 531, comment is 30, blank is 117.
+Website\delete_in_order.php, code is 8, comment is 0, blank is 7.
+Website\email-success.html, code is 68, comment is 3, blank is 1.
+Website\employee-page.php, code is 15, comment is 0, blank is 5.
+Website\forgot-password-styles.css, code is 148, comment is 4, blank is 29.
+Website\forgot-password.html, code is 76, comment is 4, blank is 1.
+Website\header-styles.css, code is 148, comment is 3, blank is 30.
+Website\home.js, code is 59, comment is 6, blank is 19.
+Website\images\barbeque.jpg, it is a binary file.
+Website\images\client-logo.png, it is a binary file.
+Website\images\WHL_IMAGE_Wholesaler.jpg, it is a binary file.
+Website\login-page.php, code is 91, comment is 0, blank is 13.
+Website\login-styles.css, code is 193, comment is 5, blank is 35.
+Website\login_error.php, code is 16, comment is 0, blank is 5.
+Website\logout.php, code is 7, comment is 0, blank is 5.
+Website\menu.php, code is 137, comment is 0, blank is 4.
+Website\order-status-progress-bar.js, code is 36, comment is 16, blank is 12.
+Website\order_food.php, code is 18, comment is 0, blank is 6.
+Website\password.html, code is 51, comment is 0, blank is 7.
+Website\product-info.php, code is 144, comment is 0, blank is 7.
+Website\reset-pass-success.html, code is 71, comment is 3, blank is 1.
+Website\reset-password.html, code is 79, comment is 3, blank is 1.
+Website\styles.css, code is 203, comment is 17, blank is 37.
+Website\success-styles.css, code is 74, comment is 4, blank is 13.
+Website\track-order.php, code is 240, comment is 1, blank is 12.
+Website\wc-register.php, code is 193, comment is 0, blank is 19.
+===============================================================================
