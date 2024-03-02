@@ -44,7 +44,7 @@ if (isset($_POST['reject'])) {
     <header class="backend">
         <div class="header-container">
             <div class="website-title">
-                <img id="logo" src="images/client-logo.jpg">
+                <img id="logo" src="images/client-logo.png">
                 <div class="text">
                     <h1>Fat Rap's Barbeque's Online Store</h1>
                     <p>ADMIN</p>
@@ -106,11 +106,9 @@ if (isset($_POST['reject'])) {
                     </div>
                     <div class="group">
                         <h3>Actions</h3>
-                        <!-- <a href="" class="view accept">Accept</a>
-                            <a href="" class="view reject">Reject</a> -->
                         <form method="POST">
-                            <button name="accept" class="page-button">Accept</button>
-                            <button name="reject" class="page-button">Reject</button>
+                            <button name="accept" class="view accept">Accept</button>
+                            <button name="reject" class="view reject">Reject</button>
                         </form>
 
                         <button>
