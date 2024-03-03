@@ -117,37 +117,52 @@ if (isset($_POST['submit'])) {
         </div>
     </header>
     <main>
-        <div class="green-block">
-            <form action="#" class="form reg-form" method="post" enctype="multipart/form-data">
-                <div class="form-title">
-                    <h1>Add Menu Item</h1>
+        <section class="section add-edit-menu">
+            <div class="section-wrapper">
+                <div class="section-heading row back">
+                    <h2>Add Menu Item</h2>
+                    <a href="<?php echo SITEURL ;?>admin-edit-menu.php">Back</a>
                 </div>
-                <div class="form-field">
-                    <div class="form-field-input">
-                        <label for="name">Product Name</label>
-                        <input class="js-user" type="text" id="name" name="name" required  pattern="[a-zA-Z ]{1,20}$"><!-- 20 characters only, letter only, with spaces -->
-                    </div>
-                    <div class="form-field-input">
-                        <label for="email">Category</label>
-                        <input name="email" id="email" class="js-user" type="text" required >
-                    </div>
-                    <div class="form-field-input">
-                        <label for="number">Price</label>
-                        <input class="js-user" type="text" id="number" name="number" required pattern="^(09)[0-9]{9}$"><!-- numbers only, starts with 09, must have 11-digits -->
-                    </div>
-                    <div class="form-field-input">
-                        <label for="password">Active</label>
-                        <input class="js-pass" type="password" id="password" name="password" >
-                    </div>
-                    <div class="form-field-input">
-                        <label for="valid-id">Image</label>
-                        <p class="label-desc">(accepted files: .jpg, .png)</p>
-                        <input name="image" id="image" class="image" type="file" required><!-- numbers only, starts with 09, must have 11-digits -->
-                    </div>
-                    <button class="primary-btn" name="submit">Add Product</button>
-                </div>
-            </form>
-        </div>
+                <section class="section-body">
+                    <section class="main-section column">
+                        <form action="#" class="column" method="post" enctype="multipart/form-data">
+                            <div class="block">
+                                <div class="form-field">
+                                    <div class="form-field-input">
+                                        <label for="product-name">Product Name</label>
+                                        <input class="js-user" type="text" id="product-name" name="product-name" required  pattern="[a-zA-Z ]{1,20}$"><!-- 20 characters only, letter only, with spaces -->
+                                    </div>
+                                    <div class="form-field-input">
+                                        <label for="price">Price ₱ </label>
+                                        <input class="js-user" type="number" id="price" name="price" required><!-- numbers only, starts with 09, must have 11-digits -->
+                                    </div>
+                                    <div class="form-field-input">
+                                        <label for="category">Category</label>
+                                        <select class="dropdown" name="category" id="category" required>
+                                            <option value=""></option>
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                    <div class="form-field-input">
+                                        <label for="active">Active</label>
+                                        <select class="dropdown" name="active" id="active" required>
+                                            <option value="inactive">INACTIVE</option>
+                                            <option value="active">ACTIVE</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-field-input">
+                                        <label for="valid-id">Image</label>
+                                        <p class="label-desc">(accepted files: .jpg, .png)</p>
+                                        <input class="image" type="file" name="image" id="image" required><!-- numbers only, starts with 09, must have 11-digits -->
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="big-btn" name="submit">Add Product</button>
+                        </form>
+                    </section>
+                </section>
+            </div>
+        </section>
     </main>
 </body>
 
