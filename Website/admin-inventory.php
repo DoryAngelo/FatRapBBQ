@@ -129,7 +129,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                             ?>
                         </table>
                     </div>
-                    <a href="" class="page-btn"><button class="big-btn">Add a new product</button></a>
+                    <a href="<?php echo SITEURL ;?>admin-add-product.php" class="page-btn"><button class="big-btn">Add a new product</button></a>
                 </section>
             </section>
         </section>
