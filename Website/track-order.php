@@ -3,26 +3,26 @@
 @include 'constants.php';
 $PRSN_ID = $_SESSION['prsn_id'];
 
-$sql2 = "SELECT * FROM placed_order WHERE PRSN_ID = $PRSN_ID";
+// $sql2 = "SELECT * FROM placed_order WHERE PRSN_ID = $PRSN_ID";
 
-$res2 = mysqli_query($conn, $sql2);
+// $res2 = mysqli_query($conn, $sql2);
 
-$count2 = mysqli_num_rows($res2);
+// $count2 = mysqli_num_rows($res2);
 
-$row2 = mysqli_fetch_assoc($res2);
+// $row2 = mysqli_fetch_assoc($res2);
 
-if ($count2 > 0) {
-    $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
-    $PRSN_ID = $row2['PRSN_ID'];
-    $CUS_NAME = $row22['CUS_NAME'];
-    $CUS_NUMBER = $row2['CUS_NUMBER'];
-    $CUS_EMAIL = $row2['CUS_EMAIL'];
-    $PLACED_ORDER_DATE = $row2['PLACED_ORDER_DATE'];
-    $PLACED_ORDER_TOTAL = $row2['PLACED_ORDER_TOTAL'];
-    $DELIVERY_ADDRESS = $row2['DELIVERY_ADDRESS'];
-    $DELIVERY_DATE = $row2['DELIVERY_DATE'];
-    $PLACED_ORDER_STATUS = $row2['PLACED_ORDER_STATUS'];
-}
+// if ($count2 > 0) {
+//     $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
+//     $PRSN_ID = $row2['PRSN_ID'];
+//     $CUS_NAME = $row22['CUS_NAME'];
+//     $CUS_NUMBER = $row2['CUS_NUMBER'];
+//     $CUS_EMAIL = $row2['CUS_EMAIL'];
+//     $PLACED_ORDER_DATE = $row2['PLACED_ORDER_DATE'];
+//     $PLACED_ORDER_TOTAL = $row2['PLACED_ORDER_TOTAL'];
+//     $DELIVERY_ADDRESS = $row2['DELIVERY_ADDRESS'];
+//     $DELIVERY_DATE = $row2['DELIVERY_DATE'];
+//     $PLACED_ORDER_STATUS = $row2['PLACED_ORDER_STATUS'];
+// }
 
 ?>
 <!DOCTYPE html>
@@ -37,7 +37,8 @@ if ($count2 > 0) {
     <link rel="stylesheet" href="customer-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <script src="order-status-progress-bar.js" defer></script>
     <!-- add the code below to load the icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> <!-- from boxicons.com -->
@@ -61,14 +62,14 @@ if ($count2 > 0) {
                     <!-- Text below should change to 'Logout'once user logged in-->
                     <?php
                     if (isset($_SESSION['prsn_id'])) {
-                    ?>
+                        ?>
                         <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
                         <li>
-                        <?php
+                            <?php
                     } else {
                         ?>
                         <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                    <?php
+                        <?php
                     }
                     ?>
                 </ul>
@@ -86,36 +87,106 @@ if ($count2 > 0) {
                     <div class="block-body">
                         <div class="container">
                             <div class="steps">
+                                <?php
+                                // $PLACED_ORDER_TRACKER = $_SESSION['placed_order_tracker'];
+                                
+                                // $sql2 = "SELECT placed_order_status FROM placed_order WHERE placed_order_tracker = '$PLACED_ORDER_TRACKER'";
+                                
+                                // $res2 = mysqli_query($conn, $sql2);
+                                
+                                // $count2 = mysqli_num_rows($res2);
+                                
+                                // $row2 = mysqli_fetch_assoc($res2);
+                                $sql2 = "SELECT * FROM placed_order WHERE PRSN_ID = $PRSN_ID";
+
+                                $res2 = mysqli_query($conn, $sql2);
+
+                                $count2 = mysqli_num_rows($res2);
+
+                                $row2 = mysqli_fetch_assoc($res2);
+
+                                if ($count2 > 0) {
+                                    $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
+                                    $PRSN_ID = $row2['PRSN_ID'];
+                                    $CUS_NAME = $row2['CUS_NAME'];
+                                    $CUS_NUMBER = $row2['CUS_NUMBER'];
+                                    $CUS_EMAIL = $row2['CUS_EMAIL'];
+                                    $PLACED_ORDER_DATE = $row2['PLACED_ORDER_DATE'];
+                                    $PLACED_ORDER_TOTAL = $row2['PLACED_ORDER_TOTAL'];
+                                    $DELIVERY_ADDRESS = $row2['DELIVERY_ADDRESS'];
+                                    $DELIVERY_DATE = $row2['DELIVERY_DATE'];
+                                    $PLACED_ORDER_STATUS = $row2['PLACED_ORDER_STATUS'];
+
+                                    switch ($PLACED_ORDER_STATUS) {
+                                        case "Ordered"://PLACED
+                                ?>
+                                            <p id="status">placed</p>
+                                <?php
+                                            break;
+                                        case "Awaiting Payment"://APPROVED
+                                ?>
+                                            <p id="status">approved</p>
+                                <?php
+                                            break;
+                                        case "Paid"://PAID
+                                ?>
+                                            <p id="status">paid</p>
+                                <?php
+                                            break;
+                                        case "For Delivery"://PACKED
+                                ?>
+                                            <p id="status">packed</p>
+                                <?php
+                                            break;
+                                        case "Shipped"://SHIPPED
+                                ?>
+                                            <p id="status">shipped</p>
+                                <?php
+                                            break;
+                                        case "Completed"://DELIVERED
+                                ?>
+                                            <p id="status">completed</p>
+                                <?php
+                                            break;
+                                    }
+                                }
+                                ?>
+                                <!-- if status = placed -->
                                 <div class="step">
                                     <span class="circle active">
                                         <i class='bx bx-check'></i>
                                     </span>
                                     <span class="label">Placed</span>
                                 </div>
+                                <!-- if status = approved -->
                                 <div class="step">
                                     <span class="circle">
                                         <i class='bx bx-check'></i>
                                     </span>
                                     <span class="label">Approved</span>
                                 </div>
+                                <!-- if status = paid -->
                                 <div class="step">
                                     <span class="circle">
                                         <i class='bx bx-check'></i>
                                     </span>
                                     <span class="label">Paid</span>
                                 </div>
+                                <!-- if status = packed -->
                                 <div class="step">
                                     <span class="circle">
                                         <i class='bx bx-check'></i>
                                     </span>
                                     <span class="label">Packed</span>
                                 </div>
+                                <!-- if status = shipped -->
                                 <div class="step">
                                     <span class="circle">
                                         <i class='bx bx-check'></i>
                                     </span>
                                     <span class="label">Shipped</span>
                                 </div>
+                                <!-- if status = delivered -->
                                 <div class="step">
                                     <span class="circle">
                                         <i class='bx bx-check'></i>
@@ -127,14 +198,15 @@ if ($count2 > 0) {
                                 </div>
                             </div>
                             <!-- admin buttons controlling the progress bar -->
-                            <div class="buttons">
+                            <!-- <div class="buttons">
                                 <button id="prev" disabled>Prev</button>
                                 <button id="next">Next</button>
-                            </div>
+                            </div> -->
                         </div>
                         <!-- <p>Order status: PLACED (for testing)</p> this line is used for backend testing and will be removed later on -->
                         <h3 class="block-heading order-status">Your order has been approved</h2>
-                            <p class="order-status-desc">Lorem ipsum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit amet</p>
+                            <p class="order-status-desc">Lorem ipsum dolor sit amet, consectetur adipiscing Lorem ipsum
+                                dolor sit amet</p>
                     </div>
                 </section>
                 <!-- section directly below this will only appear if order status is approved -->
@@ -180,7 +252,7 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
                                             $FOOD_IMG = $row['FOOD_IMG'];
                                             $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
                                             $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
-                                    ?>
+                                            ?>
                                             <tr>
                                                 <td data-cell="customer" class="first-col">
                                                     <div class="pic-grp">
@@ -188,11 +260,17 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
                                                         <p>Pork BBQ</p>
                                                     </div>
                                                 </td> <!--Pic and Name-->
-                                                <td><?php echo $IN_ORDER_QUANTITY ?></td> <!--Quantity-->
-                                                <td>₱<?php echo $FOOD_PRICE ?></td><!--Price-->
-                                                <td>₱<?php echo $IN_ORDER_TOTAL ?></td><!--Sub Total-->
+                                                <td>
+                                                    <?php echo $IN_ORDER_QUANTITY ?>
+                                                </td> <!--Quantity-->
+                                                <td>₱
+                                                    <?php echo $FOOD_PRICE ?>
+                                                </td><!--Price-->
+                                                <td>₱
+                                                    <?php echo $IN_ORDER_TOTAL ?>
+                                                </td><!--Sub Total-->
                                             </tr>
-                                    <?php
+                                            <?php
                                         }
                                     }
                                     $sql3 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE PRSN_ID = $PRSN_ID";
@@ -205,7 +283,9 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
                         </div>
                         <div class="payment">
                             <h3>Total Payment:</h3>
-                            <h3>₱<?php echo $total ?></h3>
+                            <h3>₱
+                                <?php echo $total ?>
+                            </h3>
                         </div>
                     </div>
                 </section>
@@ -263,7 +343,7 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
 
 if (isset($_POST['submit'])) {
 
-    $REFERENCE_NUMBER =  mysqli_real_escape_string($conn, $_POST['reference-number']);
+    $REFERENCE_NUMBER = mysqli_real_escape_string($conn, $_POST['reference-number']);
 
     $update = "UPDATE placed_order 
     SET REFERENCE_NUMBER = '$REFERENCE_NUMBER' 

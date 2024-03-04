@@ -4,7 +4,9 @@
 
 $PRSN_ID = $_SESSION['prsn_id'];
 
-$sql = "SELECT * FROM food WHERE FOOD_ACTIVE='Yes'";
+$FOOD_NAME = 'Barbeque';
+
+$sql = "SELECT * FROM food WHERE FOOD_ACTIVE='Yes' AND FOOD_NAME = '$FOOD_NAME'";
 $res = mysqli_query($conn, $sql);
 $count = mysqli_num_rows($res);
 
@@ -23,7 +25,8 @@ if ($count > 0) {
 
 if (isset($_POST['submit'])) {
     $PLACED_ORDER_TRACKER =  mysqli_real_escape_string($conn, $_POST['track-order']);
-    $_SESSION['placed_order_tracker'] = mysqli_real_escape_string($conn, $_POST['track-order']);
+    $_SESSION['placed_order_tracker'] = $PLACED_ORDER_TRACKER;
+    $_SESSION['placed_order_tracker'] = $_POST['track-order'];
     $select = " SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'";
     $res = mysqli_query($conn, $sql);
     $count = mysqli_num_rows($res);
@@ -183,6 +186,7 @@ if (isset($_POST['order'])) {
                         <div class="quantity-group">
                             <i class='bx bxs-minus-circle js-minus circle'></i>
                             <p class="amount js-num">1</p>
+                            <!-- <input hidden value="js-num"> -->
                             <i class='bx bxs-plus-circle js-plus circle'></i>
                         </div>
                         <p class="remaining"><?php echo $FOOD_STOCK; ?> sticks remaining</p>

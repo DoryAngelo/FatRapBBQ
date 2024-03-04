@@ -72,7 +72,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                             </div>
                         </div>
                     </a>
-                    <a class="menu-item" href="<?php echo SITEURL; ?>product-info.php">
+                    <!-- <a class="menu-item" href="<?php echo SITEURL; ?>product-info.php">
                         <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
                         <div class="text">
                             <p class="name">Pork BBQ</p>
@@ -91,7 +91,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                 <p>1 stick</p>
                             </div>
                         </div>
-                    </a>
+                    </a> -->
                 </section>
             </section>
         </main>

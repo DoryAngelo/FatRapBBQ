@@ -3,60 +3,84 @@
 
  // DOM Elements
 const circles = document.querySelectorAll(".circle"),
-progressBar = document.querySelector(".indicator"),
-buttons = document.querySelectorAll("button");
-
-const sectionToShowHide = document.getElementById("payment-section");
-const submitButton = document.getElementById("submit");
-const promptMessage = document.querySelector(".prompt");
+      progressBar = document.querySelector(".indicator"),
+      buttons = document.querySelectorAll("button"),
+      pstatus = document.getElementById("status").innerHTML,
+      sectionToShowHide = document.getElementById("payment-section"),
+      submitButton = document.getElementById("submit"),
+      promptMessage = document.querySelector(".prompt");
 
 let currentStep = 1;
 
 // function that updates the current step and updates the DOM
 const updateSteps = (e) => {
-// update current step based on the button clicked
-currentStep = e.target.id === "next" ? ++currentStep : --currentStep;
 
-// loop through all circles and add/remove "active" class based on their index and current step
-circles.forEach((circle, index) => {
-  circle.classList[`${index < currentStep ? "add" : "remove"}`]("active");
-});
+  // update current step based on the text of p tag that serves as a status
+  switch(pstatus) {
+    case "placed":
+      currentStep = 1;
+      break;
+    case "approved":
+      currentStep = 2;
+      break;
+    case "paid":
+      currentStep = 3;
+      break;
+    case "packed":
+      currentStep = 4;
+      break;
+    case "shipped":
+      currentStep = 5;
+      break;
+    case "completed":
+      currentStep = 6;
+      break;
+  }
+        // // update current step based on the button clicked
+        // currentStep = e.target.id === "next" ? ++currentStep : --currentStep;
 
-// update progress bar width based on current step
-progressBar.style.width = `${((currentStep - 1) / (circles.length - 1)) * 100}%`;
-
-// check if current step is last step or first step and disable corresponding buttons
-if (currentStep === circles.length) {
-  buttons[1].disabled = true;
-} else if (currentStep === 1) {
-  buttons[0].disabled = true;
-} else {
-  buttons.forEach((button) => (button.disabled = false));
-}
-
-// Show/hide the payment section based on the current step
-if (currentStep === 2) {
-  sectionToShowHide.style.display = "block"; // Show the section
-
-  // Add a click event listener to the submit button
-  submitButton.addEventListener("click", function (event) {
-    // Prevent the default form submission behavior
-    event.preventDefault();
-
-    // Display the prompt message
-    promptMessage.style.display = "block";
-
-    // Hide the prompt message after 2000 milliseconds (adjust as needed)
-    setTimeout(() => {
-      promptMessage.style.display = "none";
-    }, 2000);
+  // loop through all circles and add/remove "active" class based on their index and current step
+  circles.forEach((circle, index) => {
+    circle.classList[`${index < currentStep ? "add" : "remove"}`]("active");
   });
-} else {
-  sectionToShowHide.style.display = "none"; // Hide the section
-}
+
+  // update progress bar width based on current step
+  progressBar.style.width = `${((currentStep - 1) / (circles.length - 1)) * 100}%`;
+
+        // check if current step is last step or first step and disable corresponding buttons
+        // if (currentStep === circles.length) {
+        //   buttons[1].disabled = true;
+        // } else if (currentStep === 1) {
+        //   buttons[0].disabled = true;
+        // } else {
+        //   buttons.forEach((button) => (button.disabled = false));
+        // }
+
+  // Show/hide the payment section based on the current step
+  if (currentStep === 2) {
+    sectionToShowHide.style.display = "block"; // Show the section
+
+    // Add a click event listener to the submit button
+    submitButton.addEventListener("click", function (event) {
+      // Prevent the default form submission behavior
+      event.preventDefault();
+
+      // Display the prompt message
+      promptMessage.style.display = "block";
+
+      // Hide the prompt message after 2000 milliseconds (adjust as needed)
+      setTimeout(() => {
+        promptMessage.style.display = "none";
+      }, 2000);
+    });
+  } else {
+    sectionToShowHide.style.display = "none"; // Hide the section
+  }
 };
 
-// add click event listeners to all buttons
-buttons.forEach((button) => {
-button.addEventListener("click", updateSteps);
-});
+updateSteps();
+
+        // add click event listeners to all buttons
+        // buttons.forEach((button) => {
+        // button.addEventListener("click", updateSteps);
+        // });

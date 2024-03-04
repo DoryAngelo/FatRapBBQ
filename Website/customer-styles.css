@@ -147,6 +147,10 @@ div.circle {
     margin-bottom: 1.25rem;
 }
 
+.track-order #status {
+    display: none;
+}
+
 .track-order h3.order-status {
     margin-bottom: 0.33rem;
     font-size: 1rem;
@@ -229,7 +233,6 @@ table.order .quantity-col {
     flex-direction: column;
     align-items: center;
     padding-top: 0.9rem;
-    background-color: red;
 }
 
 table.order .narrow-col {
@@ -246,15 +249,16 @@ table.order tr:last-of-type {
 
 /* end of table */
 
-.cart i.trash {
+.cart .trash {
     color: var(--text);
+    text-decoration: none;
 }
 
-.cart i.trash:hover {
+.cart .trash:hover {
     cursor: pointer;
 }
 
-.cart i.trash:active {
+.cart .trash:active {
     color: var(--red);
 }
 
