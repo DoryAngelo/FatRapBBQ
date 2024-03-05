@@ -247,6 +247,13 @@ table.order tr:last-of-type {
     border-bottom: 1px solid #DFDCCB;
 }
 
+table .error {
+    color: #3B3B3B;
+    text-align: center;
+    font-style: italic;
+    padding: 1.5rem 0;
+}
+
 /* end of table */
 
 .cart .trash {

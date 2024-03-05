@@ -136,48 +136,47 @@ if (isset($_POST['not-confirmed'])) {
                         </tr>
                         <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
                         <?php
-                        $sql = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'Ordered' OR PLACED_ORDER_STATUS = 'Awaiting Payment'";
-                        $res = mysqli_query($conn, $sql);
-                        $count = mysqli_num_rows($res);
-                        if ($count > 0) {
-                            while ($row = mysqli_fetch_assoc($res)) {
-                                $PLACED_ORDER_ID = $row['PLACED_ORDER_ID'];
-                                $PRSN_ID = $row['PRSN_ID'];
-                                $CUS_NAME = $row['CUS_NAME'];
-                                $PLACED_ORDER_DATE = $row['PLACED_ORDER_DATE'];
-                                $PLACED_ORDER_TOTAL = $row['PLACED_ORDER_TOTAL'];
-                                $DELIVERY_ADDRESS = $row['DELIVERY_ADDRESS'];
-                                $DELIVERY_DATE = $row['DELIVERY_DATE'];
-                                $PLACED_ORDER_STATUS = $row['PLACED_ORDER_STATUS'];
+                            $sql = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'Ordered' OR PLACED_ORDER_STATUS = 'Awaiting Payment'";
+                            $res = mysqli_query($conn, $sql);
+                            $count = mysqli_num_rows($res);
+                            if ($count > 0) {
+                                while ($row = mysqli_fetch_assoc($res)) {
+                                    $PLACED_ORDER_ID = $row['PLACED_ORDER_ID'];
+                                    $PRSN_ID = $row['PRSN_ID'];
+                                    $CUS_NAME = $row['CUS_NAME'];
+                                    $PLACED_ORDER_DATE = $row['PLACED_ORDER_DATE'];
+                                    $PLACED_ORDER_TOTAL = $row['PLACED_ORDER_TOTAL'];
+                                    $DELIVERY_ADDRESS = $row['DELIVERY_ADDRESS'];
+                                    $DELIVERY_DATE = $row['DELIVERY_DATE'];
+                                    $PLACED_ORDER_STATUS = $row['PLACED_ORDER_STATUS'];
                         ?>
-                                <tr>
-                                    <td data-cell="Date and Time"><?php echo $PLACED_ORDER_DATE ?></td>
-                                    <td data-cell="customer"><?php echo $CUS_NAME ?></td>
-                                    <td data-cell="Order #"><a href="<?php echo SITEURL ?>admin-order-details.php?PRSN_ID=<?php echo $PRSN_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
-                                    <td data-cell="Payment">₱<?php echo $PLACED_ORDER_TOTAL ?></td>
-                                    <td data-cell="Status"><?php echo $PLACED_ORDER_STATUS ?></td>
-                                    <td data-cell="Confimed">
-                                        <div class="btn-wrapper">
-                                            <form method="POST">
-                                                <input type="hidden" name="PLACED_ORDER_ID" value="<?php echo $PLACED_ORDER_ID; ?>">
-                                                <input type="hidden" name="PLACED_ORDER_STATUS" value="<?php echo $PLACED_ORDER_STATUS; ?>">
-                                                <button class="btn-check" name="confirmed"><i class='bx bxs-check-circle'></i></button>
-                                                <button class="btn-cross" name="not-confirmed"><i class='bx bxs-x-circle'></i></button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php
-                            }
-                        } else {
-                            ?>
+                                    <tr>
+                                        <td data-cell="Date and Time"><?php echo $PLACED_ORDER_DATE ?></td>
+                                        <td data-cell="customer"><?php echo $CUS_NAME ?></td>
+                                        <td data-cell="Order #"><a href="<?php echo SITEURL ?>admin-order-details.php?PRSN_ID=<?php echo $PRSN_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
+                                        <td data-cell="Payment">₱<?php echo $PLACED_ORDER_TOTAL ?></td>
+                                        <td data-cell="Status"><?php echo $PLACED_ORDER_STATUS ?></td>
+                                        <td data-cell="Confimed">
+                                            <div class="btn-wrapper">
+                                                <form method="POST">
+                                                    <input type="hidden" name="PLACED_ORDER_ID" value="<?php echo $PLACED_ORDER_ID; ?>">
+                                                    <input type="hidden" name="PLACED_ORDER_STATUS" value="<?php echo $PLACED_ORDER_STATUS; ?>">
+                                                    <button class="btn-check" name="confirmed"><i class='bx bxs-check-circle'></i></button>
+                                                    <button class="btn-cross" name="not-confirmed"><i class='bx bxs-x-circle'></i></button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                        <?php
+                                }
+                            } else {
+                        ?>
                             <!-- <div class="error">No new orders</div> -->
                             <tr>
                                 <td colspan="5" class="error">No new orders</td>
                             </tr>
                         <?php
-
-                        }
+                            }
                         ?>
                     </table>
                 </section>
