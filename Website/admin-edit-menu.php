@@ -93,7 +93,9 @@ $PRSN_ID = $_SESSION['prsn_id'];
 
                                 if ($count > 0) {
                                     while ($row = mysqli_fetch_assoc($res)) {
-
+                                        
+                                        $FOOD_ID = $row['FOOD_ID'];
+                                        $CTGY_ID = $row['CTGY_ID'];
                                         $FOOD_NAME = $row['FOOD_NAME'];
                                         $FOOD_PRICE = $row['FOOD_PRICE'];
                                         $FOOD_IMG = $row['FOOD_IMG'];
@@ -109,7 +111,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                             <td data-cell="Category"><?php echo $CTGY_NAME?></td>
                                             <td data-cell="Price">₱<?php echo $FOOD_PRICE?></td>
                                             <td data-cell="Display"><?php echo $FOOD_ACTIVE?></td>
-                                            <td data-cell="Action"><a href="<?php echo SITEURL ;?>admin-edit-product.php"  class="edit">Edit</a></td>
+                                            <td data-cell="Action"><a href="<?php echo SITEURL ;?>admin-edit-product.php?FOOD_ID=<?php echo $FOOD_ID?>&CTGY_ID=<?php echo $CTGY_ID?>"  class="edit">Edit</a></td>
                                         </tr>
                             <?php
                                     }

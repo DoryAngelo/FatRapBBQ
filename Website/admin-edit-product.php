@@ -2,68 +2,9 @@
 
 @include 'constants.php';
 
-$PRSN_ID = $_SESSION['prsn_id'];
+$FOOD_ID = $_GET['FOOD_ID'];
+$CTGY_ID = $_GET['CTGY_ID'];
 
-if (isset($_POST['submit'])) {
-
-    $PRSN_NAME = mysqli_real_escape_string($conn, $_POST['name']);
-    $PRSN_EMAIL = mysqli_real_escape_string($conn, $_POST['email']);
-    $PRSN_PHONE = $_POST['number'];
-    $PRSN_PASSWORD = md5($_POST['password']);
-    $PRSN_CPASSWORD = md5($_POST['cpassword']);
-    $PRSN_ROLE = 'Wholesaler';
-
-
-    if (isset($_FILES['image']['name'])) {
-        $WHL_IMG = $_FILES['image']['name'];
-
-        if ($WHL_IMG != "") {
-            $image_info = explode(".", $WHL_IMG);
-            $ext = end($image_info);
-
-            $WHL_IMG = "WHL_IMAGE_" . $PRSN_NAME . "." . $ext;
-
-            $src = $_FILES['image']['tmp_name'];
-            $dst = "images/" . $WHL_IMG;
-
-            $upload = move_uploaded_file($src, $dst);
-
-            if ($upload = false) {
-                $_SESSION['upload'] = "<div class='error'>Failed To Upload Image</div>";
-                header('location:' . SITEURL . 'cus-home-page.php');
-                die();
-            }
-        }
-    } else {
-        $WHL_IMG = "";
-    }
-    
-    $select = "SELECT * FROM `person` WHERE PRSN_EMAIL = '$PRSN_EMAIL'";
-
-    $result = mysqli_query($conn, $select);
-
-    if (mysqli_num_rows($result) > 0) {
-        $error[] = "User already exists";
-    } else {
-        if ($PRSN_PASSWORD != $PRSN_CPASSWORD) {
-            $error[] = "Password not matched";
-        } else {
-            $insert = "INSERT INTO person(PRSN_NAME, PRSN_EMAIL, PRSN_PASSWORD, PRSN_PHONE, PRSN_ROLE) 
-                       VALUES('$PRSN_NAME', '$PRSN_EMAIL', '$PRSN_PASSWORD', '$PRSN_PHONE', '$PRSN_ROLE')";
-            if (mysqli_query($conn, $insert)) {
-                $PRSN_ID = mysqli_insert_id($conn);
-                $DATE_OF_REGISTRATION = date("Y-m-d h:i:sa");
-                $insert2 = "INSERT INTO wholesaler(PRSN_ID, WHL_DISC, WHL_IMAGE, DATE_OF_REGISTRATION) 
-                            VALUES('$PRSN_ID', '00.05', '$WHL_IMG', '$DATE_OF_REGISTRATION')";
-                if (!mysqli_query($conn, $insert2)) {
-                    $error[] = "Error inserting data into wholesaler table: " . mysqli_error($conn);
-                }
-            } else {
-                $error[] = "Error inserting data into person table: " . mysqli_error($conn);
-            }
-        }
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -96,21 +37,20 @@ if (isset($_POST['submit'])) {
             </div>
             <nav>
                 <ul>
-                    <li><a href="<?php echo SITEURL ;?>admin-home.php">Home</a></li>
-                    <li><a href="<?php echo SITEURL ;?>admin-edit-menu.php">Menu</a></li>
-                    <li><a href="<?php echo SITEURL ;?>admin-new-orders.php">Orders</a></li>
+                    <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
+                    <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
+                    <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
                     <?php
-                        if(isset($_SESSION['prsn_id'])){
-                    ?>  
-                        <li><a href="<?php echo SITEURL ;?>logout.php">Logout</a><li>
-                    <?php
-                        } 
-                        else 
-                        {
+                    if (isset($_SESSION['prsn_id'])) {
                     ?>
-                        <li><a href="<?php echo SITEURL ;?>login-page.php">Login</a></li>
+                        <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
+                        <li>
+                        <?php
+                    } else {
+                        ?>
+                        <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
                     <?php
-                        }
+                    }
                     ?>
                 </ul>
             </nav>
@@ -121,49 +61,166 @@ if (isset($_POST['submit'])) {
             <div class="section-wrapper">
                 <div class="section-heading row back">
                     <h2>Edit Menu Item</h2>
-                    <a href="<?php echo SITEURL ;?>admin-edit-menu.php">Back</a>
+                    <a href="<?php echo SITEURL; ?>admin-edit-menu.php">Back</a>
                 </div>
-                <section class="section-body">
-                    <section class="main-section column">
-                        <form action="#" class="column" method="post" enctype="multipart/form-data">
-                            <div class="block">
-                                <div class="form-field">
-                                    <div class="form-field-input">
-                                        <label for="product-name">Product Name</label>
-                                        <input class="js-user" type="text" id="product-name" name="product-name" required  pattern="[a-zA-Z ]{1,20}$"><!-- 20 characters only, letter only, with spaces -->
+                <?php
+
+                $sql = "SELECT * 
+                FROM food
+                JOIN category ON food.ctgy_id = category.ctgy_id WHERE food.food_id = '$FOOD_ID'";
+
+                $res = mysqli_query($conn, $sql);
+                $count = mysqli_num_rows($res);
+                if ($count > 0) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                        $FOOD_ID = $row['FOOD_ID'];
+                        $CTGY_ID = $row['CTGY_ID'];
+                        $FOOD_NAME = $row['FOOD_NAME'];
+                        $FOOD_DESC = $row['FOOD_DESC'];
+                        $FOOD_PRICE = $row['FOOD_PRICE'];
+                        $FOOD_STOCK = $row['FOOD_STOCK'];
+                        $FOOD_IMAGE = $row['FOOD_IMG'];
+                        $CTGY_NAME = $row['CTGY_NAME'];
+                        $FOOD_ACTIVE = $row['FOOD_ACTIVE'];
+                ?>
+
+                        <section class="section-body">
+                            <section class="main-section column">
+                                <form action="#" class="column" method="post" enctype="multipart/form-data">
+                                    <div class="block">
+                                        <div class="form-field">
+                                            <div class="form-field-input">
+                                                <label for="product-name">Product Name</label>
+                                                <input value="<?php echo $FOOD_NAME ?>" class="js-user" type="text" id="product-name" name="product-name" required pattern="[a-zA-Z ]{1,20}$"><!-- 20 characters only, letter only, with spaces -->
+                                            </div>
+                                            <div class="form-field-input">
+                                                <label for="product-name">Product Description</label>
+                                                <input value="<?php echo $FOOD_DESC ?>" class="js-user" type="text" id="product-name" name="product-desc" required pattern="[a-zA-Z ]{1,20}$"><!-- 20 characters only, letter only, with spaces -->
+                                            </div>
+                                            <div class="form-field-input">
+                                                <label for="price">Price ₱ </label>
+                                                <input value="<?php echo $FOOD_PRICE ?>" class="js-user" type="number" id="price" name="price" required><!-- numbers only, starts with 09, must have 11-digits -->
+                                            </div>
+                                            <div class="form-field-input">
+                                                <label for="price">Stock </label>
+                                                <input value="<?php echo $FOOD_STOCK ?>" class="js-user" type="number" id="price" name="stock" required><!-- numbers only, starts with 09, must have 11-digits -->
+                                            </div>
+                                            <div class="form-field-input">
+                                                <label for="category">Category</label>
+                                                <select class="dropdown" name="category" id="category" required>
+                                                    <?php
+                                                    $sql = "SELECT * FROM category WHERE CTGY_ACTIVE='Yes'";
+                                                    $res = mysqli_query($conn, $sql);
+                                                    $count = mysqli_num_rows($res);
+                                                    if ($count > 0) {
+                                                        while ($row = mysqli_fetch_assoc($res)) {
+                                                            //get the details of category
+                                                            $CTGY_ID = $row['CTGY_ID'];
+                                                            $CTGY_NAME = $row['CTGY_NAME'];
+                                                    ?>
+                                                            <option value="<?php echo $CTGY_ID; ?>"><?php echo $CTGY_NAME; ?></option>
+                                                        <?php
+                                                        }
+                                                    } else {
+                                                        ?>
+                                                        <option value="0">No Category Found</option>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="form-field-input">
+                                                <label for="active">Active</label>
+                                                <select class="dropdown" name="active" id="active" required>
+                                                    <option value="inactive">INACTIVE</option>
+                                                    <option value="active">ACTIVE</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-field-input">
+                                                <label for="valid-id">Image</label>
+                                                <p class="label-desc">(accepted files: .jpg, .png)</p>
+                                                <input class="image" type="file" name="image" id="image" required><!-- numbers only, starts with 09, must have 11-digits -->
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-field-input">
-                                        <label for="price">Price ₱ </label>
-                                        <input class="js-user" type="number" id="price" name="price" required><!-- numbers only, starts with 09, must have 11-digits -->
-                                    </div>
-                                    <div class="form-field-input">
-                                        <label for="category">Category</label>
-                                        <select class="dropdown" name="category" id="category" required>
-                                            <option value=""></option>
-                                            <option value=""></option>
-                                        </select>
-                                    </div>
-                                    <div class="form-field-input">
-                                        <label for="active">Active</label>
-                                        <select class="dropdown" name="active" id="active" required>
-                                            <option value="inactive">INACTIVE</option>
-                                            <option value="active">ACTIVE</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-field-input">
-                                        <label for="valid-id">Image</label>
-                                        <p class="label-desc">(accepted files: .jpg, .png)</p>
-                                        <input class="image" type="file" name="image" id="image" required><!-- numbers only, starts with 09, must have 11-digits -->
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="big-btn" name="submit">Add Product</button>
-                        </form>
-                    </section>
-                </section>
+                                    <!-- <input type="hidden" name="FOOD_IMG" value="<?php echo $FOOD_IMG; ?>"> -->
+                                    <button class="big-btn" name="submit">Add Product</button>
+                                </form>
+                            </section>
+                        </section>
+                <?php
+                    }
+                }
+                ?>
+
             </div>
         </section>
     </main>
 </body>
 
 </html>
+<?php
+if (isset($_POST['submit'])) {
+
+    $FOOD_NAME = mysqli_real_escape_string($conn, $_POST['product-name']);
+    $FOOD_DESC = mysqli_real_escape_string($conn, $_POST['product-desc']);
+    $FOOD_PRICE =  $_POST['price'];
+    $FOOD_STOCK = $_POST['stock'];
+    $FOOD_ACTIVE = $_POST['active'];
+    $CTGY_ID = $_POST['category'];
+    $current_image = $FOOD_IMAGE;
+
+    if (isset($_FILES['image']['name'])) {
+        //get the image details
+        $FOOD_IMG = $_FILES['image']['name'];
+
+        //check whether image is available
+        if ($FOOD_IMG != "") {
+            $image_info = explode(".", $FOOD_IMG);
+            $ext = end($image_info);
+
+            $FOOD_IMG = "FOOD_IMAGE_" . $FOOD_NAME . "." . $ext;
+
+            $src = $_FILES['image']['tmp_name'];
+            $dst = "images/" . $FOOD_IMG;
+
+            $upload    = move_uploaded_file($src, $dst);
+
+            //check whether the image is uploaded
+            if ($upload == false) {
+                $_SESSION['upload'] = "<div class='error'>Failed To Upload Image</div>";
+                header('loaction:' . SITEURL . 'admin/manage_food.php');
+                die();
+            }
+            //remove current image if available
+            if ($current_image != "") {
+                $remove_path = "images/" . $FOOD_IMAGE;
+                $remove = unlink($remove_path);
+                //check whether image is removed
+                if ($remove == false) {
+                    $_SESSION['failed-remove'] = "<div class='error'>Failed To Remove Current Image</div>";
+                    header('location:' . SITEURL . 'admin-home.php');
+                    die();
+                }
+            }
+        } else {
+            $image_name = $current_image;
+        }
+    } else {
+        $image_name = $current_image;
+    }
+
+
+    $update = "UPDATE food 
+        SET FOOD_NAME = '$FOOD_NAME',
+            FOOD_DESC = '$FOOD_DESC',
+            CTGY_ID = '$CTGY_ID',
+            FOOD_IMG = '$FOOD_IMG',
+            FOOD_PRICE = '$FOOD_PRICE',
+            FOOD_STOCK = '$FOOD_STOCK',
+            FOOD_ACTIVE = '$FOOD_ACTIVE'
+        WHERE FOOD_ID = '$FOOD_ID'";
+
+    mysqli_query($conn, $update);
+}
+?>
