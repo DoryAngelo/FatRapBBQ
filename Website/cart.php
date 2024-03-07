@@ -77,53 +77,53 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                 </thead>
                                 <tbody>
                                     <?php
-                                        $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, FOOD_STOCK, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
+                                    $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, FOOD_STOCK, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
                                         FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND PRSN_ID = $PRSN_ID";
-                                        $res = mysqli_query($conn, $sql);
-                                        $count = mysqli_num_rows($res);
-                                        if ($count > 0) {
-                                            while ($row = mysqli_fetch_assoc($res)) {
-                                                $IN_ORDER_ID = $row['IN_ORDER_ID'];
-                                                $FOOD_NAME = $row['FOOD_NAME'];
-                                                $FOOD_PRICE = $row['FOOD_PRICE'];
-                                                $FOOD_IMG = $row['FOOD_IMG'];
-                                                $FOOD_STOCK = $row['FOOD_STOCK'];
-                                                $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
-                                                $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
+                                    $res = mysqli_query($conn, $sql);
+                                    $count = mysqli_num_rows($res);
+                                    if ($count > 0) {
+                                        while ($row = mysqli_fetch_assoc($res)) {
+                                            $IN_ORDER_ID = $row['IN_ORDER_ID'];
+                                            $FOOD_NAME = $row['FOOD_NAME'];
+                                            $FOOD_PRICE = $row['FOOD_PRICE'];
+                                            $FOOD_IMG = $row['FOOD_IMG'];
+                                            $FOOD_STOCK = $row['FOOD_STOCK'];
+                                            $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
+                                            $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
                                     ?>
-                                                <tr> <!-- one row for a product-->
-                                                    <td data-cell="customer" class="first-col">
-                                                        <div class="pic-grp">
-                                                            <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
-                                                            <p><?php echo $FOOD_NAME ?></p>
-                                                        </div>
-                                                    </td> <!--Pic and Name-->
-                                                    <td class="narrow-col quantity-col">
-                                                        <div class="quantity-grp">
-                                                            <i class='bx bxs-minus-circle js-minus'></i>
-                                                            <p class="amount js-num"><?php echo $IN_ORDER_QUANTITY?></p>
-                                                            <i class='bx bxs-plus-circle js-plus'></i>
-                                                        </div>
-                                                        <p class="remaining"><?php echo $FOOD_STOCK ?> sticks remaining</p>
-                                                    </td> <!--Quantity-->
-                                                    <td class="narrow-col price-col">₱<?php echo $FOOD_PRICE ?></td><!--Price-->
-                                                    <td class="narrow-col">
-                                                        <a href="delete_in_order.php?IN_ORDER_ID=<?php echo $IN_ORDER_ID; ?>" class="bx bxs-trash-alt trash"></a><!-- pa remove na lang ng underline sa link -->
-                                                    </td><!--Action-->
-                                                </tr>
-                                    <?php
-                                            }
-                                        } else {
-                                    ?>
+                                            <tr> <!-- one row for a product-->
+                                                <td data-cell="customer" class="first-col">
+                                                    <div class="pic-grp">
+                                                        <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
+                                                        <p><?php echo $FOOD_NAME ?></p>
+                                                    </div>
+                                                </td> <!--Pic and Name-->
+                                                <td class="narrow-col quantity-col">
+                                                    <div class="quantity-grp">
+                                                        <i class='bx bxs-minus-circle js-minus'></i>
+                                                        <p class="amount js-num"><?php echo $IN_ORDER_QUANTITY ?></p>
+                                                        <i class='bx bxs-plus-circle js-plus'></i>
+                                                    </div>
+                                                    <p class="remaining"><?php echo $FOOD_STOCK ?> sticks remaining</p>
+                                                </td> <!--Quantity-->
+                                                <td class="narrow-col price-col">₱<?php echo $FOOD_PRICE ?></td><!--Price-->
+                                                <td class="narrow-col">
+                                                    <a href="delete_in_order.php?IN_ORDER_ID=<?php echo $IN_ORDER_ID; ?>" class="bx bxs-trash-alt trash"></a><!-- pa remove na lang ng underline sa link -->
+                                                </td><!--Action-->
+                                            </tr>
+                                        <?php
+                                        }
+                                    } else {
+                                        ?>
                                         <tr>
                                             <td colspan="5" class="error">Cart is empty</td>
                                         </tr>
                                     <?php
-                                        }
-                                        $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE PRSN_ID = $PRSN_ID";
-                                        $res2 = mysqli_query($conn, $sql2);
-                                        $row2 = mysqli_fetch_assoc($res2);
-                                        $total = $row2['Total'];
+                                    }
+                                    $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE PRSN_ID = $PRSN_ID";
+                                    $res2 = mysqli_query($conn, $sql2);
+                                    $row2 = mysqli_fetch_assoc($res2);
+                                    $total = $row2['Total'];
                                     ?>
                                 </tbody>
                             </table>
@@ -134,7 +134,20 @@ $PRSN_ID = $_SESSION['prsn_id'];
                         </div>
                     </div>
                 </section>
-                <a href="checkout.php" class="page-button center">Checkout</a>
+                <!-- <a href="checkout.php" class="page-button center">Checkout</a> -->
+                <?php
+
+                if ($count <= 0) {
+                ?>
+                   <button class="page-button center" disabled>Checkout</button>
+                <?php
+                } else {    
+                ?>
+                    <a href="checkout.php" class="page-button center">Checkout</a>
+                <?php
+                }
+                ?>
+
             </section>
         </section>
     </main>
