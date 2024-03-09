@@ -134,6 +134,10 @@ if($PRSN_ROLE !== 'Admin'){
                             <h3>Employee</h3>
                             <a href="<?php echo SITEURL ;?>admin-employee-accounts.php" class="view">View</a>
                         </div>
+                        <div class="group">
+                            <h3>Admin Profile</h3>
+                            <a href="<?php echo SITEURL ;?>admin-profile.php" class="view">View</a>
+                        </div>
                     </section>
                 </section>
             </section>

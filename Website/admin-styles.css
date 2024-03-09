@@ -427,13 +427,15 @@ button.reject:hover {
     font-weight: bold;
     font-size: 1.25rem;
     margin-top: 2.25rem;
+    text-decoration: none;
+    text-align: center;
 }
 
 .big-btn:hover {
     background-color: var(--sidemenu-blue-hover);
 }
 
-a.page-btn {
+.page-btn {
     text-decoration: none;
 }
 
@@ -796,3 +798,40 @@ span.warning i {
     width: 35%;
 }
 
+.admin-profile .block{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.admin-profile .image-group {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.admin-profile .image-group img {
+    width: 6rem;
+    height: 6rem;
+}
+
+.admin-profile .image-group p {
+    font-size: 1.25rem;
+}
+
+.admin-profile table {
+    background-color: var(--light-blue);
+}
+
+.admin-profile table th, .admin-profile table td {
+    /* border-bottom: 1px solid var(--text); */
+    padding: 8px;
+}
+
+.admin-profile table th {
+    width: 25%;
+}
+
+.admin-profile table input {
+    background-color: var(--light-blue);
+}
