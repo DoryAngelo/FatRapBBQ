@@ -144,8 +144,8 @@ $PRSN_ID = $_SESSION['prsn_id'];
                     <?php
                     } else {    
                     ?>
-                        <!-- <a href="checkout.php" class="page-button center">Checkout</a> -->
-                        <input type="submit" value="Checkout" name="checkout" class="page-button center">
+                        <a href="checkout.php" class="page-button center">Checkout</a>
+                        <!-- <input type="submit" value="Checkout" name="checkout" class="page-button center"> -->
                     <?php
                     }
                     ?>

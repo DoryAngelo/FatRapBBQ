@@ -57,26 +57,3 @@ nextBtn.addEventListener('click', () => {
 
 updateCalendar();
 
-/*quantity buttons in product section*/
-const plus = document.querySelector(".js-plus"),
-            minus = document.querySelector(".js-minus"),
-            num = document.querySelector(".js-num");
-
-let a = 1;
-
-plus.addEventListener("click", ()=>{
-    a++;
-    console.log(a);
-    num.innerText = a;
-} 
-);
-
-minus.addEventListener("click", ()=>{
-    if(a > 1) {
-        a--;
-        console.log(a);
-        num.innerText = a;
-    }
-} 
-
-);

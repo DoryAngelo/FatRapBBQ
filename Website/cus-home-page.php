@@ -33,39 +33,70 @@ if (isset($_POST['submit'])) {
     header('location:track-order.php');
 }
 
-if (isset($_POST['order'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
+    $quantity = $_POST['quantity'];
+
+    // Your database connection and SQL queries here
+    // Replace $FOOD_ID and $PRSN_ID with actual values
     $sql = "SELECT * FROM in_order WHERE FOOD_ID = $FOOD_ID AND PRSN_ID = $PRSN_ID";
     $res = mysqli_query($conn, $sql);
     $count = mysqli_num_rows($res);
 
     if ($count > 0) {
-
         while ($row = mysqli_fetch_assoc($res)) {
             $IN_ORDER_ID = $row['IN_ORDER_ID'];
-            $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'] + 1;
-            $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'] + $FOOD_PRICE;
+            $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'] + $quantity;
+            $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'] + ($quantity * $FOOD_PRICE);
 
             $sql = "UPDATE in_order SET 
                             IN_ORDER_QUANTITY = $IN_ORDER_QUANTITY,
                             IN_ORDER_TOTAL = $IN_ORDER_TOTAL
                             WHERE IN_ORDER_ID = $IN_ORDER_ID";
             $res_update = mysqli_query($conn, $sql);
-            header('location:cus-home-page.php');
         }
     } else {
-
-        $sql2 = "INSERT INTO in_order SET
-                FOOD_ID = '$FOOD_ID',
-                PRSN_ID = '$PRSN_ID',
-                IN_ORDER_QUANTITY = 1,
-                IN_ORDER_TOTAL = $FOOD_PRICE,
-                IN_ORDER_STATUS = 'Ordered'
-                ";
-
+        $IN_ORDER_TOTAL = $quantity * $FOOD_PRICE;
+        $sql2 = "INSERT INTO in_order (FOOD_ID, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS)
+                 VALUES ('$FOOD_ID', '$PRSN_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered')";
         $res2 = mysqli_query($conn, $sql2);
-        header('location:cus-home-page.php');
     }
+
+    // Redirect to the home page after processing
+    header('location:cus-home-page.php');
 }
+// if (isset($_POST['order'])) {
+//     $sql = "SELECT * FROM in_order WHERE FOOD_ID = $FOOD_ID AND PRSN_ID = $PRSN_ID";
+//     $res = mysqli_query($conn, $sql);
+//     $count = mysqli_num_rows($res);
+
+//     if ($count > 0) {
+
+//         while ($row = mysqli_fetch_assoc($res)) {
+//             $IN_ORDER_ID = $row['IN_ORDER_ID'];
+//             $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'] + 1;
+//             $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'] + $FOOD_PRICE;
+
+//             $sql = "UPDATE in_order SET 
+//                             IN_ORDER_QUANTITY = $IN_ORDER_QUANTITY,
+//                             IN_ORDER_TOTAL = $IN_ORDER_TOTAL
+//                             WHERE IN_ORDER_ID = $IN_ORDER_ID";
+//             $res_update = mysqli_query($conn, $sql);
+//             header('location:cus-home-page.php');
+//         }
+//     } else {
+
+//         $sql2 = "INSERT INTO in_order SET
+//                 FOOD_ID = '$FOOD_ID',
+//                 PRSN_ID = '$PRSN_ID',
+//                 IN_ORDER_QUANTITY = 1,
+//                 IN_ORDER_TOTAL = $FOOD_PRICE,
+//                 IN_ORDER_STATUS = 'Ordered'
+//                 ";
+
+//         $res2 = mysqli_query($conn, $sql2);
+//         header('location:cus-home-page.php');
+//     }
+// }
 
 
 
@@ -180,20 +211,49 @@ if (isset($_POST['order'])) {
                 <h1 class="product-name"><?php echo $FOOD_NAME; ?></h1>
                 <p class="product"><?php echo $FOOD_PRICE; ?></p>
                 <p class="product"><?php echo $FOOD_DESC; ?></p>
-                <form class="button-group" method="POST">
+                <form class="button-group" method="post">
+                    <input type="hidden" id="quantity" name="quantity" value="1"> <!-- Hidden input to store the quantity -->
                     <button name="order" type="submit" class="button">Order Now</button>
-                    <div class="right-contents">
-                        <div class="quantity-group">
-                            <i class='bx bxs-minus-circle js-minus circle'></i>
-                            <p class="amount js-num">1</p>
-                            <!-- <input hidden value="js-num"> -->
-                            <i class='bx bxs-plus-circle js-plus circle'></i>
-                        </div>
-                        <p class="remaining"><?php echo $FOOD_STOCK; ?> sticks remaining</p>
-                    </div>
                 </form>
+                <div class="right-contents">
+                    <div class="quantity-group">
+                        <button class="js-minus">-</button>
+                        <span class="js-num">1</span>
+                        <button class="js-plus">+</button>
+                        <!-- <i class='bx bxs-minus-circle js-minus circle'></i>
+                            <p class="amount js-num">1</p>
+                            <i class='bx bxs-plus-circle js-plus circle'></i> -->
+                    </div>
+                    <p class="remaining"><?php echo $FOOD_STOCK; ?> sticks remaining</p>
+                </div>
+
             </div>
         </section>
+        <script>
+            /*js code for the increment and decrement buttons for the quantity*/
+            const plus = document.querySelector(".js-plus"),
+                minus = document.querySelector(".js-minus"),
+                num = document.querySelector(".js-num"),
+                quantityInput = document.getElementById("quantity");
+
+            let a = 1;
+
+            plus.addEventListener("click", () => {
+                a++;
+                console.log(a);
+                num.innerText = a;
+                quantityInput.value = a; // Update hidden input value
+            });
+
+            minus.addEventListener("click", () => {
+                if (a > 1) {
+                    a--;
+                    console.log(a);
+                    num.innerText = a;
+                    quantityInput.value = a; // Update hidden input value
+                }
+            });
+        </script>
         <!-- section 4 - order tracking-->
         <section class="product-landing order-track section">
             <div class="PL-text">
