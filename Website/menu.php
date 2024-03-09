@@ -15,7 +15,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--change title-->
-    <title>Menu</title>
+    <title>Menu | Fat Rap's Barbeque's Online Store</title>
     <link rel="stylesheet" href="header-styles.css">
     <link rel="stylesheet" href="customer-styles.css"><!--change css file-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,6 +63,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
             <div class="section-heading">
                 <h2>Menu</h2>
             </div>
+            <section class="section-body">
             <?php
 
             $sql = "SELECT * FROM food WHERE FOOD_ACTIVE = 'Yes'";
@@ -75,24 +76,59 @@ $PRSN_ID = $_SESSION['prsn_id'];
                     $FOOD_IMG = $row['FOOD_IMG'];
                     $FOOD_PRICE = $row['FOOD_PRICE'];
             ?>
-                    <section class="section-body">
-                        <a class="menu-item" href="<?php echo SITEURL; ?>product-info.php?FOOD_ID=<?php echo $FOOD_ID?>">
-                            <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
-                            <div class="text">
-                                <p class="name"><?php echo $FOOD_NAME?></p>
-                                <div class="inline">
-                                    <h2>₱<?php echo $FOOD_PRICE ?></h3>
-                                        <p>1 stick</p>
-                                </div>
+                    <a class="menu-item" href="<?php echo SITEURL; ?>product-info.php?FOOD_ID=<?php echo $FOOD_ID?>">
+                        <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
+                        <div class="text">
+                            <p class="name"><?php echo $FOOD_NAME?></p>
+                            <div class="inline">
+                                <h2>₱<?php echo $FOOD_PRICE ?></h3>
+                                    <p>1 stick</p>
                             </div>
-                        </a>
-                    </section>
-
+                        </div>
+                    </a>
             <?php
                 }
             }
             ?>
+            </section>
         </section>
+        <!-- <section class="section menu">
+            <div class="section-heading">
+                <h2>Menu</h2>                
+            </div> 
+            <section class="section-body">
+                <a class="menu-item" >
+                    <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
+                    <div class="text">
+                        <p class="name">Pork BBQ</p>
+                        <div class="inline">
+                            <h2>₱25.00</h3>
+                            <p>1 stick</p>
+                        </div>
+                    </div>
+                </a>
+                <a class="menu-item" >
+                    <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
+                    <div class="text">
+                        <p class="name">Pork BBQ</p>
+                        <div class="inline">
+                            <h2>₱25.00</h3>
+                            <p>1 stick</p>
+                        </div>
+                    </div>
+                </a>
+                <a class="menu-item" >
+                    <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
+                    <div class="text">
+                        <p class="name">Pork BBQ</p>
+                        <div class="inline">
+                            <h2>₱25.00</h3>
+                            <p>1 stick</p>
+                        </div>
+                    </div>
+                </a>
+            </section>
+        </section> -->
     </main>
     <footer>
         <div class="footer-container">
