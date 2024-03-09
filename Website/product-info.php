@@ -13,7 +13,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!--change title-->
-        <title>Product Information</title>
+        <title>Product Information | Fat Rap's Barbeque's Online Store</title>
         <link rel="stylesheet" href="header-styles.css">
         <link rel="stylesheet" href="customer-styles.css"><!--change css file-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,10 +34,9 @@ $PRSN_ID = $_SESSION['prsn_id'];
                 </div>
                 <nav>
                     <ul>
-                        <!--TODO: ADD LINKS-->
-                        <li><a href="cus-home-page.php">Home</a></li>
-                        <li><a href="#">Menu</a></li>
-                        <li><a href="#">Cart</a></li>
+                        <li><a href="<?php echo SITEURL; ?>home.php">Home</a></li>
+                        <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
+                        <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
                         <!-- Text below should change to 'Logout'once user logged in-->
                         <?php
                         if (isset($_SESSION['prsn_id'])) {
@@ -66,12 +65,14 @@ $PRSN_ID = $_SESSION['prsn_id'];
                             <h1>Pork BBQ</h1>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictum.</p>
                         </div>
-                       <form class="bottom" method="POST">
+                       <form class="bottom" action="cart.php" method="POST">
+                            <input type="hidden" name="product_id" value="<?=$product['id']?>"><!--hidden product name to accompany the product's quantity-->
                             <div class="inline">
                                 <h1>₱25.00</h1>
                                 <div class="quantity-grp">
                                     <i class='bx bxs-minus-circle js-minus'></i>
-                                    <p class="amount js-num">1</p>
+                                    <!--product quantity below-->
+                                    <input class="amount js-num" type="text" name="quantity" value="1" min="1" max="<?=$product['quantity']?>" placeholder="Quantity" required>
                                     <i class='bx bxs-plus-circle js-plus'></i>
                                 </div>
                                 <p class="remaining">200 sticks available</p>
@@ -134,7 +135,8 @@ $PRSN_ID = $_SESSION['prsn_id'];
             plus.addEventListener("click", ()=>{
                 a++;
                 console.log(a);
-                num.innerText = a;
+                // num.innerText = a;
+                num.value = a;
             } 
             );
 
@@ -142,7 +144,8 @@ $PRSN_ID = $_SESSION['prsn_id'];
                 if(a > 1) {
                     a--;
                     console.log(a);
-                    num.innerText = a;
+                    // num.innerText = a;
+                    num.value = a;
                 }
             } 
             );

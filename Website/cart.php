@@ -14,13 +14,13 @@ $PRSN_ID = $_SESSION['prsn_id'];
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--change title-->
-    <title>Cart</title>
+    <title>Cart | Fat Rap's Barbeque's Online Store</title>
     <link rel="stylesheet" href="header-styles.css">
     <link rel="stylesheet" href="customer-styles.css"><!--change css file-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="app.js" defer></script>
+    <!-- <script src="app.js" defer></script> -->
     <!-- add the code below to load the icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
@@ -37,7 +37,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
             </div>
             <nav>
                 <ul>
-                    <li><a href="#">Home</a></li>
+                    <li><a href="<?php echo SITEURL; ?>cus-home-page.php">Home</a></li>
                     <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
                     <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
                     <!-- Text below should change to 'Logout'once user logged in-->
@@ -63,91 +63,93 @@ $PRSN_ID = $_SESSION['prsn_id'];
                 <h2>Cart</h2>
             </div>
             <section class="section-body">
-                <section class="block">
-                    <div class="block-body">
-                        <div class="table-wrap">
-                            <table class="order">
-                                <thead>
-                                    <tr>
-                                        <th class="header first-col"></th>
-                                        <th class="header narrow-col">Quantity</th>
-                                        <th class="header narrow-col price-col">Price</th>
-                                        <th class="header narrow-col"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, FOOD_STOCK, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
-                                        FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND PRSN_ID = $PRSN_ID";
-                                    $res = mysqli_query($conn, $sql);
-                                    $count = mysqli_num_rows($res);
-                                    if ($count > 0) {
-                                        while ($row = mysqli_fetch_assoc($res)) {
-                                            $IN_ORDER_ID = $row['IN_ORDER_ID'];
-                                            $FOOD_NAME = $row['FOOD_NAME'];
-                                            $FOOD_PRICE = $row['FOOD_PRICE'];
-                                            $FOOD_IMG = $row['FOOD_IMG'];
-                                            $FOOD_STOCK = $row['FOOD_STOCK'];
-                                            $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
-                                            $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
-                                    ?>
-                                            <tr> <!-- one row for a product-->
-                                                <td data-cell="customer" class="first-col">
-                                                    <div class="pic-grp">
-                                                        <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
-                                                        <p><?php echo $FOOD_NAME ?></p>
-                                                    </div>
-                                                </td> <!--Pic and Name-->
-                                                <td class="narrow-col quantity-col">
-                                                    <div class="quantity-grp">
-                                                        <i class='bx bxs-minus-circle js-minus'></i>
-                                                        <p class="amount js-num"><?php echo $IN_ORDER_QUANTITY ?></p>
-                                                        <i class='bx bxs-plus-circle js-plus'></i>
-                                                    </div>
-                                                    <p class="remaining"><?php echo $FOOD_STOCK ?> sticks remaining</p>
-                                                </td> <!--Quantity-->
-                                                <td class="narrow-col price-col">₱<?php echo $FOOD_PRICE ?></td><!--Price-->
-                                                <td class="narrow-col">
-                                                    <a href="delete_in_order.php?IN_ORDER_ID=<?php echo $IN_ORDER_ID; ?>" class="bx bxs-trash-alt trash"></a><!-- pa remove na lang ng underline sa link -->
-                                                </td><!--Action-->
+                <form action="index.php?page=cart" method="post">
+                    <section class="block">
+                        <div class="block-body">
+                            <div class="table-wrap">
+                                <table class="order">
+                                    <thead>
+                                        <tr>
+                                            <th class="header first-col"></th>
+                                            <th class="header narrow-col">Quantity</th>
+                                            <th class="header narrow-col price-col">Price</th>
+                                            <th class="header narrow-col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, FOOD_STOCK, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
+                                            FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND PRSN_ID = $PRSN_ID";
+                                        $res = mysqli_query($conn, $sql);
+                                        $count = mysqli_num_rows($res);
+                                        if ($count > 0) {
+                                            while ($row = mysqli_fetch_assoc($res)) {
+                                                $IN_ORDER_ID = $row['IN_ORDER_ID'];
+                                                $FOOD_NAME = $row['FOOD_NAME'];
+                                                $FOOD_PRICE = $row['FOOD_PRICE'];
+                                                $FOOD_IMG = $row['FOOD_IMG'];
+                                                $FOOD_STOCK = $row['FOOD_STOCK'];
+                                                $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
+                                                $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
+                                        ?>
+                                                <tr> <!-- one row for a product-->
+                                                    <td data-cell="customer" class="first-col">
+                                                        <div class="pic-grp">
+                                                            <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
+                                                            <p><?php echo $FOOD_NAME ?></p>
+                                                        </div>
+                                                    </td> <!--Pic and Name-->
+                                                    <td class="narrow-col quantity-col">
+                                                        <div class="quantity-grp">
+                                                            <i class='bx bxs-minus-circle js-minus'></i>
+                                                            <p class="amount js-num"><?php echo $IN_ORDER_QUANTITY ?></p>
+                                                            <i class='bx bxs-plus-circle js-plus'></i>
+                                                        </div>
+                                                        <p class="remaining"><?php echo $FOOD_STOCK ?> sticks remaining</p>
+                                                    </td> <!--Quantity-->
+                                                    <td class="narrow-col price-col">₱<?php echo $FOOD_PRICE ?></td><!--Price-->
+                                                    <td class="narrow-col">
+                                                        <a href="delete_in_order.php?IN_ORDER_ID=<?php echo $IN_ORDER_ID; ?>" class="bx bxs-trash-alt trash"></a><!-- pa remove na lang ng underline sa link -->
+                                                    </td><!--Action-->
+                                                </tr>
+                                            <?php
+                                            }
+                                        } else {
+                                            ?>
+                                            <tr>
+                                                <td colspan="5" class="error">Cart is empty</td>
                                             </tr>
                                         <?php
                                         }
-                                    } else {
+                                        $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE PRSN_ID = $PRSN_ID";
+                                        $res2 = mysqli_query($conn, $sql2);
+                                        $row2 = mysqli_fetch_assoc($res2);
+                                        $total = $row2['Total'];
                                         ?>
-                                        <tr>
-                                            <td colspan="5" class="error">Cart is empty</td>
-                                        </tr>
-                                    <?php
-                                    }
-                                    $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE PRSN_ID = $PRSN_ID";
-                                    $res2 = mysqli_query($conn, $sql2);
-                                    $row2 = mysqli_fetch_assoc($res2);
-                                    $total = $row2['Total'];
-                                    ?>
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="payment">
+                                <h3>Total Payment:</h3>
+                                <h3>₱<?php echo $total ?></h3>
+                            </div>
                         </div>
-                        <div class="payment">
-                            <h3>Total Payment:</h3>
-                            <h3>₱<?php echo $total ?></h3>
-                        </div>
-                    </div>
-                </section>
-                <!-- <a href="checkout.php" class="page-button center">Checkout</a> -->
-                <?php
+                    </section>
+                    <!-- <a href="checkout.php" class="page-button center">Checkout</a> -->
+                    <?php
 
-                if ($count <= 0) {
-                ?>
-                   <button class="page-button center" disabled>Checkout</button>
-                <?php
-                } else {    
-                ?>
-                    <a href="checkout.php" class="page-button center">Checkout</a>
-                <?php
-                }
-                ?>
-
+                    if ($count <= 0) {
+                    ?>
+                    <button class="page-button center" disabled>Checkout</button>
+                    <?php
+                    } else {    
+                    ?>
+                        <!-- <a href="checkout.php" class="page-button center">Checkout</a> -->
+                        <input type="submit" value="Checkout" name="checkout" class="page-button center">
+                    <?php
+                    }
+                    ?>
+                </form>
             </section>
         </section>
     </main>
@@ -157,7 +159,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                 <h1>Fat Rap's Barbeque's Online Store</h1>
                 <div class="list">
                     <ul>
-                        <li><a href="#">Home</a></li>
+                        <li><a href="<?php echo SITEURL; ?>cus-home-page.php">Home</a></li>
                         <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
                         <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
                         <li><a href="<?php echo SITEURL; ?>track-order.php">Track order</a></li>
