@@ -57,3 +57,27 @@ nextBtn.addEventListener('click', () => {
 
 updateCalendar();
 
+/*js code for the increment and decrement buttons for the quantity*/
+const plus = document.querySelector(".js-plus"),
+minus = document.querySelector(".js-minus"),
+num = document.querySelector(".js-num"),
+quantityInput = document.getElementById("quantity");
+
+let a = 1;
+
+plus.addEventListener("click", () => {
+a++;
+console.log(a);
+num.innerText = a;
+quantityInput.value = a; // Update hidden input value
+});
+
+minus.addEventListener("click", () => {
+if (a > 1) {
+    a--;
+    console.log(a);
+    num.innerText = a;
+    quantityInput.value = a; // Update hidden input value
+}
+});
+

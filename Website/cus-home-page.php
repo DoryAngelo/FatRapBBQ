@@ -211,49 +211,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                 <h1 class="product-name"><?php echo $FOOD_NAME; ?></h1>
                 <p class="product"><?php echo $FOOD_PRICE; ?></p>
                 <p class="product"><?php echo $FOOD_DESC; ?></p>
-                <form class="button-group" method="post">
-                    <input type="hidden" id="quantity" name="quantity" value="1"> <!-- Hidden input to store the quantity -->
-                    <button name="order" type="submit" class="button">Order Now</button>
-                </form>
-                <div class="right-contents">
-                    <div class="quantity-group">
-                        <button class="js-minus">-</button>
-                        <span class="js-num">1</span>
-                        <button class="js-plus">+</button>
-                        <!-- <i class='bx bxs-minus-circle js-minus circle'></i>
+                <div class="button-group">
+                    <form action="checkout.php" method="post">
+                        <input type="hidden" id="quantity" name="quantity" value="1"> <!-- Hidden input to store the quantity -->
+                        <button name="order" type="submit" class="button">Order Now</button>
+                    </form>
+                    <div class="right-contents">
+                        <div class="quantity-group">
+                            <!-- <button class="js-minus">-</button>
+                            <span class="js-num">1</span>
+                            <button class="js-plus">+</button> -->
+                            <i class='bx bxs-minus-circle js-minus circle'></i>
                             <p class="amount js-num">1</p>
-                            <i class='bx bxs-plus-circle js-plus circle'></i> -->
+                            <i class='bx bxs-plus-circle js-plus circle'></i>
+                        </div>
+                        <p class="remaining"><?php echo $FOOD_STOCK; ?> sticks remaining</p>
                     </div>
-                    <p class="remaining"><?php echo $FOOD_STOCK; ?> sticks remaining</p>
                 </div>
-
             </div>
         </section>
-        <script>
-            /*js code for the increment and decrement buttons for the quantity*/
-            const plus = document.querySelector(".js-plus"),
-                minus = document.querySelector(".js-minus"),
-                num = document.querySelector(".js-num"),
-                quantityInput = document.getElementById("quantity");
-
-            let a = 1;
-
-            plus.addEventListener("click", () => {
-                a++;
-                console.log(a);
-                num.innerText = a;
-                quantityInput.value = a; // Update hidden input value
-            });
-
-            minus.addEventListener("click", () => {
-                if (a > 1) {
-                    a--;
-                    console.log(a);
-                    num.innerText = a;
-                    quantityInput.value = a; // Update hidden input value
-                }
-            });
-        </script>
         <!-- section 4 - order tracking-->
         <section class="product-landing order-track section">
             <div class="PL-text">
@@ -319,5 +295,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     </footer>
     <script src="home.js"></script>
 </body>
-
 </html>

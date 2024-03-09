@@ -29,7 +29,7 @@ $PRSN_ID = $_GET['PRSN_ID'];
     <header class="backend">
         <div class="header-container">
             <div class="website-title">
-                <img id="logo" src="images/client-logo.jpg">
+                <img id="logo" src="images/client-logo.png">
                 <div class="text">
                     <h1>Fat Rap's Barbeque's Online Store</h1>
                     <p>ADMIN</p>
