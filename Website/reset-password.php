@@ -47,6 +47,9 @@ $PRSN_ID = $_SESSION['prsn_id'];
                     <label for="re-entered-pass">Re-enter new password</label>
                     <input name="re-entered-pass" id="re-entered-pass" class="js-user" type="text" required>
                 </div>
+                <p class="prompt">
+                    <!-- Password must include at least 1 uppercase, 1 lowercase, 1 digit, and 1 special character -->
+                </p>
                 <button name="submit" class="primary-btn">Reset</button>
             </div>
         </form> 

@@ -44,6 +44,9 @@ $PRSN_ID = $_SESSION['prsn_id'];
                     <label for="email">Email</label>
                     <input name="email" id="email" class="js-user" type="text" required>
                 </div>
+                <p class="prompt">
+                    <!-- Password must include at least 1 uppercase, 1 lowercase, 1 digit, and 1 special character -->
+                </p>
                 <button type="submit" class="primary-btn">Send</button>
                 <!-- <span class="divider">Or</span> -->
                 <a href="login-page.php" class="back-btn">Back to Login</a>

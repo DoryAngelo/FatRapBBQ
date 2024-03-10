@@ -161,6 +161,9 @@ if (isset($_POST['submit'])) {
                         <p class="label-desc">(accepted files: .jpg, .png)</p>
                         <input name="image" id="image" class="image" type="file" required><!-- numbers only, starts with 09, must have 11-digits -->
                     </div>
+                    <p class="prompt">
+                        <!-- Password must include at least 1 uppercase, 1 lowercase, 1 digit, and 1 special character -->
+                    </p>
                     <button class="primary-btn" name="submit">Register</button>
                     <p class="small-text">Already have an account? <a class="login-link" href="login-page.php">Login</a></p>
                 </div>
