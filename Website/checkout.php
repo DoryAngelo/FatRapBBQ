@@ -125,7 +125,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                     </section>
                     <!-- contact info block-->
                     <section class="block red-theme">
-                        <h3 class="block-heading">Contact Information</h2>
+                        
                         <div class="block-body contact-info-blk ">
                             <!-- <?php
 
@@ -143,17 +143,15 @@ $PRSN_ID = $_SESSION['prsn_id'];
                             ?> -->
                             <!-- TODO: validate inputs -->
                             <div class="left">
+                                <h3 class="block-heading">Contact Information</h3>
                                 <div class="input-grp">
-                                    <p>Name</p>
-                                    <input type="text" name="name"> <!-- value="<?php echo $PRSN_NAME ?>" -->
+                                    <p>First Name</p>
+                                    <input type="text" name="first-name"> <!-- value="<?php echo $PRSN_NAME ?>" -->
                                 </div>
                                 <div class="input-grp">
-                                    <p>Address</p>
-                                    <input type="text" name="address"> <!-- value="" -->
-                                </div>    
-                            </div>
-                            <hr>
-                        <div class="right">
+                                    <p>Last Name</p>
+                                    <input type="text" name="last-name"> <!-- value="<?php echo $PRSN_NAME ?>" -->
+                                </div>
                                 <div class="input-grp">
                                     <p>Contact Number</p>
                                     <input type="text" name="contact-number"> <!-- value="<?php echo $PRSN_PHONE ?>" -->
@@ -161,8 +159,32 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                 <div class="input-grp">
                                     <p>Email</p>
                                     <input type="email" name="email"> <!-- value="<?php echo $PRSN_EMAIL ?>" -->
+                                </div>  
+                            </div>
+                            <hr>
+                                <div class="right">
+                                <h3 class="block-heading">Address</h3>
+                                    <div class="input-grp">
+                                        <p>Region</p>
+                                        <input type="text" name="address"> <!-- value="" -->
+                                    </div>  
+                                    <div class="input-grp">
+                                        <p>Province</p>
+                                        <input type="text" name="address"> <!-- value="" -->
+                                    </div>   
+                                    <div class="input-grp">
+                                        <p>City</p>
+                                        <input type="text" name="address"> <!-- value="" -->
+                                    </div> 
+                                    <div class="input-grp">
+                                        <p>Barangay</p>
+                                        <input type="text" name="address"> <!-- value="" -->
+                                    </div> 
+                                    <div class="input-grp">
+                                        <p>House no./Bldg./Street</p>
+                                        <input type="text" name="address"> <!-- value="" -->
+                                    </div> 
                                 </div>
-                        </div>
                         </div>
                     </section>
                     <!-- delivery info block-->

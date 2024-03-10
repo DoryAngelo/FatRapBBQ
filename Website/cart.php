@@ -62,7 +62,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
             <div class="section-heading">
                 <h2>Cart</h2>
             </div>
-            <form class="section-body" action="index.php?page=cart" method="post">
+            <form class="section-body" action="checkout.php" method="post">
                 <section class="block">
                     <div class="block-body">
                         <div class="table-wrap">
