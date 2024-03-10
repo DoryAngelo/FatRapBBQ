@@ -57,7 +57,6 @@ if(isset($_POST['submit'])){
     <script src="app.js" defer></script>
     <!-- add the code below to load the icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <script src="app.js" defer></script>
 </head>
 <body>
     <header>
@@ -95,11 +94,11 @@ if(isset($_POST['submit'])){
                                 <input id="remember-me" type="checkbox">
                                 <label for="remember-me">Remember me</label>
                             </div>
-                            <a class="forget-pass" href="forgot-password.html">Forgot Password?</a>
+                            <a class="forget-pass" href="<?php echo SITEURL; ?>forgot-password.php">Forgot Password?</a>
                         </div>
                     </div>
                     <p class="prompt"></p>
-                    <button name="submit" class="primary-btn">Login</button>
+                    <button name="submit" type="submit" class="primary-btn">Login</button>
                     <a href="cus-home-page.php" class="secondary-btn">Login as Guest</a>
                     <p class="small-text">Don't have an account? <a class="login-link" href="cus-register-page.php">Register</a></p>
                 </div>
@@ -112,7 +111,7 @@ if(isset($_POST['submit'])){
                 <h1>Fat Rap's Barbeque's Online Store</h1>
                 <div class="list">
                     <ul>
-                        <li><a href="#">Home</a></li>
+                        <li><a href="<?php echo SITEURL; ?>cus-home-page.php">Home</a></li>
                         <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
                         <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
                         <li><a href="<?php echo SITEURL; ?>track-order.php">Track order</a></li>
