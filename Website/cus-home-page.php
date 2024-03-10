@@ -36,8 +36,6 @@ if (isset($_POST['submit'])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     $quantity = $_POST['quantity'];
 
-    // Your database connection and SQL queries here
-    // Replace $FOOD_ID and $PRSN_ID with actual values
     $sql = "SELECT * FROM in_order WHERE FOOD_ID = $FOOD_ID AND PRSN_ID = $PRSN_ID";
     $res = mysqli_query($conn, $sql);
     $count = mysqli_num_rows($res);
@@ -212,7 +210,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                 <p class="product"><?php echo $FOOD_PRICE; ?></p>
                 <p class="product"><?php echo $FOOD_DESC; ?></p>
                 <div class="button-group">
-                    <form action="checkout.php" method="post">
+                    <form method="post">
                         <input type="hidden" id="quantity" name="quantity" value="1"> <!-- Hidden input to store the quantity -->
                         <button name="order" type="submit" class="button">Order Now</button>
                     </form>
