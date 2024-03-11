@@ -835,3 +835,32 @@ span.warning i {
 .admin-profile table input {
     background-color: var(--light-blue);
 }
+
+/* page button style */
+.parent {
+    position: relative;
+}
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0 5px;
+    position: absolute;
+    right: 0;
+    background-color: #ECEFEF;
+    border-radius: 3px;
+    color: var(--text);
+    margin-top: 1.5rem;
+}
+
+.buttons p{
+    font-size: 0.9rem;
+    width: 4rem;
+    text-align: center;
+}
+
+.buttons i{
+    font-size: 1.33rem;
+    color: #92989e;
+}
