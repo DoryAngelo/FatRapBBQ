@@ -106,7 +106,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                                     </div>
                                                     <p class="remaining"><?php echo $FOOD_STOCK ?> sticks remaining</p>
                                                 </td> <!--Quantity-->
-                                                <td class="narrow-col price-col">₱<?php echo $FOOD_PRICE ?></td><!--Price-->
+                                                <td class="narrow-col price-col">₱<?php echo $IN_ORDER_TOTAL ?></td><!--Price-->
                                                 <td class="narrow-col">
                                                     <a href="delete_in_order.php?IN_ORDER_ID=<?php echo $IN_ORDER_ID; ?>" class="bx bxs-trash-alt trash"></a><!-- pa remove na lang ng underline sa link -->
                                                 </td><!--Action-->
