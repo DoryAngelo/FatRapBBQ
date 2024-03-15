@@ -62,7 +62,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
             <div class="section-heading">
                 <h2>Cart</h2>
             </div>
-            <form class="section-body" action="checkout.php" method="post">
+            <form class="section-body"  method="post">
                 <section class="block">
                     <div class="block-body">
                         <div class="table-wrap">
@@ -134,6 +134,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                         </div>
                     </div>
                 </section>
+                <input type="hidden" id="quantity" name="quantity" value="1">
                 <!-- <a href="checkout.php" class="page-button center">Checkout</a> -->
                 <?php
 
@@ -197,27 +198,32 @@ $PRSN_ID = $_SESSION['prsn_id'];
         </div>
     </footer>
     <script>
-        /*js code for the increment and decrement buttons for the quantity*/
-        const plus = document.querySelector(".js-plus"),
-            minus = document.querySelector(".js-minus"),
-            num = document.querySelector(".js-num");
+    /*js code for the increment and decrement buttons for the quantity*/
+    const plus = document.querySelector(".js-plus"),
+        minus = document.querySelector(".js-minus"),
+        num = document.querySelector(".js-num");
 
-        let a = 1;
+    let a = parseInt("<?php echo $IN_ORDER_QUANTITY; ?>");
+    const stock = parseInt("<?php echo $FOOD_STOCK;?>");
 
-        plus.addEventListener("click", () => {
+    plus.addEventListener("click", () => {
+        if (a < stock) {
             a++;
             console.log(a);
             num.innerText = a;
-        });
+        } else {
+            alert("Cannot exceed food stock!");
+        }
+    });
 
-        minus.addEventListener("click", () => {
-            if (a > 1) {
-                a--;
-                console.log(a);
-                num.innerText = a;
-            }
-        });
-    </script>
+    minus.addEventListener("click", () => {
+        if (a > 1) {
+            a--;
+            console.log(a);
+            num.innerText = a;
+        }
+    });
+</script>
 </body>
 
 </html>
