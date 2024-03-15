@@ -4,6 +4,7 @@
 
 $PRSN_ID = $_SESSION['prsn_id'];
 
+
 ?>
 
 <!DOCTYPE html>
@@ -62,7 +63,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
             <div class="section-heading">
                 <h2>Cart</h2>
             </div>
-            <form class="section-body"  method="post">
+            <form class="section-body" action="checkout.php" method="post">
                 <section class="block">
                     <div class="block-body">
                         <div class="table-wrap">
@@ -81,6 +82,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                         FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND PRSN_ID = $PRSN_ID";
                                     $res = mysqli_query($conn, $sql);
                                     $count = mysqli_num_rows($res);
+                                    $stockValues = array();
                                     if ($count > 0) {
                                         while ($row = mysqli_fetch_assoc($res)) {
                                             $IN_ORDER_ID = $row['IN_ORDER_ID'];
@@ -90,6 +92,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                             $FOOD_STOCK = $row['FOOD_STOCK'];
                                             $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
                                             $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
+                                            $stockValues[$FOOD_NAME] = $FOOD_STOCK;
                                     ?>
                                             <tr> <!-- one row for a product-->
                                                 <td data-cell="customer" class="first-col">
@@ -100,9 +103,9 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                                 </td> <!--Pic and Name-->
                                                 <td class="narrow-col quantity-col">
                                                     <div class="quantity-grp">
-                                                        <i class='bx bxs-minus-circle js-minus'></i>
+                                                        <i class='bx bxs-minus-circle js-minus' data-in-order-id="<?php echo $IN_ORDER_ID; ?>" data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
                                                         <p class="amount js-num"><?php echo $IN_ORDER_QUANTITY ?></p>
-                                                        <i class='bx bxs-plus-circle js-plus'></i>
+                                                        <i class='bx bxs-plus-circle js-plus' data-in-order-id="<?php echo $IN_ORDER_ID; ?>" data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
                                                     </div>
                                                     <p class="remaining"><?php echo $FOOD_STOCK ?> sticks remaining</p>
                                                 </td> <!--Quantity-->
@@ -140,9 +143,9 @@ $PRSN_ID = $_SESSION['prsn_id'];
 
                 if ($count <= 0) {
                 ?>
-                <button class="page-button center" disabled>Checkout</button>
+                    <button class="page-button center" disabled>Checkout</button>
                 <?php
-                } else {    
+                } else {
                 ?>
                     <button name="checkout" type="submit" class="page-button center">Checkout</button>
                     <!-- second version -->
@@ -198,32 +201,60 @@ $PRSN_ID = $_SESSION['prsn_id'];
         </div>
     </footer>
     <script>
-    /*js code for the increment and decrement buttons for the quantity*/
-    const plus = document.querySelector(".js-plus"),
-        minus = document.querySelector(".js-minus"),
-        num = document.querySelector(".js-num");
+        document.addEventListener("DOMContentLoaded", function() {
+            const plusButtons = document.querySelectorAll(".js-plus");
+            const minusButtons = document.querySelectorAll(".js-minus");
+            const quantityDisplays = document.querySelectorAll(".js-num");
 
-    let a = parseInt("<?php echo $IN_ORDER_QUANTITY; ?>");
-    const stock = parseInt("<?php echo $FOOD_STOCK;?>");
+            plusButtons.forEach((button, index) => {
+                button.addEventListener("click", () => {
+                    const stock = parseInt(button.dataset.stock);
+                    const IN_ORDER_ID = button.dataset.inOrderId;
+                    const currentQuantity = parseInt(quantityDisplays[index].innerText);
+                    const newQuantity = currentQuantity + 1;
+                    const foodPrice = parseFloat(button.dataset.price);
 
-    plus.addEventListener("click", () => {
-        if (a < stock) {
-            a++;
-            console.log(a);
-            num.innerText = a;
-        } else {
-            alert("Cannot exceed food stock!");
-        }
-    });
+                    if (newQuantity <= stock) {
+                        updateQuantity(IN_ORDER_ID, newQuantity, foodPrice, index);
+                    } else {
+                        alert("Cannot exceed food stock!");
+                    }
+                });
+            });
 
-    minus.addEventListener("click", () => {
-        if (a > 1) {
-            a--;
-            console.log(a);
-            num.innerText = a;
-        }
-    });
-</script>
+            minusButtons.forEach((button, index) => {
+                button.addEventListener("click", () => {
+                    const IN_ORDER_ID = button.dataset.inOrderId;
+                    const currentQuantity = parseInt(quantityDisplays[index].innerText);
+                    const newQuantity = currentQuantity - 1;
+                    const foodPrice = parseFloat(button.dataset.price);
+
+                    if (newQuantity >= 1) {
+                        updateQuantity(IN_ORDER_ID, newQuantity, foodPrice, index);
+                    }
+                });
+            });
+
+            function updateQuantity(IN_ORDER_ID, newQuantity, foodPrice, displayIndex) {
+                const formData = new FormData();
+                formData.append("IN_ORDER_ID", IN_ORDER_ID);
+                formData.append("IN_ORDER_QUANTITY", newQuantity);
+                formData.append("FOOD_PRICE", foodPrice);
+
+                fetch("update_quantity.php", {
+                        method: "POST",
+                        body: formData
+                    })
+                    .then(response => response.text())
+                    .then(data => {
+                        quantityDisplays[displayIndex].innerText = newQuantity;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+        });
+    </script>
 </body>
 
 </html>
