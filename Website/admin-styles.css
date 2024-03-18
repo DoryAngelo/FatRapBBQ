@@ -540,6 +540,10 @@ form input {
     box-shadow: #cfd9e3 0px 2px 4px 0px;
 }
 
+/* .right-side .grid-container .box:hover {
+    cursor: default;
+} */
+
 .right-side .grid-container .green {
     color: #90BD7A;
 }
@@ -555,6 +559,7 @@ form input {
 
 .right-side .block {
     height: 100%;
+    max-height: 250px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -564,7 +569,7 @@ form input {
 .right-side hr {
     margin-top: 0.25rem;
     margin-bottom: 1.25rem;
-    color: #B5D0EF;
+    border: 0.5px solid #7297BD;
 }
 
 .right-side button {
@@ -740,6 +745,7 @@ a.back {
     height: 5rem;
     transition: 0.2s;
     font-size: 1.625rem;
+    background-color: var(--light-blue);
 }
 
 .date:hover,
@@ -863,4 +869,9 @@ span.warning i {
 .buttons i{
     font-size: 1.33rem;
     color: #92989e;
+}
+
+/*previous button in admin calendar*/
+.disabled:hover {
+    background-color: red;
 }

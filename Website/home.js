@@ -37,9 +37,11 @@ const updateCalendar = () => {
         datesHTML += `<div class="date ${activeClass}">${i}</div>`;
     }
 
-    for(let i = 1; i <= 7 - lastDayIndex; i++) {
-        const nextDate = new Date(currentYear, currentMonth + 1, i);
-        datesHTML += `<div class="date inactive">${nextDate.getDate()}</div>`;
+    if(lastDayIndex != 0) {
+        for(let i = 1; i <= 7 - lastDayIndex; i++) {
+            const nextDate = new Date(currentYear, currentMonth + 1, i);
+            datesHTML += `<div class="date inactive">${nextDate.getDate()}</div>`;
+        }
     }
 
     datesElement.innerHTML = datesHTML;
