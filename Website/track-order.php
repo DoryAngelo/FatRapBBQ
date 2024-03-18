@@ -1,9 +1,17 @@
 <?php
 
 @include 'constants.php';
-$PRSN_ID = $_SESSION['prsn_id'];
 
-$sql2 = "SELECT * FROM placed_order WHERE PRSN_ID = $PRSN_ID";
+if (isset($_SESSION['prsn_id'])) {
+    $PRSN_ID = $_SESSION['prsn_id'];
+    // $sql2 = "SELECT * FROM placed_order WHERE PRSN_ID = $PRSN_ID";
+} else {
+    $GUEST_ID = $_SESSION['guest_id'];
+}
+
+$PLACED_ORDER_TRACKER = $_SESSION['placed_order_tracker'];
+
+$sql2 = "SELECT * FROM placed_order WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'";
 
 $res2 = mysqli_query($conn, $sql2);
 
@@ -71,7 +79,7 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
             </div>
             <section class="section-body">
                 <section class="block">
-                    <h3 class="block-heading">Order code: <?php echo $PLACED_ORDER_ID?></h3>
+                    <h3 class="block-heading">Order code: <?php echo $PLACED_ORDER_ID ?></h3>
                     <div class="block-body">
                         <div class="container">
                             <div class="steps">
@@ -215,9 +223,13 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                 </thead>
                                 <tbody>
                                     <?php
-
-                                    $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
-FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND PRSN_ID = $PRSN_ID";
+                                    if (isset($_SESSION['prsn_id'])) {
+                                        $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
+                                        FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND PRSN_ID = $PRSN_ID";
+                                    } else {
+                                        $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
+                                        FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
+                                    }
                                     $res = mysqli_query($conn, $sql);
                                     $count = mysqli_num_rows($res);
                                     if ($count > 0) {
@@ -249,7 +261,11 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
                                     <?php
                                         }
                                     }
-                                    $sql3 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE PRSN_ID = $PRSN_ID";
+                                    if (isset($_SESSION['prsn_id'])) {
+                                        $sql3 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE PRSN_ID = $PRSN_ID";
+                                    } else {
+                                        $sql3 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
+                                    }
                                     $res3 = mysqli_query($conn, $sql3);
                                     $row3 = mysqli_fetch_assoc($res3);
                                     $total = $row3['Total'];

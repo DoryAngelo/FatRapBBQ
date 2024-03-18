@@ -60,6 +60,10 @@ $pdf->Cell(2);
 $pdf->Cell(130, 5, '', 0, 0);
 $pdf->Cell(59, 5, 'Delivery Date:', 0, 1);
 $pdf->Cell(2);
+$pdf->Cell(130, 5, '', 0, 0);
+$pdf->Cell(59, 5, 'Delivery Address:', 0, 1);
+$pdf->Cell(2);
+
 
 $pdf->SetFont('Arial', "B", 10);
 $pdf->Cell(189, 5, '', 0, 1);

@@ -2,7 +2,11 @@
 
 @include 'constants.php';
 
-$PRSN_ID = $_SESSION['prsn_id'];
+if (isset($_SESSION['prsn_id'])) {
+    $PRSN_ID = $_SESSION['prsn_id'];
+} else {
+    $GUEST_ID = $_SESSION['guest_id'];
+}
 
 $FOOD_NAME = 'Barbeque';
 
@@ -36,9 +40,15 @@ if (isset($_POST['submit'])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     $quantity = $_POST['quantity'];
 
-    $sql = "SELECT * FROM in_order WHERE FOOD_ID = $FOOD_ID AND PRSN_ID = $PRSN_ID";
-    $res = mysqli_query($conn, $sql);
-    $count = mysqli_num_rows($res);
+    if (isset($_SESSION['prsn_id'])) {
+        $sql = "SELECT * FROM in_order WHERE FOOD_ID = $FOOD_ID AND PRSN_ID = $PRSN_ID";
+        $res = mysqli_query($conn, $sql);
+        $count = mysqli_num_rows($res);
+    } else {
+        $sql = "SELECT * FROM in_order WHERE FOOD_ID = $FOOD_ID AND GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
+        $res = mysqli_query($conn, $sql);
+        $count = mysqli_num_rows($res);       
+    }
 
     if ($count > 0) {
         while ($row = mysqli_fetch_assoc($res)) {
@@ -54,8 +64,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         }
     } else {
         $IN_ORDER_TOTAL = $quantity * $FOOD_PRICE;
-        $sql2 = "INSERT INTO in_order (FOOD_ID, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS)
-                 VALUES ('$FOOD_ID', '$PRSN_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered')";
+        if (isset($_SESSION['prsn_id'])) {
+            $sql2 = "INSERT INTO in_order (FOOD_ID, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS)
+            VALUES ('$FOOD_ID', '$PRSN_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered')";
+        } else {
+            $sql2 = "INSERT INTO in_order (FOOD_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS, GUEST_ORDER_IDENTIFIER)
+            VALUES ('$FOOD_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered', '$GUEST_ID')";   
+        }
         $res2 = mysqli_query($conn, $sql2);
     }
 
@@ -154,7 +169,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         <!-- section 1 - product landing -->
         <section class="product-landing section">
             <div class="PL-text">
-                <h1>Order our best-selling BBQ</h1>
+                <h1>Order our best-selling BBQ <?php echo $GUEST_ID?></h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictumsum dolor sit amet</p>
                 <a href="#product-info-section" class="button">Order Now</a>
             </div>

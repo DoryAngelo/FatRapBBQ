@@ -2,7 +2,12 @@
 
 @include 'constants.php';
 
-$PRSN_ID = $_SESSION['prsn_id'];
+
+if (isset($_SESSION['prsn_id'])) {
+    $PRSN_ID = $_SESSION['prsn_id'];
+} else {
+    $GUEST_ID = $_SESSION['guest_id'];
+}
 
 
 ?>
@@ -78,8 +83,13 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, FOOD_STOCK, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
-                                        FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND PRSN_ID = $PRSN_ID";
+                                    if (isset($_SESSION['prsn_id'])) {
+                                        $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, FOOD_STOCK, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
+                                        FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND PRSN_ID = '$PRSN_ID'";
+                                    } else {
+                                        $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, FOOD_STOCK, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
+                                        FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
+                                    }
                                     $res = mysqli_query($conn, $sql);
                                     $count = mysqli_num_rows($res);
                                     $stockValues = array();
@@ -123,7 +133,11 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                         </tr>
                                     <?php
                                     }
-                                    $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE PRSN_ID = $PRSN_ID";
+                                    if (isset($_SESSION['prsn_id'])) {
+                                        $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE PRSN_ID = '$PRSN_ID'";
+                                    } else {
+                                        $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
+                                    }
                                     $res2 = mysqli_query($conn, $sql2);
                                     $row2 = mysqli_fetch_assoc($res2);
                                     $total = $row2['Total'];
