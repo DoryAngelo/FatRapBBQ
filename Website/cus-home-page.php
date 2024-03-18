@@ -173,7 +173,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         <!-- section 1 - product landing -->
         <section class="product-landing section">
             <div class="PL-text">
-                <h1>Order our best-selling BBQ <?php echo $GUEST_ID?></h1>
+                <h1>Order our best-selling BBQ</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictumsum dolor sit amet</p>
                 <a href="#product-info-section" class="button">Order Now</a>
             </div>
