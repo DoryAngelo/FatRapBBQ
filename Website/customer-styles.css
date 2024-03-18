@@ -50,7 +50,7 @@
     }
 } */
 
-body{
+body {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     min-height: 100vh;
@@ -418,7 +418,6 @@ a.clear-bg, a.clear-bg:hover {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* Creates 4 columns with equal width */
     gap: 3rem;
-
 }
 
 .menu .menu-item img {
@@ -671,22 +670,3 @@ a.back {
     background: #87a5f8;
     cursor: not-allowed;
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

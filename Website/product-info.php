@@ -6,6 +6,37 @@ $PRSN_ID = $_SESSION['prsn_id'];
 
 $FOOD_ID = $_GET['FOOD_ID'];
 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
+    $quantity = $_POST['quantity'];
+    $FOOD_PRICE = $_POST['price'];
+
+    $sql = "SELECT * FROM in_order WHERE FOOD_ID = $FOOD_ID AND PRSN_ID = $PRSN_ID";
+    $res = mysqli_query($conn, $sql);
+    $count = mysqli_num_rows($res);
+
+    if ($count > 0) {
+        while ($row = mysqli_fetch_assoc($res)) {
+            $IN_ORDER_ID = $row['IN_ORDER_ID'];
+            $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'] + $quantity;
+            $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'] + ($quantity * $FOOD_PRICE);
+
+            $sql = "UPDATE in_order SET 
+                            IN_ORDER_QUANTITY = $IN_ORDER_QUANTITY,
+                            IN_ORDER_TOTAL = $IN_ORDER_TOTAL
+                            WHERE IN_ORDER_ID = $IN_ORDER_ID";
+            $res_update = mysqli_query($conn, $sql);
+        }
+    } else {
+        $IN_ORDER_TOTAL = $quantity * $FOOD_PRICE;
+        $sql2 = "INSERT INTO in_order (FOOD_ID, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS)
+                 VALUES ('$FOOD_ID', '$PRSN_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered')";
+        $res2 = mysqli_query($conn, $sql2);
+    }
+
+    // Redirect to the home page after processing
+    header('location:cart.php');
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -28,35 +59,38 @@ $FOOD_ID = $_GET['FOOD_ID'];
 </head>
 
 <body>
-    <header>
-        <div class="header-container">
-            <div class="website-title">
+<header>
+            <div class="header-container">
+                <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
-                <div class="text">
-                    <h1>Fat Rap's Barbeque's Online Store</h1>
+                    <div class="text">
+                        <h1>Fat Rap's Barbeque's Online Store</h1>
+                    </div>
                 </div>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="<?php echo SITEURL; ?>home.php">Home</a></li>
-                    <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
-                    <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
-                    <!-- Text below should change to 'Logout'once user logged in-->
-                    <?php
-                    if (isset($_SESSION['prsn_id'])) {
-                    ?>
-                        <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                        <li>
+                    <input type="checkbox" id="menu-toggle">
+                    <label class='menu-button-container' for="menu-toggle">
+                        <div class='menu-button'></div>
+                    </label>
+                        </nav>
+                        <ul class = "menubar">
+                            <!--TODO: ADD LINKS-->
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Menu</a></li>
+                            <li><a href="<?php echo SITEURL ;?>cart.php">Cart</a></li>
+                        <!-- Text below should change to 'Logout'once user logged in-->
                         <?php
-                    } else {
-                        ?>
-                        <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                    <?php
-                    }
-                    ?>
-                </ul>
-            </nav>
-        </div>
+                        if (isset($_SESSION['prsn_id'])) {
+                            ?>
+                                <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a></li>
+                                <?php
+                            } else {
+                                ?>
+                                <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
+                            <?php
+                            }
+                            ?>
+                        </ul>
+            </div>
     </header>
     <main>
         <section class="section product-info-page">
@@ -80,22 +114,23 @@ $FOOD_ID = $_GET['FOOD_ID'];
                         <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
                         <div class="right-grp">
                             <div class="top">
-                                <h1><?php echo $FOOD_NAME?></h1>
-                                <p><?php echo $FOOD_DESC?></p>
+                                <h1><?php echo $FOOD_NAME ?></h1>
+                                <p><?php echo $FOOD_DESC ?></p>
                             </div>
-                            <form class="bottom" action="cart.php" method="POST">
+                            <form class="bottom" method="POST">
                                 <input type="hidden" name="product_id" value="<?= $product['id'] ?>"><!--hidden product name to accompany the product's quantity-->
                                 <div class="inline">
-                                    <h1>₱<?php echo $FOOD_PRICE?></h1>
+                                    <h1>₱<?php echo $FOOD_PRICE ?></h1>
                                     <div class="quantity-grp">
-                                        <i class='bx bxs-minus-circle js-minus'></i>
-                                        <!--product quantity below-->
-                                        <input class="amount js-num" type="text" name="quantity" value="1" min="1" max="<?= $product['quantity'] ?>" placeholder="Quantity" required>
-                                        <i class='bx bxs-plus-circle js-plus'></i>
+                                        <i class='bx bxs-minus-circle js-minus' data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
+                                        <p class="amount js-num">1</p>
+                                        <i class='bx bxs-plus-circle js-plus' data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
                                     </div>
-                                    <p class="remaining"><?php echo $FOOD_STOCK?> sticks available</p>
+                                    <p class="remaining"><?php echo $FOOD_STOCK ?> sticks available</p>
                                 </div>
-                                <button name="submit" type="submit">Add to Cart</button>
+                                <input type="hidden" id="quantity" name="quantity" value="1">
+                                <input type="hidden" name="price" value="<?php echo $FOOD_PRICE ?>">
+                                <button name="order" type="submit">Add to Cart</button>
                             </form>
                         </div>
                     </section>
@@ -149,26 +184,31 @@ $FOOD_ID = $_GET['FOOD_ID'];
         </div>
     </footer>
     <script>
-        /*js code for the increment and decrement buttons for the quantity*/
-        const plus = document.querySelector(".js-plus"),
-            minus = document.querySelector(".js-minus"),
-            num = document.querySelector(".js-num");
+        const plus = document.querySelector(".js-plus");
+        const minus = document.querySelector(".js-minus");
+        const num = document.querySelector(".js-num");
+        const quantityInput = document.getElementById("quantity");
 
-        let a = 1;
+        let a = parseInt(num.innerText);
+        const stock = parseInt(plus.dataset.stock); // Accessing data-stock attribute from plus element
 
         plus.addEventListener("click", () => {
-            a++;
-            console.log(a);
-            // num.innerText = a;
-            num.value = a;
+            if (a < stock) {
+                a++;
+                console.log(a);
+                num.innerText = a;
+                quantityInput.value = a; // Update hidden input value
+            } else {
+                alert("Cannot exceed food stock!");
+            }
         });
 
         minus.addEventListener("click", () => {
             if (a > 1) {
                 a--;
                 console.log(a);
-                // num.innerText = a;
-                num.value = a;
+                num.innerText = a;
+                quantityInput.value = a; // Update hidden input value
             }
         });
     </script>

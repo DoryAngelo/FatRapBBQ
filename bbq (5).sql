@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 04, 2024 at 03:10 AM
+-- Generation Time: Mar 18, 2024 at 04:54 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -124,7 +124,8 @@ CREATE TABLE `in_order` (
 
 INSERT INTO `in_order` (`IN_ORDER_ID`, `FOOD_ID`, `PRSN_ID`, `IN_ORDER_QUANTITY`, `IN_ORDER_TOTAL`, `IN_ORDER_STATUS`, `PLACED_ORDER_ID`) VALUES
 (2, 1, 99, 1, 25.00, 'Ordered', NULL),
-(10, 1, 15, 12, 300.00, 'Ordered', NULL);
+(33, 6, 15, 35, 210.00, 'Ordered', 16),
+(35, 1, 15, 20, 500.00, 'Ordered', 16);
 
 -- --------------------------------------------------------
 
@@ -150,7 +151,8 @@ INSERT INTO `person` (`PRSN_ID`, `PRSN_NAME`, `PRSN_EMAIL`, `PRSN_PASSWORD`, `PR
 (16, 'Admin', 'admin@gmail.com', '21232f297a57a5a743894a0e4a801fc3', '09123456789', 'Admin'),
 (25, 'Test', 'test@gmail.com', '147538da338b770b61e592afc92b1ee6', '09123456789', 'Employee'),
 (33, 'Wholesaler', 'wholesaler@gmail.com', '340df6ec49a0d5d9ef39693712986569', '09123456789', 'Wholesaler'),
-(38, 'Employee2', 'employee2@gmail.com', 'fa5473530e4d1a5a1e1eb53d2fedb10c', '09123456789', 'Employee');
+(38, 'Employee2', 'employee2@gmail.com', 'fa5473530e4d1a5a1e1eb53d2fedb10c', '09123456789', 'Employee'),
+(39, '', '', 'd41d8cd98f00b204e9800998ecf8427e', '', 'Wholesaler');
 
 -- --------------------------------------------------------
 
@@ -179,7 +181,7 @@ CREATE TABLE `placed_order` (
 --
 
 INSERT INTO `placed_order` (`PLACED_ORDER_ID`, `PRSN_ID`, `CUS_NAME`, `CUS_NUMBER`, `CUS_EMAIL`, `PLACED_ORDER_DATE`, `PLACED_ORDER_TOTAL`, `DELIVERY_ADDRESS`, `DELIVERY_DATE`, `PLACED_ORDER_STATUS`, `PLACED_ORDER_CONFIRMATION`, `PLACED_ORDER_TRACKER`, `REFERENCE_NUMBER`) VALUES
-(13, 15, 'User', '09123456789', 'user@gmail.com', '2024-02-23 03:16:05pm', 75.00, 'Test Address', '2024-02-23 04:22', 'Completed', 'Confirmed', '432ab3662d43ef4f', 'referencenumber2');
+(16, 15, 'Fname Lname', '09123456789', 'test@gmail.com', '2024-03-18 11:24:41am', 710.00, 'RegionTest, ProvinceTest, CityTest, BarangayTest, StreetTest', '2024-05-29 12:30', 'Completed', 'Confirmed', 'b427fa01af255b84', '');
 
 -- --------------------------------------------------------
 
@@ -201,7 +203,8 @@ CREATE TABLE `wholesaler` (
 --
 
 INSERT INTO `wholesaler` (`WHL_ID`, `PRSN_ID`, `WHL_DISC`, `WHL_IMAGE`, `DATE_OF_REGISTRATION`, `WHL_STATUS`) VALUES
-(6, 33, 0.05, 'WHL_IMAGE_Wholesaler.jpg', '2024-03-01 09:09:55pm', 'Rejected');
+(6, 33, 0.05, 'WHL_IMAGE_Wholesaler.jpg', '2024-03-01 09:09:55pm', 'Rejected'),
+(8, 39, 0.05, 'WHL_IMAGE_.jpg', '2024-03-06 06:08:08pm', '');
 
 --
 -- Indexes for dumped tables
@@ -287,25 +290,25 @@ ALTER TABLE `food`
 -- AUTO_INCREMENT for table `in_order`
 --
 ALTER TABLE `in_order`
-  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `PRSN_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `PRSN_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `placed_order`
 --
 ALTER TABLE `placed_order`
-  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `wholesaler`
 --
 ALTER TABLE `wholesaler`
-  MODIFY `WHL_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `WHL_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

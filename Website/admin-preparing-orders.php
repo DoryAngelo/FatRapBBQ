@@ -11,7 +11,7 @@ if (isset($_POST['confirmed'])) {
     $PLACED_ORDER_CONFIRMATION = "Confirmed";
 
     switch ($PLACED_ORDER_STATUS) {
-        case "Ordered":
+        case "Placed":
             $PLACED_ORDER_STATUS = "Awaiting Payment";
             break;
         case "Awaiting Payment":
@@ -95,8 +95,11 @@ if (isset($_POST['not-confirmed'])) {
                     <p>ADMIN</p>
                 </div>
             </div>
-            <nav>
-                <ul>
+            <input type="checkbox" id="menu-toggle">
+                    <label class='menu-button-container' for="menu-toggle">
+                        <div class='menu-button'></div>
+                    </label>
+                <ul class = 'menubar'>
                     <!--TODO: ADD LINKS-->
                     <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
                     <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
@@ -115,7 +118,6 @@ if (isset($_POST['not-confirmed'])) {
                     }
                     ?>
                 </ul>
-            </nav>
         </div>
     </header>
     <main>
@@ -157,7 +159,7 @@ if (isset($_POST['not-confirmed'])) {
                                 <tr>
                                     <td data-cell="Date and Time"><?php echo $PLACED_ORDER_DATE ?></td>
                                     <td data-cell="customer"><?php echo $CUS_NAME ?></td>
-                                    <td data-cell="Order #"><a href="<?php echo SITEURL ?>admin-order-details.php?PRSN_ID=<?php echo $PRSN_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
+                                    <td data-cell="Order #"><a href="<?php echo SITEURL ?>admin-order-details.php?PLACED_ORDER_ID=<?php echo $PLACED_ORDER_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
                                     <td data-cell="Payment">₱<?php echo $PLACED_ORDER_TOTAL ?></td>
                                     <td data-cell="Status"><?php echo $PLACED_ORDER_STATUS ?></td>
                                     <td data-cell="Confimed">

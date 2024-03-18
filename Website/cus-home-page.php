@@ -2,7 +2,11 @@
 
 @include 'constants.php';
 
-$PRSN_ID = $_SESSION['prsn_id'];
+if (isset($_SESSION['prsn_id'])) {
+    $PRSN_ID = $_SESSION['prsn_id'];
+} else {
+    $GUEST_ID = $_SESSION['guest_id'];
+}
 
 $FOOD_NAME = 'Barbeque';
 
@@ -36,9 +40,15 @@ if (isset($_POST['submit'])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     $quantity = $_POST['quantity'];
 
-    $sql = "SELECT * FROM in_order WHERE FOOD_ID = $FOOD_ID AND PRSN_ID = $PRSN_ID";
-    $res = mysqli_query($conn, $sql);
-    $count = mysqli_num_rows($res);
+    if (isset($_SESSION['prsn_id'])) {
+        $sql = "SELECT * FROM in_order WHERE FOOD_ID = $FOOD_ID AND PRSN_ID = $PRSN_ID";
+        $res = mysqli_query($conn, $sql);
+        $count = mysqli_num_rows($res);
+    } else {
+        $sql = "SELECT * FROM in_order WHERE FOOD_ID = $FOOD_ID AND GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
+        $res = mysqli_query($conn, $sql);
+        $count = mysqli_num_rows($res);       
+    }
 
     if ($count > 0) {
         while ($row = mysqli_fetch_assoc($res)) {
@@ -54,8 +64,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         }
     } else {
         $IN_ORDER_TOTAL = $quantity * $FOOD_PRICE;
-        $sql2 = "INSERT INTO in_order (FOOD_ID, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS)
-                 VALUES ('$FOOD_ID', '$PRSN_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered')";
+        if (isset($_SESSION['prsn_id'])) {
+            $sql2 = "INSERT INTO in_order (FOOD_ID, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS)
+            VALUES ('$FOOD_ID', '$PRSN_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered')";
+        } else {
+            $sql2 = "INSERT INTO in_order (FOOD_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS, GUEST_ORDER_IDENTIFIER)
+            VALUES ('$FOOD_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered', '$GUEST_ID')";   
+        }
         $res2 = mysqli_query($conn, $sql2);
     }
 
@@ -118,38 +133,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 </head>
+    <header>
+            <div class="header-container">
+                <div class="website-title">
+                <img id="logo" src="images/client-logo.png">
+                    <div class="text">
+                        <h1>Fat Rap's Barbeque's Online Store</h1>
+                    </div>
+                </div>
+                    <input type="checkbox" id="menu-toggle">
+                    <label class='menu-button-container' for="menu-toggle">
+                        <div class='menu-button'></div>
+                    </label>
+                        </nav>
+                        <ul class = "menubar">
+                            <!--TODO: ADD LINKS-->
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Menu</a></li>
+                            <li><a href="<?php echo SITEURL ;?>cart.php">Cart</a></li>
+                        <!-- Text below should change to 'Logout'once user logged in-->
+                        <?php
+                        if (isset($_SESSION['prsn_id'])) {
+                            ?>
+                                <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a></li>
+                                <?php
+                            } else {
+                                ?>
+                                <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
+                            <?php
+                            }
+                            ?>
+                        </ul>
+                        </nav>
+            </div>
+    </header>
 
 <body>
-    <header>
-        <div class="header-container">
-            <div class="website-title">
-                <img id="logo" src="images/client-logo.png">
-                <div class="text">
-                    <h1>Fat Rap's Barbeque's Online Store</h1>
-                </div>
-            </div>
-            <nav>
-                <ul>
-                    <!--TODO: ADD LINKS-->
-                    <li><a href="#">Home</a></li>
-                    <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
-                    <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
-                    <!-- Text below should change to 'Logout'once user logged in-->
-                    <?php
-                    if (isset($_SESSION['prsn_id'])) {
-                    ?>
-                        <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                        <li>
-                        <?php
-                    } else {
-                        ?>
-                        <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                    <?php
-                    }
-                    ?>
-            </nav>
-        </div>
-    </header>
     <main>
         <!-- section 1 - product landing -->
         <section class="product-landing section">
@@ -218,15 +237,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                             <!-- <button class="js-minus">-</button>
                             <span class="js-num">1</span>
                             <button class="js-plus">+</button> -->
-                            <i class='bx bxs-minus-circle js-minus circle'></i>
+                            <i class='bx bxs-minus-circle js-minus circle' data-stock="<?php echo $FOOD_STOCK; ?>"></i>
                             <p class="amount js-num">1</p>
-                            <i class='bx bxs-plus-circle js-plus circle'></i>
+                            <i class='bx bxs-plus-circle js-plus circle' data-stock="<?php echo $FOOD_STOCK; ?>"></i>
                         </div>
                         <p class="remaining"><?php echo $FOOD_STOCK; ?> sticks remaining</p>
                     </div>
                 </div>
             </div>
         </section>
+        <script>
+            const plus = document.querySelector(".js-plus");
+            const minus = document.querySelector(".js-minus");
+            const num = document.querySelector(".js-num");
+            const quantityInput = document.getElementById("quantity");
+
+            let a = parseInt(num.innerText);
+            const stock = parseInt(plus.dataset.stock); // Accessing data-stock attribute from plus element
+
+            plus.addEventListener("click", () => {
+                if (a < stock) {
+                    a++;
+                    console.log(a);
+                    num.innerText = a;
+                    quantityInput.value = a; // Update hidden input value
+                } else {
+                    alert("Cannot exceed food stock!");
+                }
+            });
+
+            minus.addEventListener("click", () => {
+                if (a > 1) {
+                    a--;
+                    console.log(a);
+                    num.innerText = a;
+                    quantityInput.value = a; // Update hidden input value
+                }
+            });
+        </script>
         <!-- section 4 - order tracking-->
         <section class="product-landing order-track section">
             <div class="PL-text">
@@ -292,4 +340,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     </footer>
     <script src="home.js"></script>
 </body>
+
 </html>
