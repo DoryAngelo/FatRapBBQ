@@ -119,14 +119,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                 <div class="inline">
                                     <h1>₱<?php echo $FOOD_PRICE ?></h1>
                                     <div class="quantity-grp">
-                                        <i class='bx bxs-minus-circle js-minus circle'></i>
+                                        <i class='bx bxs-minus-circle js-minus' data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
                                         <p class="amount js-num">1</p>
-                                        <i class='bx bxs-plus-circle js-plus circle'></i>
+                                        <i class='bx bxs-plus-circle js-plus' data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
                                     </div>
                                     <p class="remaining"><?php echo $FOOD_STOCK ?> sticks available</p>
                                 </div>
                                 <input type="hidden" id="quantity" name="quantity" value="1">
-                                <input type="hidden" name="price" value="<?php echo $FOOD_PRICE?>">
+                                <input type="hidden" name="price" value="<?php echo $FOOD_PRICE ?>">
                                 <button name="order" type="submit">Add to Cart</button>
                             </form>
                         </div>
@@ -181,18 +181,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         </div>
     </footer>
     <script>
-        const plus = document.querySelector(".js-plus"),
-            minus = document.querySelector(".js-minus"),
-            num = document.querySelector(".js-num"),
-            quantityInput = document.getElementById("quantity");
+        const plus = document.querySelector(".js-plus");
+        const minus = document.querySelector(".js-minus");
+        const num = document.querySelector(".js-num");
+        const quantityInput = document.getElementById("quantity");
 
-        let a = 1;
+        let a = parseInt(num.innerText);
+        const stock = parseInt(plus.dataset.stock); // Accessing data-stock attribute from plus element
 
         plus.addEventListener("click", () => {
-            a++;
-            console.log(a);
-            num.innerText = a;
-            quantityInput.value = a; // Update hidden input value
+            if (a < stock) {
+                a++;
+                console.log(a);
+                num.innerText = a;
+                quantityInput.value = a; // Update hidden input value
+            } else {
+                alert("Cannot exceed food stock!");
+            }
         });
 
         minus.addEventListener("click", () => {
@@ -203,8 +208,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                 quantityInput.value = a; // Update hidden input value
             }
         });
-
-        
     </script>
 </body>
 

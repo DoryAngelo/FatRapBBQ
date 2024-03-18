@@ -218,15 +218,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                             <!-- <button class="js-minus">-</button>
                             <span class="js-num">1</span>
                             <button class="js-plus">+</button> -->
-                            <i class='bx bxs-minus-circle js-minus circle'></i>
+                            <i class='bx bxs-minus-circle js-minus circle' data-stock="<?php echo $FOOD_STOCK; ?>"></i>
                             <p class="amount js-num">1</p>
-                            <i class='bx bxs-plus-circle js-plus circle'></i>
+                            <i class='bx bxs-plus-circle js-plus circle' data-stock="<?php echo $FOOD_STOCK; ?>"></i>
                         </div>
                         <p class="remaining"><?php echo $FOOD_STOCK; ?> sticks remaining</p>
                     </div>
                 </div>
             </div>
         </section>
+        <script>
+            const plus = document.querySelector(".js-plus");
+            const minus = document.querySelector(".js-minus");
+            const num = document.querySelector(".js-num");
+            const quantityInput = document.getElementById("quantity");
+
+            let a = parseInt(num.innerText);
+            const stock = parseInt(plus.dataset.stock); // Accessing data-stock attribute from plus element
+
+            plus.addEventListener("click", () => {
+                if (a < stock) {
+                    a++;
+                    console.log(a);
+                    num.innerText = a;
+                    quantityInput.value = a; // Update hidden input value
+                } else {
+                    alert("Cannot exceed food stock!");
+                }
+            });
+
+            minus.addEventListener("click", () => {
+                if (a > 1) {
+                    a--;
+                    console.log(a);
+                    num.innerText = a;
+                    quantityInput.value = a; // Update hidden input value
+                }
+            });
+        </script>
         <!-- section 4 - order tracking-->
         <section class="product-landing order-track section">
             <div class="PL-text">
@@ -292,4 +321,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     </footer>
     <script src="home.js"></script>
 </body>
+
 </html>

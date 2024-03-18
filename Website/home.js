@@ -14,30 +14,30 @@ const updateCalendar = () => {
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth();
 
-    const firstDay = new Date(currentYear, currentMonth,0);
-    const lastDay = new Date(currentYear, currentMonth +1, 0);
+    const firstDay = new Date(currentYear, currentMonth, 0);
+    const lastDay = new Date(currentYear, currentMonth + 1, 0);
     const totalDays = lastDay.getDate();
     const firstDayIndex = firstDay.getDay();
     const lastDayIndex = lastDay.getDay();
 
     const monthYearString = currentDate.toLocaleString
-    ('default', {month: 'long', year: 'numeric'});
+        ('default', { month: 'long', year: 'numeric' });
     monthYearElement.textContent = monthYearString;
 
     let datesHTML = '';
 
-    for(let i = firstDayIndex; i >0; i--) {
+    for (let i = firstDayIndex; i > 0; i--) {
         const prevDate = new Date(currentYear, currentMonth, 0 - i + 1);
         datesHTML += `<div class="date inactive">${prevDate.getDate()}</div>`;
     }
 
-    for(let i = 1; i <= totalDays; i++) {
+    for (let i = 1; i <= totalDays; i++) {
         const date = new Date(currentYear, currentMonth, i);
         const activeClass = date.toDateString === new Date().toDateString() ? 'active' : '';
         datesHTML += `<div class="date ${activeClass}">${i}</div>`;
     }
 
-    for(let i = 1; i <= 7 - lastDayIndex; i++) {
+    for (let i = 1; i <= 7 - lastDayIndex; i++) {
         const nextDate = new Date(currentYear, currentMonth + 1, i);
         datesHTML += `<div class="date inactive">${nextDate.getDate()}</div>`;
     }
@@ -57,27 +57,5 @@ nextBtn.addEventListener('click', () => {
 
 updateCalendar();
 
-/*js code for the increment and decrement buttons for the quantity*/
-const plus = document.querySelector(".js-plus"),
-minus = document.querySelector(".js-minus"),
-num = document.querySelector(".js-num"),
-quantityInput = document.getElementById("quantity");
 
-let a = 1;
-
-plus.addEventListener("click", () => {
-a++;
-console.log(a);
-num.innerText = a;
-quantityInput.value = a; // Update hidden input value
-});
-
-minus.addEventListener("click", () => {
-if (a > 1) {
-    a--;
-    console.log(a);
-    num.innerText = a;
-    quantityInput.value = a; // Update hidden input value
-}
-});
 
