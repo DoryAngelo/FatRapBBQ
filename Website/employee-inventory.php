@@ -35,8 +35,11 @@ $PRSN_ID = $_SESSION['prsn_id'];
                     <p>ADMIN</p>
                 </div>
             </div>
-            <nav>
-                <ul>
+            <input type="checkbox" id="menu-toggle">
+                    <label class='menu-button-container' for="menu-toggle">
+                        <div class='menu-button'></div>
+                    </label>
+                <ul class = 'menubar'>
                     <li><a href="<?php echo SITEURL ;?>employee-home.php">Home</a></li>
                     <li><a href="<?php echo SITEURL ;?>employee-to-prepare-orders.php">Orders</a></li>
                     <!-- Text below should change to 'Logout'once user logged in-->
@@ -54,7 +57,6 @@ $PRSN_ID = $_SESSION['prsn_id'];
                         }
                     ?>
                 </ul>
-            </nav>
         </div>
     </header>
     <main>

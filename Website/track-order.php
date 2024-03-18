@@ -41,8 +41,11 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                     <h1>Fat Rap's Barbeque's Online Store</h1>
                 </div>
             </div>
-            <nav>
-                <ul>
+            <input type="checkbox" id="menu-toggle">
+                    <label class='menu-button-container' for="menu-toggle">
+                        <div class='menu-button'></div>
+                    </label>
+                <ul class = 'menubar'>
                     <!--TODO: ADD LINKS-->
                     <li><a href="cus-home-page.php">Home</a></li>
                     <li><a href="#">Menu</a></li>
@@ -61,7 +64,6 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                     }
                     ?>
                 </ul>
-            </nav>
         </div>
     </header>
     <main>

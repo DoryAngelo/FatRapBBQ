@@ -35,8 +35,11 @@ $PLACED_ORDER_ID = $_GET['PLACED_ORDER_ID'];
                     <p>ADMIN</p>
                 </div>
             </div>
-            <nav>
-                <ul>
+            <input type="checkbox" id="menu-toggle">
+                    <label class='menu-button-container' for="menu-toggle">
+                        <div class='menu-button'></div>
+                    </label>
+                <ul class = 'menubar'>
                     <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
                     <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
                     <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
@@ -53,7 +56,6 @@ $PLACED_ORDER_ID = $_GET['PLACED_ORDER_ID'];
                     }
                     ?>
                 </ul>
-            </nav>
         </div>
     </header>
     <main>
