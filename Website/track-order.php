@@ -3,26 +3,15 @@
 @include 'constants.php';
 $PRSN_ID = $_SESSION['prsn_id'];
 
-// $sql2 = "SELECT * FROM placed_order WHERE PRSN_ID = $PRSN_ID";
+$sql2 = "SELECT * FROM placed_order WHERE PRSN_ID = $PRSN_ID";
 
-// $res2 = mysqli_query($conn, $sql2);
+$res2 = mysqli_query($conn, $sql2);
 
-// $count2 = mysqli_num_rows($res2);
+$count2 = mysqli_num_rows($res2);
 
-// $row2 = mysqli_fetch_assoc($res2);
+$row2 = mysqli_fetch_assoc($res2);
 
-// if ($count2 > 0) {
-//     $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
-//     $PRSN_ID = $row2['PRSN_ID'];
-//     $CUS_NAME = $row22['CUS_NAME'];
-//     $CUS_NUMBER = $row2['CUS_NUMBER'];
-//     $CUS_EMAIL = $row2['CUS_EMAIL'];
-//     $PLACED_ORDER_DATE = $row2['PLACED_ORDER_DATE'];
-//     $PLACED_ORDER_TOTAL = $row2['PLACED_ORDER_TOTAL'];
-//     $DELIVERY_ADDRESS = $row2['DELIVERY_ADDRESS'];
-//     $DELIVERY_DATE = $row2['DELIVERY_DATE'];
-//     $PLACED_ORDER_STATUS = $row2['PLACED_ORDER_STATUS'];
-// }
+$PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
 
 ?>
 <!DOCTYPE html>
@@ -82,28 +71,11 @@ $PRSN_ID = $_SESSION['prsn_id'];
             </div>
             <section class="section-body">
                 <section class="block">
-                    <h3 class="block-heading">Order code: 9999999999</h3>
+                    <h3 class="block-heading">Order code: <?php echo $PLACED_ORDER_ID?></h3>
                     <div class="block-body">
                         <div class="container">
                             <div class="steps">
                                 <?php
-                                // $PLACED_ORDER_TRACKER = $_SESSION['placed_order_tracker'];
-
-                                // $sql2 = "SELECT placed_order_status FROM placed_order WHERE placed_order_tracker = '$PLACED_ORDER_TRACKER'";
-
-                                // $res2 = mysqli_query($conn, $sql2);
-
-                                // $count2 = mysqli_num_rows($res2);
-
-                                // $row2 = mysqli_fetch_assoc($res2);
-                                $sql2 = "SELECT * FROM placed_order WHERE PRSN_ID = $PRSN_ID";
-
-                                $res2 = mysqli_query($conn, $sql2);
-
-                                $count2 = mysqli_num_rows($res2);
-
-                                $row2 = mysqli_fetch_assoc($res2);
-
                                 if ($count2 > 0) {
                                     $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                     $PRSN_ID = $row2['PRSN_ID'];
