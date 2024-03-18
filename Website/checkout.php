@@ -166,23 +166,23 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                 <h3 class="block-heading">Address</h3>
                                     <div class="input-grp">
                                         <p>Region</p>
-                                        <input type="text" name="address"> <!-- value="" -->
+                                        <input type="text" name="region"> <!-- value="" -->
                                     </div>  
                                     <div class="input-grp">
                                         <p>Province</p>
-                                        <input type="text" name="address"> <!-- value="" -->
+                                        <input type="text" name="province"> <!-- value="" -->
                                     </div>   
                                     <div class="input-grp">
                                         <p>City</p>
-                                        <input type="text" name="address"> <!-- value="" -->
+                                        <input type="text" name="city"> <!-- value="" -->
                                     </div> 
                                     <div class="input-grp">
                                         <p>Barangay</p>
-                                        <input type="text" name="address"> <!-- value="" -->
+                                        <input type="text" name="barangay"> <!-- value="" -->
                                     </div> 
                                     <div class="input-grp">
                                         <p>House no./Bldg./Street</p>
-                                        <input type="text" name="address"> <!-- value="" -->
+                                        <input type="text" name="street"> <!-- value="" -->
                                     </div> 
                                 </div>
                         </div>
@@ -266,12 +266,24 @@ $PRSN_ID = $_SESSION['prsn_id'];
 <?php
 if (isset($_POST['submit'])) {
     $CUS_ID = $PRSN_ID;
-    $CUS_NAME = $_POST['name'];
+
+    $CUS_FNAME = $_POST['first-name'];
+    $CUS_LNAME = $_POST['last-name'];
+    $CUS_NAME = $CUS_FNAME . " " . $CUS_LNAME;
+
     $CUS_NUMBER = $_POST['contact-number'];
     $CUS_EMAIL = $_POST['email'];
     $PLACED_ORDER_DATE = date("Y-m-d h:i:sa");
     $PLACED_ORDER_TOTAL = $total;
-    $DELIVERY_ADDRESS = $_POST['address'];
+
+    $Region = $_POST['region'];
+    $Province = $_POST['province'];
+    $City = $_POST['city'];
+    $Barangay = $_POST['barangay'];
+    $Street = $_POST['street'];
+    $DELIVERY_ADDRESS = $Region . ", " . $Province . ", " . $City . ", " . $Barangay . ", " . $Street;
+
+
     $date = $_POST['date'];
     $time = $_POST['time'];
     $DELIVERY_DATE = $date . " " . $time;
@@ -291,7 +303,7 @@ if (isset($_POST['submit'])) {
     }
 
     $sql3 = "INSERT INTO placed_order SET
-    CUS_ID = '$CUS_ID',
+    PRSN_ID = '$CUS_ID',
     CUS_NAME = '$CUS_NAME',
     CUS_NUMBER = '$CUS_NUMBER',
     CUS_EMAIL= '$CUS_EMAIL',
