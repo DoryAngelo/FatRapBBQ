@@ -38,8 +38,11 @@ if (isset($_SESSION['prsn_id'])) {
                     <h1>Fat Rap's Barbeque's Online Store</h1>
                 </div>
             </div>
-            <nav>
-                <ul>
+            <input type="checkbox" id="menu-toggle">
+                    <label class='menu-button-container' for="menu-toggle">
+                        <div class='menu-button'></div>
+                    </label>
+                <ul class = 'menubar'>
                     <!--TODO: ADD LINKS-->
                     <li><a href="cus-home-page.php">Home</a></li>
                     <li><a href="#">Menu</a></li>
@@ -58,7 +61,6 @@ if (isset($_SESSION['prsn_id'])) {
                     }
                     ?>
                 </ul>
-            </nav>
         </div>
     </header>
     <main>

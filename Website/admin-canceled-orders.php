@@ -94,8 +94,11 @@ if (isset($_POST['not-confirmed'])) {
                     <p>ADMIN</p>
                 </div>
             </div>
-            <nav>
-                <ul>
+            <input type="checkbox" id="menu-toggle">
+                    <label class='menu-button-container' for="menu-toggle">
+                        <div class='menu-button'></div>
+                    </label>
+                <ul class = 'menubar'>
                     <!--TODO: ADD LINKS-->
                     <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
                     <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
@@ -114,7 +117,6 @@ if (isset($_POST['not-confirmed'])) {
                     }
                     ?>
                 </ul>
-            </nav>
         </div>
     </header>
     <main>

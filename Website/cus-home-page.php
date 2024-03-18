@@ -133,38 +133,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 </head>
+    <header>
+            <div class="header-container">
+                <div class="website-title">
+                <img id="logo" src="images/client-logo.png">
+                    <div class="text">
+                        <h1>Fat Rap's Barbeque's Online Store</h1>
+                    </div>
+                </div>
+                    <input type="checkbox" id="menu-toggle">
+                    <label class='menu-button-container' for="menu-toggle">
+                        <div class='menu-button'></div>
+                    </label>
+                        </nav>
+                        <ul class = "menubar">
+                            <!--TODO: ADD LINKS-->
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Menu</a></li>
+                            <li><a href="<?php echo SITEURL ;?>cart.php">Cart</a></li>
+                        <!-- Text below should change to 'Logout'once user logged in-->
+                        <?php
+                        if (isset($_SESSION['prsn_id'])) {
+                            ?>
+                                <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a></li>
+                                <?php
+                            } else {
+                                ?>
+                                <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
+                            <?php
+                            }
+                            ?>
+                        </ul>
+                        </nav>
+            </div>
+    </header>
 
 <body>
-    <header>
-        <div class="header-container">
-            <div class="website-title">
-                <img id="logo" src="images/client-logo.png">
-                <div class="text">
-                    <h1>Fat Rap's Barbeque's Online Store</h1>
-                </div>
-            </div>
-            <nav>
-                <ul>
-                    <!--TODO: ADD LINKS-->
-                    <li><a href="#">Home</a></li>
-                    <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
-                    <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
-                    <!-- Text below should change to 'Logout'once user logged in-->
-                    <?php
-                    if (isset($_SESSION['prsn_id'])) {
-                    ?>
-                        <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                        <li>
-                        <?php
-                    } else {
-                        ?>
-                        <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                    <?php
-                    }
-                    ?>
-            </nav>
-        </div>
-    </header>
     <main>
         <!-- section 1 - product landing -->
         <section class="product-landing section">
