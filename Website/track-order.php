@@ -37,8 +37,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
     <link rel="stylesheet" href="customer-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="order-status-progress-bar.js" defer></script>
     <!-- add the code below to load the icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> <!-- from boxicons.com -->
@@ -62,14 +61,14 @@ $PRSN_ID = $_SESSION['prsn_id'];
                     <!-- Text below should change to 'Logout'once user logged in-->
                     <?php
                     if (isset($_SESSION['prsn_id'])) {
-                        ?>
+                    ?>
                         <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
                         <li>
-                            <?php
+                        <?php
                     } else {
                         ?>
                         <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                        <?php
+                    <?php
                     }
                     ?>
                 </ul>
@@ -89,13 +88,13 @@ $PRSN_ID = $_SESSION['prsn_id'];
                             <div class="steps">
                                 <?php
                                 // $PLACED_ORDER_TRACKER = $_SESSION['placed_order_tracker'];
-                                
+
                                 // $sql2 = "SELECT placed_order_status FROM placed_order WHERE placed_order_tracker = '$PLACED_ORDER_TRACKER'";
-                                
+
                                 // $res2 = mysqli_query($conn, $sql2);
-                                
+
                                 // $count2 = mysqli_num_rows($res2);
-                                
+
                                 // $row2 = mysqli_fetch_assoc($res2);
                                 $sql2 = "SELECT * FROM placed_order WHERE PRSN_ID = $PRSN_ID";
 
@@ -118,33 +117,38 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                     $PLACED_ORDER_STATUS = $row2['PLACED_ORDER_STATUS'];
 
                                     switch ($PLACED_ORDER_STATUS) {
-                                        case "Ordered"://PLACED
+                                        case "Ordered": //PLACED
                                 ?>
                                             <p id="status">placed</p>
-                                <?php
+                                        <?php
                                             break;
-                                        case "Awaiting Payment"://APPROVED
-                                ?>
+                                        case "Awaiting Payment": //APPROVED
+                                        ?>
                                             <p id="status">approved</p>
-                                <?php
+                                        <?php
                                             break;
-                                        case "Paid"://PAID
-                                ?>
+                                        case "Paid": //PAID
+                                        ?>
                                             <p id="status">paid</p>
-                                <?php
+                                        <?php
                                             break;
-                                        case "For Delivery"://PACKED
-                                ?>
+                                        case "Preparing":
+                                        ?>
                                             <p id="status">packed</p>
-                                <?php
+                                        <?php
                                             break;
-                                        case "Shipped"://SHIPPED
-                                ?>
+                                        case "For Delivery": //PACKED
+                                        ?>
                                             <p id="status">shipped</p>
-                                <?php
+                                        <?php
                                             break;
-                                        case "Completed"://DELIVERED
-                                ?>
+                                        case "Shipped": //SHIPPED
+                                        ?>
+                                            <p id="status">shipped</p>
+                                        <?php
+                                            break;
+                                        case "Completed": //DELIVERED
+                                        ?>
                                             <p id="status">completed</p>
                                 <?php
                                             break;
@@ -252,7 +256,7 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
                                             $FOOD_IMG = $row['FOOD_IMG'];
                                             $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
                                             $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
-                                            ?>
+                                    ?>
                                             <tr>
                                                 <td data-cell="customer" class="first-col">
                                                     <div class="pic-grp">
@@ -270,7 +274,7 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
                                                     <?php echo $IN_ORDER_TOTAL ?>
                                                 </td><!--Sub Total-->
                                             </tr>
-                                            <?php
+                                    <?php
                                         }
                                     }
                                     $sql3 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE PRSN_ID = $PRSN_ID";

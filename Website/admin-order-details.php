@@ -2,7 +2,7 @@
 
 @include 'constants.php';
 
-$PRSN_ID = $_GET['PRSN_ID'];
+$PLACED_ORDER_ID = $_GET['PLACED_ORDER_ID'];
 
 ?>
 
@@ -63,7 +63,7 @@ $PRSN_ID = $_GET['PRSN_ID'];
                 <div class="scroll">
                     <h2>Order Details</h2>
                     <?php
-                    $sql = "SELECT * FROM placed_order WHERE PRSN_ID = $PRSN_ID";
+                    $sql = "SELECT * FROM placed_order WHERE PLACED_ORDER_ID = '$PLACED_ORDER_ID'";
                     $res = mysqli_query($conn, $sql);
                     $count = mysqli_num_rows($res);
                     if ($count > 0) {
@@ -134,7 +134,7 @@ $PRSN_ID = $_GET['PRSN_ID'];
                                     <tbody>
                                         <?php
                                         $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_PRICE, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
-FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered'";
+FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND PLACED_ORDER_ID = '$PLACED_ORDER_ID'";
 
                                         $res = mysqli_query($conn, $sql);
 
@@ -160,7 +160,7 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
                                                 }
                                             }
                                         }
-                                        $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE PRSN_ID = $PRSN_ID";
+                                        $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE PLACED_ORDER_ID = $PLACED_ORDER_ID";
                                         $res2 = mysqli_query($conn, $sql2);
                                         $row2 = mysqli_fetch_assoc($res2);
                                         $total = $row2['Total'];

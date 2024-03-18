@@ -316,5 +316,21 @@ if (isset($_POST['submit'])) {
     ";
 
     $res3 = mysqli_query($conn, $sql3);
+
+    if ($res3==true) 
+    {
+        $sql4 = "SELECT PLACED_ORDER_ID FROM placed_order WHERE PRSN_ID = $CUS_ID AND PLACED_ORDER_STATUS = 'Placed'";
+        $res4 = mysqli_query($conn, $sql4);
+        $row5 = mysqli_fetch_array($res4);
+        $PLACED_ORDER_ID = $row5['PLACED_ORDER_ID'];
+
+        $sql5 = "UPDATE in_order SET
+        PLACED_ORDER_ID = $PLACED_ORDER_ID
+        WHERE PRSN_ID = $CUS_ID AND IN_ORDER_STATUS = 'Ordered'
+        ";
+        $res5 = mysqli_query($conn, $sql5);
+
+        
+    }
 }
 ?>
