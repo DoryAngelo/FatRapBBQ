@@ -18,7 +18,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"> 
-    <script src="app.js" defer></script>
+    <!-- <script src="app.js" defer></script> -->
     <!-- add the code below to load the icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -34,7 +34,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
         </div>
     </header>
     <main>
-        <form action="email-success.php" class="form forgot-pass-form" method="post">
+        <form action="email-success.php" id="form" class="form forgot-pass-form" method="post"> <!--should go to email-success.php-->
             <div class="form-title">
                 <h1>Forgot Password?</h1>
                 <p class="title-desc"><i>Enter your email so we can send a link to reset your password.</i></p>
@@ -42,14 +42,13 @@ $PRSN_ID = $_SESSION['prsn_id'];
             <div class="form-field">
                 <div class="form-field-input">
                     <label for="email">Email</label>
-                    <input name="email" id="email" class="js-user" type="text" required>
+                    <input name="email" id="email" class="js-user" type="text">
                 </div>
-                <p class="prompt">
-                    <!-- Password must include at least 1 uppercase, 1 lowercase, 1 digit, and 1 special character -->
-                </p>
+                <p class="error"></p>
                 <button type="submit" class="primary-btn">Send</button>
                 <!-- <span class="divider">Or</span> -->
                 <a href="login-page.php" class="back-btn">Back to Login</a>
+                <a href="<?php echo SITEURL; ?>reset-password.php">go to reset page</a>
             </div>
         </form> 
     </main>
@@ -95,6 +94,63 @@ $PRSN_ID = $_SESSION['prsn_id'];
             </div>
         </div>
     </footer>
+    <script defer>
+        const form = document.getElementById('form');
+        const email = document.getElementById('email');
+        const errorDisplay = document.querySelector('.error');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+
+            validateInputs();
+        });
+
+        const setError = (message) => {
+            errorDisplay.innerText = message;
+        };
+
+        const setSuccess = () => {
+            errorDisplay.innerText = '';
+        };
+
+        const isValidEmail = (email) => {
+            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        };
+
+        const validateInputs = () => {
+            const emailValue = email.value.trim();
+
+            if(emailValue === '') { //empty email field
+                setError('Please enter your email address');
+            } else {
+                //temporary code
+                    setSuccess();
+                    if (!isValidEmail(emailValue)) {//check if input is NOT in email format
+                        setError('Email address is invalid');
+                    } 
+                    //else: check email address is not found in the database
+
+                //end of temporary code
+
+                // for security reason, make AJAX request to PHP script 
+                // const xhr = new XMLHttpRequest();
+                // xhr.open('POST', 'validate_credentials.php'); //this file will handle the validation stuff and connect from the database
+                // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                // xhr.onload = function() {
+                //     if (xhr.status === 200) {
+                //         const response = JSON.parse(xhr.responseText);
+                //         if (response.success) {
+                //             setSuccess();
+                //         } else {
+                //             setError(response.message);
+                //         }
+                //     }
+                // };
+                // xhr.send(`email=${encodeURIComponent(emailValue)}&password=${encodeURIComponent(passwordValue)}`);
+            }
+        };
+    </script>
 </body>
 </html>
 

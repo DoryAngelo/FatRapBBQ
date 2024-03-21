@@ -170,7 +170,7 @@ a.forget-pass:hover {
     text-decoration: underline;
 }
 
-.prompt {
+.error {
     font-size: 0.8rem;
     color: var(--text2);
     text-align: center;

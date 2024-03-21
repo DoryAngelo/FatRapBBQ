@@ -66,7 +66,7 @@ main {
 
 .form-field{
     display: grid;
-    gap: 1rem;
+    gap: 1.25rem;
 }
 
 .form-field-input{
@@ -88,6 +88,17 @@ input, button, .secondary-btn{
     margin-top: 8px;
 }
 
+.form-field-input .with-desc {
+    display: flex;
+    flex-direction: column;
+}
+
+small {
+    font-size: 0.8rem;
+    font-style: italic;
+    color: #9C8993;
+}
+
 .form-field-input input[type="file"] {
     width: max-content;
     background-color: transparent;
@@ -104,20 +115,28 @@ input, button, .secondary-btn{
     border: 2px solid var(--primary);
 }
 
+.input-container {
+    position: relative;
+}
+
+.hidepass {
+    display: none;
+}
+
+.input-container .showpass, .input-container .hidepass {
+    position: absolute;
+    font-size: 1.2rem;
+    right: 10px; /* Adjust this value to adjust the position of the icon */
+    top: 40%; /* Adjust this value to vertically center the icon */
+    /* transform: translateY(-50%); */
+    cursor: pointer;
+}
+
 p.label-desc {
     font-style: italic;
     font-size: 0.8rem;
     margin-top: 3px;
     color: #A8A4A6;
-}
-
-.hidecpass, .showcpass{
-    position: absolute;
-    right: 15px;
-    top: 34px;
-    font-size: 1.2rem;
-    color: var(--eye-icon);
-    cursor: pointer;
 }
 
 .hidepass, .showpass{
@@ -154,13 +173,20 @@ p.label-desc {
     text-decoration: none;
     color: var(--text);
 }
+.input-control {
+    position: relative;
+}
 
-.prompt {
-    font-size: 0.9rem;
-    font-style: italic;
+.input-control.error input {
+    border-color: var(--text2);
+}
+
+.input-control .error {
+    position: absolute;
+    top: 100%; /* Position it just below the input */
     color: var(--text2);
-    margin-top: 1rem;
-    margin-bottom: -0.75rem;
+    font-size: 0.7rem;
+    margin-top: 2px;
 }
 
 button, .secondary-btn{

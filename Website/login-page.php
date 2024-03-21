@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="app.js" defer></script>
+    <!-- <script src="input-validation.js" defer></script> -->
     <!-- add the code below to load the icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -73,18 +73,18 @@ if (isset($_POST['submit'])) {
                 <p class="welcome-text">WELCOME TO </p>
                 <h1>Fat Rap's Barbeque's Online Store</h1>
             </div>
-            <form action="#" class="form login-form" method="post">
+            <form action="#" id="form" class="form login-form" method="post">
                 <div class="form-title">
                     <h1>Log in</h1>
                 </div>
                 <div class="form-field">
                     <div class="form-field-input">
                         <label for="email">Email</label>
-                        <input name="email" id="email" class="js-user" type="text" required>
+                        <input name="email" id="email" class="js-user" type="text" >
                     </div>
                     <div class="form-field-input">
                         <label for="password">Password</label>
-                        <input class="js-pass" type="password" id="password" name="password" required>
+                        <input class="js-pass" type="password" id="password" name="password" >
                         <svg class="showpass" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                             <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z" />
                         </svg>
@@ -99,7 +99,7 @@ if (isset($_POST['submit'])) {
                             <a class="forget-pass" href="<?php echo SITEURL; ?>forgot-password.php">Forgot Password?</a>
                         </div>
                     </div>
-                    <p class="prompt"></p>
+                    <p class="error"></p>
                     <button name="submit" type="submit" class="primary-btn">Login</button>
                     <?php
                     $random = random_bytes(16);
@@ -154,6 +154,85 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
     </footer>
-</body>
+    <!-- working input validation -->
+    <!-- <script defer> 
+        const form = document.getElementById('form');
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+        const errorDisplay = document.querySelector('.error');
 
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+
+            validateInputs();
+        });
+
+        const setError = (message) => {
+            errorDisplay.innerText = message;
+        };
+
+        const setSuccess = () => {
+            errorDisplay.innerText = '';
+        };
+
+        const isValidEmail = (email) => {
+            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        };
+
+        const validateInputs = () => {
+            const emailValue = email.value.trim();
+            const passwordValue = password.value.trim();
+
+            if(emailValue === '') { //empty email field
+                setError('Please enter your email address');
+            } else {
+                if(passwordValue === '') {//empty password
+                setError('Please enter your password');
+                } else {
+                    //temporary code
+                        setSuccess();
+                        if (!isValidEmail(emailValue)) {//check if input is NOT in email format
+                            setError('Email address is invalid');
+                        } 
+                        //email address is not found in the database
+                        
+                        //if found, check if password matches 
+
+                    //end of temporary code
+
+                    // for security reason, make AJAX request to PHP script 
+                    // const xhr = new XMLHttpRequest();
+                    // xhr.open('POST', 'validate_credentials.php'); //this file will handle the validation stuff and connect from the database
+                    // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    // xhr.onload = function() {
+                    //     if (xhr.status === 200) {
+                    //         const response = JSON.parse(xhr.responseText);
+                    //         if (response.success) {
+                    //             setSuccess();
+                    //         } else {
+                    //             setError(response.message);
+                    //         }
+                    //     }
+                    // };
+                    // xhr.send(`email=${encodeURIComponent(emailValue)}&password=${encodeURIComponent(passwordValue)}`);
+                }
+            }
+        };
+
+        //for the show password icon button 
+        function togglePassword(passwordFieldId) {
+            const eyeIcon = document.getElementById(`eyeIcon${passwordFieldId.charAt(0).toUpperCase() + passwordFieldId.slice(1)}`);
+
+            if (password.type === 'password') {
+                password.type = 'text';
+                eyeIcon.src = 'images/eye-close.png'; // Change the image source to an eye closed icon
+            } else {
+                password.type = 'password';
+                eyeIcon.src = 'images/eye-open.png'; // Change the image source to an eye open icon
+            }
+        }
+
+    </script> -->
+</body>
 </html>
