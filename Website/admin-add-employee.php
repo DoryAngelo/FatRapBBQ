@@ -80,7 +80,7 @@ if (isset($_POST['submit'])) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="app.js" defer></script>
+    <!-- <script src="input-validation.js" defer></script> -->
     <!-- add the code below to load the icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -129,32 +129,37 @@ if (isset($_POST['submit'])) {
             <section class="section-body">
                 <section class="main-section column">
                     <section class="block">
-                        <form action="#" class="form" method="post" enctype="multipart/form-data">
+                        <form action="#" id="form" class="form" method="post" enctype="multipart/form-data">
                             <section>
                                 <div class="form-title">
                                     <h1>Contact Information</h1>
                                 </div>
                                 <div class="form-field">
-                                    <div class="form-field-input">
+                                    <div class="form-field-input input-control">
                                         <label for="first-name">First Name</label>
-                                        <input name="first-name" id="first-name" class="js-user" type="text" required>
+                                        <input name="first-name" id="first-name" class="js-user" type="text">
+                                        <div class="error"></div>
                                     </div>
-                                    <div class="form-field-input">
+                                    <div class="form-field-input input-control">
                                         <label for="last-name">Last Name</label>
-                                        <input name="last-name" id="last-name" class="js-user" type="text" required>
+                                        <input name="last-name" id="last-name" class="js-user" type="text">
+                                        <div class="error"></div>
                                     </div>
-                                    <div class="form-field-input">
-                                        <label for="phone-number">Phone Number</label>
-                                        <input class="js-user" type="text" id="phone-number" name="phone-number" required pattern="^(09)[0-9]{9}$"><!-- numbers only, starts with 09, must have 11-digits -->
-                                    </div>
-                                    <div class="form-field-input">
+                                    <div class="form-field-input input-control">
+                                        <label for="number">Phone Number</label>
+                                        <input class="js-user" type="text" id="number" name="number">
+                                        <!-- numbers only, starts with 09, must have 11-digits -->
+                                        <div class="error"></div>
+                                    </div> 
+                                    <div class="form-field-input input-control">
                                         <label for="email">Email</label>
-                                        <input name="email" id="email" class="js-user" type="text" required>
+                                        <input name="email" id="email" class="js-user" type="text">
+                                        <div class="error"></div>
                                     </div>
                                     <div class="form-field-input">
                                         <label for="image">Image</label>
                                         <p>(accepted files: .jpg, .png)</p>
-                                        <input name="image" id="image" class="image" type="file" required>
+                                        <input name="image" id="image" class="image" type="file">
                                     </div>
                                 </div>
                             </section>
@@ -164,39 +169,191 @@ if (isset($_POST['submit'])) {
                                     <h1>Login Credentials</h1>
                                 </div>
                                 <div class="form-field">
-                                    <div class="form-field-input">
+                                    <div class="form-field-input input-control">
                                         <label for="username">Username</label>
-                                        <input name="username" id="username" class="js-user" type="text" required>
+                                        <input name="username" id="username" class="js-user" type="text" >
+                                        <div class="error"></div>
                                     </div>
                                     <div class="form-field-input">
-                                        <label for="password">Password</label>
-                                        <input class="js-pass" type="password" id="password" name="password" required>
-                                        <svg class="showpass" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                            <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z" />
-                                        </svg>
-                                        <svg class="hidepass" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                            <path fill="currentColor" d="M11.83 9L15 12.16V12a3 3 0 0 0-3-3h-.17m-4.3.8l1.55 1.55c-.05.21-.08.42-.08.65a3 3 0 0 0 3 3c.22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53a5 5 0 0 1-5-5c0-.79.2-1.53.53-2.2M2 4.27l2.28 2.28l.45.45C3.08 8.3 1.78 10 1 12c1.73 4.39 6 7.5 11 7.5c1.55 0 3.03-.3 4.38-.84l.43.42L19.73 22L21 20.73L3.27 3M12 7a5 5 0 0 1 5 5c0 .64-.13 1.26-.36 1.82l2.93 2.93c1.5-1.25 2.7-2.89 3.43-4.75c-1.73-4.39-6-7.5-11-7.5c-1.4 0-2.74.25-4 .7l2.17 2.15C10.74 7.13 11.35 7 12 7Z" />
-                                        </svg>
+                                        <div class="with-desc">
+                                            <label for="password">Password</label>
+                                            <p>Password must be 8 characters long, and includes at least 1 uppercase, 1 lowercase, 1 digit, and 1 special character</p>
+                                        </div>
+                                        <div class="input-container input-control">
+                                            <input class="js-pass" type="password" id="password" name="password" >
+                                            <span onclick="togglePassword('password')">
+                                                <svg class="showpass" id="eyeIconOpenPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z"/></svg>
+                                                <svg class="hidepass" id="eyeIconClosedPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M11.83 9L15 12.16V12a3 3 0 0 0-3-3h-.17m-4.3.8l1.55 1.55c-.05.21-.08.42-.08.65a3 3 0 0 0 3 3c.22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53a5 5 0 0 1-5-5c0-.79.2-1.53.53-2.2M2 4.27l2.28 2.28l.45.45C3.08 8.3 1.78 10 1 12c1.73 4.39 6 7.5 11 7.5c1.55 0 3.03-.3 4.38-.84l.43.42L19.73 22L21 20.73L3.27 3M12 7a5 5 0 0 1 5 5c0 .64-.13 1.26-.36 1.82l2.93 2.93c1.5-1.25 2.7-2.89 3.43-4.75c-1.73-4.39-6-7.5-11-7.5c-1.4 0-2.74.25-4 .7l2.17 2.15C10.74 7.13 11.35 7 12 7Z"/></svg>
+                                            </span>
+                                            <div class="error"></div>
+                                        </div>
                                     </div>
                                     <div class="form-field-input">
                                         <label for="cpassword">Re-enter Password</label>
-                                        <input class="js-cpass" type="password" id="cpassword" name="cpassword" required>
-                                        <svg class="showcpass" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                            <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z" />
-                                        </svg>
-                                        <svg class="hidecpass" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                            <path fill="currentColor" d="M11.83 9L15 12.16V12a3 3 0 0 0-3-3h-.17m-4.3.8l1.55 1.55c-.05.21-.08.42-.08.65a3 3 0 0 0 3 3c.22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53a5 5 0 0 1-5-5c0-.79.2-1.53.53-2.2M2 4.27l2.28 2.28l.45.45C3.08 8.3 1.78 10 1 12c1.73 4.39 6 7.5 11 7.5c1.55 0 3.03-.3 4.38-.84l.43.42L19.73 22L21 20.73L3.27 3M12 7a5 5 0 0 1 5 5c0 .64-.13 1.26-.36 1.82l2.93 2.93c1.5-1.25 2.7-2.89 3.43-4.75c-1.73-4.39-6-7.5-11-7.5c-1.4 0-2.74.25-4 .7l2.17 2.15C10.74 7.13 11.35 7 12 7Z" />
-                                        </svg>
+                                        <div class="input-container input-control">
+                                            <input class="js-cpass" type="password" id="cpassword" name="cpassword">
+                                            <span onclick="togglePassword('cpassword')">
+                                                <svg class="showpass" id="eyeIconOpenCPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z"/></svg>
+                                                <svg class="hidepass" id="eyeIconClosedCPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M11.83 9L15 12.16V12a3 3 0 0 0-3-3h-.17m-4.3.8l1.55 1.55c-.05.21-.08.42-.08.65a3 3 0 0 0 3 3c.22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53a5 5 0 0 1-5-5c0-.79.2-1.53.53-2.2M2 4.27l2.28 2.28l.45.45C3.08 8.3 1.78 10 1 12c1.73 4.39 6 7.5 11 7.5c1.55 0 3.03-.3 4.38-.84l.43.42L19.73 22L21 20.73L3.27 3M12 7a5 5 0 0 1 5 5c0 .64-.13 1.26-.36 1.82l2.93 2.93c1.5-1.25 2.7-2.89 3.43-4.75c-1.73-4.39-6-7.5-11-7.5c-1.4 0-2.74.25-4 .7l2.17 2.15C10.74 7.13 11.35 7 12 7Z"/></svg>
+                                            </span>
+                                            <div class="error"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </section>
-                    </section>
-                    <button name="submit" class="big-btn">Add Employee</button>
-                    </form>
+                            </section>
+                            <button name="submit" type="submit" class="big-btn">Add Employee</button>
+                        </form>
                     <!-- <a href="" class="page-btn"></a> -->
                 </section>
             </section>
         </section>
     </main>
+    <script>
+        //for eye icon password
+        function togglePassword(passwordFieldId) {
+            const passwordField = document.getElementById(passwordFieldId);
+            const eyeIconOpen = document.getElementById(`eyeIconOpen${passwordFieldId.toUpperCase()}`);
+            const eyeIconClosed = document.getElementById(`eyeIconClosed${passwordFieldId.toUpperCase()}`);
+
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                eyeIconOpen.style.display = 'none';
+                eyeIconClosed.style.display = 'block';
+            } else {
+                passwordField.type = 'password';
+                eyeIconOpen.style.display = 'block';
+                eyeIconClosed.style.display = 'none';
+            }
+        }
+
+        //input validation
+        const form = document.getElementById('form');
+        const firstName = document.getElementById('first-name');
+        const lastName = document.getElementById('last-name');
+        const email = document.getElementById('email');
+        const number = document.getElementById('number');
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+        const password2 = document.getElementById('cpassword');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+
+            validateInputs();
+        });
+
+        const setError = (element, message) => {
+            const inputControl = element.parentElement; //element should have input-control as its parent, with div.error as its sibling
+            const errorDisplay = inputControl.querySelector('.error');
+
+            errorDisplay.innerText = message;
+            inputControl.classList.add('error');
+            inputControl.classList.remove('success')
+        }
+
+        const setSuccess = element => {
+            const inputControl = element.parentElement;
+            const errorDisplay = inputControl.querySelector('.error');
+
+            errorDisplay.innerText = '';
+            inputControl.classList.add('success');
+            inputControl.classList.remove('error');
+        };
+
+        const isValidEmail = email => {
+            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        const validateInputs = () => {
+            const firstNameValue = firstName.value.trim();
+            const lastNameValue = lastName.value.trim();
+            const emailValue = email.value.trim();
+            const numberValue = number.value.trim();
+            const usernameValue = username.value.trim();
+            const passwordValue = password.value.trim();
+            const password2Value = password2.value.trim();
+
+            //Regular expressions for input validation
+            const nameRegex = /^[a-zA-Z ]+$/; //letters only
+            const numberRegex = /^09\d{9}$/; //numbers only
+            const uppercaseRegex = /[A-Z]/;
+            const lowercaseRegex = /[a-z]/;
+            const digitRegex = /\d/;
+            const specialCharRegex = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/;
+
+            if (firstNameValue === '') {
+                setError(firstName, 'Please enter your first name');
+            } else if (!nameRegex.test(firstNameValue)) {
+                setError(firstName, 'Name must contain only letters');
+            } else {
+                setSuccess(firstName);
+            }
+
+            if (lastNameValue === '') {
+                setError(lastName, 'Please enter your last name');
+            } else if (!nameRegex.test(lastNameValue)) {
+                setError(lastName, 'Name must contain only letters');
+            } else {
+                setSuccess(lastName);
+            }
+
+            if(emailValue === '') {
+                setError(email, 'Please enter your email');
+            } else if (!isValidEmail(emailValue)) {
+                setError(email, 'Provide a valid email address');
+            } else {
+                setSuccess(email);
+            }
+
+            if (numberValue === '') {
+                setError(number, 'Please enter your number');
+            } else if (!numberRegex.test(numberValue)) {
+                setError(number, 'Invalid number');
+            } else {
+                setSuccess(number);
+            }
+
+            if (usernameValue === '') {
+                setError(username, 'Please enter your username');
+            // } else if (!nameRegex.test(usernameValue)) {
+            //     setError(username, 'Invalid username');
+            } else if (usernameValue.length < 8 ) {
+                setError(username, 'Invalid username');
+            } else {
+                setSuccess(username);
+            }
+
+            if(passwordValue === '') {
+                setError(password, 'Please enter your password');
+            } else if (passwordValue.length < 8 ) {
+                setError(password, 'Password must be at least 8 character.')
+            } 
+            else if (!uppercaseRegex.test(passwordValue)) {
+                setError(password, 'Password must contain at least one uppercase letter.');
+            } 
+            else if (!lowercaseRegex.test(passwordValue)) {
+                setError(password, 'Password must contain at least one lowercase letter.');
+            } 
+            else if (!digitRegex.test(passwordValue)) {
+                setError(password, 'Password must contain at least one digit');
+            } 
+            else if (!specialCharRegex.test(passwordValue)) {
+                setError(password, 'Password must contain at least one special character.');
+            } 
+            else {
+                setSuccess(password);
+            }
+
+            if(password2Value === '') {
+                setError(password2, 'Please confirm your password');
+            } else if (password2Value !== passwordValue) {
+                setError(password2, "Password doesn't match");
+            } else {
+                setSuccess(password2);
+            }
+        };
+    </script>
 </body>
 </html>

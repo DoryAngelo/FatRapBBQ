@@ -131,6 +131,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- add the code below to load the icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="home.js" defer></script>
 
 </head>
     <header>
@@ -281,13 +282,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                 <h1 class="section-heading other-sections">Want to track your order?</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictumsum dolor sit amet</p>
             </div>
-            <form class="featured-pic" method="POST">
-                <div class="top">
+            <form class="featured-pic" id="form" method="POST">
+                <div class="top input-control">
                     <h2>Order Number</h2>
                     <hr>
-                    <input name="track-order" type="text" placeholder="0123456789">
+                    <input name="track-order" type="text" id="number" placeholder="0123456789">
+                    <div class="error"></div>
                 </div>
-                <button name="submit" type="submit" class="button">Track Order</button>
+                <button name="submit" id="track-order" type="submit" class="button">Track Order</button>
             </form>
         </section>
         <!-- section 5 - wholesale-->
@@ -338,7 +340,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             </div>
         </div>
     </footer>
-    <script src="home.js"></script>
+    <!-- <script src="home.js" defer></script> -->
 </body>
 
 </html>

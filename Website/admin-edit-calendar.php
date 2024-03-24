@@ -19,7 +19,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"> 
-        <script src="app.js" defer></script>
+        <!-- <script src="app.js" defer></script> -->
         <!-- add the code below to load the icons -->
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     </head>

@@ -450,6 +450,22 @@ p.amount {
     border: none;
 }
 
+.input-control {
+    position: relative;
+}
+
+.input-control.error input {
+    border-color: var(--text2);
+}
+
+.input-control .error {
+    position: absolute;
+    top: 100%; /* Position it just below the input */
+    color: var(--text2);
+    font-size: 0.7rem;
+    margin-top: 2px;
+}
+
 .order-track .button {
     margin: 0 auto;
     border: none;
