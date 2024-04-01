@@ -3,9 +3,6 @@
 @include 'constants.php';
 
 $PRSN_ID = $_SESSION['prsn_id'];
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -38,26 +35,26 @@ $PRSN_ID = $_SESSION['prsn_id'];
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
-                    <label class='menu-button-container' for="menu-toggle">
-                        <div class='menu-button'></div>
-                    </label>
-                <ul class = 'menubar'>
-                    <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
+            <label class='menu-button-container' for="menu-toggle">
+                <div class='menu-button'></div>
+            </label>
+            <ul class='menubar'>
+                <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
+                <?php
+                if (isset($_SESSION['prsn_id'])) {
+                ?>
+                    <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
+                    <li>
                     <?php
-                    if (isset($_SESSION['prsn_id'])) {
+                } else {
                     ?>
-                        <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                        <li>
-                        <?php
-                    } else {
-                        ?>
-                        <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                    <?php
-                    }
-                    ?>
-                </ul>
+                    <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
+                <?php
+                }
+                ?>
+            </ul>
         </div>
     </header>
     <main>
@@ -80,42 +77,42 @@ $PRSN_ID = $_SESSION['prsn_id'];
                             <th class="header">Confirmed</th>
                         </tr>
                         <?php
-                            $sql = "SELECT * FROM person, wholesaler WHERE wholesaler.PRSN_ID = person.PRSN_ID AND PRSN_ROLE = 'Wholesaler' ";
-                            $res = mysqli_query($conn, $sql);
-                            $count = mysqli_num_rows($res);
+                        $sql = "SELECT * FROM person, wholesaler WHERE wholesaler.PRSN_ID = person.PRSN_ID AND PRSN_ROLE = 'Wholesaler' AND WHL_STATUS = 'New' ";
+                        $res = mysqli_query($conn, $sql);
+                        $count = mysqli_num_rows($res);
 
-                            if ($count > 0) {
-                                while ($row = mysqli_fetch_assoc($res)) {
-                                    $DATE_OF_REGISTRATION = $row['DATE_OF_REGISTRATION'];
-                                    $WHL_ID = $row['WHL_ID'];
-                                    $PRSN_NAME = $row['PRSN_NAME'];
-                                    $PRSN_EMAIL = $row['PRSN_EMAIL'];
-                                    $WHL_IMAGE = $row['WHL_IMAGE'];
-                            ?>
-                                    <tr>
-                                        <td data-cell="Date and Time"><?php echo $DATE_OF_REGISTRATION ?></td>
-                                        <td data-cell="Application #"><a class="link" href="<?php echo SITEURL ?>admin-application-details.php?WHL_ID=<?php echo $WHL_ID; ?>&PRSN_NAME=<?php echo $PRSN_NAME ?>&PRSN_EMAIL=<?php echo $PRSN_EMAIL ?>&WHL_IMAGE=<?php echo $WHL_IMAGE ?>"><?php echo $WHL_ID ?></a></td>
-                                        <td data-cell="Name"><?php echo $PRSN_NAME ?></td>
-                                        <td data-cell="Email"><?php echo $PRSN_EMAIL ?></td>
-                                        <td data-cell="Confimed">
-                                            <div class="btn-wrapper">
-                                                <form method="post">
-                                                    <button name="accept" class="btn-check"><i class='bx bxs-check-circle'></i></button>
-                                                    <button name="reject" class="btn-cross"><i class='bx bxs-x-circle'></i></button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                        <?php
-                                }
-                            } else {
+                        if ($count > 0) {
+                            while ($row = mysqli_fetch_assoc($res)) {
+                                $DATE_OF_REGISTRATION = $row['DATE_OF_REGISTRATION'];
+                                $WHL_ID = $row['WHL_ID'];
+                                $PRSN_NAME = $row['PRSN_NAME'];
+                                $PRSN_EMAIL = $row['PRSN_EMAIL'];
+                                $WHL_IMAGE = $row['WHL_IMAGE'];
                         ?>
                                 <tr>
-                                    <td colspan="5" class="error">Empty</td>
+                                    <td data-cell="Date and Time"><?php echo $DATE_OF_REGISTRATION ?></td>
+                                    <td data-cell="Application #"><a class="link" href="<?php echo SITEURL ?>admin-application-details.php?WHL_ID=<?php echo $WHL_ID; ?>&PRSN_NAME=<?php echo $PRSN_NAME ?>&PRSN_EMAIL=<?php echo $PRSN_EMAIL ?>&WHL_IMAGE=<?php echo $WHL_IMAGE ?>"><?php echo $WHL_ID ?></a></td>
+                                    <td data-cell="Name"><?php echo $PRSN_NAME ?></td>
+                                    <td data-cell="Email"><?php echo $PRSN_EMAIL ?></td>
+                                    <td data-cell="Confimed">
+                                        <div class="btn-wrapper">
+                                            <!-- <form method="post"> -->
+                                            <button name="accept" class="btn-check"><i class='bx bxs-check-circle js-accept' data-whl-id="<?php echo $WHL_ID; ?>"></i></button>
+                                            <button name="reject" class="btn-cross"><i class='bx bxs-x-circle js-reject' data-whl-id="<?php echo $WHL_ID; ?>"></i></button>
+                                            <!-- </form> -->
+                                        </div>
+                                    </td>
                                 </tr>
+                            <?php
+                            }
+                        } else {
+                            ?>
+                            <tr>
+                                <td colspan="5" class="error">Empty</td>
+                            </tr>
                         <?php
 
-                            }
+                        }
                         ?>
                     </table>
                 </section>
@@ -138,20 +135,47 @@ $PRSN_ID = $_SESSION['prsn_id'];
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 </body>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const acceptButton = document.querySelectorAll(".js-accept");
+        const rejectButton = document.querySelectorAll(".js-reject");
+
+        acceptButton.forEach((button, index) => {
+            button.addEventListener("click", () => {
+                const WHL_ID = button.dataset.whlId;
+                status = "Accepted";
+                console.log(WHL_ID + status);
+                updateStatus(WHL_ID, status);
+            });
+        });
+
+
+        rejectButton.forEach((button, index) => {
+            button.addEventListener("click", () => {
+                const WHL_ID = button.dataset.whlId;
+                status = "Rejected";
+                console.log(WHL_ID + status);
+                updateStatus(WHL_ID, status);
+            });
+        });
+
+        function updateStatus(WHL_ID, status) {
+            const formData = new FormData();
+            formData.append("WHL_ID", WHL_ID);
+            formData.append("WHL_STATUS", status);
+
+            fetch("update_whl_status.php", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.text())
+                .then(data => {
+                    console.log("Status updated successfully.");
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    });
+</script>
 </html>
-<?php
-
-if (isset($_POST['accept'])) {
-    $sql = "UPDATE wholesaler SET WHL_STATUS = 'Accepted' WHERE WHL_ID = $WHL_ID";
-
-    $res2 = mysqli_query($conn, $sql);
-    header('location:admin-accepted-wholesale-users.php');
-}
-
-if (isset($_POST['reject'])) {
-    $sql = "UPDATE wholesaler SET WHL_STATUS = 'Rejected' WHERE WHL_ID = $WHL_ID";
-
-    $res2 = mysqli_query($conn, $sql);
-    header('location:admin-accepted-wholesale-users.php');
-} 
-?>

@@ -53,10 +53,11 @@ if (isset($_POST['submit'])) {
             if (mysqli_query($conn, $insert)) {
                 $PRSN_ID = mysqli_insert_id($conn);
                 $DATE_OF_REGISTRATION = date("Y-m-d h:i:sa");
-                $insert2 = "INSERT INTO wholesaler(PRSN_ID, WHL_DISC, WHL_IMAGE, DATE_OF_REGISTRATION) 
-                            VALUES('$PRSN_ID', '00.05', '$WHL_IMG', '$DATE_OF_REGISTRATION')";
+                $WHL_STATUS = "New";
+                $insert2 = "INSERT INTO wholesaler(PRSN_ID, WHL_DISC, WHL_IMAGE, DATE_OF_REGISTRATION, WHL_STATUS) 
+                            VALUES('$PRSN_ID', '00.05', '$WHL_IMG', '$DATE_OF_REGISTRATION', '$WHL_STATUS')";
                 if (!mysqli_query($conn, $insert2)) {
-                    $error[] = "Error inserting data into wholesaler table: " . mysqli_error($conn);
+                    // $error[] = "Error inserting data into wholesaler table: " . mysqli_error($conn);
                 }
             } else {
                 $error[] = "Error inserting data into person table: " . mysqli_error($conn);
