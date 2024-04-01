@@ -9,6 +9,56 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
 if($PRSN_ROLE !== 'Admin'){
 	header('location:'.SITEURL.'login-page.php');
 }
+
+$selectNO = "SELECT * 
+FROM placed_order
+WHERE PLACED_ORDER_STATUS = 'Placed' OR PLACED_ORDER_STATUS = 'Awaiting Payment'";
+
+$resNO = mysqli_query($conn, $selectNO);
+
+$countNO = mysqli_num_rows($resNO);
+
+$selectPa = "SELECT * 
+FROM placed_order
+WHERE PLACED_ORDER_STATUS = 'Paid'";
+
+$resPa = mysqli_query($conn, $selectPa);
+
+$countPa = mysqli_num_rows($resPa);
+
+$selectPr = "SELECT * 
+FROM placed_order
+WHERE PLACED_ORDER_STATUS = 'Preparing'";
+
+$resPr = mysqli_query($conn, $selectPr);
+
+$countPr = mysqli_num_rows($resPr);
+
+$selectFD = "SELECT * 
+FROM placed_order
+WHERE PLACED_ORDER_STATUS = 'For Delivery'";
+
+$resFD = mysqli_query($conn, $selectFD);
+
+$countFD = mysqli_num_rows($resFD);
+
+$selectCo = "SELECT * 
+FROM placed_order
+WHERE PLACED_ORDER_STATUS = 'Completed'";
+
+$resCo = mysqli_query($conn, $selectCo);
+
+$countCo = mysqli_num_rows($resCo);
+
+$selectCa = "SELECT * 
+FROM placed_order
+WHERE PLACED_ORDER_STATUS = 'Cancelled'";
+
+$resCa = mysqli_query($conn, $selectCa);
+
+$countCa = mysqli_num_rows($resCa);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -75,37 +125,37 @@ if($PRSN_ROLE !== 'Admin'){
                         <div class="grid-container">
                             <a class="box blue" href="<?php echo SITEURL ;?>admin-new-orders.php">
                                 <p>New Orders</p>
-                                <h1>100</h1>
+                                <h1><?php echo $countNO ?></h1>
                                 <p class="notif">+99</p>
                             </a>
                             <a class="box blue" href="<?php echo SITEURL ;?>admin-paid-orders.php">
                                 <p>Paid Orders</p>
-                                <h1>100</h1>
+                                <h1><?php echo $countPa ?></h1>
                                 <p class="notif">+99</p>
                             </a>
                             <a class="box" href="<?php echo SITEURL ;?>admin-preparing-orders.php">
                                 <p>Preparing Orders</p>
-                                <h1>100</h1>
+                                <h1><?php echo $countPr ?></h1>
                                 <p class="notif">+99</p>
                             </a>
-                            <a class="box" href="<?php echo SITEURL ;?>admin-packing-orders.php">
+                            <!-- <a class="box" href="<?php echo SITEURL ;?>admin-packing-orders.php">
                                 <p>Packing Orders</p>
-                                <h1>100</h1>
+                                <h1>100></h1>
                                 <p class="notif">+99</p>
-                            </a>
+                            </a> -->
                             <a class="box" href="<?php echo SITEURL ;?>admin-delivery-orders.php">
                                 <p>For Delivery Orders</p>
-                                <h1>100</h1>
+                                <h1><?php echo $countFD ?></h1>
                                 <p class="notif">+99</p>
                             </a>
                             <a class="box" href="<?php echo SITEURL ;?>admin-completed-orders.php">
                                 <p>Completed Orders</p>
-                                <h1>100</h1>
+                                <h1><?php echo $countCo ?></h1>
                                 <p class="notif">+99</p>
                             </a>
                             <a class="box" href="<?php echo SITEURL ;?>admin-canceled-orders.php">
                                 <p>Canceled Orders</p>
-                                <h1>100</h1>
+                                <h1><?php echo $countCa ?></h1>
                                 <p class="notif">+99</p>
                             </a>
                         </div>
