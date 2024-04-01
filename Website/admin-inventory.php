@@ -78,6 +78,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                 <th class="header">Category</th>
                                 <th class="header">Price</th>
                                 <th class="header">Stock</th>
+                                <th class="header">Food Type</th>
                                 <th class="header"></th>
                             </tr>
                             <?php
@@ -101,6 +102,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                     $FOOD_STOCK = $row['FOOD_STOCK'];
                                     $CTGY_NAME = $row['CTGY_NAME'];
                                     $FOOD_ACTIVE = $row['FOOD_ACTIVE'];
+                                    $FOOD_TYPE = $row['FOOD_TYPE'];
                             ?>
                                     <tr>
                                         <td data-cell="Image">
@@ -115,6 +117,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                                 <!-- <i class='bx bx-error'></i> -->
                                             </span>
                                         </td>
+                                        <td data-cell="Price"><?php echo $FOOD_TYPE ?></td>
                                         <td data-cell="Action"><a href="<?php echo SITEURL; ?>admin-edit-menu.php?FOOD_ID=<?php echo $FOOD_ID ?>" class="edit">Edit</a></td>
                                     </tr>
                                 <?php

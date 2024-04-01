@@ -11,6 +11,7 @@ if (isset($_POST['submit'])) {
     $FOOD_STOCK = $_POST['stock'];
     $FOOD_ACTIVE = $_POST['active'];
     $CTGY_ID = $_POST['category'];
+    $FOOD_TYPE = $_POST['type'];
 
 
     if (isset($_FILES['image']['name'])) {
@@ -36,8 +37,8 @@ if (isset($_POST['submit'])) {
     } else {
         $FOOD_IMG = "";
     }
-    $insert = "INSERT INTO food(CTGY_ID, FOOD_NAME, FOOD_PRICE, FOOD_DESC, FOOD_IMG, FOOD_STOCK, FOOD_ACTIVE) 
-                       VALUES('$CTGY_ID', '$FOOD_NAME', '$FOOD_PRICE', '$FOOD_DESC', '$FOOD_IMG', '$FOOD_STOCK', '$FOOD_ACTIVE')";
+    $insert = "INSERT INTO food(CTGY_ID, FOOD_NAME, FOOD_PRICE, FOOD_DESC, FOOD_IMG, FOOD_STOCK, FOOD_ACTIVE, FOOD_TYPE) 
+                       VALUES('$CTGY_ID', '$FOOD_NAME', '$FOOD_PRICE', '$FOOD_DESC', '$FOOD_IMG', '$FOOD_STOCK', '$FOOD_ACTIVE', '$FOOD_TYPE')";
     mysqli_query($conn, $insert);
 }
 
@@ -72,26 +73,26 @@ if (isset($_POST['submit'])) {
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
-                    <label class='menu-button-container' for="menu-toggle">
-                        <div class='menu-button'></div>
-                    </label>
-                <ul class = 'menubar'>
-                    <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
+            <label class='menu-button-container' for="menu-toggle">
+                <div class='menu-button'></div>
+            </label>
+            <ul class='menubar'>
+                <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
+                <?php
+                if (isset($_SESSION['prsn_id'])) {
+                ?>
+                    <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
+                    <li>
                     <?php
-                    if (isset($_SESSION['prsn_id'])) {
+                } else {
                     ?>
-                        <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                        <li>
-                        <?php
-                    } else {
-                        ?>
-                        <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                    <?php
-                    }
-                    ?>
-                </ul>
+                    <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
+                <?php
+                }
+                ?>
+            </ul>
         </div>
     </header>
     <main>
@@ -152,6 +153,13 @@ if (isset($_POST['submit'])) {
                                                 <?php
                                                 }
                                                 ?>
+                                            </select>
+                                        </td>
+                                        <td>Type: </td>
+                                        <td>
+                                            <select name="type">
+                                            <option value="Customer">Customer</option>
+                                            <option value="Wholesaler">Wholesaler</option>
                                             </select>
                                         </td>
                                     </tr>

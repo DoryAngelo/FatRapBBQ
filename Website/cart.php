@@ -47,8 +47,8 @@ if (isset($_SESSION['prsn_id'])) {
                     </label>
                         <ul class = "menubar">
                             <!--TODO: ADD LINKS-->
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">Menu</a></li>
+                            <li><a href="<?php echo SITEURL ;?>home.php">Home</a></li>
+                            <li><a href="<?php echo SITEURL ;?>menu.php">Menu</a></li>
                             <li><a href="<?php echo SITEURL ;?>cart.php">Cart</a></li>
                         <!-- Text below should change to 'Logout'once user logged in-->
                         <?php
