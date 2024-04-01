@@ -934,3 +934,7 @@ span.warning i {
     width: max-content;
     min-width: 20%;
 }
+
+.red-text {
+    color: red;
+}
