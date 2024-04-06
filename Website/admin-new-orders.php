@@ -13,6 +13,18 @@ if (isset($_POST['confirmed'])) {
     switch ($PLACED_ORDER_STATUS) {
         case "Placed":
             $PLACED_ORDER_STATUS = "Awaiting Payment";
+
+            $update = "UPDATE food f
+            JOIN (
+                SELECT food_id, in_order_quantity
+                FROM in_order
+                WHERE placed_order_id = '$PLACED_ORDER_ID'
+                GROUP BY food_id
+            ) iot ON f.food_id = iot.food_id
+            SET f.food_stock = f.food_stock - iot.in_order_quantity";
+
+            $res = mysqli_query($conn, $update);
+
             break;
         case "Awaiting Payment":
             $PLACED_ORDER_STATUS = "Preparing";
