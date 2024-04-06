@@ -15,9 +15,6 @@ if (isset($_POST['confirmed'])) {
             $PLACED_ORDER_STATUS = "Awaiting Payment";
             break;
         case "Awaiting Payment":
-            $PLACED_ORDER_STATUS = "Paid";
-            break;
-        case "Paid":
             $PLACED_ORDER_STATUS = "Preparing";
             break;
         case "Preparing":
@@ -27,7 +24,7 @@ if (isset($_POST['confirmed'])) {
             $PLACED_ORDER_STATUS = "Completed";
             break;
         case "Cancelled":
-            $PLACED_ORDER_STATUS = "Ordered";
+            $PLACED_ORDER_STATUS = "Placed";
             break;
     }
 
@@ -96,28 +93,28 @@ if (isset($_POST['not-confirmed'])) {
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
-                    <label class='menu-button-container' for="menu-toggle">
-                        <div class='menu-button'></div>
-                    </label>
-                <ul class = 'menubar'>
-                    <!--TODO: ADD LINKS-->
-                    <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
-                    <!-- Text below should change to 'Logout'once user logged in-->
+            <label class='menu-button-container' for="menu-toggle">
+                <div class='menu-button'></div>
+            </label>
+            <ul class='menubar'>
+                <!--TODO: ADD LINKS-->
+                <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
+                <!-- Text below should change to 'Logout'once user logged in-->
+                <?php
+                if (isset($_SESSION['prsn_id'])) {
+                ?>
+                    <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
+                    <li>
                     <?php
-                    if (isset($_SESSION['prsn_id'])) {
+                } else {
                     ?>
-                        <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                        <li>
-                        <?php
-                    } else {
-                        ?>
-                        <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                    <?php
-                    }
-                    ?>
-                </ul>
+                    <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
+                <?php
+                }
+                ?>
+            </ul>
         </div>
     </header>
     <main>
@@ -199,12 +196,12 @@ if (isset($_POST['not-confirmed'])) {
                         </div>
                     </div>
                     <div class="group">
-                        <a href="<?php echo SITEURL; ?>admin-new-orders.php" class="view big-font">New Orders</a>
-                        <a href="<?php echo SITEURL; ?>admin-paid-orders.php" class="view big-font">Paid Orders</a>
-                        <a href="<?php echo SITEURL; ?>admin-preparing-orders.php" class="view big-font">Preparing Orders</a>
-                        <a href="<?php echo SITEURL; ?>admin-delivery-orders.php" class="view big-font">For Delivery Orders</a>
-                        <a href="<?php echo SITEURL; ?>admin-completed-orders.php" class="view big-font">Completed Orders</a>
-                        <a href="<?php echo SITEURL; ?>admin-canceled-orders.php" class="view big-font">Canceled Orders</a>
+                        <a href="admin-new-orders.php" class="view big-font">New Orders</a>
+                        <a href="admin-awaiting-payment.php" class="view big-font">Awaiting Payment</a>
+                        <a href="admin-preparing-orders.php" class="view big-font">Preparing Orders</a>
+                        <a href="admin-delivery-orders.php" class="view big-font">For Delivery Orders</a>
+                        <a href="admin-completed-orders.php" class="view big-font">Completed Orders</a>
+                        <a href="admin-canceled-orders.php" class="view big-font">Canceled Orders</a>
                     </div>
                 </section>
             </section>
@@ -213,4 +210,3 @@ if (isset($_POST['not-confirmed'])) {
 </body>
 
 </html>
-

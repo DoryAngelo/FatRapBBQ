@@ -12,19 +12,19 @@ if($PRSN_ROLE !== 'Admin'){
 
 $selectNO = "SELECT * 
 FROM placed_order
-WHERE PLACED_ORDER_STATUS = 'Placed' OR PLACED_ORDER_STATUS = 'Awaiting Payment'";
+WHERE PLACED_ORDER_STATUS = 'Placed'";
 
 $resNO = mysqli_query($conn, $selectNO);
 
 $countNO = mysqli_num_rows($resNO);
 
-$selectPa = "SELECT * 
+$selectAP = "SELECT * 
 FROM placed_order
-WHERE PLACED_ORDER_STATUS = 'Paid'";
+WHERE PLACED_ORDER_STATUS = 'Awaiting Payment'";
 
-$resPa = mysqli_query($conn, $selectPa);
+$resAP = mysqli_query($conn, $selectAP);
 
-$countPa = mysqli_num_rows($resPa);
+$countAP = mysqli_num_rows($resAP);
 
 $selectPr = "SELECT * 
 FROM placed_order
@@ -128,9 +128,9 @@ $countCa = mysqli_num_rows($resCa);
                                 <h1><?php echo $countNO ?></h1>
                                 <p class="notif">+99</p>
                             </a>
-                            <a class="box blue" href="<?php echo SITEURL ;?>admin-paid-orders.php">
-                                <p>Paid Orders</p>
-                                <h1><?php echo $countPa ?></h1>
+                            <a class="box blue" href="<?php echo SITEURL ;?>admin-awaiting-payment.php">
+                                <p>Awaiting Payment</p>
+                                <h1><?php echo $countAP ?></h1>
                                 <p class="notif">+99</p>
                             </a>
                             <a class="box" href="<?php echo SITEURL ;?>admin-preparing-orders.php">

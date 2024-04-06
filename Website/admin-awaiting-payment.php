@@ -15,9 +15,6 @@ if (isset($_POST['confirmed'])) {
             $PLACED_ORDER_STATUS = "Awaiting Payment";
             break;
         case "Awaiting Payment":
-            $PLACED_ORDER_STATUS = "Paid";
-            break;
-        case "Paid":
             $PLACED_ORDER_STATUS = "Preparing";
             break;
         case "Preparing":
@@ -27,7 +24,7 @@ if (isset($_POST['confirmed'])) {
             $PLACED_ORDER_STATUS = "Completed";
             break;
         case "Cancelled":
-            $PLACED_ORDER_STATUS = "Ordered";
+            $PLACED_ORDER_STATUS = "Placed";
             break;
     }
 
@@ -119,7 +116,7 @@ if (isset($_POST['not-confirmed'])) {
     <main>
         <section class="section">
             <div class="section-heading">
-                <h2>Paid Orders</h2>
+                <h2>Awaiting Payment</h2>
                 <div class="inline">
                     <p>Date range:</p>
                     <input type="date">
@@ -138,7 +135,7 @@ if (isset($_POST['not-confirmed'])) {
                         </tr>
                         <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
                         <?php
-                        $sql = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'Paid'";
+                        $sql = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'Awaiting Payment'";
                         $res = mysqli_query($conn, $sql);
                         $count = mysqli_num_rows($res);
                         if ($count > 0) {
@@ -195,12 +192,12 @@ if (isset($_POST['not-confirmed'])) {
                         </div>
                     </div>
                     <div class="group">
-                        <a href="<?php echo SITEURL; ?>admin-new-orders.php" class="view big-font">New Orders</a>
-                        <a href="<?php echo SITEURL; ?>admin-paid-orders.php" class="view big-font">Paid Orders</a>
-                        <a href="<?php echo SITEURL; ?>admin-preparing-orders.php" class="view big-font">Preparing Orders</a>
-                        <a href="<?php echo SITEURL; ?>admin-delivery-orders.php" class="view big-font">For Delivery Orders</a>
-                        <a href="<?php echo SITEURL; ?>admin-completed-orders.php" class="view big-font">Completed Orders</a>
-                        <a href="<?php echo SITEURL; ?>admin-canceled-orders.php" class="view big-font">Canceled Orders</a>
+                        <a href="admin-new-orders.php" class="view big-font">New Orders</a>
+                        <a href="admin-awaiting-payment.php" class="view big-font">Awaiting Payment</a>
+                        <a href="admin-preparing-orders.php" class="view big-font">Preparing Orders</a>
+                        <a href="admin-delivery-orders.php" class="view big-font">For Delivery Orders</a>
+                        <a href="admin-completed-orders.php" class="view big-font">Completed Orders</a>
+                        <a href="admin-canceled-orders.php" class="view big-font">Canceled Orders</a>
                     </div>
                 </section>
             </section>
