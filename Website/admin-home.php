@@ -6,8 +6,8 @@ $PRSN_ID = $_SESSION['prsn_id'];
 
 $PRSN_ROLE = $_SESSION['prsn_role'];
 
-if($PRSN_ROLE !== 'Admin'){
-	header('location:'.SITEURL.'login-page.php');
+if ($PRSN_ROLE !== 'Admin') {
+    header('location:' . SITEURL . 'login-page.php');
 }
 
 $selectNO = "SELECT * 
@@ -63,137 +63,163 @@ $countCa = mysqli_num_rows($resCa);
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!--change title-->
-        <title>Home | Admin</title>
-        <link rel="stylesheet" href="header-styles.css">
-        <link rel="stylesheet" href="admin-styles.css"><!--change css file-->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"> 
-        <script src="app.js" defer></script>
-    </head>
-    <body>
-        <header class="backend">
-            <div class="header-container">
-                <div class="website-title">
-                    <img id="logo" src="images/client-logo.png">
-                    <div class="text">
-                        <h1>Fat Rap's Barbeque's Online Store</h1>
-                        <p>ADMIN</p>
-                    </div>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--change title-->
+    <title>Home | Admin</title>
+    <link rel="stylesheet" href="header-styles.css">
+    <link rel="stylesheet" href="admin-styles.css"><!--change css file-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="app.js" defer></script>
+</head>
+
+<body>
+    <header class="backend">
+        <div class="header-container">
+            <div class="website-title">
+                <img id="logo" src="images/client-logo.png">
+                <div class="text">
+                    <h1>Fat Rap's Barbeque's Online Store</h1>
+                    <p>ADMIN</p>
                 </div>
-                <input type="checkbox" id="menu-toggle">
-                    <label class='menu-button-container' for="menu-toggle">
-                        <div class='menu-button'></div>
-                    </label>
-                <ul class = 'menubar'>
-                        <li><a href="<?php echo SITEURL ;?>admin-home.php">Home</a></li>
-                        <li><a href="<?php echo SITEURL ;?>admin-edit-menu.php">Menu</a></li>
-                        <li><a href="<?php echo SITEURL ;?>admin-new-orders.php">Orders</a></li>
-                        <?php
-                            if(isset($_SESSION['prsn_id'])){
-                        ?>  
-                            <li><a href="<?php echo SITEURL ;?>logout.php">Logout</a><li>
-                        <?php
-                            } 
-                            else 
-                            {
-                        ?>
-                            <li><a href="<?php echo SITEURL ;?>login-page.php">Login</a></li>
-                        <?php
-                            }
-                        ?>
-                    </ul>
             </div>
-        </header>
-        <main>
-            <section class="section">
-                <div class="section-heading">
-                    <h2>Dashboard</h2>
-                    <div class="inline">
-                        <p>Date range:</p>
-                        <!-- <p class="dropdown">Today</p> -->
-                        <input type="date">
-                    </div>
-                </div> 
-                <section class="section-body">
-                    <section class="main-section">
-                        <div class="grid-container">
-                            <a class="box blue" href="<?php echo SITEURL ;?>admin-new-orders.php">
-                                <p>New Orders</p>
-                                <h1><?php echo $countNO ?></h1>
-                                <p class="notif">+99</p>
-                            </a>
-                            <a class="box blue" href="<?php echo SITEURL ;?>admin-awaiting-payment.php">
-                                <p>Awaiting Payment</p>
-                                <h1><?php echo $countAP ?></h1>
-                                <p class="notif">+99</p>
-                            </a>
-                            <a class="box" href="<?php echo SITEURL ;?>admin-preparing-orders.php">
-                                <p>Preparing Orders</p>
-                                <h1><?php echo $countPr ?></h1>
-                                <p class="notif">+99</p>
-                            </a>
-                            <!-- <a class="box" href="<?php echo SITEURL ;?>admin-packing-orders.php">
+            <input type="checkbox" id="menu-toggle">
+            <label class='menu-button-container' for="menu-toggle">
+                <div class='menu-button'></div>
+            </label>
+            <ul class='menubar'>
+                <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
+                <?php
+                if (isset($_SESSION['prsn_id'])) {
+                ?>
+                    <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
+                    <li>
+                    <?php
+                } else {
+                    ?>
+                    <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
+                <?php
+                }
+                ?>
+            </ul>
+        </div>
+    </header>
+    <main>
+        <section class="section">
+            <div class="section-heading">
+                <h2>Dashboard</h2>
+                <div class="inline">
+                    <p>Date range:</p>
+                    <!-- <p class="dropdown">Today</p> -->
+                    <input type="date">
+                </div>
+            </div>
+            <section class="section-body">
+                <section class="main-section">
+                    <div class="grid-container">
+                        <a class="box blue" href="<?php echo SITEURL; ?>admin-new-orders.php">
+                            <p>New Orders</p>
+                            <h1><?php echo $countNO ?></h1>
+                            <p class="notif">+99</p>
+                        </a>
+                        <a class="box blue" href="<?php echo SITEURL; ?>admin-awaiting-payment.php">
+                            <p>Awaiting Payment</p>
+                            <h1><?php echo $countAP ?></h1>
+                            <p class="notif">+99</p>
+                        </a>
+                        <a class="box" href="<?php echo SITEURL; ?>admin-preparing-orders.php">
+                            <p>Preparing Orders</p>
+                            <h1><?php echo $countPr ?></h1>
+                            <p class="notif">+99</p>
+                        </a>
+                        <!-- <a class="box" href="<?php echo SITEURL; ?>admin-packing-orders.php">
                                 <p>Packing Orders</p>
                                 <h1>100></h1>
                                 <p class="notif">+99</p>
                             </a> -->
-                            <a class="box" href="<?php echo SITEURL ;?>admin-delivery-orders.php">
-                                <p>For Delivery Orders</p>
-                                <h1><?php echo $countFD ?></h1>
-                                <p class="notif">+99</p>
-                            </a>
-                            <a class="box" href="<?php echo SITEURL ;?>admin-completed-orders.php">
-                                <p>Completed Orders</p>
-                                <h1><?php echo $countCo ?></h1>
-                                <p class="notif">+99</p>
-                            </a>
-                            <a class="box" href="<?php echo SITEURL ;?>admin-canceled-orders.php">
-                                <p>Canceled Orders</p>
-                                <h1><?php echo $countCa ?></h1>
-                                <p class="notif">+99</p>
-                            </a>
-                        </div>
-                    </section>
-                    <section class="side-menu">
-                        <div class="group inventory">
-                            <h3>Inventory</h3>
-                            <div class="inventory-box">
-                                <div class="inline">
-                                    <p>Pork BBQ</p>
-                                    <p class="number">10</p>
-                                </div>
-                                <a href="<?php echo SITEURL ;?>admin-inventory.php" class="edit">Edit</a>
+                        <a class="box" href="<?php echo SITEURL; ?>admin-delivery-orders.php">
+                            <p>For Delivery Orders</p>
+                            <h1><?php echo $countFD ?></h1>
+                            <p class="notif">+99</p>
+                        </a>
+                        <a class="box" href="<?php echo SITEURL; ?>admin-completed-orders.php">
+                            <p>Completed Orders</p>
+                            <h1><?php echo $countCo ?></h1>
+                            <p class="notif">+99</p>
+                        </a>
+                        <a class="box" href="<?php echo SITEURL; ?>admin-canceled-orders.php">
+                            <p>Canceled Orders</p>
+                            <h1><?php echo $countCa ?></h1>
+                            <p class="notif">+99</p>
+                        </a>
+                    </div>
+                </section>
+                <section class="side-menu">
+                    <div class="group inventory">
+                        <h3>Inventory</h3>
+                        <div class="inventory-box">
+                            <div class="inline">
+                                <p>Pork BBQ</p>
+                                <p class="number">10</p>
                             </div>
+                            <a href="<?php echo SITEURL; ?>admin-inventory.php" class="edit">Edit</a>
                         </div>
-                        <div class="group">
-                            <h3>Calendar</h3>
-                            <a href="<?php echo SITEURL ;?>admin-edit-calendar.php" class="view">View</a>
-                            <a href="<?php echo SITEURL ;?>admin-calendar-slots.php">View alternative</a>
+                    </div>
+                    <div class="group">
+                        <h3>Calendar</h3>
+                        <a href="<?php echo SITEURL; ?>admin-edit-calendar.php" class="view">View</a>
+                        <a href="<?php echo SITEURL; ?>admin-calendar-slots.php">View alternative</a>
+                    </div>
+                    <div class="group">
+                        <h3>Wholesale Users</h3>
+                        <div class="position-notif">
+                            <a href="<?php echo SITEURL; ?>admin-new-wholesale-users.php" class="view">New</a>
+                            <p class="notif">+99</p>
                         </div>
-                        <div class="group">
-                            <h3>Wholesale Users</h3>
-                            <div class="position-notif">
-                                <a href="<?php echo SITEURL ;?>admin-new-wholesale-users.php" class="view">New</a>
-                               <p class="notif">+99</p>
-                            </div>
-                        </div>
-                        <div class="group">
-                            <h3>Employee</h3>
-                            <a href="<?php echo SITEURL ;?>admin-employee-accounts.php" class="view">View</a>
-                        </div>
-                        <div class="group">
-                            <h3>Admin Profile</h3>
-                            <a href="<?php echo SITEURL ;?>admin-profile.php" class="view">View</a>
-                        </div>
-                    </section>
+                    </div>
+                    <div class="group">
+                        <h3>Employee</h3>
+                        <a href="<?php echo SITEURL; ?>admin-employee-accounts.php" class="view">View</a>
+                    </div>
+                    <div class="group">
+                        <h3>Admin Profile</h3>
+                        <a href="<?php echo SITEURL; ?>admin-profile.php" class="view">View</a>
+                    </div>
                 </section>
             </section>
-        </main>
-    </body>
+        </section>
+    </main>
+    <script>
+        // Function to check for new orders via AJAX
+        function checkForNewOrders() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.responseText.trim() === "NewOrder") {
+                        notifyNewOrder(); // Play notification sound
+                    }
+                }
+            };
+            xhttp.open("GET", "order-notification.php", true);
+            xhttp.send();
+        }
+
+        // Function to play notification sound
+        function notifyNewOrder() {
+            var audio = new Audio('sound/notification.mp3'); // Replace with correct path
+            audio.play();
+        }
+
+        // Check for new orders every 5 seconds 
+        setInterval(checkForNewOrders, 2000);
+    </script>
+</body>
+
 </html>
