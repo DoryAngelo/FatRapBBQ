@@ -72,26 +72,26 @@ if (isset($_POST['submit'])) {
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
-                    <label class='menu-button-container' for="menu-toggle">
-                        <div class='menu-button'></div>
-                    </label>
-                <ul class = 'menubar'>
-                    <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
+            <label class='menu-button-container' for="menu-toggle">
+                <div class='menu-button'></div>
+            </label>
+            <ul class='menubar'>
+                <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
+                <?php
+                if (isset($_SESSION['prsn_id'])) {
+                ?>
+                    <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
+                    <li>
                     <?php
-                    if (isset($_SESSION['prsn_id'])) {
+                } else {
                     ?>
-                        <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                        <li>
-                        <?php
-                    } else {
-                        ?>
-                        <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                    <?php
-                    }
-                    ?>
-                </ul>
+                    <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
+                <?php
+                }
+                ?>
+            </ul>
         </div>
     </header>
     <main>
@@ -104,29 +104,51 @@ if (isset($_POST['submit'])) {
                 <section class="section-body">
                     <section class="main-section column">
                         <form action="#" class="column" method="post" enctype="multipart/form-data">
-                            <div class="block">
-                                <div class="image-group">
-                                    <img src="https://static-00.iconduck.com/assets.00/profile-circle-icon-2048x2048-cqe5466q.png" alt="" >
-                                    <p>John Doe</p>
-                                </div>
-                                <div class="table-wrapper">
-                                    <table>
-                                        <tr>
-                                            <th>Email</th>
-                                            <td>email@gmail.com</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Username</th>
-                                            <td>johndoe1</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Password</th>
-                                            <td><input type="password" value="admin" readonly></td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                            <a href="<?php echo SITEURL ;?>admin-edit-profile.php" class="big-btn">Edit</a>
+                            <?php
+                            $sql = "SELECT * 
+                                 FROM person
+                                 WHERE PRSN_ID = '$PRSN_ID'";
+
+                            $res = mysqli_query($conn, $sql);
+
+                            $count = mysqli_num_rows($res);
+
+                            if ($count > 0) {
+                                while ($row = mysqli_fetch_assoc($res)) {
+
+                                    $PRSN_NAME = $row['PRSN_NAME'];
+                                    $PRSN_EMAIL = $row['PRSN_EMAIL'];
+
+                            ?>
+                                    <div class="block">
+                                        <div class="image-group">
+                                            <img src="https://static-00.iconduck.com/assets.00/profile-circle-icon-2048x2048-cqe5466q.png" alt="">
+                                            <p><?php echo $PRSN_NAME?></p>
+                                        </div>
+
+                                        <div class="table-wrapper">
+                                            <table>
+                                                <tr>
+                                                    <th>Email</th>
+                                                    <td><?php echo $PRSN_EMAIL ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Username</th>
+                                                    <td>johndoe1</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Password</th>
+                                                    <td><input type="password" value="admin" readonly></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                <?php
+                                }
+                            }
+                                ?>
+
+                                    </div>
+                                    <a href="<?php echo SITEURL; ?>admin-edit-profile.php" class="big-btn">Edit</a>
                         </form>
                     </section>
                 </section>

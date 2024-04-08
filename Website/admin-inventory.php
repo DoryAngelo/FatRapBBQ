@@ -36,27 +36,27 @@ $PRSN_ID = $_SESSION['prsn_id'];
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
-                    <label class='menu-button-container' for="menu-toggle">
-                        <div class='menu-button'></div>
-                    </label>
-                <ul class = 'menubar'>
-                    <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
-                    <!-- Text below should change to 'Logout'once user logged in-->
+            <label class='menu-button-container' for="menu-toggle">
+                <div class='menu-button'></div>
+            </label>
+            <ul class='menubar'>
+                <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
+                <!-- Text below should change to 'Logout'once user logged in-->
+                <?php
+                if (isset($_SESSION['prsn_id'])) {
+                ?>
+                    <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
+                    <li>
                     <?php
-                    if (isset($_SESSION['prsn_id'])) {
+                } else {
                     ?>
-                        <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                        <li>
-                        <?php
-                    } else {
-                        ?>
-                        <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                    <?php
-                    }
-                    ?>
-                </ul>
+                    <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
+                <?php
+                }
+                ?>
+            </ul>
         </div>
     </header>
     <main>
@@ -78,7 +78,8 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                 <th class="header">Category</th>
                                 <th class="header">Price</th>
                                 <th class="header">Stock</th>
-                                <th class="header"></th>
+                                <th class="header">Food Type</th>
+                                <th class="header">Action</th>
                             </tr>
                             <?php
 
@@ -95,12 +96,14 @@ $PRSN_ID = $_SESSION['prsn_id'];
                             if ($count > 0) {
                                 while ($row = mysqli_fetch_assoc($res)) {
                                     $FOOD_ID = $row['FOOD_ID'];
+                                    $CTGY_ID = $row['CTGY_ID'];
                                     $FOOD_NAME = $row['FOOD_NAME'];
                                     $FOOD_PRICE = $row['FOOD_PRICE'];
                                     $FOOD_IMG = $row['FOOD_IMG'];
                                     $FOOD_STOCK = $row['FOOD_STOCK'];
                                     $CTGY_NAME = $row['CTGY_NAME'];
                                     $FOOD_ACTIVE = $row['FOOD_ACTIVE'];
+                                    $FOOD_TYPE = $row['FOOD_TYPE'];
                             ?>
                                     <tr>
                                         <td data-cell="Image">
@@ -110,12 +113,12 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                         <td data-cell="Category"><?php echo $CTGY_NAME ?></td>
                                         <td data-cell="Price">₱<?php echo $FOOD_PRICE ?></td>
                                         <td data-cell="Stock">
-                                            <span class=""> <!--class="warning"  //for js-->
+                                            <span class="<?php echo ($FOOD_STOCK < 100) ? 'red-text' : ''; ?>">
                                                 <p><?php echo $FOOD_STOCK ?></p>
-                                                <!-- <i class='bx bx-error'></i> -->
                                             </span>
                                         </td>
-                                        <td data-cell="Action"><a href="<?php echo SITEURL; ?>admin-edit-menu.php?FOOD_ID=<?php echo $FOOD_ID ?>" class="edit">Edit</a></td>
+                                        <td data-cell="Price"><?php echo $FOOD_TYPE ?></td>
+                                        <td data-cell="Action"><a href="<?php echo SITEURL ;?>admin-edit-product.php?FOOD_ID=<?php echo $FOOD_ID?>&CTGY_ID=<?php echo $CTGY_ID?>"  class="edit">Edit</a></td>
                                     </tr>
                                 <?php
                                 }
@@ -131,7 +134,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                             ?>
                         </table>
                     </div>
-                    <a href="<?php echo SITEURL ;?>admin-add-product.php" class="page-btn"><button class="big-btn">Add a new product</button></a>
+                    <a href="<?php echo SITEURL; ?>admin-add-product.php" class="page-btn"><button class="big-btn">Add a new product</button></a>
                 </section>
             </section>
         </section>

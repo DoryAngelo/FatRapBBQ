@@ -9,6 +9,48 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
 if($PRSN_ROLE !== 'Employee'){
 	header('location:'.SITEURL.'login-page.php');
 }
+
+$selectPa = "SELECT * 
+FROM placed_order
+WHERE PLACED_ORDER_STATUS = 'Paid'";
+
+$resPa = mysqli_query($conn, $selectPa);
+
+$countPa = mysqli_num_rows($resPa);
+
+$selectPr = "SELECT * 
+FROM placed_order
+WHERE PLACED_ORDER_STATUS = 'Preparing'";
+
+$resPr = mysqli_query($conn, $selectPr);
+
+$countPr = mysqli_num_rows($resPr);
+
+$selectFD = "SELECT * 
+FROM placed_order
+WHERE PLACED_ORDER_STATUS = 'For Delivery'";
+
+$resFD = mysqli_query($conn, $selectFD);
+
+$countFD = mysqli_num_rows($resFD);
+
+$selectCo = "SELECT * 
+FROM placed_order
+WHERE PLACED_ORDER_STATUS = 'Completed'";
+
+$resCo = mysqli_query($conn, $selectCo);
+
+$countCo = mysqli_num_rows($resCo);
+
+$selectCa = "SELECT * 
+FROM placed_order
+WHERE PLACED_ORDER_STATUS = 'Cancelled'";
+
+$resCa = mysqli_query($conn, $selectCa);
+
+$countCa = mysqli_num_rows($resCa);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -74,17 +116,17 @@ if($PRSN_ROLE !== 'Employee'){
                         <div class="grid-container">
                             <a class="box blue" href="<?php echo SITEURL ;?>employee-to-prepare-orders.php">
                                 <p>To Prepare</p>
-                                <h1>100</h1>
+                                <h1><?php echo $countPa?></h1>
                                 <p class="notif">+99</p>
                             </a>
                             <a class="box" href="<?php echo SITEURL ;?>employee-preparing-orders.php">
                                 <p>Currently Preparing</p>
-                                <h1>100</h1>
+                                <h1><?php echo $countPr?></h1>
                                 <p class="notif">+99</p>
                             </a>
                             <a class="box" href="<?php echo SITEURL ;?>employee-to-deliver-orders.php">
                                 <p>To Deliver</p>
-                                <h1>100</h1>
+                                <h1><?php echo $countFD?></h1>
                                 <p class="notif">+99</p>
                             </a>
                         </div>

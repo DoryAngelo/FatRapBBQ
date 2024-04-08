@@ -4,6 +4,7 @@
 @include 'constants.php';
 
 $PRSN_ID = $_SESSION['prsn_id'];
+$PRSN_ROLE = $_SESSION['prsn_role'];
 
 ?>
 
@@ -66,7 +67,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
             <section class="section-body">
             <?php
 
-            $sql = "SELECT * FROM food WHERE FOOD_ACTIVE = 'Yes'";
+            $sql = "SELECT * FROM food WHERE FOOD_ACTIVE = 'Yes' AND FOOD_TYPE = '$PRSN_ROLE'";
             $res = mysqli_query($conn, $sql);
             $count = mysqli_num_rows($res);
             if ($count > 0) {

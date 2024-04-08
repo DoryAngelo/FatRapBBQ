@@ -81,7 +81,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                             <th class="header">Confirmed</th>
                         </tr>
                         <?php
-                            $sql = "SELECT * FROM person, wholesaler WHERE wholesaler.PRSN_ID = person.PRSN_ID AND PRSN_ROLE = 'Wholesaler' ";
+                            $sql = "SELECT * FROM person, wholesaler WHERE wholesaler.PRSN_ID = person.PRSN_ID AND WHL_STATUS = 'Accepted' ";
                             $res = mysqli_query($conn, $sql);
                             $count = mysqli_num_rows($res);
 

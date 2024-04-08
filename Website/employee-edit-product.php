@@ -27,35 +27,36 @@ $CTGY_ID = $_GET['CTGY_ID'];
 </head>
 
 <body>
-    <header class="backend">
+<header class="backend">
         <div class="header-container">
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
                     <h1>Fat Rap's Barbeque's Online Store</h1>
+                    <p>ADMIN</p>
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
-                    <label class='menu-button-container' for="menu-toggle">
-                        <div class='menu-button'></div>
-                    </label>
-                <ul class = 'menubar'>
-                    <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
+            <label class='menu-button-container' for="menu-toggle">
+                <div class='menu-button'></div>
+            </label>
+            <ul class='menubar'>
+                <li><a href="<?php echo SITEURL; ?>employee-home.php">Home</a></li>
+                <li><a href="<?php echo SITEURL; ?>employee-to-prepare-orders.php">Orders</a></li>
+                <!-- Text below should change to 'Logout'once user logged in-->
+                <?php
+                if (isset($_SESSION['prsn_id'])) {
+                ?>
+                    <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
+                    <li>
                     <?php
-                    if (isset($_SESSION['prsn_id'])) {
+                } else {
                     ?>
-                        <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                        <li>
-                        <?php
-                    } else {
-                        ?>
-                        <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                    <?php
-                    }
-                    ?>
-                </ul>
+                    <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
+                <?php
+                }
+                ?>
+            </ul>
         </div>
     </header>
     <main>
@@ -63,7 +64,7 @@ $CTGY_ID = $_GET['CTGY_ID'];
             <div class="section-wrapper">
                 <div class="section-heading row back">
                     <h2>Edit Menu Item</h2>
-                    <a href="<?php echo SITEURL; ?>admin-edit-menu.php">Back</a>
+                    <a href="<?php echo SITEURL; ?>employee-inventory.php">Back</a>
                 </div>
                 <?php
 
@@ -200,7 +201,7 @@ if (isset($_POST['submit'])) {
                 //check whether image is removed
                 if ($remove == false) {
                     $_SESSION['failed-remove'] = "<div class='error'>Failed To Remove Current Image</div>";
-                    header('location:' . SITEURL . 'admin-home.php');
+                    header('location:' . SITEURL . 'employee-home.php');
                     die();
                 }
             }

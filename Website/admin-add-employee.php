@@ -8,7 +8,7 @@ if (isset($_POST['submit'])) {
     $PRSN_FNAME = mysqli_real_escape_string($conn, $_POST['first-name']);
     $PRSN_LNAME = mysqli_real_escape_string($conn, $_POST['last-name']);
     $PRSN_EMAIL = mysqli_real_escape_string($conn, $_POST['email']);
-    $PRSN_PHONE = $_POST['phone-number'];
+    $PRSN_PHONE = $_POST['number'];
     $PRSN_UNAME = mysqli_real_escape_string($conn, $_POST['username']);
     $PRSN_PASSWORD = md5($_POST['password']);
     $PRSN_CPASSWORD = md5($_POST['cpassword']);
@@ -129,7 +129,7 @@ if (isset($_POST['submit'])) {
             <section class="section-body">
                 <section class="main-section column">
                     <section class="block">
-                        <form action="#" id="form" class="form" method="post" enctype="multipart/form-data">
+                        <form id="form" class="form" method="post" enctype="multipart/form-data">
                             <section>
                                 <div class="form-title">
                                     <h1>Contact Information</h1>
@@ -227,133 +227,133 @@ if (isset($_POST['submit'])) {
             }
         }
 
-        //input validation
-        const form = document.getElementById('form');
-        const firstName = document.getElementById('first-name');
-        const lastName = document.getElementById('last-name');
-        const email = document.getElementById('email');
-        const number = document.getElementById('number');
-        const username = document.getElementById('username');
-        const password = document.getElementById('password');
-        const password2 = document.getElementById('cpassword');
+        // //input validation
+        // const form = document.getElementById('form');
+        // const firstName = document.getElementById('first-name');
+        // const lastName = document.getElementById('last-name');
+        // const email = document.getElementById('email');
+        // const number = document.getElementById('number');
+        // const username = document.getElementById('username');
+        // const password = document.getElementById('password');
+        // const password2 = document.getElementById('cpassword');
 
-        form.addEventListener('submit', e => {
-            e.preventDefault();
+        // form.addEventListener('submit', e => {
+        //     e.preventDefault();
 
-            validateInputs();
-        });
+        //     validateInputs();
+        // });
 
-        const setError = (element, message) => {
-            const inputControl = element.parentElement; //element should have input-control as its parent, with div.error as its sibling
-            const errorDisplay = inputControl.querySelector('.error');
+        // const setError = (element, message) => {
+        //     const inputControl = element.parentElement; //element should have input-control as its parent, with div.error as its sibling
+        //     const errorDisplay = inputControl.querySelector('.error');
 
-            errorDisplay.innerText = message;
-            inputControl.classList.add('error');
-            inputControl.classList.remove('success')
-        }
+        //     errorDisplay.innerText = message;
+        //     inputControl.classList.add('error');
+        //     inputControl.classList.remove('success')
+        // }
 
-        const setSuccess = element => {
-            const inputControl = element.parentElement;
-            const errorDisplay = inputControl.querySelector('.error');
+        // const setSuccess = element => {
+        //     const inputControl = element.parentElement;
+        //     const errorDisplay = inputControl.querySelector('.error');
 
-            errorDisplay.innerText = '';
-            inputControl.classList.add('success');
-            inputControl.classList.remove('error');
-        };
+        //     errorDisplay.innerText = '';
+        //     inputControl.classList.add('success');
+        //     inputControl.classList.remove('error');
+        // };
 
-        const isValidEmail = email => {
-            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return re.test(String(email).toLowerCase());
-        }
+        // const isValidEmail = email => {
+        //     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        //     return re.test(String(email).toLowerCase());
+        // }
 
-        const validateInputs = () => {
-            const firstNameValue = firstName.value.trim();
-            const lastNameValue = lastName.value.trim();
-            const emailValue = email.value.trim();
-            const numberValue = number.value.trim();
-            const usernameValue = username.value.trim();
-            const passwordValue = password.value.trim();
-            const password2Value = password2.value.trim();
+        // const validateInputs = () => {
+        //     const firstNameValue = firstName.value.trim();
+        //     const lastNameValue = lastName.value.trim();
+        //     const emailValue = email.value.trim();
+        //     const numberValue = number.value.trim();
+        //     const usernameValue = username.value.trim();
+        //     const passwordValue = password.value.trim();
+        //     const password2Value = password2.value.trim();
 
-            //Regular expressions for input validation
-            const nameRegex = /^[a-zA-Z ]+$/; //letters only
-            const numberRegex = /^09\d{9}$/; //numbers only
-            const uppercaseRegex = /[A-Z]/;
-            const lowercaseRegex = /[a-z]/;
-            const digitRegex = /\d/;
-            const specialCharRegex = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/;
+        //     //Regular expressions for input validation
+        //     const nameRegex = /^[a-zA-Z ]+$/; //letters only
+        //     const numberRegex = /^09\d{9}$/; //numbers only
+        //     const uppercaseRegex = /[A-Z]/;
+        //     const lowercaseRegex = /[a-z]/;
+        //     const digitRegex = /\d/;
+        //     const specialCharRegex = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/;
 
-            if (firstNameValue === '') {
-                setError(firstName, 'Please enter your first name');
-            } else if (!nameRegex.test(firstNameValue)) {
-                setError(firstName, 'Name must contain only letters');
-            } else {
-                setSuccess(firstName);
-            }
+        //     if (firstNameValue === '') {
+        //         setError(firstName, 'Please enter your first name');
+        //     } else if (!nameRegex.test(firstNameValue)) {
+        //         setError(firstName, 'Name must contain only letters');
+        //     } else {
+        //         setSuccess(firstName);
+        //     }
 
-            if (lastNameValue === '') {
-                setError(lastName, 'Please enter your last name');
-            } else if (!nameRegex.test(lastNameValue)) {
-                setError(lastName, 'Name must contain only letters');
-            } else {
-                setSuccess(lastName);
-            }
+        //     if (lastNameValue === '') {
+        //         setError(lastName, 'Please enter your last name');
+        //     } else if (!nameRegex.test(lastNameValue)) {
+        //         setError(lastName, 'Name must contain only letters');
+        //     } else {
+        //         setSuccess(lastName);
+        //     }
 
-            if(emailValue === '') {
-                setError(email, 'Please enter your email');
-            } else if (!isValidEmail(emailValue)) {
-                setError(email, 'Provide a valid email address');
-            } else {
-                setSuccess(email);
-            }
+        //     if(emailValue === '') {
+        //         setError(email, 'Please enter your email');
+        //     } else if (!isValidEmail(emailValue)) {
+        //         setError(email, 'Provide a valid email address');
+        //     } else {
+        //         setSuccess(email);
+        //     }
 
-            if (numberValue === '') {
-                setError(number, 'Please enter your number');
-            } else if (!numberRegex.test(numberValue)) {
-                setError(number, 'Invalid number');
-            } else {
-                setSuccess(number);
-            }
+        //     if (numberValue === '') {
+        //         setError(number, 'Please enter your number');
+        //     } else if (!numberRegex.test(numberValue)) {
+        //         setError(number, 'Invalid number');
+        //     } else {
+        //         setSuccess(number);
+        //     }
 
-            if (usernameValue === '') {
-                setError(username, 'Please enter your username');
-            // } else if (!nameRegex.test(usernameValue)) {
-            //     setError(username, 'Invalid username');
-            } else if (usernameValue.length < 8 ) {
-                setError(username, 'Invalid username');
-            } else {
-                setSuccess(username);
-            }
+        //     if (usernameValue === '') {
+        //         setError(username, 'Please enter your username');
+        //     // } else if (!nameRegex.test(usernameValue)) {
+        //     //     setError(username, 'Invalid username');
+        //     } else if (usernameValue.length < 8 ) {
+        //         setError(username, 'Invalid username');
+        //     } else {
+        //         setSuccess(username);
+        //     }
 
-            if(passwordValue === '') {
-                setError(password, 'Please enter your password');
-            } else if (passwordValue.length < 8 ) {
-                setError(password, 'Password must be at least 8 character.')
-            } 
-            else if (!uppercaseRegex.test(passwordValue)) {
-                setError(password, 'Password must contain at least one uppercase letter.');
-            } 
-            else if (!lowercaseRegex.test(passwordValue)) {
-                setError(password, 'Password must contain at least one lowercase letter.');
-            } 
-            else if (!digitRegex.test(passwordValue)) {
-                setError(password, 'Password must contain at least one digit');
-            } 
-            else if (!specialCharRegex.test(passwordValue)) {
-                setError(password, 'Password must contain at least one special character.');
-            } 
-            else {
-                setSuccess(password);
-            }
+        //     if(passwordValue === '') {
+        //         setError(password, 'Please enter your password');
+        //     } else if (passwordValue.length < 8 ) {
+        //         setError(password, 'Password must be at least 8 character.')
+        //     } 
+        //     else if (!uppercaseRegex.test(passwordValue)) {
+        //         setError(password, 'Password must contain at least one uppercase letter.');
+        //     } 
+        //     else if (!lowercaseRegex.test(passwordValue)) {
+        //         setError(password, 'Password must contain at least one lowercase letter.');
+        //     } 
+        //     else if (!digitRegex.test(passwordValue)) {
+        //         setError(password, 'Password must contain at least one digit');
+        //     } 
+        //     else if (!specialCharRegex.test(passwordValue)) {
+        //         setError(password, 'Password must contain at least one special character.');
+        //     } 
+        //     else {
+        //         setSuccess(password);
+        //     }
 
-            if(password2Value === '') {
-                setError(password2, 'Please confirm your password');
-            } else if (password2Value !== passwordValue) {
-                setError(password2, "Password doesn't match");
-            } else {
-                setSuccess(password2);
-            }
-        };
+        //     if(password2Value === '') {
+        //         setError(password2, 'Please confirm your password');
+        //     } else if (password2Value !== passwordValue) {
+        //         setError(password2, "Password doesn't match");
+        //     } else {
+        //         setSuccess(password2);
+        //     }
+        // };
     </script>
 </body>
 </html>
