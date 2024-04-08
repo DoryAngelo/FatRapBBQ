@@ -54,6 +54,14 @@
     }
 } */
 
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
+}
+
 body{
     font-family: 'Inter', sans-serif;
     font-weight: 500;
@@ -61,6 +69,7 @@ body{
 }
 
 main {
+    width: 100%;
     padding-top: 130px;
     background-color: var(--bg);
 }
@@ -70,8 +79,15 @@ button {
 }
 
 .section {
-    padding: 0 15%;
+    /* padding: 0 15%; */
     /* padding: clamp(1.4rem,5%,20%) clamp(1rem,5%,20%); doesn't work yet*/
+}
+
+.container {
+    width: 80%;
+    max-width: 90%;
+    margin: 0 auto;
+    border: 1px solid blue;
 }
 
 ul {
@@ -87,7 +103,6 @@ ul {
     flex-direction: row;
     align-items: center;
     gap: 3rem;
-    background-color: var(--bg);
 }
 
 .PL-text {
@@ -95,6 +110,8 @@ ul {
     flex-direction: column;
     gap: 2rem;
     width: 600px;
+    min-width: 26rem;
+    border: 1px solid red;
     color: var(--text);
 }
 
@@ -119,7 +136,7 @@ ul {
     border-radius: 20px;
     background-color: var(--primary);
     text-decoration: none;
-    color: var(--text)
+    color: var(--text);
 }
 
 .product-landing .button:hover {
@@ -135,6 +152,8 @@ ul {
     border-radius: 27px;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 4px 4px 0px;
 }
+
+
 
 
 /*section 2 - product landing*/
@@ -328,17 +347,24 @@ h1.section-heading {
     width: 100%;
 }
 
+
+
 /*product info section*/
 .product-landing h1.other-sections {
     font-size: 3.5rem;
 }
 
+
 .info {
     display: flex;
     align-items: start;
     background-color: var(--product-info-bg);
-    padding: 6%;
 }
+
+.info .product-landing {
+    background-color: var(--product-info-bg);
+}
+
 .info .PL-text {
     gap: 1rem;
     color: var(--light-text);
@@ -396,6 +422,35 @@ p.amount {
     background-color: #D75039;
 }
 
+@media (width <= 700px) {
+    .product-landing, .calendar .front  {
+        flex-wrap: wrap;
+    }
+
+    .product-landing .button, .calendar-block, .calendar .front .left-text {
+        width: 100%;
+    }
+
+    .product-landing .featured-pic {
+        width: 100%;
+        height: 100%;
+    }
+
+    section h1, h1.section-heading { 
+        text-align: center;
+    }
+
+    h1.section-heading {
+        margin-bottom: 2rem;
+    }
+
+    .legend ul {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+}
 /*Order tracking section*/
 .order-track{
     padding-top: 6%;

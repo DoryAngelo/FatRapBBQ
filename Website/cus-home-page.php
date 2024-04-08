@@ -117,7 +117,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -134,115 +133,118 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     <script src="home.js" defer></script>
 
 </head>
-    <header>
-            <div class="header-container">
-                <div class="website-title">
-                <img id="logo" src="images/client-logo.png">
-                    <div class="text">
-                        <h1>Fat Rap's Barbeque's Online Store</h1>
-                    </div>
-                </div>
-                    <input type="checkbox" id="menu-toggle">
-                    <label class='menu-button-container' for="menu-toggle">
-                        <div class='menu-button'></div>
-                    </label>
-                        </nav>
-                        <ul class = "menubar">
-                            <!--TODO: ADD LINKS-->
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">Menu</a></li>
-                            <li><a href="<?php echo SITEURL ;?>cart.php">Cart</a></li>
-                        <!-- Text below should change to 'Logout'once user logged in-->
-                        <?php
-                        if (isset($_SESSION['prsn_id'])) {
-                            ?>
-                                <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a></li>
-                                <?php
-                            } else {
-                                ?>
-                                <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                            <?php
-                            }
-                            ?>
-                        </ul>
-                        </nav>
-            </div>
-    </header>
-
+    
 <body>
+    <header>
+        <div class="header-container">
+            <div class="website-title">
+                <img id="logo" src="images/client-logo.png">
+                <div class="text">
+                    <h1>Fat Rap's Barbeque's Online Store</h1>
+                </div>
+            </div>
+            <input type="checkbox" id="menu-toggle">
+            <label class='menu-button-container' for="menu-toggle">
+                <div class='menu-button'></div>
+            </label>
+            <ul class = 'menubar'>
+                <li><a href="<?php echo SITEURL; ?>cus-home-page.php">Home</a></li>
+                <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
+                <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
+                <?php
+                if (isset($_SESSION['prsn_id'])) {
+                ?>
+                    <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
+                    <li>
+                    <?php
+                } else {
+                    ?>
+                    <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
+                <?php
+                }
+                ?>
+            </ul>
+        </div>
+    </header>
     <main>
         <!-- section 1 - product landing -->
-        <section class="product-landing section">
-            <div class="PL-text">
-                <h1>Order our best-selling BBQ</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictumsum dolor sit amet</p>
-                <a href="#product-info-section" class="button">Order Now</a>
+        <section class="section">
+            <div class="product-landing container">
+            <a href="<?php echo SITEURL; ?>home.php">home</a>
+                <div class="PL-text">
+                    <h1>Order our best-selling BBQ</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictumsum dolor sit amet</p>
+                    <a href="#product-info-section" class="button">Order Now</a>
+                </div>
+                <img class="featured-pic" src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
             </div>
-            <img class="featured-pic" src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
         </section>
         <!-- section 2 - calendar -->
         <section class="calendar section">
-            <div class="front">
-                <section class="left-text">
-                    <h1 class="section-heading">See our available dates</h1>
-                    <div class="legend">
-                        <ul>
-                            <li class="available button">Available</li>
-                            <li class="fully-booked button">Fully Booked</li>
-                            <li class="closed button">Closed</li>
-                        </ul>
-                    </div>
-                </section>
-                <section class="calendar-block"> <!-- reference code: https://www.youtube.com/watch?v=OcncrLyddAs-->
-                    <div class="header">
-                        <button id="prevBtn">
-                            <i class='bx bx-chevron-left'></i>
-                        </button>
-                        <div class="monthYear" id="monthYear"></div>
-                        <button id="nextBtn">
-                            <i class='bx bx-chevron-right'></i>
-                        </button>
-                    </div>
-                    <div class="days">
-                        <div class="day">Mon</div>
-                        <div class="day">Tue</div>
-                        <div class="day">Wed</div>
-                        <div class="day">Thur</div>
-                        <div class="day">Fri</div>
-                        <div class="day">Sat</div>
-                        <div class="day">Sun</div>
-                    </div>
-                    <div class="dates" id="dates"></div>
-                </section>
-            </div>
-            </div>
-            <div class="back">
-                <div class="green-block"></div>
-                <div class="cream-block"></div>
+            <div class="container">
+                <div class="front">
+                    <section class="left-text">
+                        <h1 class="section-heading">See our available dates</h1>
+                        <div class="legend">
+                            <ul>
+                                <li class="available button">Available</li>
+                                <li class="fully-booked button">Fully Booked</li>
+                                <li class="closed button">Closed</li>
+                            </ul>
+                        </div>
+                    </section> 
+                    <section class="calendar-block"> <!-- reference code: https://www.youtube.com/watch?v=OcncrLyddAs-->
+                        <div class="header">
+                            <button id="prevBtn">
+                                <i class='bx bx-chevron-left'></i>
+                            </button>
+                            <div class="monthYear" id="monthYear"></div>
+                            <button id="nextBtn">
+                                <i class='bx bx-chevron-right'></i>
+                            </button>
+                        </div>
+                        <div class="days">
+                            <div class="day">Mon</div>
+                            <div class="day">Tue</div>
+                            <div class="day">Wed</div>
+                            <div class="day">Thur</div>
+                            <div class="day">Fri</div>
+                            <div class="day">Sat</div>
+                            <div class="day">Sun</div>
+                        </div>
+                        <div class="dates" id="dates"></div>
+                    </section>
+                </div>
+                <div class="back">
+                    <div class="green-block"></div>
+                    <div class="cream-block"></div>
+                </div>
             </div>
         </section>
         <!-- section 3 - product info -->
-        <section class="product-landing info section" id="product-info-section">
-            <img class="featured-pic" src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
-            <div class="PL-text">
-                <h1 class="product-name"><?php echo $FOOD_NAME; ?></h1>
-                <p class="product"><?php echo $FOOD_PRICE; ?></p>
-                <p class="product"><?php echo $FOOD_DESC; ?></p>
-                <div class="button-group">
-                    <form method="post">
-                        <input type="hidden" id="quantity" name="quantity" value="1"> <!-- Hidden input to store the quantity -->
-                        <button name="order" type="submit" class="button">Order Now</button>
-                    </form>
-                    <div class="right-contents">
-                        <div class="quantity-group">
-                            <!-- <button class="js-minus">-</button>
-                            <span class="js-num">1</span>
-                            <button class="js-plus">+</button> -->
-                            <i class='bx bxs-minus-circle js-minus circle' data-stock="<?php echo $FOOD_STOCK; ?>"></i>
-                            <p class="amount js-num">1</p>
-                            <i class='bx bxs-plus-circle js-plus circle' data-stock="<?php echo $FOOD_STOCK; ?>"></i>
+         <section class="info section" id="product-info-section">
+            <div class="product-landing container">
+                <img class="featured-pic" src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
+                <div class="PL-text">
+                    <h1 class="product-name"><?php echo $FOOD_NAME; ?></h1>
+                    <p class="product"><?php echo $FOOD_PRICE; ?></p>
+                    <p class="product"><?php echo $FOOD_DESC; ?></p>
+                    <div class="button-group">
+                        <form method="post">
+                            <input type="hidden" id="quantity" name="quantity" value="1"> <!-- Hidden input to store the quantity -->
+                            <button name="order" type="submit" class="button">Order Now</button>
+                        </form>
+                        <div class="right-contents">
+                            <div class="quantity-group">
+                                <!-- <button class="js-minus">-</button>
+                                <span class="js-num">1</span>
+                                <button class="js-plus">+</button> -->
+                                <i class='bx bxs-minus-circle js-minus circle' data-stock="<?php echo $FOOD_STOCK; ?>"></i>
+                                <p class="amount js-num">1</p>
+                                <i class='bx bxs-plus-circle js-plus circle' data-stock="<?php echo $FOOD_STOCK; ?>"></i>
+                            </div>
+                            <p class="remaining"><?php echo $FOOD_STOCK; ?> sticks remaining</p>
                         </div>
-                        <p class="remaining"><?php echo $FOOD_STOCK; ?> sticks remaining</p>
                     </div>
                 </div>
             </div>
@@ -277,25 +279,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             });
         </script>
         <!-- section 4 - order tracking-->
-        <section class="product-landing order-track section">
-            <div class="PL-text">
-                <h1 class="section-heading other-sections">Want to track your order?</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictumsum dolor sit amet</p>
-            </div>
-            <form class="featured-pic" id="form" method="POST">
-                <div class="top input-control">
-                    <h2>Order Number</h2>
-                    <hr>
-                    <input name="track-order" type="text" id="number" placeholder="0123456789">
-                    <div class="error"></div>
+        <section class="order-track section">
+            <div class="container product-landing ">
+                <div class="PL-text">
+                    <h1 class="section-heading other-sections">Want to track your order?</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictumsum dolor sit amet</p>
                 </div>
-                <button name="submit" id="track-order" type="submit" class="button">Track Order</button>
-            </form>
+                <form class="featured-pic" id="form" method="POST">
+                    <div class="top input-control">
+                        <h2>Order Number</h2>
+                        <hr>
+                        <input name="track-order" type="text" id="number" placeholder="0123456789">
+                        <div class="error"></div>
+                    </div>
+                    <button name="submit" id="track-order" type="submit" class="button">Track Order</button>
+                </form>
+            </div>
         </section>
         <!-- section 5 - wholesale-->
         <section class="product-landing wholesale section">
-            <h1 class="other-sections">Looking for wholesale deals?</h1>
-            <a href="<?php echo SITEURL; ?>wc-register.php" class="button">Sign up as a Wholesale Customer</a>
+                            <h1 class="other-sections">Looking for wholesale deals?</h1>
+                <a href="<?php echo SITEURL; ?>wc-register.php" class="button">Sign up as a Wholesale Customer</a>
         </section>
     </main>
     <footer>
