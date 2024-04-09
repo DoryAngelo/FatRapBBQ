@@ -168,12 +168,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         <!-- section 1 -->
         <section class="section" id="featured-section">
             <div class="container responsive">
-                <?php
-                $PLACED_ORDER_TRACKER = $_SESSION['PLACED_ORDER_TRACKER'];
-                ?>
                 <div class="text">
                     <h1>Order our best-selling BBQ</h1>
-                    <h1><?php echo $PLACED_ORDER_TRACKER?></h1>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictumsum dolor sit amet</p>
                     <a href="#product-section" class="button">Order Now</a>
                 </div>
