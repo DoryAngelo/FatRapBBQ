@@ -36,30 +36,6 @@ html {
     color: var(--text);
 }
 
-/* @media only screen and (min-width: 700px) {
-    .product-landing {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 3rem;
-    }
-    .PL-text {
-        width: 60%;
-    }
-    .button {
-        width: max(50%, 200px);
-    }
-
-    .product-landing h1 {
-        text-align: left;
-        font-size: 6rem;
-    }
-
-    .product-landing img {
-        width: min(30%, 300px);
-    }
-} */
-
 body{
     font-family: 'Inter', sans-serif;
     font-weight: 500;

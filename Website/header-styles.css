@@ -78,7 +78,7 @@ header h1 {
     /* font-size: clamp(1rem, 1.5vw, 1.5rem); */
 }
 
-header .text p {
+header .text p, footer .right-container p {
     font-size: 0.8rem;
 }
 
@@ -129,9 +129,8 @@ footer {
 }
 
 .footer-container {
-    max-width: 90%;
-    width: clamp(800px, 80%, 1000px);
-    min-width: none;
+    width: 90%;
+    max-width: 800px;
     margin: clamp(1rem, 6vw, 4.5rem) auto;
     display: flex;
     justify-content: space-between;
@@ -335,7 +334,7 @@ footer {
 }
 
 
-@media only screen and (width <= 475px) {
+@media only screen and (width <= 650px) {
   .footer-container {
     flex-direction: column;
     gap: 2rem;
