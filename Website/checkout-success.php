@@ -1,5 +1,13 @@
+<?php
+
+@include 'constants.php';
+
+$PLACED_ORDER_TRACKER = $_SESSION['PLACED_ORDER_TRACKER'];
+
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,10 +17,11 @@
     <link rel="stylesheet" href="success-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- add the code below to load the icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
+
 <body>
     <header>
         <div class="header-container">
@@ -28,9 +37,10 @@
         <div class="success-box">
             <div class="success-title">
                 <h1>Success!</h1>
+                <p class="title-desc">Your order tracker is: <?php echo $PLACED_ORDER_TRACKER; ?></p>
                 <p class="title-desc justified"><i>Your order has been placed. Please allot 5 to 10 minutes of waiting time for the confirmation of your order. Confirmation will be sent via email.</i></p>
             </div>
-        </div> 
+        </div>
     </main>
     <footer>
         <div class="footer-container">
@@ -75,5 +85,5 @@
         </div>
     </footer>
 </body>
-</html>
 
+</html>
