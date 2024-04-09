@@ -64,7 +64,7 @@ main {
 
 .success-title h1{
     color: var(--block);
-    font-size: 4rem;
+    font-size: clamp(2rem, 1rem + 5vw, 4rem);
 }
 
 .title-desc{
@@ -72,7 +72,8 @@ main {
     margin-top: 1.5rem;
     margin-left: 2rem;
     margin-right: 2rem;
-    font-size: 1.25rem;
+    /*font-size: 1.25rem;*/
+    font-size: clamp(0.625rem, 0.3125rem + 2.5vw, 1.25rem);
 }
 
 .justified {
