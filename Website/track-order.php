@@ -50,28 +50,26 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
-                    <label class='menu-button-container' for="menu-toggle">
-                        <div class='menu-button'></div>
-                    </label>
-                <ul class = 'menubar'>
-                    <!--TODO: ADD LINKS-->
-                    <li><a href="cus-home-page.php">Home</a></li>
-                    <li><a href="#">Menu</a></li>
-                    <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
-                    <!-- Text below should change to 'Logout'once user logged in-->
+            <label class='menu-button-container' for="menu-toggle">
+                <div class='menu-button'></div>
+            </label>
+            <ul class = 'menubar'>
+                <li><a href="<?php echo SITEURL; ?>cus-home-page.php">Home</a></li>
+                <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
+                <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
+                <?php
+                if (isset($_SESSION['prsn_id'])) {
+                ?>
+                    <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
+                    <li>
                     <?php
-                    if (isset($_SESSION['prsn_id'])) {
+                } else {
                     ?>
-                        <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                        <li>
-                        <?php
-                    } else {
-                        ?>
-                        <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                    <?php
-                    }
-                    ?>
-                </ul>
+                    <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
+                <?php
+                }
+                ?>
+            </ul>
         </div>
     </header>
     <main>
