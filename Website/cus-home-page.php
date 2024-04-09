@@ -29,12 +29,13 @@ if ($count > 0) {
 
 if (isset($_POST['submit'])) {
     $PLACED_ORDER_TRACKER =  mysqli_real_escape_string($conn, $_POST['track-order']);
-    $_SESSION['placed_order_tracker'] = $PLACED_ORDER_TRACKER;
-    $_SESSION['placed_order_tracker'] = $_POST['track-order'];
+    $_SESSION['tracker'] = $_POST['track-order'];
     $select = " SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'";
-    $res = mysqli_query($conn, $sql);
+    $res = mysqli_query($conn, $select);
     $count = mysqli_num_rows($res);
-    header('location:track-order.php');
+    if ($count > 0) {
+        header('location:track-order.php');
+    }
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
@@ -77,42 +78,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     // Redirect to the home page after processing
     header('location:cus-home-page.php');
 }
-// if (isset($_POST['order'])) {
-//     $sql = "SELECT * FROM in_order WHERE FOOD_ID = $FOOD_ID AND PRSN_ID = $PRSN_ID";
-//     $res = mysqli_query($conn, $sql);
-//     $count = mysqli_num_rows($res);
-
-//     if ($count > 0) {
-
-//         while ($row = mysqli_fetch_assoc($res)) {
-//             $IN_ORDER_ID = $row['IN_ORDER_ID'];
-//             $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'] + 1;
-//             $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'] + $FOOD_PRICE;
-
-//             $sql = "UPDATE in_order SET 
-//                             IN_ORDER_QUANTITY = $IN_ORDER_QUANTITY,
-//                             IN_ORDER_TOTAL = $IN_ORDER_TOTAL
-//                             WHERE IN_ORDER_ID = $IN_ORDER_ID";
-//             $res_update = mysqli_query($conn, $sql);
-//             header('location:cus-home-page.php');
-//         }
-//     } else {
-
-//         $sql2 = "INSERT INTO in_order SET
-//                 FOOD_ID = '$FOOD_ID',
-//                 PRSN_ID = '$PRSN_ID',
-//                 IN_ORDER_QUANTITY = 1,
-//                 IN_ORDER_TOTAL = $FOOD_PRICE,
-//                 IN_ORDER_STATUS = 'Ordered'
-//                 ";
-
-//         $res2 = mysqli_query($conn, $sql2);
-//         header('location:cus-home-page.php');
-//     }
-// }
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -273,14 +238,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                     <h1>Want to track your order?</h1>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictumsum dolor sit amet</p>
                 </div>
-                <form action="" class="form">
+                <form class="form" method="post">
                     <div class="top input-control">
                         <h2>Order Number</h2>
                         <hr>
-                        <input name="track-order" type="text" id="number" placeholder="0123456789">
+                        <input name="track-order" type="text" placeholder="0123456789">
                         <div class="error"></div>
                     </div>
-                    <button name="submit" id="track-order" type="submit" class="button">Track Order</button>
+                    <button name="submit" type="submit" class="button">Track Order</button>
                 </form>
             </div>
             </div>

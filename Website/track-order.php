@@ -9,7 +9,7 @@ if (isset($_SESSION['prsn_id'])) {
     $GUEST_ID = $_SESSION['guest_id'];
 }
 
-$PLACED_ORDER_TRACKER = $_SESSION['placed_order_tracker'];
+$PLACED_ORDER_TRACKER = $_SESSION['tracker'];
 
 $sql2 = "SELECT * FROM placed_order WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'";
 

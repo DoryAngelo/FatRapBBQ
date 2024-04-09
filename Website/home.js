@@ -96,7 +96,7 @@ updateCalendar();
 //     if (numberValue === '') {
 //         setError(number, 'Please enter your number');
 //     } else if (!numberRegex.test(numberValue)) {
-//         setError(number, 'Invalid number');
+//         setError(number, 'Invalid numberrrrrrr');
 //     } else {
 //         setSuccess(number);
 //     }
