@@ -52,7 +52,7 @@ h1 {
     font-size: 4.5rem;
 }
 
-p:not(.footer-container p), #product-section .quantity-group, .button {
+p, #product-section .quantity-group, .button {
     font-size: 1.5rem;
 }
 
@@ -114,7 +114,7 @@ img {
 
 /* section 1 */
 #featured-section {
-    background-color: var(--input-bg);
+    background-color: var(--bg);
 }
 
 #featured-section .container{
@@ -147,6 +147,7 @@ img {
 
 .closed-tag {
     background-color: var(--closed);
+    color: var(--closed-text);
 }
 
 .calendar-block {

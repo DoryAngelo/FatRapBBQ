@@ -78,7 +78,9 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                 <th class="header">Product Name</th>
                                 <th class="header">Category</th>
                                 <th class="header">Price</th>
+                                <th class="header">Stock</th>
                                 <th class="header">Active</th>
+                                <th class="header">Stock</th>
                                 <th class="header">Food Type</th>
                                 <th class="header"></th>
                             </tr>
@@ -103,8 +105,10 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                         $FOOD_PRICE = $row['FOOD_PRICE'];
                                         $FOOD_IMG = $row['FOOD_IMG'];
                                         $CTGY_NAME = $row['CTGY_NAME'];
+                                        $FOOD_STOCK= $row['FOOD_STOCK'];
                                         $FOOD_ACTIVE = $row['FOOD_ACTIVE'];
                                         $FOOD_TYPE = $row['FOOD_TYPE'];
+                                        $FOOD_STOCK = $row['FOOD_STOCK'];
                             ?>
 
                                         <tr>
@@ -114,7 +118,13 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                             <td data-cell="Product Name"><?php echo $FOOD_NAME?></td>
                                             <td data-cell="Category"><?php echo $CTGY_NAME?></td>
                                             <td data-cell="Price">₱<?php echo $FOOD_PRICE?></td>
+                                            <td data-cell="Price">₱<?php echo $FOOD_STOCK?></td>
                                             <td data-cell="Display"><?php echo $FOOD_ACTIVE?></td>
+                                            <td data-cell="Stock">
+                                            <span class="<?php echo ($FOOD_STOCK < 100) ? 'red-text' : ''; ?>">
+                                                <p><?php echo $FOOD_STOCK ?></p>
+                                            </span>
+                                        </td>
                                             <td data-cell="Display"><?php echo $FOOD_TYPE?></td>
                                             <td data-cell="Action"><a href="<?php echo SITEURL ;?>admin-edit-product.php?FOOD_ID=<?php echo $FOOD_ID?>&CTGY_ID=<?php echo $CTGY_ID?>"  class="edit">Edit</a></td>
                                         </tr>

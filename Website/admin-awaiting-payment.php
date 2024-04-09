@@ -40,7 +40,7 @@ if (isset($_POST['confirmed'])) {
 
     $res = mysqli_query($conn, $sql);
 
-    header('location:admin-paid-orders.php');
+    header('location:admin-awaiting-payment.php');
 }
 
 if (isset($_POST['not-confirmed'])) {
@@ -58,7 +58,7 @@ if (isset($_POST['not-confirmed'])) {
 
     $res = mysqli_query($conn, $sql);
 
-    header('location:admin-paid-orders.php');
+    header('location:admin-awaiting-payment.php');
 }
 
 ?>
