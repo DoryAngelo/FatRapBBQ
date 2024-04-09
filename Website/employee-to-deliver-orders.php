@@ -19,6 +19,9 @@ if (isset($_POST['confirmed'])) {
             $PLACED_ORDER_STATUS = "For Delivery";
             break;
         case "For Delivery":
+            $PLACED_ORDER_STATUS = "Shipped";
+            break;
+        case "Shipped":
             $PLACED_ORDER_STATUS = "Completed";
             break;
         case "Cancelled":
@@ -188,6 +191,7 @@ if (isset($_POST['not-confirmed'])) {
                         <a href="<?php echo SITEURL; ?>employee-to-prepare-orders.php" class="view big-font">To Prepare</a>
                         <a href="<?php echo SITEURL; ?>employee-preparing-orders.php" class="view big-font">Preparing</a>
                         <a href="<?php echo SITEURL; ?>employee-to-deliver-orders.php" class="view big-font">To Deliver</a>
+                        <a href="<?php echo SITEURL; ?>employee-shipped.php" class="view big-font">Shipped</a>
                         <a href="<?php echo SITEURL; ?>employee-completed-orders.php" class="view big-font">Completed Orders</a>
                         <a href="<?php echo SITEURL; ?>employee-canceled-orders.php" class="view big-font">Canceled Orders</a>
                     </div>

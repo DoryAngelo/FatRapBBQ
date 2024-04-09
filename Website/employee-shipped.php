@@ -2,6 +2,7 @@
 
 @include 'constants.php';
 
+
 if (isset($_POST['confirmed'])) {
 
     $PLACED_ORDER_ID = $_POST['PLACED_ORDER_ID'];
@@ -36,7 +37,7 @@ if (isset($_POST['confirmed'])) {
 
     $res = mysqli_query($conn, $sql);
 
-    header('location:employee-preparing-orders.php');
+    header('location:employee-to-deliver-orders.php');
 }
 
 if (isset($_POST['not-confirmed'])) {
@@ -54,8 +55,9 @@ if (isset($_POST['not-confirmed'])) {
 
     $res = mysqli_query($conn, $sql);
 
-    header('location:employee-preparing-orders.php');
+    header('location:employee-to-deliver-orders.php');
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -66,7 +68,7 @@ if (isset($_POST['not-confirmed'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--change title-->
-    <title>Preparing | Employee</title>
+    <title>To Deliver | Employee</title>
     <link rel="stylesheet" href="header-styles.css">
     <link rel="stylesheet" href="admin-styles.css"><!--change css file-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -112,7 +114,7 @@ if (isset($_POST['not-confirmed'])) {
     <main>
         <section class="section">
             <div class="section-heading">
-                <h2>Preparing</h2>
+                <h2>Shipped</h2>
                 <div class="inline">
                     <p>Date range:</p>
                     <input type="date">
@@ -130,7 +132,7 @@ if (isset($_POST['not-confirmed'])) {
                         </tr>
                         <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
                         <?php
-                        $sql = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'Preparing'";
+                        $sql = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'Shipped'";
                         $res = mysqli_query($conn, $sql);
                         $count = mysqli_num_rows($res);
                         if ($count > 0) {
@@ -147,7 +149,7 @@ if (isset($_POST['not-confirmed'])) {
                                 <tr>
                                     <td data-cell="Date and Time"><?php echo $PLACED_ORDER_DATE ?></td>
                                     <td data-cell="customer"><?php echo $CUS_NAME ?></td>
-                                    <td data-cell="Order #"><a href="<?php echo SITEURL ?>admin-order-details.php?PLACED_ORDER_ID=<?php echo $PLACED_ORDER_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
+                                    <td data-cell="Order #"><a href="<?php echo SITEURL ?>admin-order-details.php?PRSN_ID=<?php echo $PRSN_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
                                     <td data-cell="Payment">₱<?php echo $PLACED_ORDER_TOTAL ?></td>
                                     <td data-cell="Confimed">
                                         <div class="btn-wrapper">
@@ -166,7 +168,7 @@ if (isset($_POST['not-confirmed'])) {
                             ?>
                             <!-- <div class="error">No new orders</div> -->
                             <tr>
-                                <td colspan="5" class="error">No orders currently preparing</td>
+                                <td colspan="5" class="error">No orders yet to deliver</td>
                             </tr>
                         <?php
 

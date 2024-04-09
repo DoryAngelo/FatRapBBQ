@@ -17,22 +17,22 @@ const updateSteps = (e) => {
 
   // update current step based on the text of p tag that serves as a status
   switch(pstatus) {
-    case "placed":
+    case "Placed":
       currentStep = 1;
       break;
-    case "awaitng payment":
+    case "Awaiting Payment":
       currentStep = 2;
       break;
-    case "preparing":
+    case "Preparing":
       currentStep = 3;
       break;
-    case "for delivery":
+    case "Packed":
       currentStep = 4;
       break;
-    case "shipped":
+    case "Shipped":
       currentStep = 5;
       break;
-    case "completed":
+    case "Completed":
       currentStep = 6;
       break;
   }

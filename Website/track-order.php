@@ -53,7 +53,7 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
             <label class='menu-button-container' for="menu-toggle">
                 <div class='menu-button'></div>
             </label>
-            <ul class = 'menubar'>
+            <ul class='menubar'>
                 <li><a href="<?php echo SITEURL; ?>cus-home-page.php">Home</a></li>
                 <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
                 <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
@@ -97,39 +97,34 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                     $PLACED_ORDER_STATUS = $row2['PLACED_ORDER_STATUS'];
 
                                     switch ($PLACED_ORDER_STATUS) {
-                                        case "Ordered": //PLACED
+                                        case "Placed": //PLACED
                                 ?>
-                                            <p id="status">placed</p>
+                                            <p id="status">Placed</p>
                                         <?php
                                             break;
                                         case "Awaiting Payment": //APPROVED
                                         ?>
-                                            <p id="status">approved</p>
+                                            <p id="status">Awaiting Payment</p>
                                         <?php
                                             break;
-                                        case "Paid": //PAID
+                                        case "Preparing": //PAID
                                         ?>
-                                            <p id="status">paid</p>
+                                            <p id="status">Preparing</p>
                                         <?php
                                             break;
-                                        case "Preparing":
+                                        case "For Delivery":
                                         ?>
-                                            <p id="status">packed</p>
-                                        <?php
-                                            break;
-                                        case "For Delivery": //PACKED
-                                        ?>
-                                            <p id="status">shipped</p>
+                                            <p id="status">Packed</p>
                                         <?php
                                             break;
                                         case "Shipped": //SHIPPED
                                         ?>
-                                            <p id="status">shipped</p>
+                                            <p id="status">Shipped</p>
                                         <?php
                                             break;
                                         case "Completed": //DELIVERED
                                         ?>
-                                            <p id="status">completed</p>
+                                            <p id="status">Completed</p>
                                 <?php
                                             break;
                                     }
