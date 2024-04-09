@@ -108,6 +108,13 @@ $CTGY_ID = $_GET['CTGY_ID'];
                                                 <input value="<?php echo $FOOD_STOCK ?>" class="js-user" type="number" id="price" name="stock" required><!-- numbers only, starts with 09, must have 11-digits -->
                                             </div>
                                             <div class="form-field-input">
+                                                <label for="category">Type</label>
+                                                <select class="dropdown" name="type" id="type" required>
+                                                    <option value="Customer">Customer</option>
+                                                    <option value="Wholesaler">Wholesaler</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-field-input">
                                                 <label for="category">Category</label>
                                                 <select class="dropdown" name="category" id="category" required>
                                                     <?php
@@ -134,8 +141,8 @@ $CTGY_ID = $_GET['CTGY_ID'];
                                             <div class="form-field-input">
                                                 <label for="active">Active</label>
                                                 <select class="dropdown" name="active" id="active" required>
-                                                    <option value="inactive">INACTIVE</option>
-                                                    <option value="active">ACTIVE</option>
+                                                    <option value="No">INACTIVE</option>
+                                                    <option value="Yes">ACTIVE</option>
                                                 </select>
                                             </div>
                                             <div class="form-field-input">
@@ -169,6 +176,7 @@ if (isset($_POST['submit'])) {
     $FOOD_PRICE =  $_POST['price'];
     $FOOD_STOCK = $_POST['stock'];
     $FOOD_ACTIVE = $_POST['active'];
+    $FOOD_TYPE = $_POST['type'];
     $CTGY_ID = $_POST['category'];
     $current_image = $FOOD_IMAGE;
 
@@ -219,7 +227,8 @@ if (isset($_POST['submit'])) {
             FOOD_IMG = '$FOOD_IMG',
             FOOD_PRICE = '$FOOD_PRICE',
             FOOD_STOCK = '$FOOD_STOCK',
-            FOOD_ACTIVE = '$FOOD_ACTIVE'
+            FOOD_ACTIVE = '$FOOD_ACTIVE',
+            FOOD_TYPE = '$FOOD_TYPE'
         WHERE FOOD_ID = '$FOOD_ID'";
 
     mysqli_query($conn, $update);
