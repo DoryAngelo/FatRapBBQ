@@ -36,26 +36,26 @@ $CTGY_ID = $_GET['CTGY_ID'];
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
-                    <label class='menu-button-container' for="menu-toggle">
-                        <div class='menu-button'></div>
-                    </label>
-                <ul class = 'menubar'>
-                    <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
+            <label class='menu-button-container' for="menu-toggle">
+                <div class='menu-button'></div>
+            </label>
+            <ul class='menubar'>
+                <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
+                <?php
+                if (isset($_SESSION['prsn_id'])) {
+                ?>
+                    <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
+                    <li>
                     <?php
-                    if (isset($_SESSION['prsn_id'])) {
+                } else {
                     ?>
-                        <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                        <li>
-                        <?php
-                    } else {
-                        ?>
-                        <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                    <?php
-                    }
-                    ?>
-                </ul>
+                    <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
+                <?php
+                }
+                ?>
+            </ul>
         </div>
     </header>
     <main>
@@ -132,10 +132,17 @@ $CTGY_ID = $_GET['CTGY_ID'];
                                                 </select>
                                             </div>
                                             <div class="form-field-input">
+                                                <label for="type">Type</label>
+                                                <select class="dropdown" name="type" id="type" required>
+                                                    <option value="Customer">Customer</option>
+                                                    <option value="Wholesaler">Wholesaler</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-field-input">
                                                 <label for="active">Active</label>
                                                 <select class="dropdown" name="active" id="active" required>
-                                                    <option value="inactive">INACTIVE</option>
-                                                    <option value="active">ACTIVE</option>
+                                                    <option value="No">INACTIVE</option>
+                                                    <option value="Yes">ACTIVE</option>
                                                 </select>
                                             </div>
                                             <div class="form-field-input">
@@ -169,6 +176,7 @@ if (isset($_POST['submit'])) {
     $FOOD_PRICE =  $_POST['price'];
     $FOOD_STOCK = $_POST['stock'];
     $FOOD_ACTIVE = $_POST['active'];
+    $FOOD_TYPE = $_POST['type'];
     $CTGY_ID = $_POST['category'];
     $current_image = $FOOD_IMAGE;
 
@@ -219,7 +227,8 @@ if (isset($_POST['submit'])) {
             FOOD_IMG = '$FOOD_IMG',
             FOOD_PRICE = '$FOOD_PRICE',
             FOOD_STOCK = '$FOOD_STOCK',
-            FOOD_ACTIVE = '$FOOD_ACTIVE'
+            FOOD_ACTIVE = '$FOOD_ACTIVE',
+            FOOD_TYPE = '$FOOD_TYPE'
         WHERE FOOD_ID = '$FOOD_ID'";
 
     mysqli_query($conn, $update);
