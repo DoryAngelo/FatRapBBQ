@@ -154,7 +154,7 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                     <span class="circle">
                                         <i class='bx bx-check'></i>
                                     </span>
-                                    <span class="label">Paid</span>
+                                    <span class="label">Preparing</span>
                                 </div>
                                 <!-- if status = packed -->
                                 <div class="step">

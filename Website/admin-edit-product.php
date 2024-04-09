@@ -108,6 +108,13 @@ $CTGY_ID = $_GET['CTGY_ID'];
                                                 <input value="<?php echo $FOOD_STOCK ?>" class="js-user" type="number" id="price" name="stock" required><!-- numbers only, starts with 09, must have 11-digits -->
                                             </div>
                                             <div class="form-field-input">
+                                                <label for="category">Type</label>
+                                                <select class="dropdown" name="type" id="type" required>
+                                                    <option value="Customer">Customer</option>
+                                                    <option value="Wholesaler">Wholesaler</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-field-input">
                                                 <label for="category">Category</label>
                                                 <select class="dropdown" name="category" id="category" required>
                                                     <?php

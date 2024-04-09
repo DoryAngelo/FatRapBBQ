@@ -59,48 +59,48 @@ nextBtn.addEventListener('click', () => {
 
 updateCalendar();
 
-//input validation for order tracking section
-const form = document.getElementById("form"),
-        number = document.getElementById("number");
+// //input validation for order tracking section
+// const form = document.getElementById("form"),
+//         number = document.getElementById("number");
 
-form.addEventListener('submit', e => {
-    e.preventDefault();
+// form.addEventListener('submit', e => {
+//     e.preventDefault();
 
-    validateInputs();
-});
+//     validateInputs();
+// });
 
-const setError = (element, message) => {
-    const inputControl = element.parentElement; //element should have input-control as its parent, with div.error as its sibling
-    const errorDisplay = inputControl.querySelector('.error');
+// const setError = (element, message) => {
+//     const inputControl = element.parentElement; //element should have input-control as its parent, with div.error as its sibling
+//     const errorDisplay = inputControl.querySelector('.error');
 
-    errorDisplay.innerText = message;
-    inputControl.classList.add('error');
-    inputControl.classList.remove('success')
-}
+//     errorDisplay.innerText = message;
+//     inputControl.classList.add('error');
+//     inputControl.classList.remove('success')
+// }
 
-const setSuccess = element => {
-    const inputControl = element.parentElement;
-    const errorDisplay = inputControl.querySelector('.error');
+// const setSuccess = element => {
+//     const inputControl = element.parentElement;
+//     const errorDisplay = inputControl.querySelector('.error');
 
-    errorDisplay.innerText = '';
-    inputControl.classList.add('success');
-    inputControl.classList.remove('error');
-};
+//     errorDisplay.innerText = '';
+//     inputControl.classList.add('success');
+//     inputControl.classList.remove('error');
+// };
 
-const validateInputs = () => {
-    const numberValue = number.value.trim();
+// const validateInputs = () => {
+//     const numberValue = number.value.trim();
 
-    //Regular expressions for input validation
-    const numberRegex = /^09\d{9}$/; //numbers only
+//     //Regular expressions for input validation
+//     const numberRegex = /^09\d{9}$/; //numbers only
 
-    if (numberValue === '') {
-        setError(number, 'Please enter your number');
-    } else if (!numberRegex.test(numberValue)) {
-        setError(number, 'Invalid number');
-    } else {
-        setSuccess(number);
-    }
-};
+//     if (numberValue === '') {
+//         setError(number, 'Please enter your number');
+//     } else if (!numberRegex.test(numberValue)) {
+//         setError(number, 'Invalid number');
+//     } else {
+//         setSuccess(number);
+//     }
+// };
 
 
 

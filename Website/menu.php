@@ -67,7 +67,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
             <section class="section-body">
             <?php
 
-            $sql = "SELECT * FROM food WHERE FOOD_ACTIVE = 'Yes' AND FOOD_TYPE = '$PRSN_ROLE'";
+            $sql = "SELECT * FROM food WHERE FOOD_ACTIVE = 'Yes'";
             $res = mysqli_query($conn, $sql);
             $count = mysqli_num_rows($res);
             if ($count > 0) {
