@@ -25,18 +25,20 @@ body{
     font-family: 'Inter', sans-serif;
 }
 
+header, footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /*header*/
 header {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 8rem;
     position: fixed;
     top: 0;
     z-index: 100;
     color: var(--header-text);
-    /* padding-top: 30px;
-    padding-bottom: 10px; */
     background-color: var(--bg);
 }
 
@@ -46,11 +48,11 @@ header.backend {
 }
 
 .header-container, .footer-container {
-    min-width: 80%;
-    max-width: 90%;
     margin-inline: auto;
     margin-top: 2rem;
     margin-bottom: 0.9rem;
+    width: 90%;
+    max-width: 1200px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -121,26 +123,21 @@ li > a {
 
 /*footer*/
 footer {
-    width: 100%;
-    min-width: 320px;
     background-color: #000;
     color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: clamp(1rem,6%,60px) clamp(1rem,6%,60px);
+    min-height: 20rem;
 }
 
 .footer-container {
+    max-width: 90%;
     width: clamp(800px, 80%, 1000px);
     min-width: none;
-    margin: 0 auto;
+    margin: clamp(1rem, 6vw, 4.5rem) auto;
     display: flex;
     justify-content: space-between;
 }
 
-
-.left-container h1 {
+.left-container h2 {
     margin-bottom: 1.2rem;
 }
 
@@ -190,13 +187,6 @@ footer {
     display: flex;
     gap: 10px;
 }
-
-@media (width <= 320px) {
-  body {
-    background-color: red;
-  }
-}
-
 
 /* hamburger menu - responsive */  
   
@@ -276,7 +266,7 @@ footer {
     .menubar {
       position: absolute;
       top: 0;
-      margin-top: 120px;
+      margin-top: 8rem;
       left: 0;
       flex-direction: column;
       width: 100%;
@@ -310,3 +300,50 @@ footer {
       border-bottom: 1px solid white;
     }
   }
+
+  /*layout changes at this breakpoint (around tablet size)*/
+  @media only screen and (width <= 860px) {
+    header {
+      height: 4rem;
+    }
+
+    .header-container {
+      margin: 0;
+    }
+
+    #logo {
+      width: clamp(3rem, 4vw, 4rem);
+    }
+
+    header h1 {
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+    }
+
+    header .text {
+      margin-left: clamp(1rem, 2.5vw, 2rem);
+    }
+
+    .menubar {
+      margin-top: 4rem;
+    }
+
+    .menu-button,
+    .menu-button::before,
+    .menu-button::after {
+      width: 25px;
+    }
+}
+
+
+@media only screen and (width <= 475px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .left-container, .right-container {
+    width: 100%;
+  }
+}
+
+  

@@ -673,3 +673,9 @@ a.back {
     background: #87a5f8;
     cursor: not-allowed;
   }
+
+  @media only screen and (width <= 860px) {
+    main {
+        padding-top: 4rem;
+    }
+}
