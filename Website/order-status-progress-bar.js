@@ -20,13 +20,13 @@ const updateSteps = (e) => {
     case "placed":
       currentStep = 1;
       break;
-    case "approved":
+    case "awaitng payment":
       currentStep = 2;
       break;
-    case "paid":
+    case "preparing":
       currentStep = 3;
       break;
-    case "packed":
+    case "for delivery":
       currentStep = 4;
       break;
     case "shipped":

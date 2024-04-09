@@ -80,7 +80,7 @@ $pdf->Cell(35, 6, 'Total', 1, 1, 'C');
 
 
 $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, FOOD_STOCK, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
-FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND PLACED_ORDER_ID = 16";
+FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND PLACED_ORDER_ID = 23   ";
 $res = mysqli_query($conn, $sql);
 $count = mysqli_num_rows($res);
 
