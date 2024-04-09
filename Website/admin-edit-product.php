@@ -108,14 +108,7 @@ $CTGY_ID = $_GET['CTGY_ID'];
                                                     <label for="price">Stock </label>
                                                     <input value="<?php echo $FOOD_STOCK ?>" class="js-user" type="number" id="price" name="stock" required><!-- numbers only, starts with 09, must have 11-digits -->
                                                 </div>
-                                                <div class="form-field-input">
-                                                <label for="category">Type</label>
-                                                <select class="dropdown" name="type" id="type" required>
-                                                    <option value="Customer">Customer</option>
-                                                    <option value="Wholesaler">Wholesaler</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-field-input">
+                                                 <div class="form-field-input">
                                                     <label for="category">Category</label>
                                                     <select class="dropdown" name="category" id="category" required>
                                                         <?php
@@ -140,23 +133,23 @@ $CTGY_ID = $_GET['CTGY_ID'];
                                                     </select>
                                                 </div>
                                                 <div class="form-field-input">
-                                                <label for="type">Type</label>
-                                                <select class="dropdown" name="type" id="type" required>
-                                                    <option value="Customer">Customer</option>
-                                                    <option value="Wholesaler">Wholesaler</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-field-input">
+                                                    <label for="type">Type</label>
+                                                    <select class="dropdown" name="type" id="type" required>
+                                                        <option value="Customer">Customer</option>
+                                                        <option value="Wholesaler">Wholesaler</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-field-input">
                                                     <label for="active">Active</label>
                                                     <select class="dropdown" name="active" id="active" required>
                                                         <option value="No">INACTIVE</option>
                                                         <option value="Yes">ACTIVE</option>
                                                     </select>
-                                                </div>
+                                                    </div>
                                                 <div class="form-field-input">
-                                                    <label for="valid-id">Image</label>
-                                                    <p class="label-desc">(accepted files: .jpg, .png)</p>
-                                                    <input class="image" type="file" name="image" id="image" required><!-- numbers only, starts with 09, must have 11-digits -->
+                                                        <label for="valid-id">Image</label>
+                                                        <p class="label-desc">(accepted files: .jpg, .png)</p>
+                                                        <input class="image" type="file" name="image" id="image" required><!-- numbers only, starts with 09, must have 11-digits -->
                                                 </div>
                                             </div>
                                         </div>
