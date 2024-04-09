@@ -75,48 +75,51 @@ if (isset($_POST['reject'])) {
     </header>
     <main>
         <section class="section">
-            <div class="section-heading row">
-                <h2>Application Details</h2>
-                <p>#<?php echo $WHL_ID ?></p>
-            </div>
-            <section class="section-body">
-                <section class="main-section column">
-                    <section class="table-wrapper">
-                        <table class="app-det-tbl">
-                            <tr>
-                                <td class="bold-font top">Name:</td>
-                                <td class="top"><?php echo $PRSN_NAME ?></td>
-                            </tr>
-                            <tr>
-                                <td class="bold-font bottom">Email:</td>
-                                <td class="bottom"><?php echo $PRSN_EMAIL ?></td>
-                            </tr>
-                        </table>
+            <div class="container">
+                <div class="section-heading row">
+                    <h2>Application Details</h2>
+                    <p>#<?php echo $WHL_ID ?></p>
+                </div>
+                <section class="with-side-menu">
+                    <section class="main-section column">
+                        <section class="table-wrapper">
+                            <table class="app-det-tbl">
+                                <tr>
+                                    <td class="bold-font top">Name:</td>
+                                    <td class="top"><?php echo $PRSN_NAME ?></td>
+                                </tr>
+                                <tr>
+                                    <td class="bold-font bottom">Email:</td>
+                                    <td class="bottom"><?php echo $PRSN_EMAIL ?></td>
+                                </tr>
+                            </table>
+                        </section>
+                        <section class="column valid-id">
+                            <p class="bold-font">Valid ID</p>
+                            <img src="<?php echo SITEURL; ?>images/<?php echo $WHL_IMAGE; ?>" alt="">
+                        </section>
                     </section>
-                    <section class="column valid-id">
-                        <p class="bold-font">Valid ID</p>
-                        <img src="<?php echo SITEURL; ?>images/<?php echo $WHL_IMAGE; ?>" alt="">
-                    </section>
-                </section>
-                <section class="side-menu">
-                    <div class="group">
-                        <h3>Wholesale Users</h3>
-                        <div class="position-notif">
-                            <a href="" class="view">Total Count</a>
-                            <p class="notif">+99</p>
+                    <section class="side-menu">
+                        <div class="group">
+                            <h3>Wholesale Users</h3>
+                            <div class="position-notif">
+                                <a href="" class="view">Total Count</a>
+                                <p class="notif">+99</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="group">
-                        <h3>Actions</h3>
-                        <form method="POST">
-                            <button name="accept" class="view accept">Accept</button>
-                            <button name="reject" class="view reject">Reject</button>
-                        </form>
+                        <div class="group">
+                            <h3>Actions</h3>
+                            <form method="POST">
+                                <button name="accept" class="view accept">Accept</button>
+                                <button name="reject" class="view reject">Reject</button>
+                            </form>
 
-                        <button>
-                    </div>
+                            <button>
+                        </div>
+                    </section>
                 </section>
-            </section>
+            </div>
+           
         </section>
     </main>
 </body>

@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
-                    <h1>Fat Rap's Barbeque's Online Store</h1>
+                    <h1>Fat Rap's Barbeque</h1>
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
@@ -96,37 +96,36 @@ if (isset($_POST['submit'])) {
     </header>
     <main>
         <section class="section add-edit-menu admin-profile">
-            <div class="section-wrapper">
-                <div class="section-heading row back">
-                    <h2>Admin Profile</h2>
-                    <a href="<?php echo SITEURL; ?>admin-home.php">Back</a>
-                </div>
-                <section class="section-body">
-                    <section class="main-section column">
-                        <form action="#" class="column" method="post" enctype="multipart/form-data">
-                            <?php
-                            $sql = "SELECT * 
-                                 FROM person
-                                 WHERE PRSN_ID = '$PRSN_ID'";
+            <div class="container">
+                <div class="section-wrapper">
+                    <div class="section-heading row back">
+                        <h2>Admin Profile</h2>
+                        <a href="<?php echo SITEURL; ?>admin-home.php">Back</a>
+                    </div>
+                    <section class="section-body">
+                        <section class="main-section column">
+                            <form action="#" class="column" method="post" enctype="multipart/form-data">
+                                <?php
+                                $sql = "SELECT * 
+                                    FROM person
+                                    WHERE PRSN_ID = '$PRSN_ID'";
 
-                            $res = mysqli_query($conn, $sql);
+                                $res = mysqli_query($conn, $sql);
 
-                            $count = mysqli_num_rows($res);
+                                $count = mysqli_num_rows($res);
 
-                            if ($count > 0) {
-                                while ($row = mysqli_fetch_assoc($res)) {
+                                if ($count > 0) {
+                                    while ($row = mysqli_fetch_assoc($res)) {
 
-                                    $PRSN_NAME = $row['PRSN_NAME'];
-                                    $PRSN_EMAIL = $row['PRSN_EMAIL'];
+                                        $PRSN_NAME = $row['PRSN_NAME'];
+                                        $PRSN_EMAIL = $row['PRSN_EMAIL'];
 
-                            ?>
-                                    <div class="block">
-                                        <div class="image-group">
-                                            <img src="https://static-00.iconduck.com/assets.00/profile-circle-icon-2048x2048-cqe5466q.png" alt="">
-                                            <p><?php echo $PRSN_NAME?></p>
-                                        </div>
-
-                                        <div class="table-wrapper">
+                                ?>
+                                        <div class="block">
+                                            <div class="image-group">
+                                                <img src="https://static-00.iconduck.com/assets.00/profile-circle-icon-2048x2048-cqe5466q.png" alt="">
+                                                <p><?php echo $PRSN_NAME?></p>
+                                            </div>
                                             <table>
                                                 <tr>
                                                     <th>Email</th>
@@ -141,18 +140,19 @@ if (isset($_POST['submit'])) {
                                                     <td><input type="password" value="admin" readonly></td>
                                                 </tr>
                                             </table>
-                                        </div>
-                                <?php
+                                    <?php
+                                    }
                                 }
-                            }
-                                ?>
+                                    ?>
 
-                                    </div>
-                                    <a href="<?php echo SITEURL; ?>admin-edit-profile.php" class="big-btn">Edit</a>
-                        </form>
+                                        </div>
+                                        <a href="<?php echo SITEURL; ?>admin-edit-profile.php" class="big-btn">Edit</a>
+                            </form>
+                        </section>
                     </section>
-                </section>
+                </div>
             </div>
+            
         </section>
     </main>
 </body>

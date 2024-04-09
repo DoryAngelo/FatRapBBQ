@@ -30,7 +30,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
-                    <h1>Fat Rap's Barbeque's Online Store</h1>
+                    <h1>Fat Rap's Barbeque</h1>
                     <p>ADMIN</p>
                 </div>
             </div>
@@ -59,77 +59,80 @@ $PRSN_ID = $_SESSION['prsn_id'];
     </header>
     <main>
         <section class="section">
-            <div class="section-heading">
-                <h2>New Registering Wholesale Users</h2>
-                <div class="inline">
-                    <p>Filter by date:</p>
-                    <input type="date">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>New Registering Wholesale Users</h2>
+                    <div class="inline">
+                        <p>Filter by date:</p>
+                        <input type="date">
+                    </div>
                 </div>
-            </div>
-            <section class="section-body">
-                <section class="main-section table-wrapper">
-                    <table class="alternating">
-                        <tr>
-                            <th class="header">Date and Time</th>
-                            <th class="header">Application #</th>
-                            <th class="header">Name</th>
-                            <th class="header">Email</th>
-                            <th class="header">Confirmed</th>
-                        </tr>
-                        <?php
-                        $sql = "SELECT * FROM person, wholesaler WHERE wholesaler.PRSN_ID = person.PRSN_ID AND PRSN_ROLE = 'Wholesaler' AND WHL_STATUS = 'New' ";
-                        $res = mysqli_query($conn, $sql);
-                        $count = mysqli_num_rows($res);
+                <section class="with-side-menu">
+                    <section class="main-section table-wrapper">
+                        <table class="alternating">
+                            <tr>
+                                <th class="header">Date and Time</th>
+                                <th class="header">Application #</th>
+                                <th class="header">Name</th>
+                                <th class="header">Email</th>
+                                <th class="header">Confirmed</th>
+                            </tr>
+                            <?php
+                            $sql = "SELECT * FROM person, wholesaler WHERE wholesaler.PRSN_ID = person.PRSN_ID AND PRSN_ROLE = 'Wholesaler' AND WHL_STATUS = 'New' ";
+                            $res = mysqli_query($conn, $sql);
+                            $count = mysqli_num_rows($res);
 
-                        if ($count > 0) {
-                            while ($row = mysqli_fetch_assoc($res)) {
-                                $DATE_OF_REGISTRATION = $row['DATE_OF_REGISTRATION'];
-                                $WHL_ID = $row['WHL_ID'];
-                                $PRSN_NAME = $row['PRSN_NAME'];
-                                $PRSN_EMAIL = $row['PRSN_EMAIL'];
-                                $WHL_IMAGE = $row['WHL_IMAGE'];
-                        ?>
+                            if ($count > 0) {
+                                while ($row = mysqli_fetch_assoc($res)) {
+                                    $DATE_OF_REGISTRATION = $row['DATE_OF_REGISTRATION'];
+                                    $WHL_ID = $row['WHL_ID'];
+                                    $PRSN_NAME = $row['PRSN_NAME'];
+                                    $PRSN_EMAIL = $row['PRSN_EMAIL'];
+                                    $WHL_IMAGE = $row['WHL_IMAGE'];
+                            ?>
+                                    <tr>
+                                        <td data-cell="Date and Time"><?php echo $DATE_OF_REGISTRATION ?></td>
+                                        <td data-cell="Application #"><a class="link" href="<?php echo SITEURL ?>admin-application-details.php?WHL_ID=<?php echo $WHL_ID; ?>&PRSN_NAME=<?php echo $PRSN_NAME ?>&PRSN_EMAIL=<?php echo $PRSN_EMAIL ?>&WHL_IMAGE=<?php echo $WHL_IMAGE ?>"><?php echo $WHL_ID ?></a></td>
+                                        <td data-cell="Name"><?php echo $PRSN_NAME ?></td>
+                                        <td data-cell="Email"><?php echo $PRSN_EMAIL ?></td>
+                                        <td data-cell="Confimed">
+                                            <div class="btn-wrapper">
+                                                <!-- <form method="post"> -->
+                                                <button name="accept" class="btn-check"><i class='bx bxs-check-circle js-accept' data-whl-id="<?php echo $WHL_ID; ?>"></i></button>
+                                                <button name="reject" class="btn-cross"><i class='bx bxs-x-circle js-reject' data-whl-id="<?php echo $WHL_ID; ?>"></i></button>
+                                                <!-- </form> -->
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php
+                                }
+                            } else {
+                                ?>
                                 <tr>
-                                    <td data-cell="Date and Time"><?php echo $DATE_OF_REGISTRATION ?></td>
-                                    <td data-cell="Application #"><a class="link" href="<?php echo SITEURL ?>admin-application-details.php?WHL_ID=<?php echo $WHL_ID; ?>&PRSN_NAME=<?php echo $PRSN_NAME ?>&PRSN_EMAIL=<?php echo $PRSN_EMAIL ?>&WHL_IMAGE=<?php echo $WHL_IMAGE ?>"><?php echo $WHL_ID ?></a></td>
-                                    <td data-cell="Name"><?php echo $PRSN_NAME ?></td>
-                                    <td data-cell="Email"><?php echo $PRSN_EMAIL ?></td>
-                                    <td data-cell="Confimed">
-                                        <div class="btn-wrapper">
-                                            <!-- <form method="post"> -->
-                                            <button name="accept" class="btn-check"><i class='bx bxs-check-circle js-accept' data-whl-id="<?php echo $WHL_ID; ?>"></i></button>
-                                            <button name="reject" class="btn-cross"><i class='bx bxs-x-circle js-reject' data-whl-id="<?php echo $WHL_ID; ?>"></i></button>
-                                            <!-- </form> -->
-                                        </div>
-                                    </td>
+                                    <td colspan="5" class="error">Empty</td>
                                 </tr>
                             <?php
-                            }
-                        } else {
-                            ?>
-                            <tr>
-                                <td colspan="5" class="error">Empty</td>
-                            </tr>
-                        <?php
 
-                        }
-                        ?>
-                    </table>
-                </section>
-                <section class="side-menu">
-                    <div class="group inventory">
-                        <h3>Wholesale Users</h3>
-                        <div class="position-notif">
-                            <a href="<?php echo SITEURL; ?>admin-accepted-wholesale-users.php" class="view">Accepted</a>
-                            <p class="notif">+99</p>
+                            }
+                            ?>
+                        </table>
+                    </section>
+                    <section class="side-menu">
+                        <div class="group inventory">
+                            <h3>Wholesale Users</h3>
+                            <div class="position-notif">
+                                <a href="<?php echo SITEURL; ?>admin-accepted-wholesale-users.php" class="view">Accepted</a>
+                                <p class="notif">+99</p>
+                            </div>
+                            <div class="position-notif">
+                                <a href="<?php echo SITEURL; ?>admin-new-wholesale-users.php" class="view">New</a>
+                                <p class="notif">+99</p>
+                            </div>
                         </div>
-                        <div class="position-notif">
-                            <a href="<?php echo SITEURL; ?>admin-new-wholesale-users.php" class="view">New</a>
-                            <p class="notif">+99</p>
-                        </div>
-                    </div>
+                    </section>
                 </section>
-            </section>
+            </div>
+            
         </section>
     </main>
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
