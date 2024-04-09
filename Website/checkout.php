@@ -8,6 +8,116 @@ if (isset($_SESSION['prsn_id'])) {
     $GUEST_ID = $_SESSION['guest_id'];
 }
 
+if (isset($_SESSION['prsn_id'])) {
+    $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM IN_ORDER WHERE PRSN_ID = $PRSN_ID";
+} else {
+    $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM IN_ORDER WHERE GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
+}
+$res2 = mysqli_query($conn, $sql2);
+$row2 = mysqli_fetch_assoc($res2);
+$total = $row2['Total'];
+
+if (isset($_POST['submit'])) {
+    if (isset($_SESSION['prsn_id'])) {
+        $CUS_ID = $PRSN_ID;
+    }
+
+    $CUS_FNAME = $_POST['first-name'];
+    $CUS_LNAME = $_POST['last-name'];
+    $CUS_NAME = $CUS_FNAME . " " . $CUS_LNAME;
+
+    $CUS_NUMBER = $_POST['contact-number'];
+    $CUS_EMAIL = $_POST['email'];
+    $PLACED_ORDER_DATE = date("Y-m-d h:i:sa");
+    $PLACED_ORDER_TOTAL = $total;
+
+    $Region = $_POST['region'];
+    $Province = $_POST['province'];
+    $City = $_POST['city'];
+    $Barangay = $_POST['barangay'];
+    $Street = $_POST['street'];
+    $DELIVERY_ADDRESS = $Region . ", " . $Province . ", " . $City . ", " . $Barangay . ", " . $Street;
+
+
+    $date = $_POST['date'];
+    $time = $_POST['time'];
+    $DELIVERY_DATE = $date . " " . $time;
+    $PLACED_ORDER_STATUS = "Placed";
+    $random = random_bytes(16);
+    $PLACED_ORDER_TRACKER = bin2hex($random);
+
+    $select = " SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'";
+
+    $result = mysqli_query($conn, $select);
+
+    while (mysqli_num_rows($result) > 0) {
+        $random = random_bytes(16);
+        $PLACED_ORDER_TRACKER = bin2hex($random);
+        $select = "SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'";
+        $result = mysqli_query($conn, $select);
+    }
+
+    if (isset($_SESSION['prsn_id'])) {
+        $sql3 = "INSERT INTO placed_order SET
+        PRSN_ID = '$CUS_ID',
+        CUS_NAME = '$CUS_NAME',
+        CUS_NUMBER = '$CUS_NUMBER',
+        CUS_EMAIL= '$CUS_EMAIL',
+        PLACED_ORDER_DATE = '$PLACED_ORDER_DATE',
+        PLACED_ORDER_TOTAL = $PLACED_ORDER_TOTAL,
+        DELIVERY_ADDRESS = '$DELIVERY_ADDRESS',
+        DELIVERY_DATE = '$DELIVERY_DATE',
+        PLACED_ORDER_STATUS = '$PLACED_ORDER_STATUS',
+        PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'
+        ";
+    } else {
+        $sql3 = "INSERT INTO placed_order SET
+        CUS_NAME = '$CUS_NAME',
+        CUS_NUMBER = '$CUS_NUMBER',
+        CUS_EMAIL= '$CUS_EMAIL',
+        PLACED_ORDER_DATE = '$PLACED_ORDER_DATE',
+        PLACED_ORDER_TOTAL = $PLACED_ORDER_TOTAL,
+        DELIVERY_ADDRESS = '$DELIVERY_ADDRESS',
+        DELIVERY_DATE = '$DELIVERY_DATE',
+        PLACED_ORDER_STATUS = '$PLACED_ORDER_STATUS',
+        PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER',
+        GUEST_ORDER_IDENTIFIER = '$GUEST_ID'
+        ";
+    }
+
+
+    $res3 = mysqli_query($conn, $sql3);
+
+    if ($res3 == true) {
+        if (isset($_SESSION['prsn_id'])) {
+            $sql4 = "SELECT PLACED_ORDER_ID FROM placed_order WHERE PRSN_ID = $CUS_ID AND PLACED_ORDER_STATUS = 'Placed'";
+        } else {
+            $sql4 = "SELECT PLACED_ORDER_ID FROM placed_order WHERE  GUEST_ORDER_IDENTIFIER = '$GUEST_ID' AND PLACED_ORDER_STATUS = 'Placed'";
+        }
+
+        $res4 = mysqli_query($conn, $sql4);
+        $row5 = mysqli_fetch_array($res4);
+        $PLACED_ORDER_ID = $row5['PLACED_ORDER_ID'];
+
+        if (isset($_SESSION['prsn_id'])) {
+            $sql5 = "UPDATE in_order SET
+            PLACED_ORDER_ID = $PLACED_ORDER_ID
+            WHERE PRSN_ID = $CUS_ID AND IN_ORDER_STATUS = 'Ordered' 
+            ";
+        } else {
+            $sql5 = "UPDATE in_order SET
+            PLACED_ORDER_ID = $PLACED_ORDER_ID
+            WHERE GUEST_ORDER_IDENTIFIER = '$GUEST_ID' AND IN_ORDER_STATUS = 'Ordered'
+            ";
+        }
+
+        $res5 = mysqli_query($conn, $sql5);
+        if ($res5 == true) {
+            $_SESSION['PLACED_ORDER_TRACKER'] =  $PLACED_ORDER_TRACKER;
+            header('location:checkout-success.php');
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -42,7 +152,7 @@ if (isset($_SESSION['prsn_id'])) {
             <label class='menu-button-container' for="menu-toggle">
                 <div class='menu-button'></div>
             </label>
-            <ul class = 'menubar'>
+            <ul class='menubar'>
                 <li><a href="<?php echo SITEURL; ?>cus-home-page.php">Home</a></li>
                 <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
                 <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
@@ -119,14 +229,6 @@ if (isset($_SESSION['prsn_id'])) {
                                             <?php
                                                 }
                                             }
-                                            if (isset($_SESSION['prsn_id'])) {
-                                                $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM IN_ORDER WHERE PRSN_ID = $PRSN_ID";
-                                            } else {
-                                                $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM IN_ORDER WHERE GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
-                                            }
-                                            $res2 = mysqli_query($conn, $sql2);
-                                            $row2 = mysqli_fetch_assoc($res2);
-                                            $total = $row2['Total'];
                                             ?>
                                         </tbody>
                                     </table>
@@ -279,103 +381,3 @@ if (isset($_SESSION['prsn_id'])) {
 </body>
 
 </html>
-
-<?php
-if (isset($_POST['submit'])) {
-    if (isset($_SESSION['prsn_id'])) {
-        $CUS_ID = $PRSN_ID;
-    }
-
-    $CUS_FNAME = $_POST['first-name'];
-    $CUS_LNAME = $_POST['last-name'];
-    $CUS_NAME = $CUS_FNAME . " " . $CUS_LNAME;
-
-    $CUS_NUMBER = $_POST['contact-number'];
-    $CUS_EMAIL = $_POST['email'];
-    $PLACED_ORDER_DATE = date("Y-m-d h:i:sa");
-    $PLACED_ORDER_TOTAL = $total;
-
-    $Region = $_POST['region'];
-    $Province = $_POST['province'];
-    $City = $_POST['city'];
-    $Barangay = $_POST['barangay'];
-    $Street = $_POST['street'];
-    $DELIVERY_ADDRESS = $Region . ", " . $Province . ", " . $City . ", " . $Barangay . ", " . $Street;
-
-
-    $date = $_POST['date'];
-    $time = $_POST['time'];
-    $DELIVERY_DATE = $date . " " . $time;
-    $PLACED_ORDER_STATUS = "Placed";
-    $random = random_bytes(16);
-    $PLACED_ORDER_TRACKER = bin2hex($random);
-
-    $select = " SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'";
-
-    $result = mysqli_query($conn, $select);
-
-    while (mysqli_num_rows($result) > 0) {
-        $random = random_bytes(16);
-        $PLACED_ORDER_TRACKER = bin2hex($random);
-        $select = "SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'";
-        $result = mysqli_query($conn, $select);
-    }
-
-    if (isset($_SESSION['prsn_id'])) {
-        $sql3 = "INSERT INTO placed_order SET
-        PRSN_ID = '$CUS_ID',
-        CUS_NAME = '$CUS_NAME',
-        CUS_NUMBER = '$CUS_NUMBER',
-        CUS_EMAIL= '$CUS_EMAIL',
-        PLACED_ORDER_DATE = '$PLACED_ORDER_DATE',
-        PLACED_ORDER_TOTAL = $PLACED_ORDER_TOTAL,
-        DELIVERY_ADDRESS = '$DELIVERY_ADDRESS',
-        DELIVERY_DATE = '$DELIVERY_DATE',
-        PLACED_ORDER_STATUS = '$PLACED_ORDER_STATUS',
-        PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'
-        ";
-    } else {
-        $sql3 = "INSERT INTO placed_order SET
-        CUS_NAME = '$CUS_NAME',
-        CUS_NUMBER = '$CUS_NUMBER',
-        CUS_EMAIL= '$CUS_EMAIL',
-        PLACED_ORDER_DATE = '$PLACED_ORDER_DATE',
-        PLACED_ORDER_TOTAL = $PLACED_ORDER_TOTAL,
-        DELIVERY_ADDRESS = '$DELIVERY_ADDRESS',
-        DELIVERY_DATE = '$DELIVERY_DATE',
-        PLACED_ORDER_STATUS = '$PLACED_ORDER_STATUS',
-        PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER',
-        GUEST_ORDER_IDENTIFIER = '$GUEST_ID'
-        ";
-    }
-
-
-    $res3 = mysqli_query($conn, $sql3);
-
-    if ($res3 == true) {
-        if (isset($_SESSION['prsn_id'])) {
-            $sql4 = "SELECT PLACED_ORDER_ID FROM placed_order WHERE PRSN_ID = $CUS_ID AND PLACED_ORDER_STATUS = 'Placed'";
-        } else {
-            $sql4 = "SELECT PLACED_ORDER_ID FROM placed_order WHERE  GUEST_ORDER_IDENTIFIER = '$GUEST_ID' AND PLACED_ORDER_STATUS = 'Placed'";
-        }
-
-        $res4 = mysqli_query($conn, $sql4);
-        $row5 = mysqli_fetch_array($res4);
-        $PLACED_ORDER_ID = $row5['PLACED_ORDER_ID'];
-
-        if (isset($_SESSION['prsn_id'])) {
-            $sql5 = "UPDATE in_order SET
-            PLACED_ORDER_ID = $PLACED_ORDER_ID
-            WHERE PRSN_ID = $CUS_ID AND IN_ORDER_STATUS = 'Ordered' 
-            ";
-        } else {
-            $sql5 = "UPDATE in_order SET
-            PLACED_ORDER_ID = $PLACED_ORDER_ID
-            WHERE GUEST_ORDER_IDENTIFIER = '$GUEST_ID' AND IN_ORDER_STATUS = 'Ordered'
-            ";
-        }
-
-        $res5 = mysqli_query($conn, $sql5);
-    }
-}
-?>
