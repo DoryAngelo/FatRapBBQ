@@ -62,7 +62,7 @@ if (isset($_POST['reject'])) {
                     if (isset($_SESSION['prsn_id'])) {
                     ?>
                         <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                        <li>
+                    </li>
                         <?php
                     } else {
                         ?>

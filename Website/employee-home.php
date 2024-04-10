@@ -88,7 +88,7 @@ $countCa = mysqli_num_rows($resCa);
                         <?php
                             if(isset($_SESSION['prsn_id'])){
                         ?>  
-                            <li><a href="<?php echo SITEURL ;?>logout.php">Logout</a><li>
+                            <li><a href="<?php echo SITEURL ;?>logout.php">Logout</a></li>
                         <?php
                             } 
                             else 
