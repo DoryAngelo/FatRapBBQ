@@ -46,6 +46,8 @@ if (isset($_POST['submit'])) {
     $random = random_bytes(16);
     $PLACED_ORDER_TRACKER = bin2hex($random);
 
+    $PLACED_ORDER_NOTE = $_POST['note'];
+
     $select = " SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'";
 
     $result = mysqli_query($conn, $select);
@@ -68,7 +70,8 @@ if (isset($_POST['submit'])) {
         DELIVERY_ADDRESS = '$DELIVERY_ADDRESS',
         DELIVERY_DATE = '$DELIVERY_DATE',
         PLACED_ORDER_STATUS = '$PLACED_ORDER_STATUS',
-        PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'
+        PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER',
+        PLACED_ORDER_NOTE = '$PLACED_ORDER_NOTE'
         ";
     } else {
         $sql3 = "INSERT INTO placed_order SET
@@ -81,6 +84,7 @@ if (isset($_POST['submit'])) {
         DELIVERY_DATE = '$DELIVERY_DATE',
         PLACED_ORDER_STATUS = '$PLACED_ORDER_STATUS',
         PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER',
+        PLACED_ORDER_NOTE = '$PLACED_ORDER_NOTE',
         GUEST_ORDER_IDENTIFIER = '$GUEST_ID'
         ";
     }
@@ -320,6 +324,15 @@ if (isset($_POST['submit'])) {
                             <h3 class="block-heading">Time Slot</h2>
                                 <div class="block-body">
                                     <input type="time" name="time">
+                                </div>
+                        </div>
+                    </section>
+                    <!-- customer note block-->
+                    <section class="wrapper red-theme">
+                        <div class="block left-side-dvd red-theme">
+                            <h3 class="block-heading">Note</h2>
+                                <div class="block-body radio">
+                                    <input type="textbox" name="note">
                                 </div>
                         </div>
                     </section>

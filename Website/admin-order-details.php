@@ -36,26 +36,26 @@ $PLACED_ORDER_ID = $_GET['PLACED_ORDER_ID'];
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
-                    <label class='menu-button-container' for="menu-toggle">
-                        <div class='menu-button'></div>
-                    </label>
-                <ul class = 'menubar'>
-                    <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
+            <label class='menu-button-container' for="menu-toggle">
+                <div class='menu-button'></div>
+            </label>
+            <ul class='menubar'>
+                <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
+                <?php
+                if (isset($_SESSION['prsn_id'])) {
+                ?>
+                    <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
+                    <li>
                     <?php
-                    if (isset($_SESSION['prsn_id'])) {
+                } else {
                     ?>
-                        <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                        <li>
-                        <?php
-                    } else {
-                        ?>
-                        <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                    <?php
-                    }
-                    ?>
-                </ul>
+                    <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
+                <?php
+                }
+                ?>
+            </ul>
         </div>
     </header>
     <main>
@@ -77,6 +77,7 @@ $PLACED_ORDER_ID = $_GET['PLACED_ORDER_ID'];
                             $CUS_EMAIL = $row['CUS_EMAIL'];
                             $PLACED_ORDER_DATE = $row['PLACED_ORDER_DATE'];
                             $PLACED_ORDER_TOTAL = $row['PLACED_ORDER_TOTAL'];
+                            $PLACED_ORDER_NOTE = $row['PLACED_ORDER_NOTE'];
                             $DELIVERY_ADDRESS = $row['DELIVERY_ADDRESS'];
                             $DELIVERY_DATE = $row['DELIVERY_DATE'];
                             $PLACED_ORDER_STATUS = $row['PLACED_ORDER_STATUS'];
@@ -169,6 +170,12 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
                                         ?>
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="delivery-grp">
+                                <div class="text-grp">
+                                    <h3>Note:</h3>
+                                    <p><?php echo $PLACED_ORDER_NOTE ?></p>
+                                </div>
                             </div>
                             <div class="payment">
                                 <h3>Total Payment:</h3>
