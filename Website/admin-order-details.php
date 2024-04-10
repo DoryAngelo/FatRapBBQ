@@ -47,28 +47,15 @@ $PLACED_ORDER_ID = $_GET['PLACED_ORDER_ID'];
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                    <li>
-                    <?php
+                    </li>
+                <?php
                 } else {
-                    ?>
-<<<<<<< HEAD
+                ?>
                     <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
                 <?php
                 }
                 ?>
             </ul>
-=======
-                        <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                    </li>
-                        <?php
-                    } else {
-                        ?>
-                        <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                    <?php
-                    }
-                    ?>
-                </ul>
->>>>>>> 7195f9b99eaddb9124582b61d0ce221ca3986c50
         </div>
     </header>
     <main>

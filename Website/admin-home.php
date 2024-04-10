@@ -59,6 +59,15 @@ $resCa = mysqli_query($conn, $selectCa);
 $countCa = mysqli_num_rows($resCa);
 
 
+$selectW = "SELECT * 
+FROM wholesaler
+WHERE WHL_STATUS = 'New'";
+
+$resW = mysqli_query($conn, $selectW);
+
+$countW = mysqli_num_rows($resW);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -170,7 +179,7 @@ $countCa = mysqli_num_rows($resCa);
                             <h3>Wholesale Users</h3>
                             <div class="position-notif">
                                 <a href="<?php echo SITEURL; ?>admin-new-wholesale-users.php" class="view">New</a>
-                                <p class="notif">+99</p>
+                                <p class="notif"><?php echo $countW?></p>
                             </div>
                         </div>
                         <div class="group">
