@@ -41,21 +41,25 @@ body{
     font-weight: 500;
     min-height: 100vh;
     color: #3A3F42;
+    background-color: #FBFEFF;
 }
 
 main {
-    padding-top: 130px;
-    height: 100vh;
+    padding-top: 8rem;
 }
 
 .section {
-    width: 80%;
-    margin: auto;
-    margin-top: 2.5rem;
-    margin-bottom: 7rem;
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    max-width: 1200px;
+    width: 90%;
+    margin: clamp(1rem, 5vw, 3rem) auto;
+    margin-bottom: 5rem;
 }
 
 .section-heading {
@@ -106,13 +110,18 @@ main {
     margin-left: 1.5rem;
 }
 
-.section-body {
-    display: flex;
-    gap: 4.5rem;
+.with-side-menu{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 2.5rem;
 }
 
 .main-section {
-    width: 100%;
+    min-width: 5rem;
+}
+
+#orders-page .main-section {
+    /* overflow-x: scroll; */
 }
 
 .column {
@@ -139,10 +148,13 @@ p.bold-font, .app-det-tbl .bold-font {
 }
 
 .table-wrapper {
+    width: 100%;
     background-color: var(--light-blue);
     border-radius: 1rem;
     padding: 1px;
     height: max-content;
+    overflow-x: scroll;
+    flex: 1;
 }
 
 table {
@@ -192,6 +204,7 @@ table th.header:last-of-type {
 
 td,th {
     text-align: left;
+    text-wrap: nowrap;
 }
 
 td {
@@ -246,26 +259,22 @@ table button {
     width: 60%;
 }
 .grid-container {
-    width: 95%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 2rem;
 }
 
 .grid-container .box {
-    width: 100%;
-    height: 100%;
+    height: 200px;
     background-color: var(--light-blue);
     border-radius: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 2rem;
-    padding: 1.25rem;
+    text-decoration: none;
+    text-align: center;
+     display: flex;
+    justify-content: center;
+    align-items: center; 
     position: relative;
     color: var(--text);
-    text-decoration: none;
     /* box-shadow: var(--db-highlight-blue) 0px 3px 4px 0px; pick a better color db-higlight0blue as shadow is good for lightblue but not for the same color */
 }
 
@@ -279,12 +288,14 @@ table button {
 }
 
 .grid-container .box p {
+    position: absolute;
     font-weight: bold;
     font-size: 0.9rem;
+    top: 1rem;
 }
 
 .grid-container .box h1 {
-    font-size: 2.7rem;
+    font-size: 3rem;
 }
 
 p.notif {
@@ -300,7 +311,6 @@ p.notif {
 }
 
 .side-menu {
-    width: 30%;
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -308,13 +318,13 @@ p.notif {
 
 .side-menu h3 {
     font-size: 1.25rem;
+    margin-bottom: 0.6rem;
 }
 
 .side-menu .inventory-box, .view, .big-btn{
     display: block;
     background-color: var(--sidemenu-blue);
     padding: 0.9rem 1.1rem;
-    margin-top: 0.6rem;
     font-size: 1rem;
     color: var(--sidemenu-blue-text);
 }
@@ -359,15 +369,22 @@ a.big-font {
     border-radius: 2rem;
 }
 
-.side-menu .position-notif {
+.position-notif {
+    width: 100%;
+    height: max-content;
+    border: 1px solid pink;
+    display: flex;
+    align-items: center;
     position: relative;
+}
+
+.position-notif .view {
+    width: 100%;
     z-index: 0;
 }
 
-.side-menu p.notif {
-    position: absolute;
-    margin-top: -2.25rem;
-    left: 14.25rem;
+.position-notif .notif {
+    margin-left: -20%;
     z-index: 1;
 }
 
@@ -398,7 +415,8 @@ button.reject:hover {
 
 .big-btn {
     border-radius: 1.2rem;
-    width: 25%;
+    width: max-content;
+    min-width: 17rem;
     margin: 0 auto;
     font-weight: bold;
     font-size: 1.25rem;
@@ -462,6 +480,10 @@ form input {
     background: #BAD6EF;
     font-size: 1rem;
     margin-top: 8px;
+}
+
+input.image {
+    width: 100%;
 }
 
 .form-field-input p {
@@ -800,7 +822,8 @@ span.warning i {
 }
 
 .add-edit-menu .section-wrapper {
-    width: 50%;
+    /* width: 50%; */
+    max-width: 600px;
     margin: 0 auto;
 }
 
@@ -851,22 +874,24 @@ span.warning i {
     background-color: var(--light-blue);
 }
 
-/* page button style */
+/* for the page button of the table */
 .parent {
     position: relative;
+    padding-bottom: 2.5rem;
 }
+
 .buttons {
+    position: absolute;
+    right: 0;
+    bottom: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
     padding: 0 5px;
-    position: absolute;
-    right: 0;
     background-color: #ECEFEF;
     border-radius: 3px;
     color: var(--text);
-    margin-top: 1.5rem;
 }
 
 .buttons p{
@@ -913,4 +938,85 @@ span.warning i {
 
 .red-text {
     color: red;
+}
+
+.layout {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+.layout section {
+    width: 100%;
+}
+
+@media only screen and (width <= 1060px) {
+    #orders-page .with-side-menu {
+        grid-template-columns: 1fr;
+    } 
+
+    #orders-page .side-menu {
+        max-width: 20rem;
+    }
+}
+
+@media only screen and (width <= 860px) {
+    main {
+        padding-top: 4rem;
+    }
+
+    .container {
+        height: 90%;
+        margin-bottom: 10%;
+    }
+}
+
+@media only screen and (width <= 690px) {
+    .grid-container {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .grid-container .box {
+        height: 180px;
+    }
+    
+    #dashboard .with-side-menu {
+        grid-template-columns: 1fr;
+    } 
+
+    /* #orders-page .side-menu {
+        min-width: 100%;
+    } */
+    
+    .grid-container {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .layout {
+        flex-direction: column;
+    }
+    
+    .section-heading h2 {
+        font-size: clamp(1.25rem, 5vw, 2rem);
+    }
+
+    .back a {
+        margin-right: clamp(1vw, 4vw, 2rem);
+        font-size: 0.8rem;
+    }
+
+    td {
+        padding: clamp(5px,0.8vw,0.8rem) 1rem;
+    }
+
+    table {
+        font-size: 0.8rem;
+    }
+}
+
+@media only screen and (width <= 500px) {
+    #orders-page .side-menu {
+        min-width: 100%;
+    }
 }

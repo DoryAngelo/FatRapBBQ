@@ -61,7 +61,7 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                    <li>
+                </li>
                     <?php
                 } else {
                     ?>

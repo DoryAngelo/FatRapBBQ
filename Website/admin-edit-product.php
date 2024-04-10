@@ -32,7 +32,7 @@ $CTGY_ID = $_GET['CTGY_ID'];
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
-                    <h1>Fat Rap's Barbeque's Online Store</h1>
+                    <h1>Fat Rap's Barbeque</h1>
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
@@ -47,7 +47,7 @@ $CTGY_ID = $_GET['CTGY_ID'];
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                    <li>
+                </li>
                     <?php
                 } else {
                     ?>
@@ -60,116 +60,112 @@ $CTGY_ID = $_GET['CTGY_ID'];
     </header>
     <main>
         <section class="section add-edit-menu">
-            <div class="section-wrapper">
-                <div class="section-heading row back">
-                    <h2>Edit Menu Item</h2>
-                    <a href="<?php echo SITEURL; ?>admin-edit-menu.php">Back</a>
-                </div>
-                <?php
+            <div class="container">
+                <div class="section-wrapper">
+                    <div class="section-heading row back">
+                        <h2>Edit Menu Item</h2>
+                        <a href="<?php echo SITEURL; ?>admin-edit-menu.php">Back</a>
+                    </div>
+                    <?php
 
-                $sql = "SELECT * 
-                FROM food
-                JOIN category ON food.ctgy_id = category.ctgy_id WHERE food.food_id = '$FOOD_ID'";
+                    $sql = "SELECT * 
+                    FROM food
+                    JOIN category ON food.ctgy_id = category.ctgy_id WHERE food.food_id = '$FOOD_ID'";
 
-                $res = mysqli_query($conn, $sql);
-                $count = mysqli_num_rows($res);
-                if ($count > 0) {
-                    while ($row = mysqli_fetch_assoc($res)) {
-                        $FOOD_ID = $row['FOOD_ID'];
-                        $CTGY_ID = $row['CTGY_ID'];
-                        $FOOD_NAME = $row['FOOD_NAME'];
-                        $FOOD_DESC = $row['FOOD_DESC'];
-                        $FOOD_PRICE = $row['FOOD_PRICE'];
-                        $FOOD_STOCK = $row['FOOD_STOCK'];
-                        $FOOD_IMAGE = $row['FOOD_IMG'];
-                        $CTGY_NAME = $row['CTGY_NAME'];
-                        $FOOD_ACTIVE = $row['FOOD_ACTIVE'];
-                ?>
+                    $res = mysqli_query($conn, $sql);
+                    $count = mysqli_num_rows($res);
+                    if ($count > 0) {
+                        while ($row = mysqli_fetch_assoc($res)) {
+                            $FOOD_ID = $row['FOOD_ID'];
+                            $CTGY_ID = $row['CTGY_ID'];
+                            $FOOD_NAME = $row['FOOD_NAME'];
+                            $FOOD_DESC = $row['FOOD_DESC'];
+                            $FOOD_PRICE = $row['FOOD_PRICE'];
+                            $FOOD_STOCK = $row['FOOD_STOCK'];
+                            $FOOD_IMAGE = $row['FOOD_IMG'];
+                            $CTGY_NAME = $row['CTGY_NAME'];
+                            $FOOD_ACTIVE = $row['FOOD_ACTIVE'];
+                    ?>
 
-                        <section class="section-body">
-                            <section class="main-section column">
-                                <form action="#" class="column" method="post" enctype="multipart/form-data">
-                                    <div class="block">
-                                        <div class="form-field">
-                                            <div class="form-field-input">
-                                                <label for="product-name">Product Name</label>
-                                                <input value="<?php echo $FOOD_NAME ?>" class="js-user" type="text" id="product-name" name="product-name" required pattern="[a-zA-Z ]{1,20}$"><!-- 20 characters only, letter only, with spaces -->
-                                            </div>
-                                            <div class="form-field-input">
-                                                <label for="product-name">Product Description</label>
-                                                <input value="<?php echo $FOOD_DESC ?>" class="js-user" type="text" id="product-name" name="product-desc" required pattern="[a-zA-Z ]{1,20}$"><!-- 20 characters only, letter only, with spaces -->
-                                            </div>
-                                            <div class="form-field-input">
-                                                <label for="price">Price ₱ </label>
-                                                <input value="<?php echo $FOOD_PRICE ?>" class="js-user" type="number" id="price" name="price" required><!-- numbers only, starts with 09, must have 11-digits -->
-                                            </div>
-                                            <div class="form-field-input">
-                                                <label for="price">Stock </label>
-                                                <input value="<?php echo $FOOD_STOCK ?>" class="js-user" type="number" id="price" name="stock" required><!-- numbers only, starts with 09, must have 11-digits -->
-                                            </div>
-                                            <div class="form-field-input">
-                                                <label for="category">Type</label>
-                                                <select class="dropdown" name="type" id="type" required>
-                                                    <option value="Customer">Customer</option>
-                                                    <option value="Wholesaler">Wholesaler</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-field-input">
-                                                <label for="category">Category</label>
-                                                <select class="dropdown" name="category" id="category" required>
-                                                    <?php
-                                                    $sql = "SELECT * FROM category WHERE CTGY_ACTIVE='Yes'";
-                                                    $res = mysqli_query($conn, $sql);
-                                                    $count = mysqli_num_rows($res);
-                                                    if ($count > 0) {
-                                                        while ($row = mysqli_fetch_assoc($res)) {
-                                                            //get the details of category
-                                                            $CTGY_ID = $row['CTGY_ID'];
-                                                            $CTGY_NAME = $row['CTGY_NAME'];
-                                                    ?>
-                                                            <option value="<?php echo $CTGY_ID; ?>"><?php echo $CTGY_NAME; ?></option>
+                            <section class="section-body">
+                                <section class="main-section column">
+                                    <form action="#" class="column" method="post" enctype="multipart/form-data">
+                                        <div class="block">
+                                            <div class="form-field">
+                                                <div class="form-field-input">
+                                                    <label for="product-name">Product Name</label>
+                                                    <input value="<?php echo $FOOD_NAME ?>" class="js-user" type="text" id="product-name" name="product-name" required pattern="[a-zA-Z ]{1,20}$"><!-- 20 characters only, letter only, with spaces -->
+                                                </div>
+                                                <div class="form-field-input">
+                                                    <label for="product-name">Product Description</label>
+                                                    <input value="<?php echo $FOOD_DESC ?>" class="js-user" type="text" id="product-name" name="product-desc" required pattern="[a-zA-Z ]{1,20}$"><!-- 20 characters only, letter only, with spaces -->
+                                                </div>
+                                                <div class="form-field-input">
+                                                    <label for="price">Price ₱ </label>
+                                                    <input value="<?php echo $FOOD_PRICE ?>" class="js-user" type="number" id="price" name="price" required><!-- numbers only, starts with 09, must have 11-digits -->
+                                                </div>
+                                                <div class="form-field-input">
+                                                    <label for="price">Stock </label>
+                                                    <input value="<?php echo $FOOD_STOCK ?>" class="js-user" type="number" id="price" name="stock" required><!-- numbers only, starts with 09, must have 11-digits -->
+                                                </div>
+                                                 <div class="form-field-input">
+                                                    <label for="category">Category</label>
+                                                    <select class="dropdown" name="category" id="category" required>
+                                                        <?php
+                                                        $sql = "SELECT * FROM category WHERE CTGY_ACTIVE='Yes'";
+                                                        $res = mysqli_query($conn, $sql);
+                                                        $count = mysqli_num_rows($res);
+                                                        if ($count > 0) {
+                                                            while ($row = mysqli_fetch_assoc($res)) {
+                                                                //get the details of category
+                                                                $CTGY_ID = $row['CTGY_ID'];
+                                                                $CTGY_NAME = $row['CTGY_NAME'];
+                                                        ?>
+                                                                <option value="<?php echo $CTGY_ID; ?>"><?php echo $CTGY_NAME; ?></option>
+                                                            <?php
+                                                            }
+                                                        } else {
+                                                            ?>
+                                                            <option value="0">No Category Found</option>
                                                         <?php
                                                         }
-                                                    } else {
                                                         ?>
-                                                        <option value="0">No Category Found</option>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                            <div class="form-field-input">
-                                                <label for="type">Type</label>
-                                                <select class="dropdown" name="type" id="type" required>
-                                                    <option value="Customer">Customer</option>
-                                                    <option value="Wholesaler">Wholesaler</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-field-input">
-                                                <label for="active">Active</label>
-                                                <select class="dropdown" name="active" id="active" required>
-                                                    <option value="No">INACTIVE</option>
-                                                    <option value="Yes">ACTIVE</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-field-input">
-                                                <label for="valid-id">Image</label>
-                                                <p class="label-desc">(accepted files: .jpg, .png)</p>
-                                                <input class="image" type="file" name="image" id="image" required><!-- numbers only, starts with 09, must have 11-digits -->
+                                                    </select>
+                                                </div>
+                                                <div class="form-field-input">
+                                                    <label for="type">Type</label>
+                                                    <select class="dropdown" name="type" id="type" required>
+                                                        <option value="Customer">Customer</option>
+                                                        <option value="Wholesaler">Wholesaler</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-field-input">
+                                                    <label for="active">Active</label>
+                                                    <select class="dropdown" name="active" id="active" required>
+                                                        <option value="No">INACTIVE</option>
+                                                        <option value="Yes">ACTIVE</option>
+                                                    </select>
+                                                    </div>
+                                                <div class="form-field-input">
+                                                        <label for="valid-id">Image</label>
+                                                        <p class="label-desc">(accepted files: .jpg, .png)</p>
+                                                        <input class="image" type="file" name="image" id="image" required><!-- numbers only, starts with 09, must have 11-digits -->
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <!-- <input type="hidden" name="FOOD_IMG" value="<?php echo $FOOD_IMG; ?>"> -->
-                                    <button class="big-btn" name="submit">Add Product</button>
-                                </form>
+                                        <!-- <input type="hidden" name="FOOD_IMG" value="<?php echo $FOOD_IMG; ?>"> -->
+                                        <button class="big-btn" name="submit">Add Product</button>
+                                    </form>
+                                </section>
                             </section>
-                        </section>
-                <?php
+                    <?php
+                        }
                     }
-                }
-                ?>
+                    ?>
 
+                </div>
             </div>
+            
         </section>
     </main>
 </body>

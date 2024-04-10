@@ -84,7 +84,7 @@ $countCa = mysqli_num_rows($resCa);
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
-                    <h1>Fat Rap's Barbeque's Online Store</h1>
+                    <h1>Fat Rap's Barbeque</h1>
                     <p>ADMIN</p>
                 </div>
             </div>
@@ -100,7 +100,7 @@ $countCa = mysqli_num_rows($resCa);
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                    <li>
+                </li>
                     <?php
                 } else {
                     ?>
@@ -112,88 +112,78 @@ $countCa = mysqli_num_rows($resCa);
         </div>
     </header>
     <main>
-        <section class="section">
-            <div class="section-heading">
-                <h2>Dashboard</h2>
-                <div class="inline">
-                    <p>Date range:</p>
-                    <!-- <p class="dropdown">Today</p> -->
-                    <input type="date">
+        <section class="section" id="dashboard">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>Dashboard</h2>
                 </div>
-            </div>
-            <section class="section-body">
-                <section class="main-section">
-                    <div class="grid-container">
-                        <a class="box blue" href="<?php echo SITEURL; ?>admin-new-orders.php">
-                            <p>New Orders</p>
-                            <h1><?php echo $countNO ?></h1>
-                            <p class="notif">+99</p>
-                        </a>
-                        <a class="box blue" href="<?php echo SITEURL; ?>admin-awaiting-payment.php">
-                            <p>Awaiting Payment</p>
-                            <h1><?php echo $countAP ?></h1>
-                            <p class="notif">+99</p>
-                        </a>
-                        <a class="box" href="<?php echo SITEURL; ?>admin-preparing-orders.php">
-                            <p>Preparing Orders</p>
-                            <h1><?php echo $countPr ?></h1>
-                            <p class="notif">+99</p>
-                        </a>
-                        <!-- <a class="box" href="<?php echo SITEURL; ?>admin-packing-orders.php">
-                                <p>Packing Orders</p>
-                                <h1>100></h1>
-                                <p class="notif">+99</p>
-                            </a> -->
-                        <a class="box" href="<?php echo SITEURL; ?>admin-delivery-orders.php">
-                            <p>For Delivery Orders</p>
-                            <h1><?php echo $countFD ?></h1>
-                            <p class="notif">+99</p>
-                        </a>
-                        <a class="box" href="<?php echo SITEURL; ?>admin-completed-orders.php">
-                            <p>Completed Orders</p>
-                            <h1><?php echo $countCo ?></h1>
-                            <p class="notif">+99</p>
-                        </a>
-                        <a class="box" href="<?php echo SITEURL; ?>admin-canceled-orders.php">
-                            <p>Canceled Orders</p>
-                            <h1><?php echo $countCa ?></h1>
-                            <p class="notif">+99</p>
-                        </a>
-                    </div>
-                </section>
-                <section class="side-menu">
-                    <div class="group inventory">
-                        <h3>Inventory</h3>
-                        <div class="inventory-box">
-                            <div class="inline">
-                                <p>Pork BBQ</p>
-                                <p class="number">10</p>
+                <section class="with-side-menu">
+                    <section class="main-section">
+                        <div class="grid-container">
+                            <a class="box" href="<?php echo SITEURL; ?>admin-new-orders.php">
+                                <p>New Orders</p>
+                                <h1><?php echo $countNO ?></h1>
+                            </a>
+                            <a class="box" href="<?php echo SITEURL; ?>admin-awaiting-payment.php">
+                                <p>Awaiting Payment</p>
+                                <h1><?php echo $countAP ?></h1>
+                            </a>
+                            <a class="box" href="<?php echo SITEURL; ?>admin-preparing-orders.php">
+                                <p>Preparing Orders</p>
+                                <h1><?php echo $countPr ?></h1>
+                            </a>
+                            <!-- <a class="box" href="<?php echo SITEURL; ?>admin-packing-orders.php">
+                                    <p>Packing Orders</p>
+                                    <h1>100></h1>
+                                </a> -->
+                            <a class="box" href="<?php echo SITEURL; ?>admin-delivery-orders.php">
+                                <p>For Delivery Orders</p>
+                                <h1><?php echo $countFD ?></h1>
+                            </a>
+                            <a class="box" href="<?php echo SITEURL; ?>admin-completed-orders.php">
+                                <p>Completed Orders</p>
+                                <h1><?php echo $countCo ?></h1>
+                            </a>
+                            <a class="box" href="<?php echo SITEURL; ?>admin-canceled-orders.php">
+                                <p>Canceled Orders</p>
+                                <h1><?php echo $countCa ?></h1>
+                            </a>
+                        </div>
+                    </section>
+                    <section class="side-menu">
+                        <div class="group inventory">
+                            <h3>Inventory</h3>
+                            <div class="inventory-box">
+                                <div class="inline">
+                                    <p>Pork BBQ</p>
+                                    <p class="number">10</p>
+                                </div>
+                                <a href="<?php echo SITEURL; ?>admin-inventory.php" class="edit">Edit</a>
                             </div>
-                            <a href="<?php echo SITEURL; ?>admin-inventory.php" class="edit">Edit</a>
                         </div>
-                    </div>
-                    <div class="group">
-                        <h3>Calendar</h3>
-                        <a href="<?php echo SITEURL; ?>admin-edit-calendar.php" class="view">View</a>
-                        <a href="<?php echo SITEURL; ?>admin-calendar-slots.php">View alternative</a>
-                    </div>
-                    <div class="group">
-                        <h3>Wholesale Users</h3>
-                        <div class="position-notif">
-                            <a href="<?php echo SITEURL; ?>admin-new-wholesale-users.php" class="view">New</a>
-                            <p class="notif">+99</p>
+                        <div class="group">
+                            <h3>Calendar</h3>
+                            <a href="<?php echo SITEURL; ?>admin-edit-calendar.php" class="view">View</a>
+                            <a href="<?php echo SITEURL; ?>admin-calendar-slots.php">View alternative</a>
                         </div>
-                    </div>
-                    <div class="group">
-                        <h3>Employee</h3>
-                        <a href="<?php echo SITEURL; ?>admin-employee-accounts.php" class="view">View</a>
-                    </div>
-                    <div class="group">
-                        <h3>Admin Profile</h3>
-                        <a href="<?php echo SITEURL; ?>admin-profile.php" class="view">View</a>
-                    </div>
+                        <div class="group">
+                            <h3>Wholesale Users</h3>
+                            <div class="position-notif">
+                                <a href="<?php echo SITEURL; ?>admin-new-wholesale-users.php" class="view">New</a>
+                                <p class="notif">+99</p>
+                            </div>
+                        </div>
+                        <div class="group">
+                            <h3>Employee</h3>
+                            <a href="<?php echo SITEURL; ?>admin-employee-accounts.php" class="view">View</a>
+                        </div>
+                        <div class="group">
+                            <h3>Admin Profile</h3>
+                            <a href="<?php echo SITEURL; ?>admin-profile.php" class="view">View</a>
+                        </div>
+                    </section>
                 </section>
-            </section>
+            </div>
         </section>
     </main>
     <script>

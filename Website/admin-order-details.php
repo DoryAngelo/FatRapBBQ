@@ -31,7 +31,7 @@ $PLACED_ORDER_ID = $_GET['PLACED_ORDER_ID'];
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
-                    <h1>Fat Rap's Barbeque's Online Store</h1>
+                    <h1>Fat Rap's Barbeque</h1>
                     <p>ADMIN</p>
                 </div>
             </div>
@@ -51,11 +51,24 @@ $PLACED_ORDER_ID = $_GET['PLACED_ORDER_ID'];
                     <?php
                 } else {
                     ?>
+<<<<<<< HEAD
                     <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
                 <?php
                 }
                 ?>
             </ul>
+=======
+                        <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
+                    </li>
+                        <?php
+                    } else {
+                        ?>
+                        <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
+                    <?php
+                    }
+                    ?>
+                </ul>
+>>>>>>> 7195f9b99eaddb9124582b61d0ce221ca3986c50
         </div>
     </header>
     <main>

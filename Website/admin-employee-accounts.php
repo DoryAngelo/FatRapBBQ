@@ -31,7 +31,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
-                    <h1>Fat Rap's Barbeque's Online Store</h1>
+                    <h1>Fat Rap's Barbeque</h1>
                     <p>ADMIN</p>
                 </div>
             </div>
@@ -48,7 +48,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                     if (isset($_SESSION['prsn_id'])) {
                     ?>
                         <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                        <li>
+                    </li>
                         <?php
                     } else {
                         ?>
@@ -61,64 +61,66 @@ $PRSN_ID = $_SESSION['prsn_id'];
     </header>
     <main>
         <section class="section">
-            <div class="section-heading row">
-                <h2>Employees</h2>
-            </div>
-            <section class="section-body">
-                <section class="main-section column">
-                    <div class="table-wrapper">
-                        <table class="alternating">
-                            <tr>
-                                <th class="header">Picture</th>
-                                <th class="header">First Name</th>
-                                <th class="header">Last Name</th>
-                                <th class="header">Contact #</th>
-                                <th class="header">Username</th>
-                                <th class="header">Email</th>
-                                <th class="header">Action</th>
-                            </tr>
-                            <?php
-                            $sql = "SELECT * FROM person, employee WHERE employee.PRSN_ID = person.PRSN_ID AND PRSN_ROLE = 'Employee'";
-                            $res = mysqli_query($conn, $sql);
-                            $count = mysqli_num_rows($res);
-                            if ($count > 0) {
-                                while ($row = mysqli_fetch_assoc($res)) {
-                                    $PRSN_ID = $row['PRSN_ID'];
-                                    $EMP_ID = $row['EMP_ID'];
-                                    $EMP_IMAGE = $row['EMP_IMAGE'];
-                                    $EMP_FNAME = $row['EMP_FNAME'];
-                                    $EMP_LNAME = $row['EMP_LNAME'];
-                                    $PRSN_NUMBER = $row['PRSN_PHONE'];
-                                    $PRSN_NAME = $row['PRSN_NAME'];
-                                    $PRSN_EMAIL = $row['PRSN_EMAIL'];
-                            ?>
+            <div class="container">
+                <div class="section-heading row">
+                    <h2>Employees</h2>
+                </div>
+                <section class="section-body">
+                    <section class="main-section column">
+                        <div class="table-wrapper">
+                            <table class="alternating">
+                                <tr>
+                                    <th class="header">Picture</th>
+                                    <th class="header">First Name</th>
+                                    <th class="header">Last Name</th>
+                                    <th class="header">Contact #</th>
+                                    <th class="header">Username</th>
+                                    <th class="header">Email</th>
+                                    <th class="header">Action</th>
+                                </tr>
+                                <?php
+                                $sql = "SELECT * FROM person, employee WHERE employee.PRSN_ID = person.PRSN_ID AND PRSN_ROLE = 'Employee'";
+                                $res = mysqli_query($conn, $sql);
+                                $count = mysqli_num_rows($res);
+                                if ($count > 0) {
+                                    while ($row = mysqli_fetch_assoc($res)) {
+                                        $PRSN_ID = $row['PRSN_ID'];
+                                        $EMP_ID = $row['EMP_ID'];
+                                        $EMP_IMAGE = $row['EMP_IMAGE'];
+                                        $EMP_FNAME = $row['EMP_FNAME'];
+                                        $EMP_LNAME = $row['EMP_LNAME'];
+                                        $PRSN_NUMBER = $row['PRSN_PHONE'];
+                                        $PRSN_NAME = $row['PRSN_NAME'];
+                                        $PRSN_EMAIL = $row['PRSN_EMAIL'];
+                                ?>
+                                        <tr>
+                                            <td data-cell="Image">
+                                                <img src="<?php echo SITEURL; ?>images/<?php echo $EMP_IMAGE; ?>"  alt="">
+                                            </td>
+                                            <td data-cell="Name"><?php echo $EMP_FNAME?></td>
+                                            <td data-cell="Name"><?php echo $EMP_LNAME?></td>
+                                            <td data-cell="Contact #"><?php echo $PRSN_NUMBER?></td>
+                                            <td data-cell="Username"><?php echo $PRSN_NAME?></td>
+                                            <td data-cell="Email"><?php echo $PRSN_EMAIL?></td>
+                                            <td data-cell="Action"><a href="<?php echo SITEURL; ?>admin-edit-employee.php?PRSN_ID=<?php echo $PRSN_ID?>&EMP_ID=<?php echo $EMP_ID?>" class="edit">Edit</a></td>
+                                        </tr>
+                                    <?php
+                                    }
+                                } else {
+                                    ?>
                                     <tr>
-                                        <td data-cell="Image">
-                                            <img src="<?php echo SITEURL; ?>images/<?php echo $EMP_IMAGE; ?>"  alt="">
-                                        </td>
-                                        <td data-cell="Name"><?php echo $EMP_FNAME?></td>
-                                        <td data-cell="Name"><?php echo $EMP_LNAME?></td>
-                                        <td data-cell="Contact #"><?php echo $PRSN_NUMBER?></td>
-                                        <td data-cell="Username"><?php echo $PRSN_NAME?></td>
-                                        <td data-cell="Email"><?php echo $PRSN_EMAIL?></td>
-                                        <td data-cell="Action"><a href="<?php echo SITEURL; ?>admin-edit-employee.php?PRSN_ID=<?php echo $PRSN_ID?>&EMP_ID=<?php echo $EMP_ID?>" class="edit">Edit</a></td>
+                                        <td colspan="5" class="error">Empty</td>
                                     </tr>
                                 <?php
-                                }
-                            } else {
-                                ?>
-                                <tr>
-                                    <td colspan="5" class="error">Empty</td>
-                                </tr>
-                            <?php
 
-                            }
-                            ?>
-                        </table>
-                    </div>
-                    <a href="<?php echo SITEURL; ?>admin-add-employee.php" class="page-btn"><button class="big-btn">Add a new employee</button></a>
+                                }
+                                ?>
+                            </table>
+                        </div>
+                        <a href="<?php echo SITEURL; ?>admin-add-employee.php" class="page-btn"><button class="big-btn">Add a new employee</button></a>
+                    </section>
                 </section>
-            </section>
+            </div>
         </section>
     </main>
 </body>

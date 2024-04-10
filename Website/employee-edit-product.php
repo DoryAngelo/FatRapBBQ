@@ -48,7 +48,7 @@ $CTGY_ID = $_GET['CTGY_ID'];
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                    <li>
+                </li>
                     <?php
                 } else {
                     ?>

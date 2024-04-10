@@ -48,7 +48,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                    <li>
+                </li>
                     <?php
                 } else {
                     ?>

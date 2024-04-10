@@ -8,7 +8,7 @@
 
 :root{
     --bg:#F2FFE1;
-    --primary:#F5D636;
+    --primary:#f3d95c;
     --text:#3A001E;
     --text2: #FA3F1F;
     --input-bg:#F7F3DC;
@@ -207,6 +207,10 @@ footer {
     color: var(--primary);
     cursor: pointer;
   }
+
+  header.backend .menubar > li > a:hover {
+    color: #6EA4E4;
+  }
   
   .menu-button-container {
     display: none;
@@ -295,8 +299,33 @@ footer {
       color: #3A3F42;
       background-color: var(--primary) ;
     }
+
+    .menubar > li > a{
+      width: 100%;
+      height: 100%;
+      text-align: center;
+    }
+
+    .menubar > li:hover, .menubar > li:active {
+      color: white;
+      background-color: #f4c44b;
+      cursor: pointer;
+    }
+
     .menubar > li:not(:last-child) {
       border-bottom: 1px solid white;
+    }
+
+    header.backend .menubar > li {
+      background-color: #6EA4E4;
+    }
+
+    header.backend .menubar > li:hover, header.backend .menubar > li:active {
+      background-color: #9fc3ef;
+    }
+
+    .menubar > li > a:hover, header.backend .menubar > li > a:hover {
+      color: white;
     }
   }
 
@@ -322,6 +351,10 @@ footer {
       margin-left: clamp(1rem, 2.5vw, 2rem);
     }
 
+    header.backend .text p {
+      font-size: clamp(0.6rem, 2vw, 0.8rem);
+    }
+
     .menubar {
       margin-top: 4rem;
     }
@@ -331,6 +364,8 @@ footer {
     .menu-button::after {
       width: 25px;
     }
+
+
 }
 
 

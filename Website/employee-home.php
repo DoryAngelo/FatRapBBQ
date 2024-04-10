@@ -74,7 +74,7 @@ $countCa = mysqli_num_rows($resCa);
                 <div class="website-title">
                     <img id="logo" src="images/client-logo.png">
                     <div class="text">
-                        <h1>Fat Rap's Barbeque's Online Store</h1>
+                        <h1>Fat Rap's Barbeque</h1>
                         <p>EMPLOYEE</p>
                     </div>
                 </div>
@@ -88,7 +88,7 @@ $countCa = mysqli_num_rows($resCa);
                         <?php
                             if(isset($_SESSION['prsn_id'])){
                         ?>  
-                            <li><a href="<?php echo SITEURL ;?>logout.php">Logout</a><li>
+                            <li><a href="<?php echo SITEURL ;?>logout.php">Logout</a></li>
                         <?php
                             } 
                             else 
@@ -102,48 +102,51 @@ $countCa = mysqli_num_rows($resCa);
             </div>
         </header>
         <main>
-            <section class="section">
-                <div class="section-heading">
-                    <h2>Dashboard</h2>
-                    <div class="inline">
-                        <p>Date range:</p>
-                        <!-- <p class="dropdown">Today</p> -->
-                        <input type="date">
-                    </div>
-                </div> 
-                <section class="section-body">
-                    <section class="main-section">
-                        <div class="grid-container">
-                            <a class="box blue" href="<?php echo SITEURL ;?>employee-to-prepare-orders.php">
-                                <p>To Prepare</p>
-                                <h1><?php echo $countPa?></h1>
-                                <p class="notif">+99</p>
-                            </a>
-                            <a class="box" href="<?php echo SITEURL ;?>employee-preparing-orders.php">
-                                <p>Currently Preparing</p>
-                                <h1><?php echo $countPr?></h1>
-                                <p class="notif">+99</p>
-                            </a>
-                            <a class="box" href="<?php echo SITEURL ;?>employee-to-deliver-orders.php">
-                                <p>To Deliver</p>
-                                <h1><?php echo $countFD?></h1>
-                                <p class="notif">+99</p>
-                            </a>
+            <section class="section" id="dashboard">
+                <div class="container">
+                    <div class="section-heading">
+                        <h2>Dashboard</h2>
+                        <div class="inline">
+                            <p>Date range:</p>
+                            <!-- <p class="dropdown">Today</p> -->
+                            <input type="date">
                         </div>
-                    </section>
-                    <section class="side-menu">
-                        <div class="group inventory">
-                            <h3>Inventory</h3>
-                            <div class="inventory-box">
-                                <div class="inline">
-                                    <p>Pork BBQ</p>
-                                    <p class="number">10</p>
-                                </div>
-                                <a href="<?php echo SITEURL ;?>employee-inventory.php" class="edit">Edit</a>
+                    </div> 
+                    <section class="with-side-menu">
+                        <section class="main-section">
+                            <div class="grid-container">
+                                <a class="box blue" href="<?php echo SITEURL ;?>employee-to-prepare-orders.php">
+                                    <p>To Prepare</p>
+                                    <h1><?php echo $countPa?></h1>
+                                    <p class="notif">+99</p>
+                                </a>
+                                <a class="box" href="<?php echo SITEURL ;?>employee-preparing-orders.php">
+                                    <p>Currently Preparing</p>
+                                    <h1><?php echo $countPr?></h1>
+                                    <p class="notif">+99</p>
+                                </a>
+                                <a class="box" href="<?php echo SITEURL ;?>employee-to-deliver-orders.php">
+                                    <p>To Deliver</p>
+                                    <h1><?php echo $countFD?></h1>
+                                    <p class="notif">+99</p>
+                                </a>
                             </div>
-                        </div>
+                        </section>
+                        <section class="side-menu">
+                            <div class="group inventory">
+                                <h3>Inventory</h3>
+                                <div class="inventory-box">
+                                    <div class="inline">
+                                        <p>Pork BBQ</p>
+                                        <p class="number">10</p>
+                                    </div>
+                                    <a href="<?php echo SITEURL ;?>employee-inventory.php" class="edit">Edit</a>
+                                </div>
+                            </div>
+                        </section>
                     </section>
-                </section>
+                </div>
+                
             </section>
         </main>
     </body>

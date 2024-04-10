@@ -31,7 +31,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
-                    <h1>Fat Rap's Barbeque's Online Store</h1>
+                    <h1>Fat Rap's Barbeque</h1>
                     <p>ADMIN</p>
                 </div>
             </div>
@@ -48,7 +48,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                    <li>
+                </li>
                     <?php
                 } else {
                     ?>
@@ -61,82 +61,85 @@ $PRSN_ID = $_SESSION['prsn_id'];
     </header>
     <main>
         <section class="section">
-            <div class="section-heading row">
-                <h2>Inventory</h2>
-                <!-- <select name="customer-type" id="customer-type" class="dropdown">
-                    <option value="regular">REGULAR</option>
-                    <option value="wholesale">WHOLESALE</option>
-                </select>  -->
-            </div>
-            <section class="section-body">
-                <section class="main-section column">
-                    <div class="table-wrapper">
-                        <table class="alternating">
-                            <tr>
-                                <th class="header">Image</th>
-                                <th class="header">Product Name</th>
-                                <th class="header">Category</th>
-                                <th class="header">Price</th>
-                                <th class="header">Stock</th>
-                                <th class="header">Food Type</th>
-                                <th class="header">Action</th>
-                            </tr>
-                            <?php
+            <div class="container">
+                <div class="section-heading row">
+                    <h2>Inventory</h2>
+                    <!-- <select name="customer-type" id="customer-type" class="dropdown">
+                        <option value="regular">REGULAR</option>
+                        <option value="wholesale">WHOLESALE</option>
+                    </select>  -->
+                </div>
+                <section class="section-body">
+                    <section class="main-section column">
+                        <div class="table-wrapper">
+                            <table class="alternating">
+                                <tr>
+                                    <th class="header">Image</th>
+                                    <th class="header">Product Name</th>
+                                    <th class="header">Category</th>
+                                    <th class="header">Price</th>
+                                    <th class="header">Stock</th>
+                                    <th class="header">Food Type</th>
+                                    <th class="header">Action</th>
+                                </tr>
+                                <?php
 
-                            $CUS_ID = $_SESSION['prsn_id'];
+                                $CUS_ID = $_SESSION['prsn_id'];
 
-                            $sql = "SELECT * 
-                                    FROM food
-                                    JOIN category ON food.ctgy_id = category.ctgy_id";
+                                $sql = "SELECT * 
+                                        FROM food
+                                        JOIN category ON food.ctgy_id = category.ctgy_id";
 
-                            $res = mysqli_query($conn, $sql);
+                                $res = mysqli_query($conn, $sql);
 
-                            $count = mysqli_num_rows($res);
+                                $count = mysqli_num_rows($res);
 
-                            if ($count > 0) {
-                                while ($row = mysqli_fetch_assoc($res)) {
-                                    $FOOD_ID = $row['FOOD_ID'];
-                                    $CTGY_ID = $row['CTGY_ID'];
-                                    $FOOD_NAME = $row['FOOD_NAME'];
-                                    $FOOD_PRICE = $row['FOOD_PRICE'];
-                                    $FOOD_IMG = $row['FOOD_IMG'];
-                                    $FOOD_STOCK = $row['FOOD_STOCK'];
-                                    $CTGY_NAME = $row['CTGY_NAME'];
-                                    $FOOD_ACTIVE = $row['FOOD_ACTIVE'];
-                                    $FOOD_TYPE = $row['FOOD_TYPE'];
-                            ?>
+                                if ($count > 0) {
+                                    while ($row = mysqli_fetch_assoc($res)) {
+                                        $FOOD_ID = $row['FOOD_ID'];
+                                        $CTGY_ID = $row['CTGY_ID'];
+                                        $FOOD_NAME = $row['FOOD_NAME'];
+                                        $FOOD_PRICE = $row['FOOD_PRICE'];
+                                        $FOOD_IMG = $row['FOOD_IMG'];
+                                        $FOOD_STOCK = $row['FOOD_STOCK'];
+                                        $CTGY_NAME = $row['CTGY_NAME'];
+                                        $FOOD_ACTIVE = $row['FOOD_ACTIVE'];
+                                        $FOOD_TYPE = $row['FOOD_TYPE'];
+                                ?>
+                                        <tr>
+                                            <td data-cell="Image">
+                                                <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
+                                            </td>
+                                            <td data-cell="Product Name"><?php echo $FOOD_NAME ?></td>
+                                            <td data-cell="Category"><?php echo $CTGY_NAME ?></td>
+                                            <td data-cell="Price">₱<?php echo $FOOD_PRICE ?></td>
+                                            <td data-cell="Stock">
+                                                <span class="<?php echo ($FOOD_STOCK < 100) ? 'red-text' : ''; ?>">
+                                                    <p><?php echo $FOOD_STOCK ?></p>
+                                                </span>
+                                            </td>
+                                            <td data-cell="Price"><?php echo $FOOD_TYPE ?></td>
+                                            <td data-cell="Action"><a href="<?php echo SITEURL ;?>admin-edit-product.php?FOOD_ID=<?php echo $FOOD_ID?>&CTGY_ID=<?php echo $CTGY_ID?>"  class="edit">Edit</a></td>
+                                        </tr>
+                                    <?php
+                                    }
+                                } else {
+                                    ?>
+                                    <!-- <div class="error">No new orders</div> -->
                                     <tr>
-                                        <td data-cell="Image">
-                                            <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
-                                        </td>
-                                        <td data-cell="Product Name"><?php echo $FOOD_NAME ?></td>
-                                        <td data-cell="Category"><?php echo $CTGY_NAME ?></td>
-                                        <td data-cell="Price">₱<?php echo $FOOD_PRICE ?></td>
-                                        <td data-cell="Stock">
-                                            <span class="<?php echo ($FOOD_STOCK < 100) ? 'red-text' : ''; ?>">
-                                                <p><?php echo $FOOD_STOCK ?></p>
-                                            </span>
-                                        </td>
-                                        <td data-cell="Price"><?php echo $FOOD_TYPE ?></td>
-                                        <td data-cell="Action"><a href="<?php echo SITEURL ;?>admin-edit-product.php?FOOD_ID=<?php echo $FOOD_ID?>&CTGY_ID=<?php echo $CTGY_ID?>"  class="edit">Edit</a></td>
+                                        <td colspan="5" class="error">Empty</td>
                                     </tr>
                                 <?php
-                                }
-                            } else {
-                                ?>
-                                <!-- <div class="error">No new orders</div> -->
-                                <tr>
-                                    <td colspan="5" class="error">Empty</td>
-                                </tr>
-                            <?php
 
-                            }
-                            ?>
-                        </table>
-                    </div>
-                    <a href="<?php echo SITEURL; ?>admin-add-product.php" class="page-btn"><button class="big-btn">Add a new product</button></a>
+                                }
+                                ?>
+                            </table>
+                        </div>
+                        <a href="<?php echo SITEURL; ?>admin-add-product.php" class="page-btn"><button class="big-btn">Add a new product</button></a>
+                    </section>
                 </section>
-            </section>
+            </div>
+            
         </section>
     </main>
 </body>

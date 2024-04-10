@@ -44,7 +44,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                         <?php
                             if(isset($_SESSION['prsn_id'])){
                         ?>  
-                            <li><a href="<?php echo SITEURL ;?>logout.php">Logout</a><li>
+                            <li><a href="<?php echo SITEURL ;?>logout.php">Logout</a></li>
                         <?php
                             } 
                             else 
