@@ -9,9 +9,9 @@ if (isset($_SESSION['prsn_id'])) {
 }
 
 if (isset($_SESSION['prsn_id'])) {
-    $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM IN_ORDER WHERE PRSN_ID = $PRSN_ID";
+    $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM IN_ORDER WHERE PRSN_ID = '$PRSN_ID' AND PLACED_ORDER_ID IS NULL";
 } else {
-    $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM IN_ORDER WHERE GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
+    $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM IN_ORDER WHERE GUEST_ORDER_IDENTIFIER = '$GUEST_ID' AND PLACED_ORDER_ID IS NULL";
 }
 $res2 = mysqli_query($conn, $sql2);
 $row2 = mysqli_fetch_assoc($res2);
@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
     $time = $_POST['time'];
     $DELIVERY_DATE = $date . " " . $time;
     $PLACED_ORDER_STATUS = "Placed";
-    $random = random_bytes(16);
+    $random = random_bytes(8);
     $PLACED_ORDER_TRACKER = bin2hex($random);
 
     $PLACED_ORDER_NOTE = $_POST['note'];
@@ -53,11 +53,13 @@ if (isset($_POST['submit'])) {
     $result = mysqli_query($conn, $select);
 
     while (mysqli_num_rows($result) > 0) {
-        $random = random_bytes(16);
+        $random = random_bytes(8);
         $PLACED_ORDER_TRACKER = bin2hex($random);
         $select = "SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'";
         $result = mysqli_query($conn, $select);
     }
+
+    $_SESSION['PLACED_ORDER_TRACKER'] =  $PLACED_ORDER_TRACKER;
 
     if (isset($_SESSION['prsn_id'])) {
         $sql3 = "INSERT INTO placed_order SET
@@ -94,31 +96,28 @@ if (isset($_POST['submit'])) {
 
     if ($res3 == true) {
         if (isset($_SESSION['prsn_id'])) {
-            $sql4 = "SELECT PLACED_ORDER_ID FROM placed_order WHERE PRSN_ID = $CUS_ID AND PLACED_ORDER_STATUS = 'Placed'";
+            $sql4 = "SELECT PLACED_ORDER_ID FROM placed_order WHERE PRSN_ID = $CUS_ID AND PLACED_ORDER_STATUS = 'Placed' ORDER BY PLACED_ORDER_ID DESC LIMIT 1";
         } else {
-            $sql4 = "SELECT PLACED_ORDER_ID FROM placed_order WHERE  GUEST_ORDER_IDENTIFIER = '$GUEST_ID' AND PLACED_ORDER_STATUS = 'Placed'";
+            $sql4 = "SELECT PLACED_ORDER_ID FROM placed_order WHERE GUEST_ORDER_IDENTIFIER = '$GUEST_ID' AND PLACED_ORDER_STATUS = 'Placed' ORDER BY PLACED_ORDER_ID DESC LIMIT 1";
         }
 
         $res4 = mysqli_query($conn, $sql4);
-        $row5 = mysqli_fetch_array($res4);
-        $PLACED_ORDER_ID = $row5['PLACED_ORDER_ID'];
+        if ($res4 && mysqli_num_rows($res4) > 0) {  
+            $row5 = mysqli_fetch_assoc($res4);
+            $PLACED_ORDER_ID = $row5['PLACED_ORDER_ID'];
 
-        if (isset($_SESSION['prsn_id'])) {
-            $sql5 = "UPDATE in_order SET
-            PLACED_ORDER_ID = $PLACED_ORDER_ID
-            WHERE PRSN_ID = $CUS_ID AND IN_ORDER_STATUS = 'Ordered' 
-            ";
-        } else {
-            $sql5 = "UPDATE in_order SET
-            PLACED_ORDER_ID = $PLACED_ORDER_ID
-            WHERE GUEST_ORDER_IDENTIFIER = '$GUEST_ID' AND IN_ORDER_STATUS = 'Ordered'
-            ";
-        }
+            // Update the in_order table with the latest placed_order_id
+            if (isset($_SESSION['prsn_id'])) {
+                $sql5 = "UPDATE in_order SET PLACED_ORDER_ID = $PLACED_ORDER_ID WHERE PRSN_ID = $CUS_ID AND IN_ORDER_STATUS = 'Ordered' AND PLACED_ORDER_ID IS NULL";
+            } else {
+                $sql5 = "UPDATE in_order SET PLACED_ORDER_ID = $PLACED_ORDER_ID WHERE GUEST_ORDER_IDENTIFIER = '$GUEST_ID' AND IN_ORDER_STATUS = 'Ordered' AND PLACED_ORDER_ID IS NULL";
+            }
 
-        $res5 = mysqli_query($conn, $sql5);
-        if ($res5 == true) {
-            $_SESSION['PLACED_ORDER_TRACKER'] =  $PLACED_ORDER_TRACKER;
-            header('location:checkout-success.php');
+            $res5 = mysqli_query($conn, $sql5);
+            if ($res5) {
+                header('location: checkout-success.php');
+                exit(); // Ensure no further execution after redirection
+            }
         }
     }
 }
@@ -164,10 +163,10 @@ if (isset($_POST['submit'])) {
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                </li>
-                    <?php
+                    </li>
+                <?php
                 } else {
-                    ?>
+                ?>
                     <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
                 <?php
                 }
@@ -202,10 +201,10 @@ if (isset($_POST['submit'])) {
                                             if (isset($_SESSION['prsn_id'])) {
                                                 $CUS_ID = $_SESSION['prsn_id'];
                                                 $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, FOOD_STOCK, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
-                                    FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND PRSN_ID = $PRSN_ID";
+                                    FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND PRSN_ID = $PRSN_ID AND PLACED_ORDER_ID IS NULL";
                                             } else {
                                                 $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, FOOD_STOCK, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
-                                    FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
+                                    FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND GUEST_ORDER_IDENTIFIER = '$GUEST_ID' AND PLACED_ORDER_ID IS NULL";
                                             }
                                             $res = mysqli_query($conn, $sql);
                                             $count = mysqli_num_rows($res);
