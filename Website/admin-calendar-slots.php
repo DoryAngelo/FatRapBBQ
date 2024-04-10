@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
-                    <h1>Fat Rap's Barbeque's Online Store</h1>
+                    <h1>Fat Rap's Barbeque</h1>
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
@@ -96,6 +96,7 @@ if (isset($_POST['submit'])) {
     </header>
     <main>
         <section class="section calendar2">
+            <div class="container">
                 <div class="section-heading row back">
                     <h2>Calendar Slots</h2>
                     <a href="<?php echo SITEURL; ?>admin-home.php">Back</a>
@@ -179,6 +180,8 @@ if (isset($_POST['submit'])) {
                         </form>
                     </section>
                 </section>
+            </div>
+                
         </section>
     </main>
     <script>

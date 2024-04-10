@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
-                    <h1>Fat Rap's Barbeque's Online Store</h1>
+                    <h1>Fat Rap's Barbeque</h1>
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
@@ -96,34 +96,36 @@ if (isset($_POST['submit'])) {
     </header>
     <main>
         <section class="section add-edit-menu">
-            <div class="section-wrapper">
-                <div class="section-heading row back">
-                    <h2>Edit Calendar Slots</h2>
-                    <a href="<?php echo SITEURL; ?>admin-calendar-slots.php">Back</a>
-                </div>
-                <section class="section-body">
-                    <section class="main-section column">
-                        <form action="#" class="column" method="post" enctype="multipart/form-data">
-                            <div class="block">
-                                <div class="form-field">
-                                    <div class="form-field-input">
-                                        <label for="date">Date</label>
-                                        <input class="js-user" type="date" id="date" name="date" required pattern="[a-zA-Z ]{1,20}$"><!-- 20 characters only, letter only, with spaces -->
-                                    </div>
-                                    <div class="form-field-input">
-                                        <label for="active">Status</label>
-                                        <select class="dropdown" name="active" id="active" required>
-                                            <option value="available">Available</option>
-                                            <option value="fully-booked">Fully Booked</option>
-                                            <option value="closed">Closed</option>
-                                        </select>
+            <div class="container">
+                <div class="section-wrapper">
+                    <div class="section-heading row back">
+                        <h2>Edit Calendar Slots</h2>
+                        <a href="<?php echo SITEURL; ?>admin-calendar-slots.php">Back</a>
+                    </div>
+                    <section class="section-body">
+                        <section class="main-section column">
+                            <form action="#" class="column" method="post" enctype="multipart/form-data">
+                                <div class="block">
+                                    <div class="form-field">
+                                        <div class="form-field-input">
+                                            <label for="date">Date</label>
+                                            <input class="js-user" type="date" id="date" name="date" required pattern="[a-zA-Z ]{1,20}$"><!-- 20 characters only, letter only, with spaces -->
+                                        </div>
+                                        <div class="form-field-input">
+                                            <label for="active">Status</label>
+                                            <select class="dropdown" name="active" id="active" required>
+                                                <option value="available">Available</option>
+                                                <option value="fully-booked">Fully Booked</option>
+                                                <option value="closed">Closed</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <button class="big-btn" type="submit" name="submit">Save</button>
-                        </form>
+                                <button class="big-btn" type="submit" name="submit">Save</button>
+                            </form>
+                        </section>
                     </section>
-                </section>
+                </div>
             </div>
         </section>
     </main>

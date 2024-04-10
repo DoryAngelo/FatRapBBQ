@@ -60,6 +60,7 @@ main {
     width: 90%;
     margin: clamp(1rem, 5vw, 3rem) auto;
     margin-bottom: 5rem;
+    border: 1px solid red;
 }
 
 .section-heading {
@@ -70,9 +71,16 @@ main {
 }
 
 .row {
+    display: flex;
     flex-direction: row;
     align-items: center;
 }
+
+#admin-calendar .row {
+    align-items: flex-start;
+    gap: 3rem;
+}
+
 
 .back {
     justify-content: space-between;
@@ -153,7 +161,7 @@ p.bold-font, .app-det-tbl .bold-font {
     border-radius: 1rem;
     padding: 1px;
     height: max-content;
-    overflow-x: scroll;
+    overflow-x: auto;
     flex: 1;
 }
 
@@ -258,6 +266,7 @@ table button {
 .valid-id img {
     width: 60%;
 }
+
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -283,6 +292,14 @@ table button {
     box-shadow: #cfd9e3 0px 2px 4px 0px;
 }
 
+#admin-calendar .grid-container .box:hover {
+    cursor: default;
+}
+
+#admin-calendar .grid-container .box {
+    height: 8rem;
+}
+
 .grid-container .blue {
     background-color: var(--db-highlight-blue);
 }
@@ -291,7 +308,15 @@ table button {
     position: absolute;
     font-weight: bold;
     font-size: 0.9rem;
+    border: 1px solid red;
+}
+
+.grid-container .box p:not(p.bottom) {
     top: 1rem;
+}
+
+.grid-container .box p.bottom {
+    bottom: 1rem;
 }
 
 .grid-container .box h1 {
@@ -361,6 +386,13 @@ p.notif {
 
 .side-menu .inline {
     justify-content: space-between;
+}
+
+#orders-page .side-menu .group:not(:first-of-type) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    border: 1px solid red;
 }
 
 a.big-font {
@@ -551,6 +583,7 @@ input.image {
 
 .right-side {
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
@@ -563,6 +596,7 @@ input.image {
 .right-side .grid-container {
     width: 100%;
     margin-top: 1rem;
+    grid-template-columns: repeat(3,1fr);
 }
 
 .right-side .grid-container .box {
@@ -570,10 +604,6 @@ input.image {
     background-color: #fff;
     box-shadow: #cfd9e3 0px 2px 4px 0px;
 }
-
-/* .right-side .grid-container .box:hover {
-    cursor: default;
-} */
 
 .right-side .grid-container .green {
     color: #90BD7A;
@@ -590,11 +620,12 @@ input.image {
 
 .right-side .block {
     height: 100%;
-    max-height: 250px;
+    max-height: 55rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     box-shadow: #cfd9e3 0px 2px 4px 0px;
+    gap: 2rem;
 }
 
 .right-side hr {
@@ -821,13 +852,13 @@ span.warning i {
     box-shadow: rgba(175, 255, 173, 1) 0px 0px 80px 0px;
 }
 
-.add-edit-menu .section-wrapper {
-    /* width: 50%; */
+.section-wrapper {
     max-width: 600px;
     margin: 0 auto;
+    border: 1px solid red;
 }
 
-.add-edit-menu .block{
+.block{
     width: 100%;
     padding: 1.5rem 2rem;
 }
@@ -946,7 +977,7 @@ span.warning i {
     gap: 2rem;
 }
 
-.layout section {
+.layout section, a.back {
     width: 100%;
 }
 
@@ -957,6 +988,12 @@ span.warning i {
 
     #orders-page .side-menu {
         max-width: 20rem;
+    }
+}
+
+@media only screen and (width <= 950px) {
+    #admin-calendar .row {
+        flex-direction: column;
     }
 }
 
