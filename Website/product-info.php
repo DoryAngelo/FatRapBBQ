@@ -17,8 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
 
     if (isset($_SESSION['prsn_id'])) {
         $sql = "SELECT * FROM in_order WHERE FOOD_ID = $FOOD_ID AND PRSN_ID = $PRSN_ID";
-    } else {     
-        $sql = "SELECT * FROM in_order WHERE FOOD_ID = $FOOD_ID AND GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";                                
+    } else {
+        $sql = "SELECT * FROM in_order WHERE FOOD_ID = $FOOD_ID AND GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
     }
 
     $res = mysqli_query($conn, $sql);
@@ -26,17 +26,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
 
     if ($count > 0) {
         while ($row = mysqli_fetch_assoc($res)) {
-            $IN_ORDER_ID = $row['IN_ORDER_ID'];
-            $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'] + $quantity;
-            $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'] + ($quantity * $FOOD_PRICE);
+            // Check if the existing in_order item has a placed_order_id
+            if ($row['PLACED_ORDER_ID']) {
+                // If yes, insert a new in_order item instead of updating the existing one
+                $IN_ORDER_TOTAL = $quantity * $FOOD_PRICE;
+                $sql2 = "INSERT INTO in_order (FOOD_ID, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS)
+                         VALUES ('$FOOD_ID', '$PRSN_ID', '$quantity', '$IN_ORDER_TOTAL', 'Placed')";
+                $res2 = mysqli_query($conn, $sql2);
+            } else {
+                // If no placed_order_id, update the existing in_order item
+                $IN_ORDER_ID = $row['IN_ORDER_ID'];
+                $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'] + $quantity;
+                $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'] + ($quantity * $FOOD_PRICE);
 
-            $sql = "UPDATE in_order SET 
-                            IN_ORDER_QUANTITY = $IN_ORDER_QUANTITY,
-                            IN_ORDER_TOTAL = $IN_ORDER_TOTAL
-                            WHERE IN_ORDER_ID = $IN_ORDER_ID";
-            $res_update = mysqli_query($conn, $sql);
+                $sql = "UPDATE in_order SET 
+                                IN_ORDER_QUANTITY = $IN_ORDER_QUANTITY,
+                                IN_ORDER_TOTAL = $IN_ORDER_TOTAL
+                                WHERE IN_ORDER_ID = $IN_ORDER_ID";
+                $res_update = mysqli_query($conn, $sql);
+            }
         }
     } else {
+        // If no existing in_order item, insert a new one
         $IN_ORDER_TOTAL = $quantity * $FOOD_PRICE;
         $sql2 = "INSERT INTO in_order (FOOD_ID, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS)
                  VALUES ('$FOOD_ID', '$PRSN_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered')";
@@ -48,6 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
 }
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -81,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             <label class='menu-button-container' for="menu-toggle">
                 <div class='menu-button'></div>
             </label>
-            <ul class = 'menubar'>
+            <ul class='menubar'>
                 <li><a href="<?php echo SITEURL; ?>cus-home-page.php">Home</a></li>
                 <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
                 <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
@@ -89,10 +101,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                </li>
-                    <?php
+                    </li>
+                <?php
                 } else {
-                    ?>
+                ?>
                     <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
                 <?php
                 }

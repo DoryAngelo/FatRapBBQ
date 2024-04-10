@@ -56,26 +56,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
 
     if ($count > 0) {
         while ($row = mysqli_fetch_assoc($res)) {
-            $IN_ORDER_ID = $row['IN_ORDER_ID'];
-            $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'] + $quantity;
-            $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'] + ($quantity * $FOOD_PRICE);
+            // Check if the existing in_order item has a placed_order_id
+            if ($row['PLACED_ORDER_ID']) {
+                // If yes, insert a new in_order item instead of updating the existing one
+                $IN_ORDER_TOTAL = $quantity * $FOOD_PRICE;
+                $sql2 = "INSERT INTO in_order (FOOD_ID, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS)
+                         VALUES ('$FOOD_ID', '$PRSN_ID', '$quantity', '$IN_ORDER_TOTAL', 'Placed')";
+                $res2 = mysqli_query($conn, $sql2);
+            } else {
+                // If no placed_order_id, update the existing in_order item
+                $IN_ORDER_ID = $row['IN_ORDER_ID'];
+                $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'] + $quantity;
+                $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'] + ($quantity * $FOOD_PRICE);
 
-            $sql = "UPDATE in_order SET 
-                            IN_ORDER_QUANTITY = $IN_ORDER_QUANTITY,
-                            IN_ORDER_TOTAL = $IN_ORDER_TOTAL
-                            WHERE IN_ORDER_ID = $IN_ORDER_ID";
-            $res_update = mysqli_query($conn, $sql);
+                $sql = "UPDATE in_order SET 
+                                IN_ORDER_QUANTITY = $IN_ORDER_QUANTITY,
+                                IN_ORDER_TOTAL = $IN_ORDER_TOTAL
+                                WHERE IN_ORDER_ID = $IN_ORDER_ID";
+                $res_update = mysqli_query($conn, $sql);
+            }
         }
     } else {
+        // Insert a new in_order item
         $IN_ORDER_TOTAL = $quantity * $FOOD_PRICE;
         if (isset($_SESSION['prsn_id'])) {
-            $sql2 = "INSERT INTO in_order (FOOD_ID, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS)
+            $sql4 = "INSERT INTO in_order (FOOD_ID, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS)
             VALUES ('$FOOD_ID', '$PRSN_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered')";
         } else {
-            $sql2 = "INSERT INTO in_order (FOOD_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS, GUEST_ORDER_IDENTIFIER)
+            $sql4 = "INSERT INTO in_order (FOOD_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS, GUEST_ORDER_IDENTIFIER)
             VALUES ('$FOOD_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered', '$GUEST_ID')";
         }
-        $res2 = mysqli_query($conn, $sql2);
+        $res4 = mysqli_query($conn, $sql4);
     }
 
     // Redirect to the home page after processing
