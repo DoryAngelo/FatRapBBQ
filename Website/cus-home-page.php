@@ -5,6 +5,7 @@
 if (isset($_SESSION['prsn_id'])) {
     $PRSN_ID = $_SESSION['prsn_id'];
 } else {
+    $_SESSION['prsn_role'] = "Customer";
     $GUEST_ID = $_SESSION['guest_id'];
 }
 

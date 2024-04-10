@@ -33,7 +33,6 @@ if (isset($_POST['submit'])) {
         $_SESSION['incorrect'] = "<div class='error-msg'>Incorrect email or password</div>";
     }
 } else if (isset($_POST['guest'])) {
-
     header('location:home.php');
 }
 ?>

@@ -45,7 +45,7 @@ if (isset($_SESSION['prsn_id'])) {
             <label class='menu-button-container' for="menu-toggle">
                 <div class='menu-button'></div>
             </label>
-            <ul class = 'menubar'>
+            <ul class='menubar'>
                 <li><a href="<?php echo SITEURL; ?>cus-home-page.php">Home</a></li>
                 <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
                 <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
@@ -53,10 +53,10 @@ if (isset($_SESSION['prsn_id'])) {
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                </li>
-                    <?php
+                    </li>
+                <?php
                 } else {
-                    ?>
+                ?>
                     <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
                 <?php
                 }
@@ -85,11 +85,23 @@ if (isset($_SESSION['prsn_id'])) {
                                 <tbody>
                                     <?php
                                     if (isset($_SESSION['prsn_id'])) {
-                                        $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, FOOD_STOCK, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
-                                        FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND PRSN_ID = '$PRSN_ID'";
+                                        $sql = "SELECT io.IN_ORDER_ID, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, f.FOOD_STOCK, io.PRSN_ID, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
+                                        FROM in_order io
+                                        LEFT JOIN placed_order po ON io.placed_order_id = po.placed_order_id
+                                        JOIN food f ON io.FOOD_ID = f.FOOD_ID
+                                        WHERE io.IN_ORDER_STATUS != 'Delivered' 
+                                        AND io.PRSN_ID = '$PRSN_ID'
+                                        AND po.placed_order_id IS NULL";
                                     } else {
-                                        $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, FOOD_STOCK, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
-                                        FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
+                                        // $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, FOOD_STOCK, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
+                                        // FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
+                                        $sql = "SELECT io.IN_ORDER_ID, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, f.FOOD_STOCK, io.PRSN_ID, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
+                                        FROM in_order io
+                                        LEFT JOIN placed_order po ON io.placed_order_id = po.placed_order_id
+                                        JOIN food f ON io.FOOD_ID = f.FOOD_ID
+                                        WHERE io.IN_ORDER_STATUS != 'Delivered' 
+                                        AND io.GUEST_ORDER_IDENTIFIER = '$GUEST_ID'
+                                        AND po.placed_order_id IS NULL";
                                     }
                                     $res = mysqli_query($conn, $sql);
                                     $count = mysqli_num_rows($res);

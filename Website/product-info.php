@@ -2,7 +2,12 @@
 
 @include 'constants.php';
 
-$PRSN_ID = $_SESSION['prsn_id'];
+if (isset($_SESSION['prsn_id'])) {
+    $PRSN_ID = $_SESSION['prsn_id'];
+} else {
+    $_SESSION['prsn_role'] = "Customer";
+    $GUEST_ID = $_SESSION['guest_id'];
+}
 
 $FOOD_ID = $_GET['FOOD_ID'];
 
@@ -10,7 +15,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     $quantity = $_POST['quantity'];
     $FOOD_PRICE = $_POST['price'];
 
-    $sql = "SELECT * FROM in_order WHERE FOOD_ID = $FOOD_ID AND PRSN_ID = $PRSN_ID";
+    if (isset($_SESSION['prsn_id'])) {
+        $sql = "SELECT * FROM in_order WHERE FOOD_ID = $FOOD_ID AND PRSN_ID = $PRSN_ID";
+    } else {     
+        $sql = "SELECT * FROM in_order WHERE FOOD_ID = $FOOD_ID AND GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";                                
+    }
+
     $res = mysqli_query($conn, $sql);
     $count = mysqli_num_rows($res);
 

@@ -3,7 +3,12 @@
 
 @include 'constants.php';
 
-$PRSN_ID = $_SESSION['prsn_id'];
+if (isset($_SESSION['prsn_id'])) {
+    $PRSN_ID = $_SESSION['prsn_id'];
+} else {
+    $_SESSION['prsn_role'] = "Customer";
+    $GUEST_ID = $_SESSION['guest_id'];
+}
 $PRSN_ROLE = $_SESSION['prsn_role'];
 
 ?>
@@ -32,7 +37,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
         <div class="header-container">
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
-                <div class="text">
+                <div class="text">  
                     <h1>Fat Rap's Barbeque's Online Store</h1>
                 </div>
             </div>
