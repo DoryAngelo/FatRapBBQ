@@ -28,16 +28,18 @@ if ($count > 0) {
     }
 }
 
-if (isset($_POST['submit'])) {
-    $PLACED_ORDER_TRACKER =  mysqli_real_escape_string($conn, $_POST['track-order']);
-    $_SESSION['tracker'] = $_POST['track-order'];
-    $select = " SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'";
-    $res = mysqli_query($conn, $select);
-    $count = mysqli_num_rows($res);
-    if ($count > 0) {
-        header('location:track-order.php');
-    }
-}
+// if (isset($_POST['submit'])) {
+//     $PLACED_ORDER_TRACKER = mysqli_real_escape_string($conn, $_POST['track-order']);
+//     $_SESSION['tracker'] = $_POST['track-order'];
+//     $select = "SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'";
+//     $res = mysqli_query($conn, $select);
+//     $count = mysqli_num_rows($res);
+//     if ($count > 0) {
+//         header('location: track-order.php');
+//     } else {
+//         echo '<div class="error">Order not found in the database.</div>';
+//     }
+// }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     $quantity = $_POST['quantity'];
@@ -249,7 +251,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                         <h2>Order Number</h2>
                         <hr>
                         <input name="track-order" id="order-number" type="text" placeholder="0123456789">
-                        <div class="error" id="error-message"></div>
+                        <div class="error" id="error-message">
+                            <?php
+                            if (isset($_POST['submit'])) {
+                                $PLACED_ORDER_TRACKER = mysqli_real_escape_string($conn, $_POST['track-order']);
+                                $_SESSION['tracker'] = $_POST['track-order'];
+                                $select = "SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'";
+                                $res = mysqli_query($conn, $select);
+                                $count = mysqli_num_rows($res);
+                                if ($count > 0) {
+                                    // If order is found, perform JavaScript redirection
+                                    echo '<script>window.location.href = "track-order.php";</script>';
+                                    exit(); // Ensure no further PHP execution after redirection
+                                } else {
+                                    echo '<div class="error">Order does not exist.</div>';
+                                }
+                            }
+                            ?>
+
+                        </div>
                     </div>
                     <button name="submit" type="submit" class="button">Track Order</button>
                 </form>
@@ -259,6 +279,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                         var orderNumber = document.getElementById('order-number').value.trim();
                         var errorMessage = document.getElementById('error-message');
 
+                        // Regular expression to match the correct format
                         var regex = /^[0-9a-fA-F]{16}$/;
 
                         if (orderNumber === "") {
@@ -268,7 +289,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                             errorMessage.innerText = "Invalid order number format.";
                             return false;
                         } else {
-                            errorMessage.innerText = "";
+                            errorMessage.innerText = ""; // Clear error message
                             return true;
                         }
                     }
