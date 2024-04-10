@@ -119,10 +119,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                </li>
-                    <?php
+                    </li>
+                <?php
                 } else {
-                    ?>
+                ?>
                     <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
                 <?php
                 }
@@ -239,15 +239,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                     <h1>Want to track your order?</h1>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictumsum dolor sit amet</p>
                 </div>
-                <form class="form" method="post">
+                <style>
+                    .error {
+                        color: red;
+                    }
+                </style>
+                <form class="form" method="post" onsubmit="return validateForm()">
                     <div class="top input-control">
                         <h2>Order Number</h2>
                         <hr>
-                        <input name="track-order" type="text" placeholder="0123456789">
-                        <div class="error"></div>
+                        <input name="track-order" id="order-number" type="text" placeholder="0123456789">
+                        <div class="error" id="error-message"></div>
                     </div>
                     <button name="submit" type="submit" class="button">Track Order</button>
                 </form>
+
+                <script>
+                    function validateForm() {
+                        var orderNumber = document.getElementById('order-number').value.trim();
+                        var errorMessage = document.getElementById('error-message');
+
+                        var regex = /^[0-9a-fA-F]{16}$/;
+
+                        if (orderNumber === "") {
+                            errorMessage.innerText = "Please enter an order number.";
+                            return false;
+                        } else if (!regex.test(orderNumber)) {
+                            errorMessage.innerText = "Invalid order number format.";
+                            return false;
+                        } else {
+                            errorMessage.innerText = "";
+                            return true;
+                        }
+                    }
+                </script>
             </div>
             </div>
         </section>
