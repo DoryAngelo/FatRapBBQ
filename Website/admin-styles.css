@@ -187,9 +187,13 @@ table .error {
     padding: 1.5rem 0;
 }
 
-table .edit {
+table .edit, table .trash {
     color: var(--sidemenu-blue-text);
     font-weight: bold;
+}
+
+table .trash {
+    text-decoration: none;
 }
 
 .app-det-tbl {
@@ -390,7 +394,6 @@ p.notif {
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
-    border: 1px solid red;
 }
 
 a.big-font {
@@ -853,7 +856,6 @@ span.warning i {
 .section-wrapper {
     max-width: 600px;
     margin: 0 auto;
-    border: 1px solid red;
 }
 
 .block{

@@ -81,6 +81,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                     <th class="header">Stock</th>
                                     <th class="header">Food Type</th>
                                     <th class="header">Action</th>
+                                    <th class="header"></th>
                                 </tr>
                                 <?php
 
@@ -120,6 +121,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                             </td>
                                             <td data-cell="Price"><?php echo $FOOD_TYPE ?></td>
                                             <td data-cell="Action"><a href="<?php echo SITEURL ;?>admin-edit-product.php?FOOD_ID=<?php echo $FOOD_ID?>&CTGY_ID=<?php echo $CTGY_ID?>"  class="edit">Edit</a></td>
+                                            <td data-cell="Action"><a href="delete_in_order.php?IN_ORDER_ID=<?php echo $IN_ORDER_ID; ?>" class="bx bxs-trash-alt trash"></a></td>
                                         </tr>
                                     <?php
                                     }
