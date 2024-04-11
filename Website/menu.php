@@ -9,6 +9,7 @@ if (isset($_SESSION['prsn_id'])) {
     $_SESSION['prsn_role'] = "Customer";
     $GUEST_ID = $_SESSION['guest_id'];
 }
+
 $PRSN_ROLE = $_SESSION['prsn_role'];
 
 ?>
@@ -68,11 +69,13 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
         <section class="section menu">
             <div class="section-heading">
                 <?php
-                if ($PRSN_ROLE == "Wholesaler")
+                if ($PRSN_ROLE == "Wholesaler") {
                 ?>
-                <h1>WHOLESALE DEALS!!!</h1>
+                    <h1>WHOLESALE DEALS!!!</h1>
                 <?php
+                }
                 ?>
+
                 <h2>Menu</h2>
             </div>
             <section class="section-body">
