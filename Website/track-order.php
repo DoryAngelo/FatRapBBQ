@@ -182,12 +182,16 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                 <button id="next">Next</button>
                             </div> -->
                         </div>
-                        <!-- <p>Order status: PLACED (for testing)</p> this line is used for backend testing and will be removed later on -->
-                        <h3 class="block-heading order-status">Your order has been approved</h2>
-                            <p class="order-status-desc">Lorem ipsum dolor sit amet, consectetur adipiscing Lorem ipsum
-                                dolor sit amet</p>
+                        <div class="order-status-desc">
+                            <div>
+                                <h3 class="block-heading order-status">Your order has been approved</h2>
+                                <p class="order-status-desc">Lorem ipsum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit amet</p>
+                            </div>
+                            <button class="button" id="generate-receipt-btn">Generate Receipt</button>
+                        </div>
                     </div>
                 </section>
+
                 <!-- section directly below this will only appear if order status is approved -->
                 <section class="block" id="payment-section">
                     <form action="" method="post">
@@ -203,6 +207,7 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                         </div>
                     </form>
                 </section>
+
                 <section class="block">
                     <h3 class="block-heading">Order Summary</h3>
                     <div class="block-body">

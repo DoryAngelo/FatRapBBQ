@@ -143,12 +143,13 @@ div.circle {
     text-align: center;
     color: var(--green);
 }
-.order-status::before {
+
+/* .order-status::before {
     content: "";
     border: 1px solid var(--gray);
     display: block;
     margin-bottom: 1.25rem;
-}
+} */
 
 .track-order #status {
     display: none;
@@ -684,6 +685,37 @@ a.back {
     background: #87a5f8;
     cursor: not-allowed;
   }
+
+  div.order-status-desc {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--gray);
+    padding-top: 1.25rem;
+    }
+
+  .button {
+    width: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 1.3rem;
+    font-weight: bold;
+    border-radius: 30px;
+    background-color: var(--primary);
+    text-decoration: none;
+    color: var(--text);
+    border: none;
+}
+
+.button:hover {
+    background-color: var(--active-primary);
+    cursor: pointer;
+}
+
+#generate-receipt-btn {
+    display: none;
+}
 
   @media only screen and (width <= 860px) {
     main {

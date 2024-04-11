@@ -7,6 +7,7 @@ const circles = document.querySelectorAll(".circle"),
       buttons = document.querySelectorAll("button"),
       pstatus = document.getElementById("status").innerHTML,
       sectionToShowHide = document.getElementById("payment-section"),
+      receiptButton = document.getElementById("generate-receipt-btn"),
       submitButton = document.getElementById("submit"),
       promptMessage = document.querySelector(".prompt");
 
@@ -57,6 +58,14 @@ const updateSteps = (e) => {
         // }
 
   // Show/hide the payment section based on the current step
+    if (currentStep >= 3) {
+      receiptButton.style.display = "block"; // Show the section
+    } else {
+      receiptButton.style.display = "none"; // Hide the section
+    }
+  
+
+  // Show/hide the payment section based on the current step
   if (currentStep === 2) {
     sectionToShowHide.style.display = "block"; // Show the section
 
@@ -76,7 +85,8 @@ const updateSteps = (e) => {
   } else {
     sectionToShowHide.style.display = "none"; // Hide the section
   }
-};
+
+ }; 
 
 updateSteps();
 
