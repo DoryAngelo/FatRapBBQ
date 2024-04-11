@@ -118,17 +118,14 @@ $countCa = mysqli_num_rows($resCa);
                                 <a class="box blue" href="<?php echo SITEURL ;?>employee-to-prepare-orders.php">
                                     <p>To Prepare</p>
                                     <h1><?php echo $countPa?></h1>
-                                    <p class="notif">+99</p>
                                 </a>
                                 <a class="box" href="<?php echo SITEURL ;?>employee-preparing-orders.php">
                                     <p>Currently Preparing</p>
                                     <h1><?php echo $countPr?></h1>
-                                    <p class="notif">+99</p>
                                 </a>
                                 <a class="box" href="<?php echo SITEURL ;?>employee-to-deliver-orders.php">
                                     <p>To Deliver</p>
                                     <h1><?php echo $countFD?></h1>
-                                    <p class="notif">+99</p>
                                 </a>
                             </div>
                         </section>

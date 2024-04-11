@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
         $_SESSION['prsn_id'] = $row['PRSN_ID'];
         $_SESSION['prsn_role'] = $row['PRSN_ROLE'];
 
-        if ($PRSN_ROLE == "Customer") {
+        if ($PRSN_ROLE == "Customer" || $PRSN_ROLE == "Wholesaler") {
             header('location:cus-home-page.php');
         } else if ($PRSN_ROLE == "Admin") {
             header('location:admin-home.php');

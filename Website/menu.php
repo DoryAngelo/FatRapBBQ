@@ -37,7 +37,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
         <div class="header-container">
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
-                <div class="text">  
+                <div class="text">
                     <h1>Fat Rap's Barbeque's Online Store</h1>
                 </div>
             </div>
@@ -45,7 +45,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
             <label class='menu-button-container' for="menu-toggle">
                 <div class='menu-button'></div>
             </label>
-            <ul class = 'menubar'>
+            <ul class='menubar'>
                 <li><a href="<?php echo SITEURL; ?>cus-home-page.php">Home</a></li>
                 <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
                 <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
@@ -53,10 +53,10 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                </li>
-                    <?php
+                    </li>
+                <?php
                 } else {
-                    ?>
+                ?>
                     <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
                 <?php
                 }
@@ -67,35 +67,41 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
     <main>
         <section class="section menu">
             <div class="section-heading">
+                <?php
+                if ($PRSN_ROLE == "Wholesaler")
+                ?>
+                <h1>WHOLESALE DEALS!!!</h1>
+                <?php
+                ?>
                 <h2>Menu</h2>
             </div>
             <section class="section-body">
-            <?php
+                <?php
 
-            $sql = "SELECT * FROM food WHERE FOOD_ACTIVE = 'Yes' AND FOOD_TYPE = '$PRSN_ROLE'";
-            $res = mysqli_query($conn, $sql);
-            $count = mysqli_num_rows($res);
-            if ($count > 0) {
-                while ($row = mysqli_fetch_assoc($res)) {
-                    $FOOD_ID = $row['FOOD_ID'];
-                    $FOOD_NAME = $row['FOOD_NAME'];
-                    $FOOD_IMG = $row['FOOD_IMG'];
-                    $FOOD_PRICE = $row['FOOD_PRICE'];
-            ?>
-                    <a class="menu-item" href="<?php echo SITEURL; ?>product-info.php?FOOD_ID=<?php echo $FOOD_ID?>">
-                        <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
-                        <div class="text">
-                            <p class="name"><?php echo $FOOD_NAME?></p>
-                            <div class="inline">
-                                <h2>₱<?php echo $FOOD_PRICE ?></h3>
-                                    <p>1 stick</p>
+                $sql = "SELECT * FROM food WHERE FOOD_ACTIVE = 'Yes' AND FOOD_TYPE = '$PRSN_ROLE'";
+                $res = mysqli_query($conn, $sql);
+                $count = mysqli_num_rows($res);
+                if ($count > 0) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                        $FOOD_ID = $row['FOOD_ID'];
+                        $FOOD_NAME = $row['FOOD_NAME'];
+                        $FOOD_IMG = $row['FOOD_IMG'];
+                        $FOOD_PRICE = $row['FOOD_PRICE'];
+                ?>
+                        <a class="menu-item" href="<?php echo SITEURL; ?>product-info.php?FOOD_ID=<?php echo $FOOD_ID ?>">
+                            <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
+                            <div class="text">
+                                <p class="name"><?php echo $FOOD_NAME ?></p>
+                                <div class="inline">
+                                    <h2>₱<?php echo $FOOD_PRICE ?></h3>
+                                        <p>1 stick</p>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-            <?php
+                        </a>
+                <?php
+                    }
                 }
-            }
-            ?>
+                ?>
             </section>
         </section>
         <!-- <section class="section menu">

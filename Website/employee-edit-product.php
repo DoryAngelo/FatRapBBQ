@@ -147,7 +147,7 @@ $CTGY_ID = $_GET['CTGY_ID'];
                                         </div>
                                     </div>
                                     <!-- <input type="hidden" name="FOOD_IMG" value="<?php echo $FOOD_IMG; ?>"> -->
-                                    <button class="big-btn" name="submit">Add Product</button>
+                                    <a href="<?php echo SITEURL; ?>employee-add-product.php" class="page-btn"><button class="big-btn">Add a new product</button></a>
                                 </form>
                             </section>
                         </section>
