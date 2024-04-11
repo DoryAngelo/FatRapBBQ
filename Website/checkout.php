@@ -46,7 +46,7 @@ if (isset($_POST['submit'])) {
     $random = random_bytes(8);
     $PLACED_ORDER_TRACKER = bin2hex($random);
 
-    $PLACED_ORDER_NOTE = $_POST['note'];
+    $PLACED_ORDER_NOTE = $_POST['customer-note'];
 
     $select = " SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'";
 

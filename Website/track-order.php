@@ -61,10 +61,10 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                </li>
-                    <?php
+                    </li>
+                <?php
                 } else {
-                    ?>
+                ?>
                     <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
                 <?php
                 }
@@ -185,9 +185,39 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                         <div class="order-status-desc">
                             <div>
                                 <h3 class="block-heading order-status">Your order has been approved</h2>
-                                <p class="order-status-desc">Lorem ipsum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit amet</p>
+                                    <p class="order-status-desc">Lorem ipsum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit amet</p>
                             </div>
-                            <button class="button" id="generate-receipt-btn">Generate Receipt</button>
+                            <form action="generate_receipt.php" method="GET" id="generate-receipt-form">
+                                <input type="hidden" name="id" value="<?php echo $PLACED_ORDER_ID ?>">
+                                <button type="submit" class="button" id="generate-receipt-btn" name="receipt">Generate Receipt</button>
+                            </form>
+                            <script>
+                                document.getElementById('generate-receipt-form').addEventListener('submit', function(event) {
+                                    event.preventDefault(); // Prevent the form from submitting normally
+
+                                    // Submit the form via AJAX
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.open('GET', 'generate-receipt.php?id=<?php echo $PLACED_ORDER_ID ?>', true);
+                                    xhr.responseType = 'blob'; // Set the response type to Blob
+                                    xhr.onload = function() {
+                                        if (this.status === 200) {
+                                            var blob = new Blob([this.response], {
+                                                type: 'application/pdf'
+                                            }); // Create a Blob from the response
+                                            var url = window.URL.createObjectURL(blob); // Create a URL for the Blob
+                                            var a = document.createElement('a'); // Create a temporary <a> element
+                                            a.href = url; // Set the href attribute to the URL
+                                            a.download = 'receipt.pdf'; // Set the download attribute to the desired file name
+                                            document.body.appendChild(a); // Append the <a> element to the document body
+                                            a.click(); // Simulate a click on the <a> element
+                                            window.URL.revokeObjectURL(url); // Revoke the URL to release the Blob
+                                            document.body.removeChild(a); // Remove the <a> element from the document body
+                                        }
+                                    };
+                                    xhr.send(); // Send the AJAX request
+                                });
+                            </script>
+
                         </div>
                     </div>
                 </section>
@@ -344,5 +374,6 @@ if (isset($_POST['submit'])) {
     mysqli_query($conn, $update);
     // header('location:track-order.php');
 }
+
 
 ?>
