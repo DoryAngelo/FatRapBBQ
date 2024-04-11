@@ -93,32 +93,32 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                 <div class="grid-container">
                                     <div class="box green">
                                         <p>Available</p>
-                                        <h1>10</h1>
+                                        <div id="numAvail"><h1>10</h1></div>
                                         <p class="bottom">days</p>
                                     </div>
                                     <div class="box red">
                                         <p>Fully Booked</p>
-                                        <h1>10</h1>
+                                        <div id="numFB"><h1>10</h1></div>
                                         <p class="bottom">days</p>
                                     </div>
                                     <div class="box">
                                         <p>Closed</p>
-                                        <h1>10</h1>
+                                        <div id="numClosed"><h1>10</h1></div>
                                         <p class="bottom">days</p>
                                     </div>
                                 </div>
                             </section>
                             <section class="group block">
                                 <div class="top">
-                                    <h3>November 1</h3>
+                                    <div id="selectedDate"><h3>Select a Date</h3></div>
                                     <hr>
                                     <div class="btn-wrapper">
-                                        <button class="button green">Available</button>
-                                        <button class="button red">Fully Booked</button>
-                                        <button class="button black">Closed</button>
+                                        <button id="availBtn" class="button green">Available</button>
+                                        <button id="fullBtn" class="button red">Fully Booked</button>
+                                        <button id="closedBtn" class="button black">Closed</button>
                                     </div>
                                 </div>
-                                <button class="save-btn">Save</button>
+                                <button id="saveBtn" class="save-btn">Save</button>
                             </section>
                         </section>
                     </section>

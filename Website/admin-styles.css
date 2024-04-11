@@ -811,11 +811,31 @@ a.back {
     background-color: var(--light-blue);
 }
 
-.date:hover,
+/* .date:hover,
 .date.active {
     background: var(--db-highlight-blue);
     color: white;
+} */
+
+
+
+.date.available{
+    background: var(--available);
+    color: white;
 }
+.date.fullybooked{
+    background: var(--fully-booked);
+    color: white;
+}
+ .date.closed{
+    background: var(--closed);
+    color: white;
+} 
+.date.active:focus-within{
+    background: var(--active-primary);
+    color: black;
+} 
+
 
 .date.inactive {
     color: #7297BD;
@@ -976,6 +996,17 @@ span.warning i {
 
 .layout section, a.back {
     width: 100%;
+}
+
+.button.green:focus {
+    background-color: var(--active-primary);
+}
+.button.red:focus {
+    background-color: var(--active-primary);
+}
+.button.black:focus {
+    background-color: var(--active-primary);
+    color: black;
 }
 
 @media only screen and (width <= 1060px) {
