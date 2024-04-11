@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 11, 2024 at 01:31 PM
+-- Generation Time: Apr 11, 2024 at 02:24 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -152,10 +152,10 @@ CREATE TABLE `person` (
 --
 
 INSERT INTO `person` (`PRSN_ID`, `PRSN_NAME`, `PRSN_EMAIL`, `PRSN_PASSWORD`, `PRSN_PHONE`, `PRSN_ROLE`) VALUES
-(15, 'User', 'user@gmail.com', '7dc715960b177f323db34eacd63048f7', '09123456789', 'Customer'),
-(16, 'Admin', 'admin@gmail.com', '21232f297a57a5a743894a0e4a801fc3', '09123456789', 'Admin'),
-(25, 'Test', 'test@gmail.com', '147538da338b770b61e592afc92b1ee6', '09123456789', 'Employee'),
-(33, 'Wholesaler', 'wholesaler@gmail.com', '340df6ec49a0d5d9ef39693712986569', '09123456789', 'Wholesaler'),
+(15, 'User', 'user@gmail.com', '4792487cdd9c183bfab5e48780837552', '09123456789', 'Customer'),
+(16, 'Admin', 'admin@gmail.com', '2cdcf3ae8d662d2141f8f4b0d5f0465c', '09123456789', 'Admin'),
+(25, 'Employee', 'employee@gmail.com', 'd3d73db423372e0bea89ca659ea9d115', '09123456789', 'Employee'),
+(33, 'Wholesaler', 'wholesaler@gmail.com', '4ff918a8bde60d5bda668f617164af08', '09123456789', 'Wholesaler'),
 (38, 'Employee2', 'employee2@gmail.com', 'fa5473530e4d1a5a1e1eb53d2fedb10c', '09123456789', 'Employee'),
 (41, 'WholesalerTest', 'wtest@gmail.com', '9b92b1d0fa5c259e9a5eb4a1872d8725', '09123456789', 'Wholesaler'),
 (48, 'New', 'new@gmail.com', '70efb8810172bcaceb5b475652600ed0', '09123456789', 'Customer');
