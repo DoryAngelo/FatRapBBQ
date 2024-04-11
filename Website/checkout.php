@@ -315,13 +315,13 @@ if (isset($_POST['submit'])) {
                                 <div class="block-body radio">
                                     <label for=""><input id="" type="radio" name="" class="" /> Today</label>
                                     <label for=""><input id="" type="radio" name="" class="" /> Select a date:</label>
-                                    <input type="date" name="date">
+                                    <input type="date" name="date" min="2024-04-01" max="2024-05-31">
                                 </div>
                         </div>
                         <div class="block time-slot">
                             <h3 class="block-heading">Time Slot</h2>
                                 <div class="block-body">
-                                    <input type="time" name="time">
+                                    <input type="time" name="time" min="09:00:00" max="17:00:00">
                                 </div>
                         </div>
                     </section>
