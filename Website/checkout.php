@@ -102,7 +102,7 @@ if (isset($_POST['submit'])) {
         }
 
         $res4 = mysqli_query($conn, $sql4);
-        if ($res4 && mysqli_num_rows($res4) > 0) {  
+        if ($res4 && mysqli_num_rows($res4) > 0) {
             $row5 = mysqli_fetch_assoc($res4);
             $PLACED_ORDER_ID = $row5['PLACED_ORDER_ID'];
 
@@ -175,7 +175,13 @@ if (isset($_POST['submit'])) {
         </div>
     </header>
     <main>
-        <form method="POST">
+        <style>
+            .error-text {
+                color: yellow;
+                font-size: 10px;
+            }
+        </style>
+        <form method="POST" onsubmit="return validateInputs()">
             <section class="section">
                 <div class="section-heading">
                     <h2>Checkout</h2>
@@ -267,19 +273,23 @@ if (isset($_POST['submit'])) {
                                 <h3 class="block-heading">Contact Information</h3>
                                 <div class="input-grp">
                                     <p>First Name</p>
-                                    <input type="text" name="first-name"> <!-- value="<?php echo $PRSN_NAME ?>" -->
+                                    <input type="text" id="first-name" name="first-name">
+                                    <div class="error"></div>
                                 </div>
                                 <div class="input-grp">
                                     <p>Last Name</p>
-                                    <input type="text" name="last-name"> <!-- value="<?php echo $PRSN_NAME ?>" -->
+                                    <input type="text" id="last-name" name="last-name">
+                                    <div class="error"></div>
                                 </div>
                                 <div class="input-grp">
                                     <p>Contact Number</p>
-                                    <input type="text" name="contact-number"> <!-- value="<?php echo $PRSN_PHONE ?>" -->
+                                    <input type="text" id="contact-number" name="contact-number">
+                                    <div class="error"></div>
                                 </div>
                                 <div class="input-grp">
                                     <p>Email</p>
-                                    <input type="email" name="email"> <!-- value="<?php echo $PRSN_EMAIL ?>" -->
+                                    <input type="email" id="email" name="email">
+                                    <div class="error"></div>
                                 </div>
                             </div>
                             <hr>
@@ -287,23 +297,28 @@ if (isset($_POST['submit'])) {
                                 <h3 class="block-heading">Address</h3>
                                 <div class="input-grp">
                                     <p>Region</p>
-                                    <input type="text" name="region"> <!-- value="" -->
+                                    <input type="text" name="region">
+                                    <div class="error"></div>
                                 </div>
                                 <div class="input-grp">
                                     <p>Province</p>
-                                    <input type="text" name="province"> <!-- value="" -->
+                                    <input type="text" name="province">
+                                    <div class="error"></div>
                                 </div>
                                 <div class="input-grp">
                                     <p>City</p>
-                                    <input type="text" name="city"> <!-- value="" -->
+                                    <input type="text" name="city">
+                                    <div class="error"></div>
                                 </div>
                                 <div class="input-grp">
                                     <p>Barangay</p>
-                                    <input type="text" name="barangay"> <!-- value="" -->
+                                    <input type="text" name="barangay">
+                                    <div class="error"></div>
                                 </div>
                                 <div class="input-grp">
                                     <p>House no./Bldg./Street</p>
-                                    <input type="text" name="street"> <!-- value="" -->
+                                    <input type="text" name="street">
+                                    <div class="error"></div>
                                 </div>
                             </div>
                         </div>
@@ -316,12 +331,14 @@ if (isset($_POST['submit'])) {
                                     <label for=""><input id="" type="radio" name="" class="" /> Today</label>
                                     <label for=""><input id="" type="radio" name="" class="" /> Select a date:</label>
                                     <input type="date" name="date" min="2024-04-01" max="2024-05-31">
+                                    <div class="error"></div>
                                 </div>
                         </div>
                         <div class="block time-slot">
                             <h3 class="block-heading">Time Slot</h2>
                                 <div class="block-body">
                                     <input type="time" name="time" min="09:00:00" max="17:00:00">
+                                    <div class="error"></div>
                                 </div>
                         </div>
                     </section>
@@ -345,6 +362,147 @@ if (isset($_POST['submit'])) {
                 </section>
             </section>
         </form>
+        <script>
+            const firstNameInput = document.getElementById('first-name');
+            const lastNameInput = document.getElementById('last-name');
+            const emailInput = document.getElementById('email');
+            const numberInput = document.getElementById('contact-number');
+
+            const regionInput = document.getElementsByName('region')[0];
+            const provinceInput = document.getElementsByName('province')[0];
+            const cityInput = document.getElementsByName('city')[0];
+            const barangayInput = document.getElementsByName('barangay')[0];
+            const streetInput = document.getElementsByName('street')[0];
+
+            const dateInput = document.getElementsByName('date')[0];
+            const timeInput = document.getElementsByName('time')[0];
+
+            function setError(input, message) {
+                const errorDiv = input.nextElementSibling;
+                errorDiv.innerHTML = `<span class="error-text">${message}</span>`;
+            }
+
+            function clearError(input) {
+                const errorDiv = input.nextElementSibling;
+                errorDiv.innerHTML = ''; // Clear the error message
+            }
+
+            function validateInputs() {
+                let isValid = true;
+
+                const firstNameValue = firstNameInput.value.trim();
+                const lastNameValue = lastNameInput.value.trim();
+                const emailValue = emailInput.value.trim();
+                const numberValue = numberInput.value.trim();
+
+                const regionValue = regionInput.value.trim();
+                const provinceValue = provinceInput.value.trim();
+                const cityValue = cityInput.value.trim();
+                const barangayValue = barangayInput.value.trim();
+                const streetValue = streetInput.value.trim();
+
+                const dateValue = dateInput.value.trim();
+                const timeValue = timeInput.value.trim();
+
+                const nameRegex = /^[a-zA-Z\s]+$/;
+                const numberRegex = /^09\d{9}$/;
+                const passwordRegex = /^[a-zA-Z0-9]{8,}$/; // Password should not contain special characters
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Email must contain an '@'
+
+                if (firstNameValue === '') {
+                    setError(firstNameInput, 'Please enter your name');
+                    isValid = false;
+                } else if (!nameRegex.test(firstNameValue)) {
+                    setError(firstNameInput, 'Name must contain only letters');
+                    isValid = false;
+                } else {
+                    clearError(firstNameInput);
+                }
+
+                if (lastNameValue === '') {
+                    setError(lastNameInput, 'Please enter your name');
+                    isValid = false;
+                } else if (!nameRegex.test(lastNameValue)) {
+                    setError(lastNameInput, 'Name must contain only letters');
+                    isValid = false;
+                } else {
+                    clearError(lastNameInput);
+                }
+
+
+                if (emailValue === '') {
+                    setError(emailInput, 'Please enter your email');
+                    isValid = false;
+                } else if (!emailRegex.test(emailValue)) {
+                    setError(emailInput, 'Invalid email format');
+                    isValid = false;
+                } else {
+                    clearError(emailInput);
+                }
+
+                if (numberValue === '') {
+                    setError(numberInput, 'Please enter your number');
+                    isValid = false;
+                } else if (!numberRegex.test(numberValue)) {
+                    setError(numberInput, 'Invalid number');
+                    isValid = false;
+                } else {
+                    clearError(numberInput);
+                }
+
+                if (regionValue === '') {
+                    setError(regionInput, 'Please enter your region');
+                    isValid = false;
+                } else {
+                    clearError(regionInput);
+                }
+
+                if (provinceValue === '') {
+                    setError(provinceInput, 'Please enter your province');
+                    isValid = false;
+                } else {
+                    clearError(provinceInput);
+                }
+
+                if (cityValue === '') {
+                    setError(cityInput, 'Please enter your city');
+                    isValid = false;
+                } else {
+                    clearError(cityInput);
+                }
+
+                if (barangayValue === '') {
+                    setError(barangayInput, 'Please enter your barangay');
+                    isValid = false;
+                } else {
+                    clearError(barangayInput);
+                }
+
+                if (streetValue === '') {
+                    setError(streetInput, 'Please enter your street');
+                    isValid = false;
+                } else {
+                    clearError(streetInput);
+                }
+
+                if (dateValue === '') {
+                    setError(dateInput, 'Please enter your date');
+                    isValid = false;
+                } else {
+                    clearError(dateInput);
+                }
+
+                if (timeValue === '') {
+                    setError(timeInput, 'Please enter your time');
+                    isValid = false;
+                } else {
+                    clearError(timeInput);
+                }
+
+
+                return isValid;
+            }
+        </script>
     </main>
     <footer>
         <div class="footer-container">
