@@ -147,10 +147,12 @@ if (isset($_POST['submit'])) {
                     if (passwordValue === '') {
                         setError(passwordInput, 'Please enter your password');
                         isValid = false;
-                    } else if (!passwordRegex.test(passwordValue)) {
+                    } 
+                    else if (!passwordRegex.test(passwordValue)) {
                         setError(passwordInput, 'Password should be at least 8 characters long and contain only alphanumeric characters');
                         isValid = false;
-                    } else {
+                    } 
+                    else {
                         clearError(passwordInput);
                     }
 

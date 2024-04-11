@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 10, 2024 at 09:51 AM
+-- Generation Time: Apr 11, 2024 at 01:31 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,18 @@ SET time_zone = "+00:00";
 --
 -- Database: `bbq`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `calendar`
+--
+
+CREATE TABLE `calendar` (
+  `CALENDAR_ID` int(16) UNSIGNED NOT NULL,
+  `CALANEDAR_AVAIL` varchar(50) NOT NULL,
+  `DATE_STATUS` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -101,7 +113,7 @@ CREATE TABLE `food` (
 INSERT INTO `food` (`FOOD_ID`, `CTGY_ID`, `FOOD_NAME`, `FOOD_PRICE`, `FOOD_DESC`, `FOOD_IMG`, `FOOD_STOCK`, `FOOD_ACTIVE`, `FOOD_TYPE`) VALUES
 (1, 1, 'Barbeque', 25.00, 'Lorem ipsum dolor', 'FOOD_IMAGE_Q.jpg', 138, 'Yes', 'Customer'),
 (6, 1, 'Isaw', 6.00, 'Isaw ng manok', 'FOOD_IMAGE_Isaw.jpg', 100, 'Yes', 'Customer'),
-(9, 1, 'Isaw', 5.00, 'Isaw ng manok', 'FOOD_IMAGE_Isaw.jpg', 100, 'Yes', 'Customer');
+(9, 1, 'Isaw2', 5.00, 'Isaw ng manok', 'FOOD_IMAGE_Isaw.jpg', 100, 'Yes', 'Customer');
 
 -- --------------------------------------------------------
 
@@ -119,14 +131,6 @@ CREATE TABLE `in_order` (
   `PLACED_ORDER_ID` int(18) UNSIGNED DEFAULT NULL,
   `GUEST_ORDER_IDENTIFIER` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `in_order`
---
-
-INSERT INTO `in_order` (`IN_ORDER_ID`, `FOOD_ID`, `PRSN_ID`, `IN_ORDER_QUANTITY`, `IN_ORDER_TOTAL`, `IN_ORDER_STATUS`, `PLACED_ORDER_ID`, `GUEST_ORDER_IDENTIFIER`) VALUES
-(40, 1, 15, 4, 100.00, 'Ordered', 31, ''),
-(41, 1, 0, 7, 175.00, 'Ordered', 32, '3ac0494393716275a3b4c8f986ef6682');
 
 -- --------------------------------------------------------
 
@@ -153,7 +157,8 @@ INSERT INTO `person` (`PRSN_ID`, `PRSN_NAME`, `PRSN_EMAIL`, `PRSN_PASSWORD`, `PR
 (25, 'Test', 'test@gmail.com', '147538da338b770b61e592afc92b1ee6', '09123456789', 'Employee'),
 (33, 'Wholesaler', 'wholesaler@gmail.com', '340df6ec49a0d5d9ef39693712986569', '09123456789', 'Wholesaler'),
 (38, 'Employee2', 'employee2@gmail.com', 'fa5473530e4d1a5a1e1eb53d2fedb10c', '09123456789', 'Employee'),
-(41, 'WholesalerTest', 'wtest@gmail.com', '9b92b1d0fa5c259e9a5eb4a1872d8725', '09123456789', 'Wholesaler');
+(41, 'WholesalerTest', 'wtest@gmail.com', '9b92b1d0fa5c259e9a5eb4a1872d8725', '09123456789', 'Wholesaler'),
+(48, 'New', 'new@gmail.com', '70efb8810172bcaceb5b475652600ed0', '09123456789', 'Customer');
 
 -- --------------------------------------------------------
 
@@ -184,8 +189,11 @@ CREATE TABLE `placed_order` (
 --
 
 INSERT INTO `placed_order` (`PLACED_ORDER_ID`, `PRSN_ID`, `CUS_NAME`, `CUS_NUMBER`, `CUS_EMAIL`, `PLACED_ORDER_DATE`, `PLACED_ORDER_TOTAL`, `DELIVERY_ADDRESS`, `DELIVERY_DATE`, `PLACED_ORDER_STATUS`, `PLACED_ORDER_CONFIRMATION`, `PLACED_ORDER_TRACKER`, `PLACED_ORDER_NOTE`, `REFERENCE_NUMBER`, `GUEST_ORDER_IDENTIFIER`) VALUES
-(31, 15, 'test test', '09123456789', 'test@gmail.com', '2024-04-10 01:40:37pm', 100.00, 'test, test, test, test, test', '2024-04-30 19:46', 'Placed', '', '7184df9a348f3028', 'fsafsafsafsa', '', ''),
-(32, 0, 'dsadsa dsadsa', '09123456789', 'test@gmail.com', '2024-04-10 01:52:16pm', 175.00, 'dsadsa, dasds, dasds, dasd, dsasa', '2024-04-30 19:58', 'Placed', '', '39c18ce6b5f0107c', 'hgdfhfgh', '', '3ac0494393716275a3b4c8f986ef6682');
+(56, 15, ' ', '', '', '2024-04-11 05:48:41pm', 5.00, ', , , , ', ' ', 'Placed', '', '977a159e369c1fb9', 'Enter text here...', '', ''),
+(57, 15, ' ', '', '', '2024-04-11 05:52:28pm', 192.00, ', , , , ', ' ', 'Placed', '', '3e54d132e442de33', 'Enter text here...', '', ''),
+(58, 15, ' ', '', '', '2024-04-11 06:04:53pm', 175.00, ', , , , ', ' ', 'Preparing', '', 'f484335a5246a943', 'Enter text here...', '', ''),
+(59, 15, ' ', '', '', '2024-04-11 06:06:13pm', 200.00, ', , , , ', ' ', 'Placed', '', '9cca5a5c65db5011', 'Enter text here...', '', ''),
+(60, 15, ' ', '', '', '2024-04-11 06:07:38pm', 180.00, ', , , , ', ' ', 'Preparing', '', '03d7f292bb0853c4', 'Enter text here...', '', '');
 
 -- --------------------------------------------------------
 
@@ -213,6 +221,12 @@ INSERT INTO `wholesaler` (`WHL_ID`, `PRSN_ID`, `WHL_DISC`, `WHL_IMAGE`, `DATE_OF
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `calendar`
+--
+ALTER TABLE `calendar`
+  ADD PRIMARY KEY (`CALENDAR_ID`);
 
 --
 -- Indexes for table `category`
@@ -267,6 +281,12 @@ ALTER TABLE `wholesaler`
 --
 
 --
+-- AUTO_INCREMENT for table `calendar`
+--
+ALTER TABLE `calendar`
+  MODIFY `CALENDAR_ID` int(16) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
@@ -294,19 +314,19 @@ ALTER TABLE `food`
 -- AUTO_INCREMENT for table `in_order`
 --
 ALTER TABLE `in_order`
-  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
 
 --
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `PRSN_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `PRSN_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `placed_order`
 --
 ALTER TABLE `placed_order`
-  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `wholesaler`
