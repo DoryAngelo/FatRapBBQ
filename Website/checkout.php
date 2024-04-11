@@ -244,7 +244,6 @@ if (isset($_POST['submit'])) {
                     </section>
                     <!-- contact info block-->
                     <section class="block red-theme">
-
                         <div class="block-body contact-info-blk ">
                             <?php
 
@@ -327,13 +326,12 @@ if (isset($_POST['submit'])) {
                         </div>
                     </section>
                     <!-- customer note block-->
-                    <section class="wrapper red-theme">
-                        <div class="block left-side-dvd red-theme">
-                            <h3 class="block-heading">Note</h2>
-                                <div class="block-body radio">
-                                    <input type="textbox" name="note">
-                                </div>
-                        </div>
+                    <section class="block red-theme">
+                        <h3 class="block-heading">Additional Notes</h2>
+                            <div class="block-body">
+                                <label for="customer-note"></label>
+                                <textarea id="customer-note" class="customer-note" name="customer-note" rows="4">Enter text here...</textarea>
+                            </div>
                     </section>
                     <!-- note block-->
                     <div class="block note">

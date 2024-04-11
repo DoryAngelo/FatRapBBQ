@@ -314,27 +314,34 @@ table .error {
 }
 
 .contact-info-blk hr {
-    color: #c13f28;
+    border: 1px solid #ae3621;
 }
 
 .contact-info-blk p{
     font-weight: bold;
 }
 
-.contact-info-blk input, .track-order input{
+.contact-info-blk input, .track-order input, .customer-note{
     width: 100%;
     border-radius: 5px;
     border: none;
     outline: none;
     padding: 5px 13px;
     font-size: 1rem;
+}
+
+.contact-info-blk input, .track-order input {
     margin-top: 8px;
     margin-bottom: 1.25rem;
 }
 
-.contact-info-blk input {
+.contact-info-blk input, .customer-note {
     background-color: #D95039;
     color: white;
+}
+
+.customer-note { 
+    /* min-height: 5rem; */
 }
 
 .track-order #payment-section input {
@@ -371,6 +378,10 @@ table .error {
 .red-theme {
     color: var(--light-text);
     background-color: var(--red);
+}
+
+.customer-note {
+    width: 100%;
 }
 
 .note {
