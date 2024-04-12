@@ -303,7 +303,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                         <li><a href="#">Home</a></li>
                         <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
                         <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
-                        <li><a href="<?php echo SITEURL; ?>track-order.php">Track order</a></li>
+                        <li><a href="#track-order-section">Track order</a></li>
                     </ul>
                 </div>
             </div>

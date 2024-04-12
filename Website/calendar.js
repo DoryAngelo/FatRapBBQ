@@ -78,6 +78,7 @@ const updateCalendar = () => {
 }
 
 
+
 const selectedDateElement = document.getElementById('selectedDate');
 const availBtn = document.getElementById('availBtn');
 const fullBtn = document.getElementById('fullBtn');
