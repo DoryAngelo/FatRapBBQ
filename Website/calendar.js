@@ -67,6 +67,13 @@ const updateCalendar = () => {
         prevBtn.classList.remove("disabled");
     }
 
+    if (currentDate.getMonth()==maxDate.getMonth()){
+        nextBtn.classList.add("disabled");
+    }
+    else{
+        nextBtn.classList.remove("disabled");
+    }
+
     var sampleDivs = document.querySelectorAll('.date:not(.inactive)');
     for (var x = 0, sampleDivsLength = sampleDivs.length; x < sampleDivsLength; x++) {
         sampleDivs[x].addEventListener("click", function () {
