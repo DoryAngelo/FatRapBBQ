@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 12, 2024 at 03:16 AM
+-- Generation Time: Apr 12, 2024 at 05:41 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,11 +42,13 @@ INSERT INTO `calendar` (`CALENDAR_ID`, `CALENDAR_DATE`, `DATE_STATUS`) VALUES
 (21, 'April 24 2024', 'closed'),
 (22, 'April 22 2024', 'fullybooked'),
 (23, 'April 14 2024', 'available'),
-(25, 'April 18 2024', 'closed'),
+(25, 'April 18 2024', 'available'),
 (27, 'April 25 2024', 'fullybooked'),
-(28, 'April 13 2024', 'closed'),
+(28, 'April 13 2024', 'fullybooked'),
 (29, 'May 8 2024', 'available'),
-(30, 'April 19 2024', 'available');
+(30, 'April 19 2024', 'available'),
+(31, 'May 12 2024', 'fullybooked'),
+(32, 'April 20 2024', 'available');
 
 -- --------------------------------------------------------
 
@@ -122,6 +124,14 @@ CREATE TABLE `food` (
   `FOOD_TYPE` varchar(16) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `food`
+--
+
+INSERT INTO `food` (`FOOD_ID`, `CTGY_ID`, `FOOD_NAME`, `FOOD_PRICE`, `FOOD_DESC`, `FOOD_IMG`, `FOOD_STOCK`, `FOOD_ACTIVE`, `FOOD_TYPE`) VALUES
+(12, 0, 'Barbeque', 25.00, 'gfdgfdgfd', 'FOOD_IMAGE_Barbeque.jpg', 200, 'Yes', 'Customer'),
+(13, 0, 'Isaw', 5.00, 'dsadsad', 'FOOD_IMAGE_Isaw.jpg', 500, 'Yes', 'Customer');
+
 -- --------------------------------------------------------
 
 --
@@ -144,7 +154,9 @@ CREATE TABLE `in_order` (
 --
 
 INSERT INTO `in_order` (`IN_ORDER_ID`, `FOOD_ID`, `PRSN_ID`, `IN_ORDER_QUANTITY`, `IN_ORDER_TOTAL`, `IN_ORDER_STATUS`, `PLACED_ORDER_ID`, `GUEST_ORDER_IDENTIFIER`) VALUES
-(144, 9, 33, 1, 5.00, 'Ordered', NULL, '');
+(144, 9, 33, 1, 5.00, 'Ordered', NULL, ''),
+(145, 10, 15, 4, 100.00, 'Ordered', 72, ''),
+(146, 10, 15, 3, 75.00, 'Ordered', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -198,6 +210,13 @@ CREATE TABLE `placed_order` (
   `REFERENCE_NUMBER` varchar(50) NOT NULL,
   `GUEST_ORDER_IDENTIFIER` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `placed_order`
+--
+
+INSERT INTO `placed_order` (`PLACED_ORDER_ID`, `PRSN_ID`, `CUS_NAME`, `CUS_NUMBER`, `CUS_EMAIL`, `PLACED_ORDER_DATE`, `PLACED_ORDER_TOTAL`, `DELIVERY_ADDRESS`, `DELIVERY_DATE`, `PLACED_ORDER_STATUS`, `PLACED_ORDER_CONFIRMATION`, `PLACED_ORDER_TRACKER`, `PLACED_ORDER_NOTE`, `REFERENCE_NUMBER`, `GUEST_ORDER_IDENTIFIER`) VALUES
+(72, 15, 'New New', '09123456789', 'user@gmail.com', '2024-04-12 10:00:38am', 100.00, 'New, New, New, New, New', '2024-04-30 16:00', 'Completed', 'Confirmed', 'dd794419e3a41370', 'Enter text here...', '', '');
 
 -- --------------------------------------------------------
 
@@ -288,7 +307,7 @@ ALTER TABLE `wholesaler`
 -- AUTO_INCREMENT for table `calendar`
 --
 ALTER TABLE `calendar`
-  MODIFY `CALENDAR_ID` int(16) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `CALENDAR_ID` int(16) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -312,13 +331,13 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT for table `food`
 --
 ALTER TABLE `food`
-  MODIFY `FOOD_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `FOOD_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `in_order`
 --
 ALTER TABLE `in_order`
-  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
+  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
 
 --
 -- AUTO_INCREMENT for table `person`
@@ -330,7 +349,7 @@ ALTER TABLE `person`
 -- AUTO_INCREMENT for table `placed_order`
 --
 ALTER TABLE `placed_order`
-  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `wholesaler`
