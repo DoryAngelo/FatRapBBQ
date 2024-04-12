@@ -83,7 +83,7 @@ if (isset($_POST['not-confirmed'])) {
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
-                    <h1>Fat Rap's Barbeque's Online Store</h1>
+                    <h1>Fat Rap's Barbeque</h1>
                     <p>EMPLOYEE</p>
                 </div>
             </div>
@@ -110,90 +110,93 @@ if (isset($_POST['not-confirmed'])) {
         </div>
     </header>
     <main>
-        <section class="section">
-            <div class="section-heading">
-                <h2>Canceled Orders</h2>
-                <div class="inline">
-                    <p>Date range:</p>
-                    <input type="date">
+        <section class="section" id="orders-page">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>Canceled Orders</h2>
+                    <div class="inline">
+                        <p>Date range:</p>
+                        <input type="date">
+                    </div>
                 </div>
-            </div>
-            <section class="section-body">
-                <section class="main-section table-wrapper">
-                    <table class="alternating">
-                        <tr>
-                            <th class="header">Date and Time</th>
-                            <th class="header">Customer</th>
-                            <th class="header">Order #</th>
-                            <th class="header">Payment</th>
-                            <th class="header">Confirmed</th>
-                        </tr>
-                        <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
-                        <?php
-                        $sql = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'Cancelled'";
-                        $res = mysqli_query($conn, $sql);
-                        $count = mysqli_num_rows($res);
-                        if ($count > 0) {
-                            while ($row = mysqli_fetch_assoc($res)) {
-                                $PLACED_ORDER_ID = $row['PLACED_ORDER_ID'];
-                                $PRSN_ID = $row['PRSN_ID'];
-                                $CUS_NAME = $row['CUS_NAME'];
-                                $PLACED_ORDER_DATE = $row['PLACED_ORDER_DATE'];
-                                $PLACED_ORDER_TOTAL = $row['PLACED_ORDER_TOTAL'];
-                                $DELIVERY_ADDRESS = $row['DELIVERY_ADDRESS'];
-                                $DELIVERY_DATE = $row['DELIVERY_DATE'];
-                                $PLACED_ORDER_STATUS = $row['PLACED_ORDER_STATUS'];
-                        ?>
+                <section class="with-side-menu">
+                    <section class="main-section table-wrapper">
+                        <table class="alternating">
+                            <tr>
+                                <th class="header">Date and Time</th>
+                                <th class="header">Customer</th>
+                                <th class="header">Order #</th>
+                                <th class="header">Payment</th>
+                                <th class="header">Confirmed</th>
+                            </tr>
+                            <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
+                            <?php
+                            $sql = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'Cancelled'";
+                            $res = mysqli_query($conn, $sql);
+                            $count = mysqli_num_rows($res);
+                            if ($count > 0) {
+                                while ($row = mysqli_fetch_assoc($res)) {
+                                    $PLACED_ORDER_ID = $row['PLACED_ORDER_ID'];
+                                    $PRSN_ID = $row['PRSN_ID'];
+                                    $CUS_NAME = $row['CUS_NAME'];
+                                    $PLACED_ORDER_DATE = $row['PLACED_ORDER_DATE'];
+                                    $PLACED_ORDER_TOTAL = $row['PLACED_ORDER_TOTAL'];
+                                    $DELIVERY_ADDRESS = $row['DELIVERY_ADDRESS'];
+                                    $DELIVERY_DATE = $row['DELIVERY_DATE'];
+                                    $PLACED_ORDER_STATUS = $row['PLACED_ORDER_STATUS'];
+                            ?>
+                                    <tr>
+                                        <td data-cell="Date and Time"><?php echo $PLACED_ORDER_DATE ?></td>
+                                        <td data-cell="customer"><?php echo $CUS_NAME ?></td>
+                                        <td data-cell="Order #"><a href="<?php echo SITEURL ?>employee-order-details.php?PLACED_ORDER_ID=<?php echo $PLACED_ORDER_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
+                                        <td data-cell="Payment">₱<?php echo $PLACED_ORDER_TOTAL ?></td>
+                                        <td data-cell="Confimed">
+                                            <div class="btn-wrapper">
+                                                <form method="POST">
+                                                    <input type="hidden" name="PLACED_ORDER_ID" value="<?php echo $PLACED_ORDER_ID; ?>">
+                                                    <input type="hidden" name="PLACED_ORDER_STATUS" value="<?php echo $PLACED_ORDER_STATUS; ?>">
+                                                    <button class="btn-check" name="confirmed"><i class='bx bxs-check-circle'></i></button>
+                                                    <button class="btn-cross" name="not-confirmed"><i class='bx bxs-x-circle'></i></button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php
+                                }
+                            } else {
+                                ?>
+                                <!-- <div class="error">No new orders</div> -->
                                 <tr>
-                                    <td data-cell="Date and Time"><?php echo $PLACED_ORDER_DATE ?></td>
-                                    <td data-cell="customer"><?php echo $CUS_NAME ?></td>
-                                    <td data-cell="Order #"><a href="<?php echo SITEURL ?>employee-order-details.php?PLACED_ORDER_ID=<?php echo $PLACED_ORDER_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
-                                    <td data-cell="Payment">₱<?php echo $PLACED_ORDER_TOTAL ?></td>
-                                    <td data-cell="Confimed">
-                                        <div class="btn-wrapper">
-                                            <form method="POST">
-                                                <input type="hidden" name="PLACED_ORDER_ID" value="<?php echo $PLACED_ORDER_ID; ?>">
-                                                <input type="hidden" name="PLACED_ORDER_STATUS" value="<?php echo $PLACED_ORDER_STATUS; ?>">
-                                                <button class="btn-check" name="confirmed"><i class='bx bxs-check-circle'></i></button>
-                                                <button class="btn-cross" name="not-confirmed"><i class='bx bxs-x-circle'></i></button>
-                                            </form>
-                                        </div>
-                                    </td>
+                                    <td colspan="5" class="error">Empty</td>
                                 </tr>
                             <?php
-                            }
-                        } else {
-                            ?>
-                            <!-- <div class="error">No new orders</div> -->
-                            <tr>
-                                <td colspan="5" class="error">Empty</td>
-                            </tr>
-                        <?php
 
-                        }
-                        ?>
-                    </table>
-                </section>
-                <section class="side-menu">
-                    <div class="group inventory">
-                        <h3>Inventory</h3>
-                        <div class="inventory-box">
-                            <div class="inline">
-                                <p>Pork BBQ</p>
-                                <p class="number">10</p>
+                            }
+                            ?>
+                        </table>
+                    </section>
+                    <section class="side-menu">
+                        <div class="group inventory">
+                            <h3>Inventory</h3>
+                            <div class="inventory-box">
+                                <div class="inline">
+                                    <p>Pork BBQ</p>
+                                    <p class="number">10</p>
+                                </div>
+                                <a href="<?php echo SITEURL; ?>employee-inventory.php" class="edit">Edit</a>
                             </div>
-                            <a href="<?php echo SITEURL; ?>employee-inventory.php" class="edit">Edit</a>
                         </div>
-                    </div>
-                    <div class="group">
-                        <a href="<?php echo SITEURL; ?>employee-to-prepare-orders.php" class="view big-font">To Prepare</a>
-                        <a href="<?php echo SITEURL; ?>employee-to-deliver-orders.php" class="view big-font">To Deliver</a>
-                        <a href="<?php echo SITEURL; ?>employee-shipped.php" class="view big-font">Shipped</a>
-                        <a href="<?php echo SITEURL; ?>employee-completed-orders.php" class="view big-font">Completed Orders</a>
-                        <a href="<?php echo SITEURL; ?>employee-canceled-orders.php" class="view big-font">Canceled Orders</a>
-                    </div>
+                        <div class="group">
+                            <a href="<?php echo SITEURL; ?>employee-to-prepare-orders.php" class="view big-font">To Prepare</a>
+                            <a href="<?php echo SITEURL; ?>employee-preparing-orders.php" class="view big-font">Preparing</a>
+                            <a href="<?php echo SITEURL; ?>employee-to-deliver-orders.php" class="view big-font">To Deliver</a>
+                            <a href="<?php echo SITEURL; ?>employee-shipped.php" class="view big-font">Shipped</a>
+                            <a href="<?php echo SITEURL; ?>employee-completed-orders.php" class="view big-font">Completed Orders</a>
+                            <a href="<?php echo SITEURL; ?>employee-canceled-orders.php" class="view big-font">Canceled Orders</a>
+                        </div>
+                    </section>
                 </section>
-            </section>
+            </div>
         </section>
     </main>
 </body>

@@ -97,11 +97,9 @@ if (isset($_POST['not-confirmed'])) {
                 <div class='menu-button'></div>
             </label>
             <ul class='menubar'>
-                <!--TODO: ADD LINKS-->
                 <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
                 <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
                 <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
-                <!-- Text below should change to 'Logout'once user logged in-->
                 <?php
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
@@ -127,7 +125,7 @@ if (isset($_POST['not-confirmed'])) {
                         <input type="date">
                     </div>
                 </div>
-                <section class="section-body">
+                <section class="with-side-menu">
                     <section class="main-section table-wrapper">
                         <table class="alternating">
                             <tr>
