@@ -36,27 +36,27 @@ $PRSN_ID = $_SESSION['prsn_id'];
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
-                    <label class='menu-button-container' for="menu-toggle">
-                        <div class='menu-button'></div>
-                    </label>
-                <ul class = 'menubar'>
-                    <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
-                    <!-- Text below should change to 'Logout'once user logged in-->
-                    <?php
-                    if (isset($_SESSION['prsn_id'])) {
-                    ?>
-                        <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
+            <label class='menu-button-container' for="menu-toggle">
+                <div class='menu-button'></div>
+            </label>
+            <ul class='menubar'>
+                <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
+                <!-- Text below should change to 'Logout'once user logged in-->
+                <?php
+                if (isset($_SESSION['prsn_id'])) {
+                ?>
+                    <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
                     </li>
-                        <?php
-                    } else {
-                        ?>
-                        <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                    <?php
-                    }
-                    ?>
-                </ul>
+                <?php
+                } else {
+                ?>
+                    <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
+                <?php
+                }
+                ?>
+            </ul>
         </div>
     </header>
     <main>
@@ -78,7 +78,12 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                     <th class="header">Action</th>
                                 </tr>
                                 <?php
-                                $sql = "SELECT * FROM person, employee WHERE employee.PRSN_ID = person.PRSN_ID AND PRSN_ROLE = 'Employee' OR PRSN_ROLE = 'Admin'";
+                                $sql = "SELECT *
+                                FROM person
+                                INNER JOIN employee ON person.PRSN_ID = employee.PRSN_ID
+                                WHERE person.PRSN_ROLE= 'Employee' 
+                                OR person.PRSN_ROLE= 'Admin';
+                                ";
                                 $res = mysqli_query($conn, $sql);
                                 $count = mysqli_num_rows($res);
                                 if ($count > 0) {
@@ -93,13 +98,13 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                 ?>
                                         <tr>
                                             <td data-cell="Image">
-                                                <img src="<?php echo SITEURL; ?>images/<?php echo $EMP_IMAGE; ?>"  alt="">
+                                                <img src="<?php echo SITEURL; ?>images/<?php echo $EMP_IMAGE; ?>" alt="">
                                             </td>
-                                            <td data-cell="Name"><?php echo $EMP_FNAME?></td>
-                                            <td data-cell="Name"><?php echo $EMP_LNAME?></td>
-                                            <td data-cell="Contact #"><?php echo $PRSN_NUMBER?></td>
-                                            <td data-cell="Username"><?php echo $PRSN_NAME?></td>
-                                            <td data-cell="Action"><a href="<?php echo SITEURL; ?>admin-edit-employee.php?PRSN_ID=<?php echo $PRSN_ID?>&EMP_ID=<?php echo $EMP_ID?>" class="edit">Edit</a></td>
+                                            <td data-cell="Name"><?php echo $EMP_FNAME ?></td>
+                                            <td data-cell="Name"><?php echo $EMP_LNAME ?></td>
+                                            <td data-cell="Contact #"><?php echo $PRSN_NUMBER ?></td>
+                                            <td data-cell="Username"><?php echo $PRSN_NAME ?></td>
+                                            <td data-cell="Action"><a href="<?php echo SITEURL; ?>admin-edit-employee.php?PRSN_ID=<?php echo $PRSN_ID ?>&EMP_ID=<?php echo $EMP_ID ?>" class="edit">Edit</a></td>
                                         </tr>
                                     <?php
                                     }

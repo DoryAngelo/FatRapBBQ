@@ -4,43 +4,6 @@
 
 $PRSN_ID = $_SESSION['prsn_id'];
 
-if (isset($_POST['submit'])) {
-    $FOOD_NAME = mysqli_real_escape_string($conn, $_POST['product-name']);
-    $FOOD_DESC = mysqli_real_escape_string($conn, $_POST['product-desc']);
-    $FOOD_PRICE =  $_POST['price'];
-    $FOOD_STOCK = $_POST['stock'];
-    $FOOD_ACTIVE = $_POST['active'];
-    $CTGY_ID = $_POST['category'];
-
-
-    if (isset($_FILES['image']['name'])) {
-        $FOOD_IMG = $_FILES['image']['name'];
-
-        if ($FOOD_IMG != "") {
-            $image_info = explode(".", $FOOD_IMG);
-            $ext = end($image_info);
-
-            $FOOD_IMG = "FOOD_IMAGE_" . $FOOD_NAME . "." . $ext;
-
-            $src = $_FILES['image']['tmp_name'];
-            $dst = "images/" . $FOOD_IMG;
-
-            $upload    = move_uploaded_file($src, $dst);
-
-            if ($upload = false) {
-                $_SESSION['upload'] = "<div class='error'>Failed To Upload Image</div>";
-                header('location:' . SITEURL . 'admin-home.php');
-                die();
-            }
-        }
-    } else {
-        $FOOD_IMG = "";
-    }
-    $insert = "INSERT INTO food(CTGY_ID, FOOD_NAME, FOOD_PRICE, FOOD_DESC, FOOD_IMG, FOOD_STOCK, FOOD_ACTIVE) 
-                       VALUES('$CTGY_ID', '$FOOD_NAME', '$FOOD_PRICE', '$FOOD_DESC', '$FOOD_IMG', '$FOOD_STOCK', '$FOOD_ACTIVE')";
-    mysqli_query($conn, $insert);
-}
-
 ?>
 
 <!DOCTYPE html>
