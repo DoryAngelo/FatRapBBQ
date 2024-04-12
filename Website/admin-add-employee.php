@@ -7,12 +7,12 @@ $PRSN_ID = $_SESSION['prsn_id'];
 if (isset($_POST['submit'])) {
     $PRSN_FNAME = mysqli_real_escape_string($conn, $_POST['first-name']);
     $PRSN_LNAME = mysqli_real_escape_string($conn, $_POST['last-name']);
-    $PRSN_EMAIL = mysqli_real_escape_string($conn, $_POST['email']);
     $PRSN_PHONE = $_POST['number'];
     $PRSN_UNAME = mysqli_real_escape_string($conn, $_POST['username']);
+    $EMP_BRANCH = mysqli_real_escape_string($conn, $_POST['branch']);
     $PRSN_PASSWORD = md5($_POST['password']);
     $PRSN_CPASSWORD = md5($_POST['cpassword']);
-    $PRSN_ROLE = 'Employee';
+    $PRSN_ROLE = 'Admin';
 
     if (isset($_FILES['image']['name'])) {
         $EMP_IMG = $_FILES['image']['name'];
@@ -38,31 +38,25 @@ if (isset($_POST['submit'])) {
         $EMP_IMG = "";
     }
 
-    $select = "SELECT * FROM `person` WHERE PRSN_EMAIL = '$PRSN_EMAIL'";
 
-    $result = mysqli_query($conn, $select);
-
-    if (mysqli_num_rows($result) > 0) {
-        $error[] = "User already exists";
+    if ($PRSN_PASSWORD != $PRSN_CPASSWORD) {
+        echo  "Password not matched";
     } else {
-        if ($PRSN_PASSWORD != $PRSN_CPASSWORD) {
-            $error[] = "Password not matched";
-        } else {
-            $insert = "INSERT INTO person(PRSN_NAME, PRSN_EMAIL, PRSN_PASSWORD, PRSN_PHONE, PRSN_ROLE) 
-                       VALUES('$PRSN_UNAME', '$PRSN_EMAIL', '$PRSN_PASSWORD', '$PRSN_PHONE', '$PRSN_ROLE')";
-            if (mysqli_query($conn, $insert)) {
-                $PRSN_ID = mysqli_insert_id($conn);
-                $insert2 = "INSERT INTO employee(PRSN_ID, EMP_FNAME, EMP_LNAME, EMP_IMAGE) 
-                            VALUES('$PRSN_ID', '$PRSN_FNAME', '$PRSN_LNAME', '$EMP_IMG')";
-                if (!mysqli_query($conn, $insert2)) {
-                    $error[] = "Error inserting data into employee table: " . mysqli_error($conn);
-                }
-            } else {
-                $error[] = "Error inserting data into person table: " . mysqli_error($conn);
+        $insert = "INSERT INTO person(PRSN_NAME, PRSN_PASSWORD, PRSN_PHONE, PRSN_ROLE) 
+                       VALUES('$PRSN_UNAME', '$PRSN_PASSWORD', '$PRSN_PHONE', '$PRSN_ROLE')";
+        if (mysqli_query($conn, $insert)) {
+            $PRSN_ID = mysqli_insert_id($conn);
+            $insert2 = "INSERT INTO employee(PRSN_ID, EMP_FNAME, EMP_LNAME, EMP_IMAGE, EMP_BRANCH) 
+                            VALUES('$PRSN_ID', '$PRSN_FNAME', '$PRSN_LNAME', '$EMP_IMG', '$EMP_BRANCH')";
+            if (!mysqli_query($conn, $insert2)) {
+                echo "Error inserting data into employee table: " . mysqli_error($conn);
             }
+        } else {
+            echo "Error inserting data into person table: " . mysqli_error($conn);
         }
     }
 }
+
 
 ?>
 
@@ -165,6 +159,13 @@ if (isset($_POST['submit'])) {
                                             <p>(accepted files: .jpg, .png)</p>
                                             <input name="image" id="image" class="image" type="file">
                                         </div>
+                                        <div class="form-field-input">
+                                            <label for="role">Role</label>
+                                            <select class="dropdown" name="role" id="role" required>
+                                                <option value="Employee">Employee</option>
+                                                <option value="Admin">Admin</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </section>
                                 <section>
@@ -183,7 +184,7 @@ if (isset($_POST['submit'])) {
                                                 <p>Password must be 8 characters long, and includes at least 1 uppercase, 1 lowercase, 1 digit</p>
                                             </div>
                                             <div class="input-container input-control">
-                                                <input class="js-pass" type="password" id="password" name="pas  sword">
+                                                <input class="js-pass" type="password" id="password" name="password">
                                                 <span onclick="togglePassword('password')">
                                                     <svg class="showpass" id="eyeIconOpenPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                                                         <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z" />

@@ -4,42 +4,7 @@
 
 $PRSN_ID = $_SESSION['prsn_id'];
 
-if (isset($_POST['submit'])) {
-    $FOOD_NAME = mysqli_real_escape_string($conn, $_POST['product-name']);
-    $FOOD_DESC = mysqli_real_escape_string($conn, $_POST['product-desc']);
-    $FOOD_PRICE =  $_POST['price'];
-    $FOOD_STOCK = $_POST['stock'];
-    $FOOD_ACTIVE = $_POST['active'];
-    $CTGY_ID = $_POST['category'];
-
-
-    if (isset($_FILES['image']['name'])) {
-        $FOOD_IMG = $_FILES['image']['name'];
-
-        if ($FOOD_IMG != "") {
-            $image_info = explode(".", $FOOD_IMG);
-            $ext = end($image_info);
-
-            $FOOD_IMG = "FOOD_IMAGE_" . $FOOD_NAME . "." . $ext;
-
-            $src = $_FILES['image']['tmp_name'];
-            $dst = "images/" . $FOOD_IMG;
-
-            $upload    = move_uploaded_file($src, $dst);
-
-            if ($upload = false) {
-                $_SESSION['upload'] = "<div class='error'>Failed To Upload Image</div>";
-                header('location:' . SITEURL . 'admin-home.php');
-                die();
-            }
-        }
-    } else {
-        $FOOD_IMG = "";
-    }
-    $insert = "INSERT INTO food(CTGY_ID, FOOD_NAME, FOOD_PRICE, FOOD_DESC, FOOD_IMG, FOOD_STOCK, FOOD_ACTIVE) 
-                       VALUES('$CTGY_ID', '$FOOD_NAME', '$FOOD_PRICE', '$FOOD_DESC', '$FOOD_IMG', '$FOOD_STOCK', '$FOOD_ACTIVE')";
-    mysqli_query($conn, $insert);
-}
+$EMP_IMAGE = $_GET['EMP_IMAGE'];
 
 ?>
 
@@ -71,26 +36,26 @@ if (isset($_POST['submit'])) {
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
-                    <label class='menu-button-container' for="menu-toggle">
-                        <div class='menu-button'></div>
-                    </label>
-                <ul class = 'menubar'>
-                    <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
-                    <?php
-                    if (isset($_SESSION['prsn_id'])) {
-                    ?>
-                        <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
+            <label class='menu-button-container' for="menu-toggle">
+                <div class='menu-button'></div>
+            </label>
+            <ul class='menubar'>
+                <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
+                <?php
+                if (isset($_SESSION['prsn_id'])) {
+                ?>
+                    <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
                     </li>
-                        <?php
-                    } else {
-                        ?>
-                        <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                    <?php
-                    }
-                    ?>
-                </ul>
+                <?php
+                } else {
+                ?>
+                    <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
+                <?php
+                }
+                ?>
+            </ul>
         </div>
     </header>
     <main>
@@ -103,10 +68,10 @@ if (isset($_POST['submit'])) {
                     </div>
                     <section class="section-body">
                         <section class="main-section column">
-                            <form action="#" id="form" class="column" method="post" enctype="multipart/form-data">
+                            <form action="#" class="column" method="post" enctype="multipart/form-data" onsubmit="return validateInputs()">
                                 <div class="block">
                                     <div class="form-field">
-                                    <div class="form-field-input input-control">
+                                        <div class="form-field-input input-control">
                                             <label for="first-name">First Name</label>
                                             <input name="first-name" id="first-name" class="js-user" type="text">
                                             <div class="error"></div>
@@ -117,13 +82,13 @@ if (isset($_POST['submit'])) {
                                             <div class="error"></div>
                                         </div>
                                         <div class="form-field-input input-control">
-                                            <label for="email">Email</label>
-                                            <input name="email" id="email" class="js-user" type="text">
+                                            <label for="username">Username</label>
+                                            <input name="username" id="username" class="js-user" type="text">
                                             <div class="error"></div>
                                         </div>
                                         <div class="form-field-input input-control">
-                                            <label for="username">Username</label>
-                                            <input name="username" id="username" class="js-user" type="text" >
+                                            <label for="branch">Branch</label>
+                                            <input name="branch" id="branch" class="js-user" type="text">
                                             <div class="error"></div>
                                         </div>
                                         <div class="form-field-input">
@@ -132,29 +97,46 @@ if (isset($_POST['submit'])) {
                                                 <p>Password must be 8 characters long, and includes at least 1 uppercase, 1 lowercase, 1 digit, and 1 special character</p>
                                             </div>
                                             <div class="input-container input-control">
-                                                <input class="js-pass" type="password" id="password" name="password" >
-                                                <span onclick="togglePassword('password')">
-                                                    <svg class="showpass" id="eyeIconOpenPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z"/></svg>
-                                                    <svg class="hidepass" id="eyeIconClosedPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M11.83 9L15 12.16V12a3 3 0 0 0-3-3h-.17m-4.3.8l1.55 1.55c-.05.21-.08.42-.08.65a3 3 0 0 0 3 3c.22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53a5 5 0 0 1-5-5c0-.79.2-1.53.53-2.2M2 4.27l2.28 2.28l.45.45C3.08 8.3 1.78 10 1 12c1.73 4.39 6 7.5 11 7.5c1.55 0 3.03-.3 4.38-.84l.43.42L19.73 22L21 20.73L3.27 3M12 7a5 5 0 0 1 5 5c0 .64-.13 1.26-.36 1.82l2.93 2.93c1.5-1.25 2.7-2.89 3.43-4.75c-1.73-4.39-6-7.5-11-7.5c-1.4 0-2.74.25-4 .7l2.17 2.15C10.74 7.13 11.35 7 12 7Z"/></svg>
-                                                </span>
+                                                <input class="js-pass" type="password" id="password" name="password">
                                                 <div class="error"></div>
+                                                <span onclick="togglePassword('password')">
+                                                    <svg class="showpass" id="eyeIconOpenPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                                        <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z" />
+                                                    </svg>
+                                                    <svg class="hidepass" id="eyeIconClosedPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                                        <path fill="currentColor" d="M11.83 9L15 12.16V12a3 3 0 0 0-3-3h-.17m-4.3.8l1.55 1.55c-.05.21-.08.42-.08.65a3 3 0 0 0 3 3c.22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53a5 5 0 0 1-5-5c0-.79.2-1.53.53-2.2M2 4.27l2.28 2.28l.45.45C3.08 8.3 1.78 10 1 12c1.73 4.39 6 7.5 11 7.5c1.55 0 3.03-.3 4.38-.84l.43.42L19.73 22L21 20.73L3.27 3M12 7a5 5 0 0 1 5 5c0 .64-.13 1.26-.36 1.82l2.93 2.93c1.5-1.25 2.7-2.89 3.43-4.75c-1.73-4.39-6-7.5-11-7.5c-1.4 0-2.74.25-4 .7l2.17 2.15C10.74 7.13 11.35 7 12 7Z" />
+                                                    </svg>
+                                                </span>
+
                                             </div>
                                         </div>
                                         <div class="form-field-input">
                                             <label for="cpassword">Re-enter Password</label>
                                             <div class="input-container input-control">
                                                 <input class="js-cpass" type="password" id="cpassword" name="cpassword">
-                                                <span onclick="togglePassword('cpassword')">
-                                                    <svg class="showpass" id="eyeIconOpenCPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z"/></svg>
-                                                    <svg class="hidepass" id="eyeIconClosedCPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M11.83 9L15 12.16V12a3 3 0 0 0-3-3h-.17m-4.3.8l1.55 1.55c-.05.21-.08.42-.08.65a3 3 0 0 0 3 3c.22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53a5 5 0 0 1-5-5c0-.79.2-1.53.53-2.2M2 4.27l2.28 2.28l.45.45C3.08 8.3 1.78 10 1 12c1.73 4.39 6 7.5 11 7.5c1.55 0 3.03-.3 4.38-.84l.43.42L19.73 22L21 20.73L3.27 3M12 7a5 5 0 0 1 5 5c0 .64-.13 1.26-.36 1.82l2.93 2.93c1.5-1.25 2.7-2.89 3.43-4.75c-1.73-4.39-6-7.5-11-7.5c-1.4 0-2.74.25-4 .7l2.17 2.15C10.74 7.13 11.35 7 12 7Z"/></svg>
-                                                </span>
                                                 <div class="error"></div>
+                                                <span onclick="togglePassword('cpassword')">
+                                                    <svg class="showpass" id="eyeIconOpenCPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                                        <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z" />
+                                                    </svg>
+                                                    <svg class="hidepass" id="eyeIconClosedCPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                                        <path fill="currentColor" d="M11.83 9L15 12.16V12a3 3 0 0 0-3-3h-.17m-4.3.8l1.55 1.55c-.05.21-.08.42-.08.65a3 3 0 0 0 3 3c.22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53a5 5 0 0 1-5-5c0-.79.2-1.53.53-2.2M2 4.27l2.28 2.28l.45.45C3.08 8.3 1.78 10 1 12c1.73 4.39 6 7.5 11 7.5c1.55 0 3.03-.3 4.38-.84l.43.42L19.73 22L21 20.73L3.27 3M12 7a5 5 0 0 1 5 5c0 .64-.13 1.26-.36 1.82l2.93 2.93c1.5-1.25 2.7-2.89 3.43-4.75c-1.73-4.39-6-7.5-11-7.5c-1.4 0-2.74.25-4 .7l2.17 2.15C10.74 7.13 11.35 7 12 7Z" />
+                                                    </svg>
+                                                </span>
+
                                             </div>
+                                        </div>
+                                        <div class="form-field-input">
+                                            <label for="role">Role</label>
+                                            <select class="dropdown" name="role" id="role" required>
+                                                <option value="Employee">Employee</option>
+                                                <option value="Admin">Admin</option>
+                                            </select>
                                         </div>
                                         <div class="form-field-input">
                                             <label for="valid-id">Image</label>
                                             <p class="label-desc">(accepted files: .jpg, .png)</p>
-                                            <input class="image" type="file" name="image" id="image"><!-- numbers only, starts with 09, must have 11-digits -->
+                                            <input required class="image" type="file" name="image" id="image">
                                         </div>
                                     </div>
                                 </div>
@@ -164,7 +146,7 @@ if (isset($_POST['submit'])) {
                     </section>
                 </div>
             </div>
-            
+
         </section>
     </main>
     <script>
@@ -185,134 +167,163 @@ if (isset($_POST['submit'])) {
             }
         }
 
-        //input validation
-        const form = document.getElementById('form');
-        const firstName = document.getElementById('first-name');
-        const lastName = document.getElementById('last-name');
-        const email = document.getElementById('email');
-        // const number = document.getElementById('number');
-        const username = document.getElementById('username');
-        const password = document.getElementById('password');
-        const password2 = document.getElementById('cpassword');
+        const firstnameInput = document.getElementById('first-name');
+        const lastnameInput = document.getElementById('last-name');
+        const usernameInput = document.getElementById('username');
+        const branchInput = document.getElementById('branch');
+        const passwordInput = document.getElementById('password');
+        const cpasswordInput = document.getElementById('cpassword');
 
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-
-            validateInputs();
-        });
-
-        const setError = (element, message) => {
-            const inputControl = element.parentElement; //element should have input-control as its parent, with div.error as its sibling
-            const errorDisplay = inputControl.querySelector('.error');
-
-            errorDisplay.innerText = message;
-            inputControl.classList.add('error');
-            inputControl.classList.remove('success')
+        function setError(input, message) {
+            const errorDiv = input.nextElementSibling;
+            errorDiv.innerHTML = `<span class="error-text">${message}</span>`;
         }
 
-        const setSuccess = element => {
-            const inputControl = element.parentElement;
-            const errorDisplay = inputControl.querySelector('.error');
-
-            errorDisplay.innerText = '';
-            inputControl.classList.add('success');
-            inputControl.classList.remove('error');
-        };
-
-        const isValidEmail = email => {
-            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return re.test(String(email).toLowerCase());
+        function clearError(input) {
+            const errorDiv = input.nextElementSibling;
+            errorDiv.innerHTML = ''; // Clear the error message
         }
 
-        const validateInputs = () => {
-            const firstNameValue = firstName.value.trim();
-            const lastNameValue = lastName.value.trim();
-            const emailValue = email.value.trim();
-            // const numberValue = number.value.trim();
-            const usernameValue = username.value.trim();
-            const passwordValue = password.value.trim();
-            const password2Value = password2.value.trim();
+        function validateInputs() {
+            let isValid = true;
 
-            //Regular expressions for input validation
-            const nameRegex = /^[a-zA-Z ]+$/; //letters only
-            const numberRegex = /^09\d{9}$/; //numbers only
-            const uppercaseRegex = /[A-Z]/;
-            const lowercaseRegex = /[a-z]/;
-            const digitRegex = /\d/;
-            const specialCharRegex = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/;
+            const firstnameValue = firstnameInput.value.trim();
+            const lastnameValue = lastnameInput.value.trim();
+            const usernameValue = usernameInput.value.trim();
+            const branchValue = usernameInput.value.trim();
+            const passwordValue = passwordInput.value.trim();
+            const cpasswordValue = cpasswordInput.value.trim();
 
-            if (firstNameValue === '') {
-                setError(firstName, 'Please enter your first name');
-            } else if (!nameRegex.test(firstNameValue)) {
-                setError(firstName, 'Name must contain only letters');
+            const nameRegex = /^[a-zA-Z\s]+$/;
+            const passwordRegex = /^[a-zA-Z0-9]{8,}$/; // Password should not contain special characters
+
+            if (firstnameValue === '') {
+                setError(firstnameInput, 'Please enter your first-name');
+                isValid = false;
+            } else if (!nameRegex.test(firstnameValue)) {
+                setErrorfirst(nameInput, 'Name must contain only letters');
+                isValid = false;
             } else {
-                setSuccess(firstName);
+                clearError(firstnameInput);
             }
 
-            if (lastNameValue === '') {
-                setError(lastName, 'Please enter your last name');
-            } else if (!nameRegex.test(lastNameValue)) {
-                setError(lastName, 'Name must contain only letters');
+            if (lastnameValue === '') {
+                setError(lastnameInput, 'Please enter your last-name');
+                isValid = false;
+            } else if (!nameRegex.test(lastnameValue)) {
+                setError(lastnameInput, 'Name must contain only letters');
+                isValid = false;
             } else {
-                setSuccess(lastName);
+                clearError(lastnameInput);
             }
-
-            if(emailValue === '') {
-                setError(email, 'Please enter your email');
-            } else if (!isValidEmail(emailValue)) {
-                setError(email, 'Provide a valid email address');
-            } else {
-                setSuccess(email);
-            }
-
-            // if (numberValue === '') {
-            //     setError(number, 'Please enter your number');
-            // } else if (!numberRegex.test(numberValue)) {
-            //     setError(number, 'Invalid number');
-            // } else {
-            //     setSuccess(number);
-            // }
 
             if (usernameValue === '') {
-                setError(username, 'Please enter your username');
-            // } else if (!nameRegex.test(usernameValue)) {
-            //     setError(username, 'Invalid username');
-            } else if (usernameValue.length < 8 ) {
-                setError(username, 'Invalid username');
+                setError(usernameInput, 'Please enter your username');
+                isValid = false;
             } else {
-                setSuccess(username);
+                clearError(usernameInput);
             }
 
-            if(passwordValue === '') {
-                setError(password, 'Please enter your password');
-            } else if (passwordValue.length < 8 ) {
-                setError(password, 'Password must be at least 8 character.')
-            } 
-            else if (!uppercaseRegex.test(passwordValue)) {
-                setError(password, 'Password must contain at least one uppercase letter.');
-            } 
-            else if (!lowercaseRegex.test(passwordValue)) {
-                setError(password, 'Password must contain at least one lowercase letter.');
-            } 
-            else if (!digitRegex.test(passwordValue)) {
-                setError(password, 'Password must contain at least one digit');
-            } 
-            else if (!specialCharRegex.test(passwordValue)) {
-                setError(password, 'Password must contain at least one special character.');
-            } 
-            else {
-                setSuccess(password);
+            if (branchValue === '') {
+                setError(branchInput, 'Please enter your branch');
+                isValid = false;
+            } else {
+                clearError(branchInput);
             }
 
-            if(password2Value === '') {
-                setError(password2, 'Please confirm your password');
-            } else if (password2Value !== passwordValue) {
-                setError(password2, "Password doesn't match");
+            if (passwordValue === '') {
+                setError(passwordInput, 'Please enter your password');
+                isValid = false;
+            } else if (!passwordRegex.test(passwordValue)) {
+                setError(passwordInput, 'Invalid password format');
+                isValid = false;
             } else {
-                setSuccess(password2);
+                clearError(passwordInput);
             }
-        };
+
+            if (cpasswordValue === '') {
+                setError(cpasswordInput, 'Please confirm your password');
+                isValid = false;
+            } else if (cpasswordValue !== passwordValue) {
+                setError(cpasswordInput, 'Passwords do not match');
+                isValid = false;
+            } else {
+                clearError(cpasswordInput);
+            }
+
+            return isValid;
+        }
     </script>
+
 </body>
 
 </html>
+<?php
+if (isset($_POST['submit'])) {
+
+    $PRSN_NAME = mysqli_real_escape_string($conn, $_POST['username']);
+    $EMP_FNAME = mysqli_real_escape_string($conn, $_POST['first-name']);
+    $EMP_LNAME = mysqli_real_escape_string($conn, $_POST['last-name']);
+    $EMP_BRANCH = mysqli_real_escape_string($conn, $_POST['branch']);
+    $PRSN_PASSWORD = md5($_POST['password']);
+    $PRSN_ROLE = $_POST['role'];
+    $current_image = $EMP_IMAGE;
+
+    if (isset($_FILES['image']['name'])) {
+        //get the image details
+        $EMP_IMG = $_FILES['image']['name'];
+
+        //check whether image is available
+        if ($EMP_IMG != "") {
+            $image_info = explode(".", $EMP_IMG);
+            $ext = end($image_info);
+
+            $EMP_IMG = "EMP_IMAGE_" . $EMP_LNAME . "." . $ext;
+
+            $src = $_FILES['image']['tmp_name'];
+            $dst = "images/" . $EMP_IMG;
+
+            $upload = move_uploaded_file($src, $dst);
+
+            //check whether the image is uploaded
+            if ($upload == false) {
+                $_SESSION['upload'] = "<div class='error'>Failed To Upload Image</div>";
+                die();
+            }
+            //remove current image if available
+            if ($current_image != "") {
+                $remove_path = "images/" . $current_image;
+                $remove = unlink($remove_path);
+                //check whether image is removed
+                if ($remove == false) {
+                    $_SESSION['failed-remove'] = "<div class='error'>Failed To Remove Current Image</div>";
+                    header('location:' . SITEURL . 'admin-home.php');
+                    die();
+                }
+            }
+        } else {
+            $image_name = $current_image;
+        }
+    } else {
+        $image_name = $current_image;
+    }
+
+    // Update person table
+    $update_person = "UPDATE person 
+                  SET PRSN_NAME = '$PRSN_NAME', 
+                      PRSN_PASSWORD = '$PRSN_PASSWORD',
+                      PRSN_ROLE = '$PRSN_ROLE' 
+                  WHERE PRSN_ID = '$PRSN_ID'"; 
+    mysqli_query($conn, $update_person);
+
+    // Update employee table
+    $update_employee = "UPDATE employee 
+                    SET EMP_FNAME = '$EMP_FNAME', 
+                        EMP_LNAME = '$EMP_LNAME', 
+                        EMP_IMAGE = '$EMP_IMG',
+                        EMP_BRANCH = '$EMP_BRANCH' 
+                    WHERE PRSN_ID = '$PRSN_ID'";
+
+    mysqli_query($conn, $update_employee);
+}
+?>
