@@ -3,6 +3,9 @@ const datesElement = document.getElementById('dates');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 
+// Access the calendarData variable
+console.log(calendarData);
+
 let currentDate = new Date();
 
 let selectedDate = null;
@@ -36,14 +39,15 @@ const updateCalendar = () => {
 
     for (let i = 1; i <= totalDays; i++) {
         const date = new Date(currentYear, currentMonth, i);
-        if (date <= today || date > resultDate || (date < today && today.getHour() > -1)) {
+        if (date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth() && date.getDate() === today.getDate()) {
+            datesHTML += `<button id="${getMonthName(currentDate.getMonth())} ${i} ${currentDate.getFullYear()}" class="date active ">${i}</button>`;
+        } else if (date <= today || date > resultDate || (date < today && today.getHours() > -1)) {
             datesHTML += `<div class="date inactive ${currentDate.getMonth()} ${i}">${i}</div>`;
-        }
-        else {
+        } else {
             datesHTML += `<button id="${getMonthName(currentDate.getMonth())} ${i} ${currentDate.getFullYear()}" class="date active ">${i}</button>`;
         }
     }
-
+    
     if (lastDayIndex != 0) {
         for (let i = 1; i <= 7 - lastDayIndex; i++) {
             const nextDate = new Date(currentYear, currentMonth + 1, i);
@@ -64,18 +68,51 @@ const updateCalendar = () => {
         prevBtn.classList.remove("disabled");
     }
 
+    if (currentDate.getMonth()==maxDate.getMonth()){
+        nextBtn.classList.add("disabled");
+    }
+    else{
+        nextBtn.classList.remove("disabled");
+    }
+
     var sampleDivs = document.querySelectorAll('.date:not(.inactive)');
     for (var x = 0, sampleDivsLength = sampleDivs.length; x < sampleDivsLength; x++) {
+        //console.log(sampleDivs[x]);
         sampleDivs[x].addEventListener("click", function () {
             const selectedDateString = getMonthName(currentDate.getMonth()) + ' ' + this.innerHTML + ' ' + currentDate.getFullYear();
             selectedDate = selectedDateString;
             selectedString = selectedDateString;
-            selectedDate.innerHTML = '<h3>' + selectedString + '</h3>';
-            updateNumbers();
+            selectedDateElement.innerHTML = '<h3>' + selectedString + '</h3>';
+           // updateNumbers();
         });
     }
-    updateNumbers();
+    calendarData.forEach(function (databasedate){
+        var month = databasedate.CALENDAR_DATE.split(' ');
+        console.log(month);
+        var settingDate;
+        if(month[0]==getMonthName(currentDate.getMonth())){
+            settingDate = document.getElementById(databasedate.CALENDAR_DATE);
+            console.log(settingDate)
+            if (databasedate.DATE_STATUS == "available"){
+                settingDate.classList.add("available");
+                settingDate.classList.remove("fullybooked");
+                settingDate.classList.remove("closed");
+            }
+            else if (databasedate.DATE_STATUS == "fullybooked"){
+                settingDate.classList.remove("available");
+                settingDate.classList.add("fullybooked");
+                settingDate.classList.remove("closed");
+            }
+            else if (databasedate.DATE_STATUS == "closed"){
+                settingDate.classList.remove("available");
+                settingDate.classList.remove("fullybooked");
+                settingDate.classList.add("closed");
+            }
+        }
+    });
+    //updateNumbers();
 }
+
 
 
 const selectedDateElement = document.getElementById('selectedDate');
@@ -97,7 +134,7 @@ closedBtn.addEventListener('click', () => {
 saveBtn.addEventListener('click', () => {
     if (selectedDate && selectedStatus) {
         updateDatabase(selectedDate, selectedStatus);
-        updateNumbers();
+        //updateNumbers();
         updateSelected();
     } else {
         console.error("Date or status is missing");
@@ -143,19 +180,19 @@ function updateSelected() {
     }
 }
 
-const availCounter = document.getElementById('numAvail');
-const fbCounter = document.getElementById('numFB');
-const closedCounter = document.getElementById('numClosed');
+// const availCounter = document.getElementById('numAvail');
+// const fbCounter = document.getElementById('numFB');
+// const closedCounter = document.getElementById('numClosed');
 
-function updateNumbers() {
-    var availDates = document.querySelectorAll('.available');
-    var fbDates = document.querySelectorAll('.fullybooked');
-    var closedDates = document.querySelectorAll('.closed');
+// function updateNumbers() {
+//     var availDates = document.querySelectorAll('.available');
+//     var fbDates = document.querySelectorAll('.fullybooked');
+//     var closedDates = document.querySelectorAll('.closed');
 
-    availCounter.innerHTML = '<h1>' + availDates.length + '</h1>';
-    fbCounter.innerHTML = '<h1>' + fbDates.length + '</h1>';
-    closedCounter.innerHTML = '<h1>' + closedDates.length + '</h1>';
-}
+//     availCounter.innerHTML = '<h1>' + availDates.length + '</h1>';
+//     fbCounter.innerHTML = '<h1>' + fbDates.length + '</h1>';
+//     closedCounter.innerHTML = '<h1>' + closedDates.length + '</h1>';
+// }
 
 prevBtn.addEventListener('click', () => {
     if (!prevBtn.classList.contains("disabled")) {

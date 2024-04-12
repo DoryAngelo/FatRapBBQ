@@ -42,6 +42,15 @@ $resFD = mysqli_query($conn, $selectFD);
 
 $countFD = mysqli_num_rows($resFD);
 
+
+$selectS = "SELECT * 
+FROM placed_order
+WHERE PLACED_ORDER_STATUS = 'Shipped'";
+
+$resS = mysqli_query($conn, $selectS);
+
+$countS = mysqli_num_rows($resS);
+
 $selectCo = "SELECT * 
 FROM placed_order
 WHERE PLACED_ORDER_STATUS = 'Completed'";
@@ -109,10 +118,10 @@ $countW = mysqli_num_rows($resW);
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                </li>
-                    <?php
+                    </li>
+                <?php
                 } else {
-                    ?>
+                ?>
                     <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
                 <?php
                 }
@@ -149,6 +158,10 @@ $countW = mysqli_num_rows($resW);
                                 <p>For Delivery Orders</p>
                                 <h1><?php echo $countFD ?></h1>
                             </a>
+                            <a class="box" href="<?php echo SITEURL; ?>admin-shipped.php">
+                                <p>Shipped</p>
+                                <h1><?php echo $countS ?></h1>
+                            </a>
                             <a class="box" href="<?php echo SITEURL; ?>admin-completed-orders.php">
                                 <p>Completed Orders</p>
                                 <h1><?php echo $countCo ?></h1>
@@ -179,7 +192,7 @@ $countW = mysqli_num_rows($resW);
                             <h3>Wholesale Users</h3>
                             <div class="position-notif">
                                 <a href="<?php echo SITEURL; ?>admin-new-wholesale-users.php" class="view">New</a>
-                                <p class="notif"><?php echo $countW?></p>
+                                <p class="notif"><?php echo $countW ?></p>
                             </div>
                         </div>
                         <div class="group">

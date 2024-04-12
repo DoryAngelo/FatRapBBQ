@@ -7,14 +7,18 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Check if user is logged in as Admin
-if ($_SESSION['prsn_role'] !== 'Admin') {
+// Check if user is logged in as Admin or Employee
+if ($_SESSION['prsn_role'] !== 'Admin' && $_SESSION['prsn_role'] !== 'Employee') {
     header('HTTP/1.1 403 Forbidden');
     exit();
 }
 
 // Check for new orders
-$selectNO = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'Placed'";
+if ($_SESSION['prsn_role'] === 'Admin') {
+    $selectNO = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'Placed'";
+} else { // For employees, check if there are orders in preparing status
+    $selectNO = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'Preparing'";
+}
 $resNO = mysqli_query($conn, $selectNO);
 $countNO = mysqli_num_rows($resNO);
 

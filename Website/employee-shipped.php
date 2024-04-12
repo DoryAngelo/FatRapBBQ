@@ -37,7 +37,7 @@ if (isset($_POST['confirmed'])) {
 
     $res = mysqli_query($conn, $sql);
 
-    header('location:employee-to-deliver-orders.php');
+    header('location:employee-shipped.php');
 }
 
 if (isset($_POST['not-confirmed'])) {
@@ -55,7 +55,7 @@ if (isset($_POST['not-confirmed'])) {
 
     $res = mysqli_query($conn, $sql);
 
-    header('location:employee-to-deliver-orders.php');
+    header('location:employee-shipped.php');
 }
 
 ?>
@@ -100,10 +100,10 @@ if (isset($_POST['not-confirmed'])) {
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                </li>
-                    <?php
+                    </li>
+                <?php
                 } else {
-                    ?>
+                ?>
                     <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
                 <?php
                 }
@@ -149,7 +149,7 @@ if (isset($_POST['not-confirmed'])) {
                                 <tr>
                                     <td data-cell="Date and Time"><?php echo $PLACED_ORDER_DATE ?></td>
                                     <td data-cell="customer"><?php echo $CUS_NAME ?></td>
-                                    <td data-cell="Order #"><a href="<?php echo SITEURL ?>admin-order-details.php?PRSN_ID=<?php echo $PRSN_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
+                                    <td data-cell="Order #"><a href="<?php echo SITEURL ?>employee-order-details.php?PLACED_ORDER_ID=<?php echo $PLACED_ORDER_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
                                     <td data-cell="Payment">₱<?php echo $PLACED_ORDER_TOTAL ?></td>
                                     <td data-cell="Confimed">
                                         <div class="btn-wrapper">
@@ -189,7 +189,6 @@ if (isset($_POST['not-confirmed'])) {
                     </div>
                     <div class="group">
                         <a href="<?php echo SITEURL; ?>employee-to-prepare-orders.php" class="view big-font">To Prepare</a>
-                        <a href="<?php echo SITEURL; ?>employee-preparing-orders.php" class="view big-font">Preparing</a>
                         <a href="<?php echo SITEURL; ?>employee-to-deliver-orders.php" class="view big-font">To Deliver</a>
                         <a href="<?php echo SITEURL; ?>employee-shipped.php" class="view big-font">Shipped</a>
                         <a href="<?php echo SITEURL; ?>employee-completed-orders.php" class="view big-font">Completed Orders</a>
@@ -200,6 +199,30 @@ if (isset($_POST['not-confirmed'])) {
         </section>
     </main>
 </body>
+<script>
+    // Function to check for new orders via AJAX
+    function checkForNewOrders() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                if (this.responseText.trim() === "NewOrder") {
+                    notifyNewOrder(); // Play notification sound
+                }
+            }
+        };
+        xhttp.open("GET", "order-notification.php", true);
+        xhttp.send();
+    }
+
+    // Function to play notification sound
+    function notifyNewOrder() {
+        var audio = new Audio('sound/notification.mp3'); // Replace with correct path
+        audio.play();
+    }
+
+    // Check for new orders every 5 seconds 
+    setInterval(checkForNewOrders, 2000);
+</script>
 
 </html>
 

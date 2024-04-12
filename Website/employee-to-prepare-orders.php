@@ -99,10 +99,10 @@ if (isset($_POST['not-confirmed'])) {
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                </li>
-                    <?php
+                    </li>
+                <?php
                 } else {
-                    ?>
+                ?>
                     <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
                 <?php
                 }
@@ -131,7 +131,7 @@ if (isset($_POST['not-confirmed'])) {
                         </tr>
                         <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
                         <?php
-                        $sql = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'Paid'";
+                        $sql = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'Preparing'";
                         $res = mysqli_query($conn, $sql);
                         $count = mysqli_num_rows($res);
                         if ($count > 0) {
@@ -188,7 +188,6 @@ if (isset($_POST['not-confirmed'])) {
                     </div>
                     <div class="group">
                         <a href="<?php echo SITEURL; ?>employee-to-prepare-orders.php" class="view big-font">To Prepare</a>
-                        <a href="<?php echo SITEURL; ?>employee-preparing-orders.php" class="view big-font">Preparing</a>
                         <a href="<?php echo SITEURL; ?>employee-to-deliver-orders.php" class="view big-font">To Deliver</a>
                         <a href="<?php echo SITEURL; ?>employee-shipped.php" class="view big-font">Shipped</a>
                         <a href="<?php echo SITEURL; ?>employee-completed-orders.php" class="view big-font">Completed Orders</a>
@@ -199,6 +198,30 @@ if (isset($_POST['not-confirmed'])) {
         </section>
     </main>
 </body>
+<script>
+    // Function to check for new orders via AJAX
+    function checkForNewOrders() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                if (this.responseText.trim() === "NewOrder") {
+                    notifyNewOrder(); // Play notification sound
+                }
+            }
+        };
+        xhttp.open("GET", "order-notification.php", true);
+        xhttp.send();
+    }
+
+    // Function to play notification sound
+    function notifyNewOrder() {
+        var audio = new Audio('sound/notification.mp3'); // Replace with correct path
+        audio.play();
+    }
+
+    // Check for new orders every 5 seconds 
+    setInterval(checkForNewOrders, 2000);
+</script>
 
 </html>
 

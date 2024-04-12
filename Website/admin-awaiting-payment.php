@@ -2,10 +2,6 @@
 
 @include 'constants.php';
 
-if ($countNO > 0) {
-    echo "<script>notifyNewOrder();</script>";
-}
-
 if (isset($_POST['confirmed'])) {
 
     $PLACED_ORDER_ID = $_POST['PLACED_ORDER_ID'];
@@ -93,27 +89,27 @@ if (isset($_POST['not-confirmed'])) {
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
-                    <label class='menu-button-container' for="menu-toggle">
-                        <div class='menu-button'></div>
-                    </label>
-                <ul class = 'menubar'>
-                    <!--TODO: ADD LINKS-->
-                    <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
-                    <!-- Text below should change to 'Logout'once user logged in-->
-                    <?php
-                    if (isset($_SESSION['prsn_id'])) {
-                    ?>
-                        <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a></li>
-                        <?php
-                    } else {
-                        ?>
-                        <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                    <?php
-                    }
-                    ?>
-                </ul>
+            <label class='menu-button-container' for="menu-toggle">
+                <div class='menu-button'></div>
+            </label>
+            <ul class='menubar'>
+                <!--TODO: ADD LINKS-->
+                <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
+                <!-- Text below should change to 'Logout'once user logged in-->
+                <?php
+                if (isset($_SESSION['prsn_id'])) {
+                ?>
+                    <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a></li>
+                <?php
+                } else {
+                ?>
+                    <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
+                <?php
+                }
+                ?>
+            </ul>
         </div>
     </header>
     <main>
@@ -200,13 +196,14 @@ if (isset($_POST['not-confirmed'])) {
                             <a href="admin-awaiting-payment.php" class="view big-font">Awaiting Payment</a>
                             <a href="admin-preparing-orders.php" class="view big-font">Preparing Orders</a>
                             <a href="admin-delivery-orders.php" class="view big-font">For Delivery Orders</a>
+                            <a href="admin-shipped.php" class="view big-font">Shipped</a>
                             <a href="admin-completed-orders.php" class="view big-font">Completed Orders</a>
                             <a href="admin-canceled-orders.php" class="view big-font">Canceled Orders</a>
                         </div>
                     </section>
                 </section>
             </div>
-            
+
         </section>
     </main>
     <script>

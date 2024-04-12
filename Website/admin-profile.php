@@ -4,43 +4,6 @@
 
 $PRSN_ID = $_SESSION['prsn_id'];
 
-if (isset($_POST['submit'])) {
-    $FOOD_NAME = mysqli_real_escape_string($conn, $_POST['product-name']);
-    $FOOD_DESC = mysqli_real_escape_string($conn, $_POST['product-desc']);
-    $FOOD_PRICE =  $_POST['price'];
-    $FOOD_STOCK = $_POST['stock'];
-    $FOOD_ACTIVE = $_POST['active'];
-    $CTGY_ID = $_POST['category'];
-
-
-    if (isset($_FILES['image']['name'])) {
-        $FOOD_IMG = $_FILES['image']['name'];
-
-        if ($FOOD_IMG != "") {
-            $image_info = explode(".", $FOOD_IMG);
-            $ext = end($image_info);
-
-            $FOOD_IMG = "FOOD_IMAGE_" . $FOOD_NAME . "." . $ext;
-
-            $src = $_FILES['image']['tmp_name'];
-            $dst = "images/" . $FOOD_IMG;
-
-            $upload    = move_uploaded_file($src, $dst);
-
-            if ($upload = false) {
-                $_SESSION['upload'] = "<div class='error'>Failed To Upload Image</div>";
-                header('location:' . SITEURL . 'admin-home.php');
-                die();
-            }
-        }
-    } else {
-        $FOOD_IMG = "";
-    }
-    $insert = "INSERT INTO food(CTGY_ID, FOOD_NAME, FOOD_PRICE, FOOD_DESC, FOOD_IMG, FOOD_STOCK, FOOD_ACTIVE) 
-                       VALUES('$CTGY_ID', '$FOOD_NAME', '$FOOD_PRICE', '$FOOD_DESC', '$FOOD_IMG', '$FOOD_STOCK', '$FOOD_ACTIVE')";
-    mysqli_query($conn, $insert);
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -83,10 +46,10 @@ if (isset($_POST['submit'])) {
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                </li>
-                    <?php
+                    </li>
+                <?php
                 } else {
-                    ?>
+                ?>
                     <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
                 <?php
                 }
@@ -106,9 +69,11 @@ if (isset($_POST['submit'])) {
                         <section class="main-section column">
                             <form action="#" class="column" method="post" enctype="multipart/form-data">
                                 <?php
-                                $sql = "SELECT * 
-                                    FROM person
-                                    WHERE PRSN_ID = '$PRSN_ID'";
+                                $sql = "SELECT *
+                                FROM person
+                                INNER JOIN employee ON person.PRSN_ID = employee.PRSN_ID
+                                WHERE person.PRSN_ID = '$PRSN_ID';
+                                ";
 
                                 $res = mysqli_query($conn, $sql);
 
@@ -116,28 +81,28 @@ if (isset($_POST['submit'])) {
 
                                 if ($count > 0) {
                                     while ($row = mysqli_fetch_assoc($res)) {
-
                                         $PRSN_NAME = $row['PRSN_NAME'];
-                                        $PRSN_EMAIL = $row['PRSN_EMAIL'];
-
+                                        $EMP_IMG = $row['EMP_IMAGE'];
+                                        $EMP_BRANCH = $row['EMP_BRANCH'];
+                                        $PRSN_ROLE = $row['PRSN_ROLE'];
                                 ?>
                                         <div class="block">
                                             <div class="image-group">
-                                                <img src="https://static-00.iconduck.com/assets.00/profile-circle-icon-2048x2048-cqe5466q.png" alt="">
-                                                <p><?php echo $PRSN_NAME?></p>
+                                                <img src="<?php echo SITEURL; ?>images/<?php echo $EMP_IMG; ?>" alt="">
+                                                <p><?php echo $PRSN_NAME ?></p>
                                             </div>
                                             <table>
                                                 <tr>
-                                                    <th>Email</th>
-                                                    <td><?php echo $PRSN_EMAIL ?></td>
-                                                </tr>
-                                                <tr>
                                                     <th>Username</th>
-                                                    <td>johndoe1</td>
+                                                    <td><?php echo $PRSN_NAME?></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>Password</th>
-                                                    <td><input type="password" value="admin" readonly></td>
+                                                    <th>Branch</th>
+                                                    <td><?php echo $EMP_BRANCH?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Role</th>
+                                                    <td><?php echo $PRSN_ROLE?></td>
                                                 </tr>
                                             </table>
                                     <?php
@@ -146,13 +111,13 @@ if (isset($_POST['submit'])) {
                                     ?>
 
                                         </div>
-                                        <a href="<?php echo SITEURL; ?>admin-edit-profile.php" class="big-btn">Edit</a>
+                                        <a href="<?php echo SITEURL; ?>admin-edit-profile.php?PRSN_ID=<?php echo $PRSN_ID?>&EMP_IMAGE=<?php echo $EMP_IMG?>" class="big-btn">Edit</a>
                             </form>
                         </section>
                     </section>
                 </div>
             </div>
-            
+
         </section>
     </main>
 </body>

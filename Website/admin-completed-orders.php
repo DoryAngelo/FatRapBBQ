@@ -201,10 +201,11 @@ if (isset($_POST['not-confirmed'])) {
                             </div>
                         </div>
                         <div class="group">
-                            <a href="admin-new-orders.php" class="view big-font">New Orders</a>
+                        <a href="admin-new-orders.php" class="view big-font">New Orders</a>
                             <a href="admin-awaiting-payment.php" class="view big-font">Awaiting Payment</a>
                             <a href="admin-preparing-orders.php" class="view big-font">Preparing Orders</a>
                             <a href="admin-delivery-orders.php" class="view big-font">For Delivery Orders</a>
+                            <a href="admin-shipped.php" class="view big-font">Shipped</a>
                             <a href="admin-completed-orders.php" class="view big-font">Completed Orders</a>
                             <a href="admin-canceled-orders.php" class="view big-font">Canceled Orders</a>
                         </div>

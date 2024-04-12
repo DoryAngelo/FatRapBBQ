@@ -154,7 +154,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                         <li><a href="<?php echo SITEURL; ?>cus-home-page.php">Home</a></li>
                         <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
                         <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
-                        <li><a href="<?php echo SITEURL; ?>track-order.php">Track order</a></li>
+                        <li><a href="cus-home-page.php#track-order-section">Track order</a></li>
                     </ul>
                 </div>
             </div>

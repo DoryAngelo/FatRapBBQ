@@ -24,7 +24,7 @@ if (isset($_POST['confirmed'])) {
             $PLACED_ORDER_STATUS = "Completed";
             break;
         case "Cancelled":
-            $PLACED_ORDER_STATUS = "Ordered";
+            $PLACED_ORDER_STATUS = "Placed";
             break;
     }
     $sql = "UPDATE placed_order SET
@@ -98,10 +98,10 @@ if (isset($_POST['not-confirmed'])) {
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                </li>
-                    <?php
+                    </li>
+                <?php
                 } else {
-                    ?>
+                ?>
                     <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
                 <?php
                 }
@@ -148,7 +148,7 @@ if (isset($_POST['not-confirmed'])) {
                                     <tr>
                                         <td data-cell="Date and Time"><?php echo $PLACED_ORDER_DATE ?></td>
                                         <td data-cell="customer"><?php echo $CUS_NAME ?></td>
-                                        <td data-cell="Order #"><a href="<?php echo SITEURL ?>admin-order-details.php?PLACED_ORDER_ID=<?php echo $PLACED_ORDER_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
+                                        <td data-cell="Order #"><a href="<?php echo SITEURL ?>employee-order-details.php?PLACED_ORDER_ID=<?php echo $PLACED_ORDER_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
                                         <td data-cell="Payment">₱<?php echo $PLACED_ORDER_TOTAL ?></td>
                                         <td data-cell="Confimed">
                                             <div class="btn-wrapper">

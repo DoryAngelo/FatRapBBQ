@@ -2,39 +2,10 @@
 
 @include 'constants.php';
 
-session_start();
-
-if (isset($_POST['submit'])) {
-
-    $PRSN_EMAIL =  mysqli_real_escape_string($conn, $_POST['email']);
-    $PRSN_PASSWORD =  md5($_POST['password']);
-
-    $select = " SELECT * FROM `person` WHERE PRSN_EMAIL = '$PRSN_EMAIL' && PRSN_PASSWORD = '$PRSN_PASSWORD' ";
-
-    $result = mysqli_query($conn, $select);
-
-    if (mysqli_num_rows($result) > 0) {
-
-        $row = mysqli_fetch_array($result);
-        $PRSN_ROLE = $row['PRSN_ROLE'];
-        $_SESSION['prsn_id'] = $row['PRSN_ID'];
-        $_SESSION['prsn_role'] = $row['PRSN_ROLE'];
-
-        if ($PRSN_ROLE == "Customer" || $PRSN_ROLE == "Wholesaler") {
-            header('location:cus-home-page.php');
-        } else if ($PRSN_ROLE == "Admin") {
-            header('location:admin-home.php');
-        } else {
-            header('location:employee-home.php');
-        }
-    } else if (mysqli_num_rows($result) == 0) {
-        $_SESSION['inexistent'] = "<div class='error-msg'>Email does not exist</div>";
-    } else {
-        $_SESSION['incorrect'] = "<div class='error-msg'>Incorrect email or password</div>";
-    }
-} else if (isset($_POST['guest'])) {
-    header('location:home.php');
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -75,12 +46,55 @@ if (isset($_POST['submit'])) {
             <form action="#" class="form login-form" method="post" onsubmit="return validateLogin()">
                 <div class="form-title">
                     <h1>Log in</h1>
+                    <?php
+                    if (isset($_POST['submit'])) {
+                        $loginValue = $_POST['login_value'];
+
+                        // Check if the input value contains an "@" symbol
+                        if (strpos($loginValue, '@') !== false) {
+                            $identifier = 'email';
+                        } else {
+                            $identifier = 'username';
+                        }
+
+                        $loginValue = mysqli_real_escape_string($conn, $loginValue);
+                        $PRSN_PASSWORD =  md5($_POST['password']);
+
+                        // Modify the SQL query to check either email or username based on the identified type
+                        if ($identifier === 'email') {
+                            $select = "SELECT * FROM `person` WHERE PRSN_EMAIL = '$loginValue' && PRSN_PASSWORD = '$PRSN_PASSWORD'";
+                        } else {
+                            $select = "SELECT * FROM `person` WHERE PRSN_NAME = '$loginValue' && PRSN_PASSWORD = '$PRSN_PASSWORD'";
+                        }
+
+                        $result = mysqli_query($conn, $select);
+
+                        if (mysqli_num_rows($result) > 0) {
+
+                            $row = mysqli_fetch_array($result);
+                            $PRSN_ROLE = $row['PRSN_ROLE'];
+                            $_SESSION['prsn_id'] = $row['PRSN_ID'];
+                            $_SESSION['prsn_role'] = $row['PRSN_ROLE'];
+
+                            if ($PRSN_ROLE == "Customer" || $PRSN_ROLE == "Wholesaler") {
+                                header('location:cus-home-page.php');
+                            } else if ($PRSN_ROLE == "Admin") {
+                                header('location:admin-home.php');
+                            } else {
+                                header('location:employee-home.php');
+                            }
+                        } else {
+                            echo "<div class='error'>Incorrect email or password</div>";
+                        }
+                    } else if (isset($_POST['guest'])) {
+                        header('location:home.php');
+                    } ?>
                 </div>
                 <div class="form-field">
                     <div class="form-field-input">
-                        <label for="email">Email</label>
-                        <input name="email" id="email" class="js-user" type="text">
-                        <div class="error"></div> <!-- Error message for email -->
+                        <label for="login_value">Email or Username</label>
+                        <input name="login_value" id="login_value" class="js-user" type="text">
+                        <div class="error"></div> <!-- Error message for login value -->
                     </div>
                     <div class="form-field-input">
                         <label for="password">Password</label>
@@ -101,7 +115,7 @@ if (isset($_POST['submit'])) {
                         <a class="forget-pass" href="<?php echo SITEURL; ?>forgot-password.php">Forgot Password?</a>
                     </div>
 
-                    <button name="submit" type="submit" class="primary-btn">Login</button>
+                    <button name="submit" type="submit" class="primary-btn" onclick="clearErrorMessage()">Login</button>
                     <?php
                     $random = random_bytes(16);
                     $GUEST_ID = bin2hex($random);
@@ -112,8 +126,8 @@ if (isset($_POST['submit'])) {
                 </div>
             </form>
             <script>
-                const emailInput = document.getElementById('email');
-                const passwordInput = document.getElementById('password');
+                const loginInput = document.getElementById('login_value');
+                const passwordInput = document.getElementById('password'); // Add password input
 
                 function setError(input, message) {
                     const errorDiv = input.nextElementSibling;
@@ -125,41 +139,49 @@ if (isset($_POST['submit'])) {
                     errorDiv.innerHTML = ''; // Clear the error message
                 }
 
+                function clearErrorMessage() {
+                    const errorDivs = document.querySelectorAll('.error');
+                    errorDivs.forEach(div => div.innerHTML = '');
+                }
+
+
                 function validateLogin() {
                     let isValid = true;
 
-                    const emailValue = emailInput.value.trim();
+                    const loginValue = loginInput.value.trim();
                     const passwordValue = passwordInput.value.trim();
 
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Email must contain an '@'
-                    const passwordRegex = /^[a-zA-Z0-9]{8,}$/; // Password should only contain alphanumeric characters
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    const passwordRegex = /^[a-zA-Z0-9]{8,}$/;
 
-                    if (emailValue === '') {
-                        setError(emailInput, 'Please enter your email');
+                    if (loginValue === '') { // Check if login value is empty
+                        setError(loginInput, 'Please enter your email or username');
                         isValid = false;
-                    } else if (!emailRegex.test(emailValue)) {
-                        setError(emailInput, 'Invalid email format');
-                        isValid = false;
-                    } else {
-                        clearError(emailInput);
+                    } else if (loginValue.includes('@')) { // Check if login value contains '@' symbol
+                        if (!emailRegex.test(loginValue)) {
+                            setError(loginInput, 'Invalid email format');
+                            isValid = false;
+                        } else {
+                            clearError(loginInput);
+                        }
+                    } else { // Assume it's a username
+                        clearError(loginInput);
                     }
-
                     if (passwordValue === '') {
                         setError(passwordInput, 'Please enter your password');
                         isValid = false;
-                    } 
-                    else if (!passwordRegex.test(passwordValue)) {
+                    } else if (!passwordRegex.test(passwordValue)) {
                         setError(passwordInput, 'Password should be at least 8 characters long and contain only alphanumeric characters');
                         isValid = false;
-                    } 
-                    else {
+                    } else {
                         clearError(passwordInput);
                     }
 
-                    return isValid;
+                    if (!isValid) {
+                        return false;
+                    }
                 }
             </script>
-
         </div>
     </main>
     <footer>
@@ -204,86 +226,6 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
     </footer>
-    <!-- working input validation -->
-    <!-- <script defer> 
-        const form = document.getElementById('form');
-        const email = document.getElementById('email');
-        const password = document.getElementById('password');
-        const errorDisplay = document.querySelector('.error');
-
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-
-            validateInputs();
-        });
-
-        const setError = (message) => {
-            errorDisplay.innerText = message;
-        };
-
-        const setSuccess = () => {
-            errorDisplay.innerText = '';
-        };
-
-        const isValidEmail = (email) => {
-            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return re.test(String(email).toLowerCase());
-        };
-
-        const validateInputs = () => {
-            const emailValue = email.value.trim();
-            const passwordValue = password.value.trim();
-
-            if(emailValue === '') { //empty email field
-                setError('Please enter your email address');
-            } else {
-                if(passwordValue === '') {//empty password
-                setError('Please enter your password');
-                } else {
-                    //temporary code
-                        setSuccess();
-                        if (!isValidEmail(emailValue)) {//check if input is NOT in email format
-                            setError('Email address is invalid');
-                        } 
-                        //email address is not found in the database
-                        
-                        //if found, check if password matches 
-
-                    //end of temporary code
-
-                    // for security reason, make AJAX request to PHP script 
-                    // const xhr = new XMLHttpRequest();
-                    // xhr.open('POST', 'validate_credentials.php'); //this file will handle the validation stuff and connect from the database
-                    // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                    // xhr.onload = function() {
-                    //     if (xhr.status === 200) {
-                    //         const response = JSON.parse(xhr.responseText);
-                    //         if (response.success) {
-                    //             setSuccess();
-                    //         } else {
-                    //             setError(response.message);
-                    //         }
-                    //     }
-                    // };
-                    // xhr.send(`email=${encodeURIComponent(emailValue)}&password=${encodeURIComponent(passwordValue)}`);
-                }
-            }
-        };
-
-        //for the show password icon button 
-        function togglePassword(passwordFieldId) {
-            const eyeIcon = document.getElementById(`eyeIcon${passwordFieldId.charAt(0).toUpperCase() + passwordFieldId.slice(1)}`);
-
-            if (password.type === 'password') {
-                password.type = 'text';
-                eyeIcon.src = 'images/eye-close.png'; // Change the image source to an eye closed icon
-            } else {
-                password.type = 'password';
-                eyeIcon.src = 'images/eye-open.png'; // Change the image source to an eye open icon
-            }
-        }
-
-    </script> -->
 </body>
 
 </html>

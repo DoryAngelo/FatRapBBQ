@@ -3,7 +3,6 @@
 @include 'constants.php';
 
 $FOOD_ID = $_GET['FOOD_ID'];
-$CTGY_ID = $_GET['CTGY_ID'];
 
 ?>
 
@@ -27,13 +26,13 @@ $CTGY_ID = $_GET['CTGY_ID'];
 </head>
 
 <body>
-<header class="backend">
+    <header class="backend">
         <div class="header-container">
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
                     <h1>Fat Rap's Barbeque's Online Store</h1>
-                    <p>ADMIN</p>
+                    <p>Employee</p>
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
@@ -48,10 +47,10 @@ $CTGY_ID = $_GET['CTGY_ID'];
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                </li>
-                    <?php
+                    </li>
+                <?php
                 } else {
-                    ?>
+                ?>
                     <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
                 <?php
                 }
@@ -70,20 +69,18 @@ $CTGY_ID = $_GET['CTGY_ID'];
 
                 $sql = "SELECT * 
                 FROM food
-                JOIN category ON food.ctgy_id = category.ctgy_id WHERE food.food_id = '$FOOD_ID'";
+                WHERE food_id = '$FOOD_ID'";
 
                 $res = mysqli_query($conn, $sql);
                 $count = mysqli_num_rows($res);
                 if ($count > 0) {
                     while ($row = mysqli_fetch_assoc($res)) {
                         $FOOD_ID = $row['FOOD_ID'];
-                        $CTGY_ID = $row['CTGY_ID'];
                         $FOOD_NAME = $row['FOOD_NAME'];
                         $FOOD_DESC = $row['FOOD_DESC'];
                         $FOOD_PRICE = $row['FOOD_PRICE'];
                         $FOOD_STOCK = $row['FOOD_STOCK'];
                         $FOOD_IMAGE = $row['FOOD_IMG'];
-                        $CTGY_NAME = $row['CTGY_NAME'];
                         $FOOD_ACTIVE = $row['FOOD_ACTIVE'];
                 ?>
 
@@ -107,30 +104,6 @@ $CTGY_ID = $_GET['CTGY_ID'];
                                             <div class="form-field-input">
                                                 <label for="price">Stock </label>
                                                 <input value="<?php echo $FOOD_STOCK ?>" class="js-user" type="number" id="price" name="stock" required><!-- numbers only, starts with 09, must have 11-digits -->
-                                            </div>
-                                            <div class="form-field-input">
-                                                <label for="category">Category</label>
-                                                <select class="dropdown" name="category" id="category" required>
-                                                    <?php
-                                                    $sql = "SELECT * FROM category WHERE CTGY_ACTIVE='Yes'";
-                                                    $res = mysqli_query($conn, $sql);
-                                                    $count = mysqli_num_rows($res);
-                                                    if ($count > 0) {
-                                                        while ($row = mysqli_fetch_assoc($res)) {
-                                                            //get the details of category
-                                                            $CTGY_ID = $row['CTGY_ID'];
-                                                            $CTGY_NAME = $row['CTGY_NAME'];
-                                                    ?>
-                                                            <option value="<?php echo $CTGY_ID; ?>"><?php echo $CTGY_NAME; ?></option>
-                                                        <?php
-                                                        }
-                                                    } else {
-                                                        ?>
-                                                        <option value="0">No Category Found</option>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </select>
                                             </div>
                                             <div class="form-field-input">
                                                 <label for="active">Active</label>
@@ -170,7 +143,6 @@ if (isset($_POST['submit'])) {
     $FOOD_PRICE =  $_POST['price'];
     $FOOD_STOCK = $_POST['stock'];
     $FOOD_ACTIVE = $_POST['active'];
-    $CTGY_ID = $_POST['category'];
     $current_image = $FOOD_IMAGE;
 
     if (isset($_FILES['image']['name'])) {
@@ -216,7 +188,6 @@ if (isset($_POST['submit'])) {
     $update = "UPDATE food 
         SET FOOD_NAME = '$FOOD_NAME',
             FOOD_DESC = '$FOOD_DESC',
-            CTGY_ID = '$CTGY_ID',
             FOOD_IMG = '$FOOD_IMG',
             FOOD_PRICE = '$FOOD_PRICE',
             FOOD_STOCK = '$FOOD_STOCK',

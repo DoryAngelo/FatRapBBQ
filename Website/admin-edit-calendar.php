@@ -108,21 +108,21 @@ if ($res) {
                                 <div class="box green">
                                     <p>Available</p>
                                     <div>
-                                        <h1><?php echo $available_count?></h1>
+                                        <h1><?php echo $available_count ?></h1>
                                     </div>
                                     <p class="bottom">days</p>
                                 </div>
                                 <div class="box red">
                                     <p>Fully Booked</p>
                                     <div>
-                                        <h1><?php echo $fullybooked_count?></h1>
+                                        <h1><?php echo $fullybooked_count ?></h1>
                                     </div>
                                     <p class="bottom">days</p>
                                 </div>
                                 <div class="box">
                                     <p>Closed</p>
                                     <div>
-                                        <h1><?php echo $closed_count?></h1>
+                                        <h1><?php echo $closed_count ?></h1>
                                     </div>
                                     <p class="bottom">days</p>
                                 </div>
@@ -148,6 +148,23 @@ if ($res) {
 
         </section>
     </main>
+    <?php
+    $sql = "SELECT * FROM calendar";
+    $res = mysqli_query($conn, $sql);
+    $count = mysqli_num_rows($res);
+
+    $calendar_data = array();
+
+    if ($count > 0) {
+        while ($row = mysqli_fetch_assoc($res)) {
+            $calendar_data[] = $row;
+        }
+    }
+    $calendar_json = json_encode($calendar_data);
+    ?>
+    <script>
+        var calendarData = <?php echo $calendar_json; ?>;
+    </script>
     <script src="calendar.js"></script>
 </body>
 
