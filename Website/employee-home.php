@@ -114,16 +114,15 @@ $countCa = mysqli_num_rows($resCa);
             <div class="container">
                 <div class="section-heading">
                     <h2>Dashboard</h2>
-                    <div class="inline">
+                    <!-- <div class="inline">
                         <p>Date range:</p>
-                        <!-- <p class="dropdown">Today</p> -->
-                        <input type="date">
-                    </div>
+                        <input type="date"> 
+                    </div>-->
                 </div>
                 <section class="with-side-menu">
                     <section class="main-section">
                         <div class="grid-container">
-                            <a class="box blue" href="<?php echo SITEURL; ?>employee-to-prepare-orders.php">
+                            <a class="box" href="<?php echo SITEURL; ?>employee-to-prepare-orders.php">
                                 <p>To Prepare</p>
                                 <h1><?php echo $countPa ?></h1>
                             </a>

@@ -13,7 +13,7 @@ $FOOD_ID = $_GET['FOOD_ID'];
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Menu Item | Fat Rap's Barbeque's Online Store</title>
+    <title>Edit Menu Item | Employee</title>
     <link rel="stylesheet" href="header-styles.css">
     <link rel="stylesheet" href="admin-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,7 +31,7 @@ $FOOD_ID = $_GET['FOOD_ID'];
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
-                    <h1>Fat Rap's Barbeque's Online Store</h1>
+                    <h1>Fat Rap's Barbeque</h1>
                     <p>Employee</p>
                 </div>
             </div>
@@ -60,76 +60,79 @@ $FOOD_ID = $_GET['FOOD_ID'];
     </header>
     <main>
         <section class="section add-edit-menu">
-            <div class="section-wrapper">
-                <div class="section-heading row back">
-                    <h2>Edit Menu Item</h2>
-                    <a href="<?php echo SITEURL; ?>employee-inventory.php">Back</a>
-                </div>
-                <?php
+            <div class="container">
+                <div class="section-wrapper">
+                    <div class="section-heading row back">
+                        <h2>Edit Menu Item</h2>
+                        <a href="<?php echo SITEURL; ?>employee-inventory.php">Back</a>
+                    </div>
+                    <?php
 
-                $sql = "SELECT * 
-                FROM food
-                WHERE food_id = '$FOOD_ID'";
+                    $sql = "SELECT * 
+                    FROM food
+                    WHERE food_id = '$FOOD_ID'";
 
-                $res = mysqli_query($conn, $sql);
-                $count = mysqli_num_rows($res);
-                if ($count > 0) {
-                    while ($row = mysqli_fetch_assoc($res)) {
-                        $FOOD_ID = $row['FOOD_ID'];
-                        $FOOD_NAME = $row['FOOD_NAME'];
-                        $FOOD_DESC = $row['FOOD_DESC'];
-                        $FOOD_PRICE = $row['FOOD_PRICE'];
-                        $FOOD_STOCK = $row['FOOD_STOCK'];
-                        $FOOD_IMAGE = $row['FOOD_IMG'];
-                        $FOOD_ACTIVE = $row['FOOD_ACTIVE'];
-                ?>
+                    $res = mysqli_query($conn, $sql);
+                    $count = mysqli_num_rows($res);
+                    if ($count > 0) {
+                        while ($row = mysqli_fetch_assoc($res)) {
+                            $FOOD_ID = $row['FOOD_ID'];
+                            $FOOD_NAME = $row['FOOD_NAME'];
+                            $FOOD_DESC = $row['FOOD_DESC'];
+                            $FOOD_PRICE = $row['FOOD_PRICE'];
+                            $FOOD_STOCK = $row['FOOD_STOCK'];
+                            $FOOD_IMAGE = $row['FOOD_IMG'];
+                            $FOOD_ACTIVE = $row['FOOD_ACTIVE'];
+                    ?>
 
-                        <section class="section-body">
-                            <section class="main-section column">
-                                <form action="#" class="column" method="post" enctype="multipart/form-data">
-                                    <div class="block">
-                                        <div class="form-field">
-                                            <div class="form-field-input">
-                                                <label for="product-name">Product Name</label>
-                                                <input value="<?php echo $FOOD_NAME ?>" class="js-user" type="text" id="product-name" name="product-name" required pattern="[a-zA-Z ]{1,20}$"><!-- 20 characters only, letter only, with spaces -->
-                                            </div>
-                                            <div class="form-field-input">
-                                                <label for="product-name">Product Description</label>
-                                                <input value="<?php echo $FOOD_DESC ?>" class="js-user" type="text" id="product-name" name="product-desc" required pattern="[a-zA-Z ]{1,20}$"><!-- 20 characters only, letter only, with spaces -->
-                                            </div>
-                                            <div class="form-field-input">
-                                                <label for="price">Price ₱ </label>
-                                                <input value="<?php echo $FOOD_PRICE ?>" class="js-user" type="number" id="price" name="price" required><!-- numbers only, starts with 09, must have 11-digits -->
-                                            </div>
-                                            <div class="form-field-input">
-                                                <label for="price">Stock </label>
-                                                <input value="<?php echo $FOOD_STOCK ?>" class="js-user" type="number" id="price" name="stock" required><!-- numbers only, starts with 09, must have 11-digits -->
-                                            </div>
-                                            <div class="form-field-input">
-                                                <label for="active">Active</label>
-                                                <select class="dropdown" name="active" id="active" required>
-                                                    <option value="inactive">INACTIVE</option>
-                                                    <option value="active">ACTIVE</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-field-input">
-                                                <label for="valid-id">Image</label>
-                                                <p class="label-desc">(accepted files: .jpg, .png)</p>
-                                                <input class="image" type="file" name="image" id="image" required><!-- numbers only, starts with 09, must have 11-digits -->
+                            <section class="section-body">
+                                <section class="main-section column">
+                                    <form action="#" class="column" method="post" enctype="multipart/form-data">
+                                        <div class="block">
+                                            <div class="form-field">
+                                                <div class="form-field-input">
+                                                    <label for="product-name">Product Name</label>
+                                                    <input value="<?php echo $FOOD_NAME ?>" class="js-user" type="text" id="product-name" name="product-name" required pattern="[a-zA-Z ]{1,20}$"><!-- 20 characters only, letter only, with spaces -->
+                                                </div>
+                                                <div class="form-field-input">
+                                                    <label for="product-name">Product Description</label>
+                                                    <input value="<?php echo $FOOD_DESC ?>" class="js-user" type="text" id="product-name" name="product-desc" required pattern="[a-zA-Z ]{1,20}$"><!-- 20 characters only, letter only, with spaces -->
+                                                </div>
+                                                <div class="form-field-input">
+                                                    <label for="price">Price ₱ </label>
+                                                    <input value="<?php echo $FOOD_PRICE ?>" class="js-user" type="number" id="price" name="price" required><!-- numbers only, starts with 09, must have 11-digits -->
+                                                </div>
+                                                <div class="form-field-input">
+                                                    <label for="price">Stock </label>
+                                                    <input value="<?php echo $FOOD_STOCK ?>" class="js-user" type="number" id="price" name="stock" required><!-- numbers only, starts with 09, must have 11-digits -->
+                                                </div>
+                                                <div class="form-field-input">
+                                                    <label for="active">Active</label>
+                                                    <select class="dropdown" name="active" id="active" required>
+                                                        <option value="inactive">INACTIVE</option>
+                                                        <option value="active">ACTIVE</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-field-input">
+                                                    <label for="valid-id">Image</label>
+                                                    <p class="label-desc">(accepted files: .jpg, .png)</p>
+                                                    <input class="image" type="file" name="image" id="image" required><!-- numbers only, starts with 09, must have 11-digits -->
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <!-- <input type="hidden" name="FOOD_IMG" value="<?php echo $FOOD_IMG; ?>"> -->
-                                    <a href="<?php echo SITEURL; ?>employee-add-product.php" class="page-btn"><button class="big-btn">Add a new product</button></a>
-                                </form>
+                                        <!-- <input type="hidden" name="FOOD_IMG" value="<?php echo $FOOD_IMG; ?>"> -->
+                                        <a href="<?php echo SITEURL; ?>employee-add-product.php" class="page-btn"><button class="big-btn">Add a new product</button></a>
+                                    </form>
+                                </section>
                             </section>
-                        </section>
-                <?php
+                    <?php
+                        }
                     }
-                }
-                ?>
+                    ?>
 
+                </div>
             </div>
+            
         </section>
     </main>
 </body>
