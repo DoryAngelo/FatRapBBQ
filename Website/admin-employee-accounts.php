@@ -78,7 +78,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                     <th class="header">Action</th>
                                 </tr>
                                 <?php
-                                $sql = "SELECT * FROM person, employee WHERE employee.PRSN_ID = person.PRSN_ID AND PRSN_ROLE = 'Employee'";
+                                $sql = "SELECT * FROM person, employee WHERE employee.PRSN_ID = person.PRSN_ID AND PRSN_ROLE = 'Employee' OR PRSN_ROLE = 'Admin'";
                                 $res = mysqli_query($conn, $sql);
                                 $count = mysqli_num_rows($res);
                                 if ($count > 0) {
