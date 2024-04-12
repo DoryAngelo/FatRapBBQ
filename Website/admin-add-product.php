@@ -10,7 +10,6 @@ if (isset($_POST['submit'])) {
     $FOOD_PRICE =  $_POST['price'];
     $FOOD_STOCK = $_POST['stock'];
     $FOOD_ACTIVE = $_POST['active'];
-    $CTGY_ID = $_POST['category'];
     $FOOD_TYPE = $_POST['type'];
 
 
@@ -123,30 +122,6 @@ if (isset($_POST['submit'])) {
                                         <div class="form-field-input">
                                             <label for="price">Stock </label>
                                             <input class="js-user" type="number" id="price" name="stock" required><!-- numbers only, starts with 09, must have 11-digits -->
-                                        </div>
-                                        <div class="form-field-input">
-                                            <label for="category">Category</label>
-                                            <select class="dropdown" name="category" id="category" required>
-                                                <?php
-                                                    $sql = "SELECT * FROM category WHERE CTGY_ACTIVE='Yes'";
-                                                    $res = mysqli_query($conn, $sql);
-                                                    $count = mysqli_num_rows($res);
-                                                    if ($count > 0) {
-                                                        while ($row = mysqli_fetch_assoc($res)) {
-                                                            //get the details of category
-                                                            $CTGY_ID = $row['CTGY_ID'];
-                                                            $CTGY_NAME = $row['CTGY_NAME'];
-                                                ?>
-                                                            <option value="<?php echo $CTGY_ID; ?>"><?php echo $CTGY_NAME; ?></option>
-                                                <?php
-                                                        }
-                                                    } else {
-                                                ?>
-                                                        <option value="0">No Category Found</option>
-                                                <?php
-                                                    }
-                                                ?>
-                                            </select>
                                         </div>
                                         <div class="form-field-input">
                                             <label for="type">Type</label>

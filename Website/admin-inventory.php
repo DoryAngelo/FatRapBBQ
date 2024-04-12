@@ -76,7 +76,6 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                 <tr>
                                     <th class="header">Image</th>
                                     <th class="header">Product Name</th>
-                                    <th class="header">Category</th>
                                     <th class="header">Price</th>
                                     <th class="header">Stock</th>
                                     <th class="header">Food Type</th>
@@ -89,7 +88,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
 
                                 $sql = "SELECT * 
                                         FROM food
-                                        JOIN category ON food.ctgy_id = category.ctgy_id";
+                                      ";
 
                                 $res = mysqli_query($conn, $sql);
 
@@ -98,12 +97,10 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                 if ($count > 0) {
                                     while ($row = mysqli_fetch_assoc($res)) {
                                         $FOOD_ID = $row['FOOD_ID'];
-                                        $CTGY_ID = $row['CTGY_ID'];
                                         $FOOD_NAME = $row['FOOD_NAME'];
                                         $FOOD_PRICE = $row['FOOD_PRICE'];
                                         $FOOD_IMG = $row['FOOD_IMG'];
                                         $FOOD_STOCK = $row['FOOD_STOCK'];
-                                        $CTGY_NAME = $row['CTGY_NAME'];
                                         $FOOD_ACTIVE = $row['FOOD_ACTIVE'];
                                         $FOOD_TYPE = $row['FOOD_TYPE'];
                                 ?>
@@ -112,7 +109,6 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                                 <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
                                             </td>
                                             <td data-cell="Product Name"><?php echo $FOOD_NAME ?></td>
-                                            <td data-cell="Category"><?php echo $CTGY_NAME ?></td>
                                             <td data-cell="Price">₱<?php echo $FOOD_PRICE ?></td>
                                             <td data-cell="Stock">
                                                 <span class="<?php echo ($FOOD_STOCK < 100) ? 'red-text' : ''; ?>">
@@ -120,7 +116,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                                 </span>
                                             </td>
                                             <td data-cell="Price"><?php echo $FOOD_TYPE ?></td>
-                                            <td data-cell="Action"><a href="<?php echo SITEURL ;?>admin-edit-product.php?FOOD_ID=<?php echo $FOOD_ID?>&CTGY_ID=<?php echo $CTGY_ID?>"  class="edit">Edit</a></td>
+                                            <td data-cell="Action"><a href="<?php echo SITEURL ;?>admin-edit-product.php?FOOD_ID=<?php echo $FOOD_ID?>"  class="edit">Edit</a></td>
                                             <td data-cell="Action"><a href="delete_in_order.php?IN_ORDER_ID=<?php echo $IN_ORDER_ID; ?>" class="bx bxs-trash-alt trash"></a></td>
                                         </tr>
                                     <?php
