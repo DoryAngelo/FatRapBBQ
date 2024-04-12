@@ -3,6 +3,9 @@ const datesElement = document.getElementById('dates');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 
+// Access the calendarData variable
+console.log(calendarData);
+
 let currentDate = new Date();
 
 let selectedDate = null;
