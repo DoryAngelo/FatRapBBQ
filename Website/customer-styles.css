@@ -29,14 +29,14 @@
 body {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
-    /* min-height: 100vh; */
+    min-height: 100vh;
     min-width: 320px;
 }
 
 main {
     padding-top: 8rem; /*height of header */
     /* padding-bottom: 7rem; */
-    height: max-content;
+    min-height: 70vh;
     background-color: var(--bg);
     color: var(--text);
     /* overflow: hidden;    */
@@ -44,7 +44,6 @@ main {
 
 .section {
     min-width: 320px;
-    min-height: 30rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -53,6 +52,7 @@ main {
 
 .container {
     width: 90%;
+    height: 100%;
     max-width: 1200px;
     margin: clamp(1rem, 6vw, 4.5rem) auto;
     border: 1px solid red;

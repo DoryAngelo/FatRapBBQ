@@ -66,48 +66,51 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
         </div>
     </header>
     <main>
-        <!-- <section class="section menu">
-            <div class="section-heading">
-                <?php
-                if ($PRSN_ROLE == "Wholesaler") {
-                ?>
-                    <h1>WHOLESALE DEALS!!!</h1>
-                <?php
-                }
-                ?>
-
-                <h2>Menu</h2>
-            </div>
-            <section class="section-body">
-                <?php
-
-                $sql = "SELECT * FROM food WHERE FOOD_ACTIVE = 'Yes' AND FOOD_TYPE = '$PRSN_ROLE'";
-                $res = mysqli_query($conn, $sql);
-                $count = mysqli_num_rows($res);
-                if ($count > 0) {
-                    while ($row = mysqli_fetch_assoc($res)) {
-                        $FOOD_ID = $row['FOOD_ID'];
-                        $FOOD_NAME = $row['FOOD_NAME'];
-                        $FOOD_IMG = $row['FOOD_IMG'];
-                        $FOOD_PRICE = $row['FOOD_PRICE'];
-                ?>
-                        <a class="menu-item" href="<?php echo SITEURL; ?>product-info.php?FOOD_ID=<?php echo $FOOD_ID ?>">
-                            <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
-                            <div class="text">
-                                <p class="name"><?php echo $FOOD_NAME ?></p>
-                                <div class="inline">
-                                    <h2>₱<?php echo $FOOD_PRICE ?></h3>
-                                        <p>1 stick</p>
-                                </div>
-                            </div>
-                        </a>
-                <?php
-                    }
-                }
-                ?>
-            </section>
-        </section> -->
         <section class="section menu">
+            <div class="container">
+                <div class="section-heading">
+                    <?php
+                    if ($PRSN_ROLE == "Wholesaler") {
+                    ?>
+                        <h1>WHOLESALE DEALS!!!</h1>
+                    <?php
+                    }
+                    ?>
+
+                    <h2>Menu</h2>
+                </div>
+                <section class="section-body">
+                    <?php
+
+                    $sql = "SELECT * FROM food WHERE FOOD_ACTIVE = 'Yes' AND FOOD_TYPE = '$PRSN_ROLE'";
+                    $res = mysqli_query($conn, $sql);
+                    $count = mysqli_num_rows($res);
+                    if ($count > 0) {
+                        while ($row = mysqli_fetch_assoc($res)) {
+                            $FOOD_ID = $row['FOOD_ID'];
+                            $FOOD_NAME = $row['FOOD_NAME'];
+                            $FOOD_IMG = $row['FOOD_IMG'];
+                            $FOOD_PRICE = $row['FOOD_PRICE'];
+                    ?>
+                            <a class="menu-item" href="<?php echo SITEURL; ?>product-info.php?FOOD_ID=<?php echo $FOOD_ID ?>">
+                                <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
+                                <div class="text">
+                                    <p class="name"><?php echo $FOOD_NAME ?></p>
+                                    <div class="inline">
+                                        <h2>₱<?php echo $FOOD_PRICE ?></h3>
+                                            <p>1 stick</p>
+                                    </div>
+                                </div>
+                            </a>
+                    <?php
+                        }
+                    }
+                    ?>
+                </section>
+            </div>
+            
+        </section>
+        <!-- <section class="section menu">
             <div class="container">
                 <div class="section-heading">
                     <h2>Menu</h2>                
@@ -175,7 +178,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                     </a>
                 </section>
             </div>
-        </section>
+        </section> -->
     </main>
     <footer>
         <div class="footer-container">
