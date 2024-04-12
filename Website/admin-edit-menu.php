@@ -78,8 +78,8 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                     <th class="header">Price</th>
                                     <th class="header">Stock</th>
                                     <th class="header">Active</th>
-                                    <th class="header">Food Type</th>
-                                    <th class="header"></th><!--for edit button column-->
+                                    <th class="header">Type</th>
+                                    <th class="header">Action</th><!--for edit button column-->
                                     <th class="header"></th><!--for delete button column-->
                                 </tr>
                                 <?php

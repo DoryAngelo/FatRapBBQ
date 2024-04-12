@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Menu Item | Admin</title>
+    <title>Add Menu Item | Employee</title>
     <link rel="stylesheet" href="header-styles.css">
     <link rel="stylesheet" href="admin-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -70,6 +70,7 @@ if (isset($_POST['submit'])) {
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
                     <h1>Fat Rap's Barbeque</h1>
+                    <p>EMPLOYEE</p>
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
