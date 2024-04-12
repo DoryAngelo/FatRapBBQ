@@ -107,43 +107,6 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                 ?>
             </section>
         </section>
-        <!-- <section class="section menu">
-            <div class="section-heading">
-                <h2>Menu</h2>                
-            </div> 
-            <section class="section-body">
-                <a class="menu-item" >
-                    <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
-                    <div class="text">
-                        <p class="name">Pork BBQ</p>
-                        <div class="inline">
-                            <h2>₱25.00</h3>
-                            <p>1 stick</p>
-                        </div>
-                    </div>
-                </a>
-                <a class="menu-item" >
-                    <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
-                    <div class="text">
-                        <p class="name">Pork BBQ</p>
-                        <div class="inline">
-                            <h2>₱25.00</h3>
-                            <p>1 stick</p>
-                        </div>
-                    </div>
-                </a>
-                <a class="menu-item" >
-                    <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
-                    <div class="text">
-                        <p class="name">Pork BBQ</p>
-                        <div class="inline">
-                            <h2>₱25.00</h3>
-                            <p>1 stick</p>
-                        </div>
-                    </div>
-                </a>
-            </section>
-        </section> -->
     </main>
     <footer>
         <div class="footer-container">
