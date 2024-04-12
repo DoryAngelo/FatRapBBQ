@@ -39,7 +39,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
-                    <h1>Fat Rap's Barbeque's Online Store</h1>
+                    <h1>Fat Rap's Barbeque</h1>
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
@@ -66,7 +66,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
         </div>
     </header>
     <main>
-        <section class="section menu">
+        <!-- <section class="section menu">
             <div class="section-heading">
                 <?php
                 if ($PRSN_ROLE == "Wholesaler") {
@@ -106,49 +106,81 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                 }
                 ?>
             </section>
-        </section>
-        <!-- <section class="section menu">
-            <div class="section-heading">
-                <h2>Menu</h2>                
-            </div> 
-            <section class="section-body">
-                <a class="menu-item" >
-                    <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
-                    <div class="text">
-                        <p class="name">Pork BBQ</p>
-                        <div class="inline">
-                            <h2>₱25.00</h3>
-                            <p>1 stick</p>
-                        </div>
-                    </div>
-                </a>
-                <a class="menu-item" >
-                    <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
-                    <div class="text">
-                        <p class="name">Pork BBQ</p>
-                        <div class="inline">
-                            <h2>₱25.00</h3>
-                            <p>1 stick</p>
-                        </div>
-                    </div>
-                </a>
-                <a class="menu-item" >
-                    <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
-                    <div class="text">
-                        <p class="name">Pork BBQ</p>
-                        <div class="inline">
-                            <h2>₱25.00</h3>
-                            <p>1 stick</p>
-                        </div>
-                    </div>
-                </a>
-            </section>
         </section> -->
+        <section class="section menu">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>Menu</h2>                
+                </div> 
+                <section class="section-body">
+                    <a class="menu-item" >
+                        <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
+                        <div class="text">
+                            <p class="name">Pork BBQ</p>
+                            <div class="inline">
+                                <h2>₱25.00</h3>
+                                <p>1 stick</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="menu-item" >
+                        <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
+                        <div class="text">
+                            <p class="name">Pork BBQ</p>
+                            <div class="inline">
+                                <h2>₱25.00</h3>
+                                <p>1 stick</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="menu-item" >
+                        <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
+                        <div class="text">
+                            <p class="name">Pork BBQ</p>
+                            <div class="inline">
+                                <h2>₱25.00</h3>
+                                <p>1 stick</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="menu-item" >
+                        <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
+                        <div class="text">
+                            <p class="name">Pork BBQ</p>
+                            <div class="inline">
+                                <h2>₱25.00</h3>
+                                <p>1 stick</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="menu-item" >
+                        <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
+                        <div class="text">
+                            <p class="name">Pork BBQ</p>
+                            <div class="inline">
+                                <h2>₱25.00</h3>
+                                <p>1 stick</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="menu-item" >
+                        <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
+                        <div class="text">
+                            <p class="name">Pork BBQ</p>
+                            <div class="inline">
+                                <h2>₱25.00</h3>
+                                <p>1 stick</p>
+                            </div>
+                        </div>
+                    </a>
+                </section>
+            </div>
+        </section>
     </main>
     <footer>
         <div class="footer-container">
             <div class="left-container">
-                <h1>Fat Rap's Barbeque's Online Store</h1>
+                <h1>Fat Rap's Barbeque</h1>
                 <div class="list">
                     <ul>
                         <li><a href="<?php echo SITEURL; ?>cus-home-page.php">Home</a></li>

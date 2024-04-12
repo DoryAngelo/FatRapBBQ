@@ -26,54 +26,40 @@
     --red: #C13B24;
 }
 
-/* @media only screen and (min-width: 700px) {
-    .product-landing {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 3rem;
-    }
-    .PL-text {
-        width: 60%;
-    }
-    .button {
-        width: max(50%, 200px);
-    }
-
-    .product-landing h1 {
-        text-align: left;
-        font-size: 6rem;
-    }
-
-    .product-landing img {
-        width: min(30%, 300px);
-    }
-} */
-
 body {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     /* min-height: 100vh; */
+    min-width: 320px;
 }
 
 main {
-    padding-top: 130px;
-    padding-bottom: 7rem;
+    padding-top: 8rem; /*height of header */
+    /* padding-bottom: 7rem; */
     height: max-content;
     background-color: var(--bg);
     color: var(--text);
-    width: 100%;
-    min-width: 320px;
-    overflow: hidden;   
+    /* overflow: hidden;    */
 }
 
 .section {
-    width: 80%;
-    margin: auto;
-    margin-top: 2.5rem;
+    min-width: 320px;
+    min-height: 30rem;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid red;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: clamp(1rem, 6vw, 4.5rem) auto;
+    border: 1px solid red;
+}
+
+img {
+    object-fit: cover;
 }
 
 .section-heading {
@@ -425,14 +411,9 @@ a.clear-bg, a.clear-bg:hover {
 }
 
 .menu .section-body {
-    /* display: flex;
-    flex-direction: row;
-    gap: 3rem;
-    justify-content: space-between; */
-
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Creates 4 columns with equal width */
-    gap: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 2rem 3rem;
 }
 
 .menu .menu-item img {
@@ -585,7 +566,7 @@ a.back {
 }
 
 /*order tracking progress bar*/
-.container {
+.track-order .container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -594,7 +575,7 @@ a.back {
     padding: 2rem 0;
   }
   
-  .container .steps {
+  .track-order .container .steps {
     display: flex;
     width: 90%;
     align-items: center;
@@ -662,7 +643,7 @@ a.back {
     background: #6FDE4A;
     transition: all 300ms ease;
   }
-  .container .buttons {
+  .track-order .container .buttons {
     display: flex;
     gap: 20px;
   }
@@ -717,8 +698,32 @@ a.back {
     display: none;
 }
 
-  @media only screen and (width <= 860px) {
+@media only screen and (width <= 950px) {
+    .menu .section-body {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+        gap: 2rem;
+    }
+}
+
+@media only screen and (width <= 860px) {
     main {
         padding-top: 4rem;
     }
+}
+
+@media only screen and (width <= 361px) {
+    .menu .menu-item img{
+        height: 8rem;
+        object-fit: cover;
+    }
+    .menu .menu-item .text {
+        margin: 0.4rem 0.6rem 0.6rem 0.6rem;
+    }
+    .menu .menu-item p.name, .menu .menu-item .inline p{
+        font-size: 0.9rem;
+    }
+    .menu .menu-item .inline h2 {
+        font-size: 1.33rem;
+    }
+
 }
