@@ -39,14 +39,15 @@ const updateCalendar = () => {
 
     for (let i = 1; i <= totalDays; i++) {
         const date = new Date(currentYear, currentMonth, i);
-        if (date <= today || date > resultDate || (date < today && today.getHour() > -1)) {
+        if (date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth() && date.getDate() === today.getDate()) {
+            datesHTML += `<button id="${getMonthName(currentDate.getMonth())} ${i} ${currentDate.getFullYear()}" class="date active ">${i}</button>`;
+        } else if (date <= today || date > resultDate || (date < today && today.getHours() > -1)) {
             datesHTML += `<div class="date inactive ${currentDate.getMonth()} ${i}">${i}</div>`;
-        }
-        else {
+        } else {
             datesHTML += `<button id="${getMonthName(currentDate.getMonth())} ${i} ${currentDate.getFullYear()}" class="date active ">${i}</button>`;
         }
     }
-
+    
     if (lastDayIndex != 0) {
         for (let i = 1; i <= 7 - lastDayIndex; i++) {
             const nextDate = new Date(currentYear, currentMonth + 1, i);
