@@ -138,6 +138,7 @@ if ($res) {
                                     <button id="availBtn" class="button green">Available</button>
                                     <button id="fullBtn" class="button red">Fully Booked</button>
                                     <button id="closedBtn" class="button black">Closed</button>
+                                    <button id="clearBtn" class="button clear">Clear</button>
                                 </div>
                             </div>
                             <button id="saveBtn" class="save-btn">Save</button>

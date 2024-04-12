@@ -831,6 +831,13 @@ a.back {
     color: white;
 } 
 
+.button.clear{
+    background: transparent;
+    color: #517ca7;
+    border: 2px solid #517ca7;
+    font-weight: 600;
+} 
+
 .date.available{
     background: var(--available);
     color: white;
