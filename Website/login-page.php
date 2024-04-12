@@ -6,48 +6,6 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-if (isset($_POST['submit'])) {
-    $loginValue = $_POST['login_value'];
-
-    // Check if the input value contains an "@" symbol
-    if (strpos($loginValue, '@') !== false) {
-        $identifier = 'email';
-    } else {
-        $identifier = 'username';
-    }
-
-    $loginValue = mysqli_real_escape_string($conn, $loginValue);
-    $PRSN_PASSWORD =  md5($_POST['password']);
-
-    // Modify the SQL query to check either email or username based on the identified type
-    if ($identifier === 'email') {
-        $select = "SELECT * FROM `person` WHERE PRSN_EMAIL = '$loginValue' && PRSN_PASSWORD = '$PRSN_PASSWORD'";
-    } else {
-        $select = "SELECT * FROM `person` WHERE PRSN_NAME = '$loginValue' && PRSN_PASSWORD = '$PRSN_PASSWORD'";
-    }
-
-    $result = mysqli_query($conn, $select);
-
-    if (mysqli_num_rows($result) > 0) {
-
-        $row = mysqli_fetch_array($result);
-        $PRSN_ROLE = $row['PRSN_ROLE'];
-        $_SESSION['prsn_id'] = $row['PRSN_ID'];
-        $_SESSION['prsn_role'] = $row['PRSN_ROLE'];
-
-        if ($PRSN_ROLE == "Customer" || $PRSN_ROLE == "Wholesaler") {
-            header('location:cus-home-page.php');
-        } else if ($PRSN_ROLE == "Admin") {
-            header('location:admin-home.php');
-        } else {
-            header('location:employee-home.php');
-        }
-    } else {
-        $_SESSION['incorrect'] = "<div class='error-msg'>Incorrect email or password</div>";
-    }
-} else if (isset($_POST['guest'])) {
-    header('location:home.php');
-}
 ?>
 
 <!DOCTYPE html>
@@ -88,6 +46,49 @@ if (isset($_POST['submit'])) {
             <form action="#" class="form login-form" method="post" onsubmit="return validateLogin()">
                 <div class="form-title">
                     <h1>Log in</h1>
+                    <?php
+                    if (isset($_POST['submit'])) {
+                        $loginValue = $_POST['login_value'];
+
+                        // Check if the input value contains an "@" symbol
+                        if (strpos($loginValue, '@') !== false) {
+                            $identifier = 'email';
+                        } else {
+                            $identifier = 'username';
+                        }
+
+                        $loginValue = mysqli_real_escape_string($conn, $loginValue);
+                        $PRSN_PASSWORD =  md5($_POST['password']);
+
+                        // Modify the SQL query to check either email or username based on the identified type
+                        if ($identifier === 'email') {
+                            $select = "SELECT * FROM `person` WHERE PRSN_EMAIL = '$loginValue' && PRSN_PASSWORD = '$PRSN_PASSWORD'";
+                        } else {
+                            $select = "SELECT * FROM `person` WHERE PRSN_NAME = '$loginValue' && PRSN_PASSWORD = '$PRSN_PASSWORD'";
+                        }
+
+                        $result = mysqli_query($conn, $select);
+
+                        if (mysqli_num_rows($result) > 0) {
+
+                            $row = mysqli_fetch_array($result);
+                            $PRSN_ROLE = $row['PRSN_ROLE'];
+                            $_SESSION['prsn_id'] = $row['PRSN_ID'];
+                            $_SESSION['prsn_role'] = $row['PRSN_ROLE'];
+
+                            if ($PRSN_ROLE == "Customer" || $PRSN_ROLE == "Wholesaler") {
+                                header('location:cus-home-page.php');
+                            } else if ($PRSN_ROLE == "Admin") {
+                                header('location:admin-home.php');
+                            } else {
+                                header('location:employee-home.php');
+                            }
+                        } else {
+                            echo "<div class='error'>Incorrect email or password</div>";
+                        }
+                    } else if (isset($_POST['guest'])) {
+                        header('location:home.php');
+                    } ?>
                 </div>
                 <div class="form-field">
                     <div class="form-field-input">
@@ -114,7 +115,7 @@ if (isset($_POST['submit'])) {
                         <a class="forget-pass" href="<?php echo SITEURL; ?>forgot-password.php">Forgot Password?</a>
                     </div>
 
-                    <button name="submit" type="submit" class="primary-btn">Login</button>
+                    <button name="submit" type="submit" class="primary-btn" onclick="clearErrorMessage()">Login</button>
                     <?php
                     $random = random_bytes(16);
                     $GUEST_ID = bin2hex($random);
@@ -138,6 +139,12 @@ if (isset($_POST['submit'])) {
                     errorDiv.innerHTML = ''; // Clear the error message
                 }
 
+                function clearErrorMessage() {
+                    const errorDivs = document.querySelectorAll('.error');
+                    errorDivs.forEach(div => div.innerHTML = '');
+                }
+
+
                 function validateLogin() {
                     let isValid = true;
 
@@ -160,7 +167,6 @@ if (isset($_POST['submit'])) {
                     } else { // Assume it's a username
                         clearError(loginInput);
                     }
-
                     if (passwordValue === '') {
                         setError(passwordInput, 'Please enter your password');
                         isValid = false;
@@ -172,7 +178,7 @@ if (isset($_POST['submit'])) {
                     }
 
                     if (!isValid) {
-                        return false; 
+                        return false;
                     }
                 }
             </script>

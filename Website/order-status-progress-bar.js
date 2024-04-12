@@ -1,15 +1,15 @@
- /* javascript for controlling the progress bar and appearance of payment section and 
- displaying a message after clicking the submit button in the payment section*/
+/* javascript for controlling the progress bar and appearance of payment section and 
+displaying a message after clicking the submit button in the payment section*/
 
- // DOM Elements
+// DOM Elements
 const circles = document.querySelectorAll(".circle"),
-      progressBar = document.querySelector(".indicator"),
-      buttons = document.querySelectorAll("button"),
-      pstatus = document.getElementById("status").innerHTML,
-      sectionToShowHide = document.getElementById("payment-section"),
-      receiptButton = document.getElementById("generate-receipt-btn"),
-      submitButton = document.getElementById("submit"),
-      promptMessage = document.querySelector(".prompt");
+  progressBar = document.querySelector(".indicator"),
+  buttons = document.querySelectorAll("button"),
+  pstatus = document.getElementById("status").innerHTML,
+  sectionToShowHide = document.getElementById("payment-section"),
+  receiptButton = document.getElementById("generate-receipt-btn"),
+  submitButton = document.getElementById("submit"),
+  promptMessage = document.querySelector(".prompt");
 
 let currentStep = 1;
 
@@ -17,12 +17,15 @@ let currentStep = 1;
 const updateSteps = (e) => {
 
   // update current step based on the text of p tag that serves as a status
-  switch(pstatus) {
+  switch (pstatus) {
     case "Placed":
       currentStep = 1;
       break;
     case "Awaiting Payment":
       currentStep = 2;
+      break;
+    case "Paid":
+      currentStep = 3;
       break;
     case "Preparing":
       currentStep = 3;
@@ -37,8 +40,8 @@ const updateSteps = (e) => {
       currentStep = 6;
       break;
   }
-        // // update current step based on the button clicked
-        // currentStep = e.target.id === "next" ? ++currentStep : --currentStep;
+  // // update current step based on the button clicked
+  // currentStep = e.target.id === "next" ? ++currentStep : --currentStep;
 
   // loop through all circles and add/remove "active" class based on their index and current step
   circles.forEach((circle, index) => {
@@ -48,22 +51,22 @@ const updateSteps = (e) => {
   // update progress bar width based on current step
   progressBar.style.width = `${((currentStep - 1) / (circles.length - 1)) * 100}%`;
 
-        // check if current step is last step or first step and disable corresponding buttons
-        // if (currentStep === circles.length) {
-        //   buttons[1].disabled = true;
-        // } else if (currentStep === 1) {
-        //   buttons[0].disabled = true;
-        // } else {
-        //   buttons.forEach((button) => (button.disabled = false));
-        // }
+  // check if current step is last step or first step and disable corresponding buttons
+  // if (currentStep === circles.length) {
+  //   buttons[1].disabled = true;
+  // } else if (currentStep === 1) {
+  //   buttons[0].disabled = true;
+  // } else {
+  //   buttons.forEach((button) => (button.disabled = false));
+  // }
 
   // Show/hide the payment section based on the current step
-    if (currentStep >= 3) {
-      receiptButton.style.display = "block"; // Show the section
-    } else {
-      receiptButton.style.display = "none"; // Hide the section
-    }
-  
+  if (currentStep >= 3) {
+    receiptButton.style.display = "block"; // Show the section
+  } else {
+    receiptButton.style.display = "none"; // Hide the section
+  }
+
 
   // Show/hide the payment section based on the current step
   if (currentStep === 2) {
@@ -86,11 +89,11 @@ const updateSteps = (e) => {
     sectionToShowHide.style.display = "none"; // Hide the section
   }
 
- }; 
+};
 
 updateSteps();
 
-        // add click event listeners to all buttons
-        // buttons.forEach((button) => {
-        // button.addEventListener("click", updateSteps);
-        // });
+// add click event listeners to all buttons
+// buttons.forEach((button) => {
+// button.addEventListener("click", updateSteps);
+// });
