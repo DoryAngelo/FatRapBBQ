@@ -27,16 +27,22 @@ body{
 }
 
 main {
-    padding-top: 180px;
-    padding-bottom: 110px;
+    padding-top: 8rem; /*height of header */
+}
+
+.section {
     background-color: var(--bg);
     display: flex;
     justify-content: center;
+    align-items: center;
+    padding-bottom: 2rem;
 }
 
 /*green block*/
 .green-block {
-    width: 50%;
+    width: 90%;
+    margin: clamp(1rem, 6vw, 4.5rem) auto;
+    max-width: 780px;
     background: var(--block);
     border-radius: 25px;
     z-index: 0;
@@ -56,12 +62,12 @@ main {
 
 .form-title{
     position: relative;
-    /* padding-left: 15px; */
     margin-bottom: 20px;
 }
 
 .form-title h1{
     color: var(--text);
+    font-size: 2rem;
 }
 
 .form-field{
@@ -221,3 +227,19 @@ button, .secondary-btn{
     text-decoration: none;
 }
 /* end of login block */
+
+@media only screen and (width <= 860px) {
+    main {
+        padding-top: 4rem;
+    }
+
+    .form-title h1 {
+        font-size: 1.5rem;
+    }
+}
+
+@media only screen and (width <= 600px) {
+    .form {
+        padding: 6%;
+    }
+}
