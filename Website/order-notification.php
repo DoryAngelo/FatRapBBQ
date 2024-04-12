@@ -1,5 +1,5 @@
 <?php
-// Include necessary files/constants and establish database connection
+
 @include 'constants.php';
 
 // Check if session is started
@@ -12,6 +12,13 @@ if ($_SESSION['prsn_role'] !== 'Admin' && $_SESSION['prsn_role'] !== 'Employee')
     header('HTTP/1.1 403 Forbidden');
     exit();
 }
+
+$current_date = date('Y-m-d');
+
+$sql = "DELETE FROM calendar WHERE STR_TO_DATE(CALENDAR_DATE, '%M %d %Y') < '$current_date'";
+$res = mysqli_query($conn, $sql);
+
+
 
 // Check for new orders
 if ($_SESSION['prsn_role'] === 'Admin') {
@@ -31,4 +38,3 @@ if ($countNO > 0) {
 
 // Close database connection
 mysqli_close($conn);
-?>

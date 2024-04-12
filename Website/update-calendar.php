@@ -32,4 +32,3 @@ if ($date && $status) {
 }
 
 $conn->close();
-?>
