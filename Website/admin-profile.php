@@ -117,7 +117,6 @@ $PRSN_ID = $_SESSION['prsn_id'];
                     </section>
                 </div>
             </div>
-
         </section>
     </main>
 </body>

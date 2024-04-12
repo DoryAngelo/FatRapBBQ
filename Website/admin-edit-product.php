@@ -127,7 +127,7 @@ $FOOD_ID = $_GET['FOOD_ID'];
                                             </div>
                                         </div>
                                         <!-- <input type="hidden" name="FOOD_IMG" value="<?php echo $FOOD_IMG; ?>"> -->
-                                        <button class="big-btn" name="submit">Add Product</button>
+                                        <button class="big-btn" name="submit">Save</button>
                                     </form>
                                 </section>
                             </section>
