@@ -2,10 +2,6 @@
 
 @include 'constants.php';
 
-if ($countNO > 0) {
-    echo "<script>notifyNewOrder();</script>";
-}
-
 if (isset($_POST['confirmed'])) {
 
     $PLACED_ORDER_ID = $_POST['PLACED_ORDER_ID'];
