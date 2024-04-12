@@ -2,7 +2,9 @@
 
 @include 'constants.php';
 
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 if (isset($_POST['submit'])) {
     $loginValue = $_POST['login_value'];
