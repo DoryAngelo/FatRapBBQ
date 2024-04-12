@@ -47,7 +47,7 @@ const updateCalendar = () => {
             datesHTML += `<button id="${getMonthName(currentDate.getMonth())} ${i} ${currentDate.getFullYear()}" class="date active ">${i}</button>`;
         }
     }
-    
+
     if (lastDayIndex != 0) {
         for (let i = 1; i <= 7 - lastDayIndex; i++) {
             const nextDate = new Date(currentYear, currentMonth + 1, i);
@@ -68,10 +68,10 @@ const updateCalendar = () => {
         prevBtn.classList.remove("disabled");
     }
 
-    if (currentDate.getMonth()==maxDate.getMonth()){
+    if (currentDate.getMonth() == maxDate.getMonth()) {
         nextBtn.classList.add("disabled");
     }
-    else{
+    else {
         nextBtn.classList.remove("disabled");
     }
 
@@ -83,27 +83,27 @@ const updateCalendar = () => {
             selectedDate = selectedDateString;
             selectedString = selectedDateString;
             selectedDateElement.innerHTML = '<h3>' + selectedString + '</h3>';
-           // updateNumbers();
+            // updateNumbers();
         });
     }
-    calendarData.forEach(function (databasedate){
+    calendarData.forEach(function (databasedate) {
         var month = databasedate.CALENDAR_DATE.split(' ');
         console.log(month);
         var settingDate;
-        if(month[0]==getMonthName(currentDate.getMonth())){
+        if (month[0] == getMonthName(currentDate.getMonth())) {
             settingDate = document.getElementById(databasedate.CALENDAR_DATE);
             console.log(settingDate)
-            if (databasedate.DATE_STATUS == "available"){
+            if (databasedate.DATE_STATUS == "available") {
                 settingDate.classList.add("available");
                 settingDate.classList.remove("fullybooked");
                 settingDate.classList.remove("closed");
             }
-            else if (databasedate.DATE_STATUS == "fullybooked"){
+            else if (databasedate.DATE_STATUS == "fullybooked") {
                 settingDate.classList.remove("available");
                 settingDate.classList.add("fullybooked");
                 settingDate.classList.remove("closed");
             }
-            else if (databasedate.DATE_STATUS == "closed"){
+            else if (databasedate.DATE_STATUS == "closed") {
                 settingDate.classList.remove("available");
                 settingDate.classList.remove("fullybooked");
                 settingDate.classList.add("closed");
@@ -120,6 +120,7 @@ const availBtn = document.getElementById('availBtn');
 const fullBtn = document.getElementById('fullBtn');
 const closedBtn = document.getElementById('closedBtn');
 const saveBtn = document.getElementById('saveBtn');
+const clearBtn = document.getElementById('clearBtn');
 
 availBtn.addEventListener('click', () => {
     selectedStatus = "available";
@@ -132,6 +133,17 @@ closedBtn.addEventListener('click', () => {
 });
 
 saveBtn.addEventListener('click', () => {
+    if (selectedDate && selectedStatus) {
+        updateDatabase(selectedDate, selectedStatus);
+        //updateNumbers();
+        updateSelected();
+    } else {
+        console.error("Date or status is missing");
+    }
+});
+
+clearBtn.addEventListener('click', () => {
+    selectedStatus = "clear";
     if (selectedDate && selectedStatus) {
         updateDatabase(selectedDate, selectedStatus);
         //updateNumbers();

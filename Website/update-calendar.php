@@ -5,7 +5,12 @@
 $date = isset($_POST['date']) ? $_POST['date'] : null;
 $status = isset($_POST['status']) ? $_POST['status'] : null;
 
-if ($date && $status) {
+if ($status == "clear") {
+    $sql = "DELETE FROM calendar WHERE CALENDAR_DATE = '$date'";
+    $res = mysqli_query($conn, $sql);
+} else if ($date && $status) {
+
+
     // Check if the date already exists in the database
     $check_sql = "SELECT * FROM calendar WHERE CALENDAR_DATE = '$date'";
     $check_result = $conn->query($check_sql);
