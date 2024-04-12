@@ -3,6 +3,9 @@
 /* for calendar section */
 /* reference: https://www.youtube.com/watch?v=OcncrLyddAs */
 
+// Access the calendarData variable
+console.log(calendarData);
+
 const monthYearElement = document.getElementById('monthYear');
 const datesElement = document.getElementById('dates');
 const prevBtn = document.getElementById('prevBtn');
