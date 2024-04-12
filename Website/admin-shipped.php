@@ -37,7 +37,7 @@ if (isset($_POST['confirmed'])) {
 
     $res = mysqli_query($conn, $sql);
 
-    header('location:employee-shipped.php');
+    header('location:employee-to-deliver-orders.php');
 }
 
 if (isset($_POST['not-confirmed'])) {
@@ -55,7 +55,7 @@ if (isset($_POST['not-confirmed'])) {
 
     $res = mysqli_query($conn, $sql);
 
-    header('location:employee-shipped.php');
+    header('location:employee-to-deliver-orders.php');
 }
 
 ?>
@@ -86,7 +86,7 @@ if (isset($_POST['not-confirmed'])) {
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
                     <h1>Fat Rap's Barbeque's Online Store</h1>
-                    <p>EMPLOYEE</p>
+                    <p>Admin</p>
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
@@ -94,8 +94,9 @@ if (isset($_POST['not-confirmed'])) {
                 <div class='menu-button'></div>
             </label>
             <ul class='menubar'>
-                <li><a href="<?php echo SITEURL; ?>employee-home.php">Home</a></li>
-                <li><a href="<?php echo SITEURL; ?>employee-to-prepare-orders.php">Orders</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
                 <?php
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
@@ -149,7 +150,7 @@ if (isset($_POST['not-confirmed'])) {
                                 <tr>
                                     <td data-cell="Date and Time"><?php echo $PLACED_ORDER_DATE ?></td>
                                     <td data-cell="customer"><?php echo $CUS_NAME ?></td>
-                                    <td data-cell="Order #"><a href="<?php echo SITEURL ?>employee-order-details.php?PLACED_ORDER_ID=<?php echo $PLACED_ORDER_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
+                                    <td data-cell="Order #"><a href="<?php echo SITEURL ?>admin-order-details.php?PLACED_ORDER_ID=<?php echo $PLACED_ORDER_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
                                     <td data-cell="Payment">₱<?php echo $PLACED_ORDER_TOTAL ?></td>
                                     <td data-cell="Confimed">
                                         <div class="btn-wrapper">
@@ -188,11 +189,13 @@ if (isset($_POST['not-confirmed'])) {
                         </div>
                     </div>
                     <div class="group">
-                        <a href="<?php echo SITEURL; ?>employee-to-prepare-orders.php" class="view big-font">To Prepare</a>
-                        <a href="<?php echo SITEURL; ?>employee-to-deliver-orders.php" class="view big-font">To Deliver</a>
-                        <a href="<?php echo SITEURL; ?>employee-shipped.php" class="view big-font">Shipped</a>
-                        <a href="<?php echo SITEURL; ?>employee-completed-orders.php" class="view big-font">Completed Orders</a>
-                        <a href="<?php echo SITEURL; ?>employee-canceled-orders.php" class="view big-font">Canceled Orders</a>
+                        <a href="admin-new-orders.php" class="view big-font">New Orders</a>
+                        <a href="admin-awaiting-payment.php" class="view big-font">Awaiting Payment</a>
+                        <a href="admin-preparing-orders.php" class="view big-font">Preparing Orders</a>
+                        <a href="admin-delivery-orders.php" class="view big-font">For Delivery Orders</a>
+                        <a href="admin-shipped.php" class="view big-font">Shipped</a>
+                        <a href="admin-completed-orders.php" class="view big-font">Completed Orders</a>
+                        <a href="admin-canceled-orders.php" class="view big-font">Canceled Orders</a>
                     </div>
                 </section>
             </section>

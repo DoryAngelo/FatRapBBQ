@@ -139,6 +139,14 @@ $countCa = mysqli_num_rows($resCa);
                                 <p>Shipped</p>
                                 <h1><?php echo $countS ?></h1>
                             </a>
+                            <a class="box" href="<?php echo SITEURL; ?>employee-completed-orders.php">
+                                <p>Completed</p>
+                                <h1><?php echo $countCo?></h1>
+                            </a>
+                            <a class="box" href="<?php echo SITEURL; ?>employee-canceled-orders.php">
+                                <p>Cancelled</p>
+                                <h1><?php echo $countCa ?></h1>
+                            </a>
                         </div>
                     </section>
                     <section class="side-menu">
