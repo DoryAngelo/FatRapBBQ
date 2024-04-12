@@ -106,10 +106,10 @@ if (isset($_POST['not-confirmed'])) {
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                </li>
-                    <?php
+                    </li>
+                <?php
                 } else {
-                    ?>
+                ?>
                     <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
                 <?php
                 }
@@ -189,10 +189,26 @@ if (isset($_POST['not-confirmed'])) {
                         <div class="group inventory">
                             <h3>Inventory</h3>
                             <div class="inventory-box">
-                                <div class="inline">
-                                    <p>Pork BBQ</p>
-                                    <p class="number">10</p>
-                                </div>
+                                <?php
+                                $sql = "SELECT * FROM food WHERE FOOD_STOCK < 100";
+                                $res = mysqli_query($conn, $sql);
+                                $count = mysqli_num_rows($res);
+                                $stockValues = array();
+                                if ($count > 0) {
+                                    while ($row = mysqli_fetch_assoc($res)) {
+                                        $FOOD_NAME = $row['FOOD_NAME'];
+                                        $FOOD_STOCK = $row['FOOD_STOCK'];
+                                ?>
+                                        <div class="inline">
+                                            <p><?php echo $FOOD_NAME ?></p>
+                                            <span class="<?php echo ($FOOD_STOCK < 100) ? 'red-text' : ''; ?>">
+                                                <p><?php echo $FOOD_STOCK ?></p>
+                                            </span>
+                                        </div>
+                                <?php
+                                    }
+                                }
+                                ?>
                                 <a href="<?php echo SITEURL; ?>admin-edit-inventory.php" class="edit">Edit</a>
                             </div>
                         </div>
@@ -208,7 +224,7 @@ if (isset($_POST['not-confirmed'])) {
                     </section>
                 </section>
             </div>
-            
+
         </section>
     </main>
     <script>
