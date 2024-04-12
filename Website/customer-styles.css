@@ -412,7 +412,7 @@ a.clear-bg, a.clear-bg:hover {
 
 .menu .section-body {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    grid-template-columns: repeat(auto-fit, minmax(250px, 250px)); 
     gap: 2rem 3rem;
 }
 
@@ -699,19 +699,33 @@ a.back {
 }
 
 @media only screen and (width <= 950px) {
-    .menu .section-body {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+    /* .menu .section-body {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 150px)); 
         gap: 2rem;
-    }
+    } */
 }
 
 @media only screen and (width <= 860px) {
     main {
         padding-top: 4rem;
     }
+
+    .menu .section-body {
+        grid-template-columns: repeat(3,1fr); 
+        gap: 2rem;
+    }
+}
+
+@media only screen and (width <= 860px) {
+    .menu .section-body {
+        grid-template-columns: repeat(2,1fr); 
+    }
 }
 
 @media only screen and (width <= 361px) {
+    .menu .section-body {
+        grid-template-columns: 1fr;
+    }
     .menu .menu-item img{
         height: 8rem;
         object-fit: cover;
