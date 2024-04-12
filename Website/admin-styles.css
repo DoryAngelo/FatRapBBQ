@@ -818,6 +818,18 @@ a.back {
 } */
 
 
+.available{
+    background: var(--available);
+    color: white;
+}
+.fullybooked{
+    background: var(--fully-booked);
+    color: white;
+}
+ .closed{
+    background: var(--closed);
+    color: white;
+} 
 
 .date.available{
     background: var(--available);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 11, 2024 at 05:07 PM
+-- Generation Time: Apr 12, 2024 at 03:16 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,9 +29,24 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `calendar` (
   `CALENDAR_ID` int(16) UNSIGNED NOT NULL,
-  `CALANEDAR_AVAIL` varchar(50) NOT NULL,
+  `CALENDAR_DATE` varchar(50) NOT NULL,
   `DATE_STATUS` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `calendar`
+--
+
+INSERT INTO `calendar` (`CALENDAR_ID`, `CALENDAR_DATE`, `DATE_STATUS`) VALUES
+(20, 'April 28 2024', 'closed'),
+(21, 'April 24 2024', 'closed'),
+(22, 'April 22 2024', 'fullybooked'),
+(23, 'April 14 2024', 'available'),
+(25, 'April 18 2024', 'closed'),
+(27, 'April 25 2024', 'fullybooked'),
+(28, 'April 13 2024', 'closed'),
+(29, 'May 8 2024', 'available'),
+(30, 'April 19 2024', 'available');
 
 -- --------------------------------------------------------
 
@@ -273,7 +288,7 @@ ALTER TABLE `wholesaler`
 -- AUTO_INCREMENT for table `calendar`
 --
 ALTER TABLE `calendar`
-  MODIFY `CALENDAR_ID` int(16) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `CALENDAR_ID` int(16) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `category`
