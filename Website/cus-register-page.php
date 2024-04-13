@@ -2,6 +2,31 @@
 
 @include 'constants.php';
 
+
+
+if (isset($_POST['submit'])) {
+    $PRSN_NAME =  mysqli_real_escape_string($conn, trim($_POST['name']));
+    $PRSN_EMAIL =  mysqli_real_escape_string($conn, trim($_POST['email']));
+    $PRSN_PHONE = str_replace(' ', '', $_POST['number']);
+    $PRSN_PASSWORD =  md5($_POST['password']);
+    $PRSN_CPASSWORD =  md5($_POST['cpassword']);
+    $PRSN_ROLE = 'Customer';
+
+    $select = "SELECT * FROM `person` WHERE PRSN_EMAIL = '$PRSN_EMAIL' OR PRSN_NAME= '$PRSN_NAME' ";
+
+    $result = mysqli_query($conn, $select);
+
+    if (mysqli_num_rows($result) > 0) {
+        // User already exists, set error message in session
+        $_SESSION['error_message'] = "User already exists";
+        header('Location: cus-register-page.php');
+    } else {
+        $insert = "INSERT INTO person(PRSN_NAME, PRSN_EMAIL, PRSN_PASSWORD, PRSN_PHONE, PRSN_ROLE) 
+            VALUES('$PRSN_NAME', '$PRSN_EMAIL', '$PRSN_PASSWORD', '$PRSN_PHONE', '$PRSN_ROLE')";
+        mysqli_query($conn, $insert);
+        header('Location: login-page.php');
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -46,28 +71,13 @@
                     <div class="form-title">
                         <h1>Register</h1>
                         <?php
-                        if (isset($_POST['submit'])) {
-                            $PRSN_NAME =  mysqli_real_escape_string($conn, trim($_POST['name']));
-                            $PRSN_EMAIL =  mysqli_real_escape_string($conn, trim($_POST['email']));
-                            $PRSN_PHONE = str_replace(' ', '', $_POST['number']);
-                            $PRSN_PASSWORD =  md5($_POST['password']);
-                            $PRSN_CPASSWORD =  md5($_POST['cpassword']);
-                            $PRSN_ROLE = 'Customer';
 
-                            $select = " SELECT * FROM `person` WHERE PRSN_EMAIL = '$PRSN_EMAIL' OR PRSN_NAME= '$PRSN_NAME' ";
-
-                            $result = mysqli_query($conn, $select);
-
-                            if (mysqli_num_rows($result) > 0) {
-                                echo "<div class='error-text'>User already exists</div>";
-                            } else {
-                                $insert = "INSERT INTO person(PRSN_NAME, PRSN_EMAIL, PRSN_PASSWORD, PRSN_PHONE, PRSN_ROLE) 
-                                    VALUES('$PRSN_NAME', '$PRSN_EMAIL',    '$PRSN_PASSWORD',    '$PRSN_PHONE', '$PRSN_ROLE')";
-                                mysqli_query($conn, $insert);
-                                header('location:login-page.php');
-                            }
+                        if (isset($_SESSION['error_message'])) {
+                            echo "<div class='error-text'>" . $_SESSION['error_message'] . "</div>";
+                            unset($_SESSION['error_message']);
                         }
                         ?>
+
                     </div>
                     <div class="form-field">
                         <div class="form-field-input input-control">
