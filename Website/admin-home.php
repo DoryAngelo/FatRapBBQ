@@ -207,7 +207,7 @@ $countW = mysqli_num_rows($resW);
                         <div class="group">
                             <h3>Wholesale Users</h3>
                             <div class="position-notif">
-                                <a href="<?php echo SITEURL; ?>admin-new-wholesale-users.php" class="view">New</a>
+                                <a href="<?php echo SITEURL; ?>admin-wholesaler-accounts.php" class="view">New</a>
                                 <p class="notif"><?php echo $countW ?></p>
                             </div>
                         </div>
