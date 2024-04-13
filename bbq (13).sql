@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 12, 2024 at 05:41 AM
+-- Generation Time: Apr 13, 2024 at 06:44 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,17 +38,10 @@ CREATE TABLE `calendar` (
 --
 
 INSERT INTO `calendar` (`CALENDAR_ID`, `CALENDAR_DATE`, `DATE_STATUS`) VALUES
-(20, 'April 28 2024', 'closed'),
-(21, 'April 24 2024', 'closed'),
-(22, 'April 22 2024', 'fullybooked'),
-(23, 'April 14 2024', 'available'),
-(25, 'April 18 2024', 'available'),
-(27, 'April 25 2024', 'fullybooked'),
-(28, 'April 13 2024', 'fullybooked'),
-(29, 'May 8 2024', 'available'),
-(30, 'April 19 2024', 'available'),
-(31, 'May 12 2024', 'fullybooked'),
-(32, 'April 20 2024', 'available');
+(43, 'April 25 2024', 'available'),
+(45, 'April 13 2024', 'closed'),
+(46, 'April 21 2024', 'available'),
+(47, 'April 17 2024', 'fullybooked');
 
 -- --------------------------------------------------------
 
@@ -104,7 +97,8 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`EMP_ID`, `PRSN_ID`, `EMP_FNAME`, `EMP_LNAME`, `EMP_IMAGE`, `EMP_BRANCH`) VALUES
-(11, 38, 'Fname2', 'Lname2', 'EMP_IMAGE_Lname2.jpg', '');
+(11, 38, '', '', 'EMP_IMAGE_.jpg', ''),
+(18, 52, 'NewUpdate', 'NewUpdate', 'EMP_IMAGE_NewUpdate.png', 'NewUpdate');
 
 -- --------------------------------------------------------
 
@@ -123,14 +117,6 @@ CREATE TABLE `food` (
   `FOOD_ACTIVE` varchar(10) NOT NULL,
   `FOOD_TYPE` varchar(16) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `food`
---
-
-INSERT INTO `food` (`FOOD_ID`, `CTGY_ID`, `FOOD_NAME`, `FOOD_PRICE`, `FOOD_DESC`, `FOOD_IMG`, `FOOD_STOCK`, `FOOD_ACTIVE`, `FOOD_TYPE`) VALUES
-(12, 0, 'Barbeque', 25.00, 'gfdgfdgfd', 'FOOD_IMAGE_Barbeque.jpg', 200, 'Yes', 'Customer'),
-(13, 0, 'Isaw', 5.00, 'dsadsad', 'FOOD_IMAGE_Isaw.jpg', 500, 'Yes', 'Customer');
 
 -- --------------------------------------------------------
 
@@ -155,8 +141,7 @@ CREATE TABLE `in_order` (
 
 INSERT INTO `in_order` (`IN_ORDER_ID`, `FOOD_ID`, `PRSN_ID`, `IN_ORDER_QUANTITY`, `IN_ORDER_TOTAL`, `IN_ORDER_STATUS`, `PLACED_ORDER_ID`, `GUEST_ORDER_IDENTIFIER`) VALUES
 (144, 9, 33, 1, 5.00, 'Ordered', NULL, ''),
-(145, 10, 15, 4, 100.00, 'Ordered', 72, ''),
-(146, 10, 15, 3, 75.00, 'Ordered', NULL, '');
+(147, 16, 15, 4, 100.00, 'Ordered', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -181,11 +166,9 @@ INSERT INTO `person` (`PRSN_ID`, `PRSN_NAME`, `PRSN_EMAIL`, `PRSN_PASSWORD`, `PR
 (15, 'User', 'user@gmail.com', '4792487cdd9c183bfab5e48780837552', '09123456789', 'Customer'),
 (16, 'Admin', 'admin@gmail.com', '2cdcf3ae8d662d2141f8f4b0d5f0465c', '09123456789', 'Admin'),
 (25, 'Employee', 'employee@gmail.com', 'd3d73db423372e0bea89ca659ea9d115', '09123456789', 'Employee'),
-(33, 'Wholesaler', 'wholesaler@gmail.com', '4ff918a8bde60d5bda668f617164af08', '09123456789', 'Wholesaler'),
-(38, 'Employee2', 'employee2@gmail.com', 'fa5473530e4d1a5a1e1eb53d2fedb10c', '09123456789', 'Employee'),
-(41, 'WholesalerTest', 'wtest@gmail.com', '9b92b1d0fa5c259e9a5eb4a1872d8725', '09123456789', 'Wholesaler'),
 (48, 'New', 'new@gmail.com', '70efb8810172bcaceb5b475652600ed0', '09123456789', 'Customer'),
-(49, '', '', 'd41d8cd98f00b204e9800998ecf8427e', '', 'Employee');
+(54, 'Number', 'number@gmail.com', 'a7f9f337591ea4d7acbd0073e1ca35d8', '09123456789', 'Customer'),
+(58, 'Wholesaler', '', '4ff918a8bde60d5bda668f617164af08', '09123456789', 'Wholesaler');
 
 -- --------------------------------------------------------
 
@@ -211,13 +194,6 @@ CREATE TABLE `placed_order` (
   `GUEST_ORDER_IDENTIFIER` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `placed_order`
---
-
-INSERT INTO `placed_order` (`PLACED_ORDER_ID`, `PRSN_ID`, `CUS_NAME`, `CUS_NUMBER`, `CUS_EMAIL`, `PLACED_ORDER_DATE`, `PLACED_ORDER_TOTAL`, `DELIVERY_ADDRESS`, `DELIVERY_DATE`, `PLACED_ORDER_STATUS`, `PLACED_ORDER_CONFIRMATION`, `PLACED_ORDER_TRACKER`, `PLACED_ORDER_NOTE`, `REFERENCE_NUMBER`, `GUEST_ORDER_IDENTIFIER`) VALUES
-(72, 15, 'New New', '09123456789', 'user@gmail.com', '2024-04-12 10:00:38am', 100.00, 'New, New, New, New, New', '2024-04-30 16:00', 'Completed', 'Confirmed', 'dd794419e3a41370', 'Enter text here...', '', '');
-
 -- --------------------------------------------------------
 
 --
@@ -227,9 +203,9 @@ INSERT INTO `placed_order` (`PLACED_ORDER_ID`, `PRSN_ID`, `CUS_NAME`, `CUS_NUMBE
 CREATE TABLE `wholesaler` (
   `WHL_ID` int(18) UNSIGNED NOT NULL,
   `PRSN_ID` int(18) NOT NULL,
-  `WHL_DISC` decimal(2,2) NOT NULL,
+  `WHL_FNAME` varchar(20) NOT NULL,
+  `WHL_LNAME` varchar(20) NOT NULL,
   `WHL_IMAGE` varchar(250) NOT NULL,
-  `DATE_OF_REGISTRATION` varchar(250) NOT NULL,
   `WHL_STATUS` varchar(18) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -237,9 +213,8 @@ CREATE TABLE `wholesaler` (
 -- Dumping data for table `wholesaler`
 --
 
-INSERT INTO `wholesaler` (`WHL_ID`, `PRSN_ID`, `WHL_DISC`, `WHL_IMAGE`, `DATE_OF_REGISTRATION`, `WHL_STATUS`) VALUES
-(6, 33, 0.05, 'WHL_IMAGE_Wholesaler.jpg', '2024-03-01 09:09:55pm', 'Accepted'),
-(10, 41, 0.05, 'WHL_IMAGE_WholesalerTest.png', '2024-04-01 09:17:05pm', 'New');
+INSERT INTO `wholesaler` (`WHL_ID`, `PRSN_ID`, `WHL_FNAME`, `WHL_LNAME`, `WHL_IMAGE`, `WHL_STATUS`) VALUES
+(14, 58, 'Wholesaler', 'Wholesaler', 'WHL_IMAGE_Wholesaler.jpg', '');
 
 --
 -- Indexes for dumped tables
@@ -307,7 +282,7 @@ ALTER TABLE `wholesaler`
 -- AUTO_INCREMENT for table `calendar`
 --
 ALTER TABLE `calendar`
-  MODIFY `CALENDAR_ID` int(16) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `CALENDAR_ID` int(16) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -325,25 +300,25 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `EMP_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `EMP_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `food`
 --
 ALTER TABLE `food`
-  MODIFY `FOOD_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `FOOD_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `in_order`
 --
 ALTER TABLE `in_order`
-  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
+  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
 
 --
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `PRSN_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `PRSN_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `placed_order`
@@ -355,7 +330,7 @@ ALTER TABLE `placed_order`
 -- AUTO_INCREMENT for table `wholesaler`
 --
 ALTER TABLE `wholesaler`
-  MODIFY `WHL_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `WHL_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
