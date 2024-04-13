@@ -3,7 +3,7 @@
 @include 'constants.php';
 
 $PRSN_ID = $_GET['PRSN_ID'];
-$EMP_ID = $_GET['EMP_ID'];
+$WHL_ID = $_GET['WHL_ID'];
 
 ?>
 
@@ -70,113 +70,79 @@ $EMP_ID = $_GET['EMP_ID'];
                     <section class="main-section column">
                         <form id="form" class="column" method="post" enctype="multipart/form-data" onsubmit="return validateInputs()">
                             <div class="block layout">
-                                <?php
-                                $sql = "SELECT * FROM person, employee WHERE employee.PRSN_ID = person.PRSN_ID AND EMP_ID = $EMP_ID";
-                                $res = mysqli_query($conn, $sql);
-                                $count = mysqli_num_rows($res);
-                                if ($count > 0) {
-                                    while ($row = mysqli_fetch_assoc($res)) {
-                                        $PRSN_ID = $row['PRSN_ID'];
-                                        $EMP_IMAGE = $row['EMP_IMAGE'];
-                                        $EMP_FNAME = $row['EMP_FNAME'];
-                                        $EMP_LNAME = $row['EMP_LNAME'];
-                                        $PRSN_NUMBER = $row['PRSN_PHONE'];
-                                        $PRSN_NAME = $row['PRSN_NAME'];
-                                        $PRSN_EMAIL = $row['PRSN_EMAIL'];
-                                ?>
-                                        <section>
-                                            <div class="form-title">
-                                                <h1>Contact Information</h1>
+                                <section>
+                                    <div class="form-title">
+                                        <h1>Contact Information</h1>
+                                    </div>
+                                    <div class="form-field">
+                                        <div class="form-field-input input-control">
+                                            <label for="first-name">First Name</label>
+                                            <input name="first-name" id="first-name" class="js-user" type="text">
+                                            <div class="error"></div>
+                                        </div>
+                                        <div class="form-field-input input-control">
+                                            <label for="last-name">Last Name</label>
+                                            <input name="last-name" id="last-name" class="js-user" type="text">
+                                            <div class="error"></div>
+                                        </div>
+                                        <div class="form-field-input input-control">
+                                            <label for="number">Phone Number</label>
+                                            <input class="js-user" type="text" id="number" name="number">
+                                            <div class="error"></div>
+                                        </div>
+                                        <div class="form-field-input">
+                                            <label for="image">Image</label>
+                                            <p>(accepted files: .jpg, .png)</p>
+                                            <input name="image" id="image" class="image" type="file">
+                                        </div>
+                                    </div>
+                                </section>
+                                <section>
+                                    <div class="form-title">
+                                        <h1>Login Credentials</h1>
+                                    </div>
+                                    <div class="form-field">
+                                        <div class="form-field-input input-control">
+                                            <label for="username">Username</label>
+                                            <input name="username" id="username" class="js-user" type="text">
+                                            <div class="error"></div>
+                                        </div>
+                                        <div class="form-field-input">
+                                            <div class="with-desc">
+                                                <label for="password">Password</label>
+                                                <p>Password must be 8 characters long, and includes at least 1 uppercase, 1 lowercase, and 1 digit</p>
                                             </div>
-                                            <div class="form-field">
-                                                <div class="form-field-input input-control">
-                                                    <label for="first-name">First Name</label>
-                                                    <input name="first-name" id="first-name" class="js-user" type="text">
-                                                    <div class="error"></div>
-                                                </div>
-                                                <div class="form-field-input input-control">
-                                                    <label for="last-name">Last Name</label>
-                                                    <input name="last-name" id="last-name" class="js-user" type="text">
-                                                    <div class="error"></div>
-                                                </div>
-                                                <div class="form-field-input input-control">
-                                                    <label for="number">Phone Number</label>
-                                                    <input class="js-user" type="text" id="number" name="number">
-                                                    <div class="error"></div>
-                                                </div>
-                                                <div class="form-field-input input-control">
-                                                    <label for="branch">Branch</label>
-                                                    <input name="branch" id="branch" class="js-user" type="text">
-                                                    <div class="error"></div>
-                                                </div>
-                                                <div class="form-field-input">
-                                                    <label for="image">Image</label>
-                                                    <p>(accepted files: .jpg, .png)</p>
-                                                    <input required name="image" id="image" class="image" type="file">
-                                                </div>
-                                                <div class="form-field-input">
-                                                    <label for="role">Role</label>
-                                                    <select class="dropdown" name="role" id="role" required>
-                                                        <option value="Employee">Employee</option>
-                                                        <option value="Admin">Admin</option>
-                                                    </select>
-                                                </div>
+                                            <div class="input-container input-control">
+                                                <input class="js-pass" type="password" id="password" name="password">
+                                                <div class="error"></div>
+                                                <span onclick="togglePassword('password')">
+                                                    <svg class="showpass" id="eyeIconOpenPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                                        <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z" />
+                                                    </svg>
+                                                    <svg class="hidepass" id="eyeIconClosedPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                                        <path fill="currentColor" d="M11.83 9L15 12.16V12a3 3 0 0 0-3-3h-.17m-4.3.8l1.55 1.55c-.05.21-.08.42-.08.65a3 3 0 0 0 3 3c.22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53a5 5 0 0 1-5-5c0-.79.2-1.53.53-2.2M2 4.27l2.28 2.28l.45.45C3.08 8.3 1.78 10 1 12c1.73 4.39 6 7.5 11 7.5c1.55 0 3.03-.3 4.38-.84l.43.42L19.73 22L21 20.73L3.27 3M12 7a5 5 0 0 1 5 5c0 .64-.13 1.26-.36 1.82l2.93 2.93c1.5-1.25 2.7-2.89 3.43-4.75c-1.73-4.39-6-7.5-11-7.5c-1.4 0-2.74.25-4 .7l2.17 2.15C10.74 7.13 11.35 7 12 7Z" />
+                                                    </svg>
+                                                </span>
                                             </div>
-                                        </section>
-                                        <section>
-                                            <div class="form-title">
-                                                <h1>Login Credentials</h1>
+                                        </div>
+                                        <div class="form-field-input">
+                                            <label for="cpassword">Re-enter Password</label>
+                                            <div class="input-container input-control">
+                                                <input class="js-cpass" type="password" id="cpassword" name="cpassword">
+                                                <div class="error"></div>
+                                                <span onclick="togglePassword('cpassword')">
+                                                    <svg class="showpass" id="eyeIconOpenCPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                                        <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z" />
+                                                    </svg>
+                                                    <svg class="hidepass" id="eyeIconClosedCPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                                        <path fill="currentColor" d="M11.83 9L15 12.16V12a3 3 0 0 0-3-3h-.17m-4.3.8l1.55 1.55c-.05.21-.08.42-.08.65a3 3 0 0 0 3 3c.22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53a5 5 0 0 1-5-5c0-.79.2-1.53.53-2.2M2 4.27l2.28 2.28l.45.45C3.08 8.3 1.78 10 1 12c1.73 4.39 6 7.5 11 7.5c1.55 0 3.03-.3 4.38-.84l.43.42L19.73 22L21 20.73L3.27 3M12 7a5 5 0 0 1 5 5c0 .64-.13 1.26-.36 1.82l2.93 2.93c1.5-1.25 2.7-2.89 3.43-4.75c-1.73-4.39-6-7.5-11-7.5c-1.4 0-2.74.25-4 .7l2.17 2.15C10.74 7.13 11.35 7 12 7Z" />
+                                                    </svg>
+                                                </span>
                                             </div>
-                                            <div class="form-field">
-                                                <div class="form-field-input input-control">
-                                                    <label for="username">Username</label>
-                                                    <input name="username" id="username" class="js-user" type="text">
-                                                    <div class="error"></div>
-                                                </div>
-                                                <div class="form-field-input">
-                                                    <div class="with-desc">
-                                                        <label for="password">Password</label>
-                                                        <p>Password must be 8 characters long, and includes at least 1 uppercase, 1 lowercase, and 1 digit</p>
-                                                    </div>
-                                                    <div class="input-container input-control">
-                                                        <input class="js-pass" type="password" id="password" name="password">
-                                                        <div class="error"></div>
-                                                        <span onclick="togglePassword('password')">
-                                                            <svg class="showpass" id="eyeIconOpenPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                                                <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z" />
-                                                            </svg>
-                                                            <svg class="hidepass" id="eyeIconClosedPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                                                <path fill="currentColor" d="M11.83 9L15 12.16V12a3 3 0 0 0-3-3h-.17m-4.3.8l1.55 1.55c-.05.21-.08.42-.08.65a3 3 0 0 0 3 3c.22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53a5 5 0 0 1-5-5c0-.79.2-1.53.53-2.2M2 4.27l2.28 2.28l.45.45C3.08 8.3 1.78 10 1 12c1.73 4.39 6 7.5 11 7.5c1.55 0 3.03-.3 4.38-.84l.43.42L19.73 22L21 20.73L3.27 3M12 7a5 5 0 0 1 5 5c0 .64-.13 1.26-.36 1.82l2.93 2.93c1.5-1.25 2.7-2.89 3.43-4.75c-1.73-4.39-6-7.5-11-7.5c-1.4 0-2.74.25-4 .7l2.17 2.15C10.74 7.13 11.35 7 12 7Z" />
-                                                            </svg>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="form-field-input">
-                                                    <label for="cpassword">Re-enter Password</label>
-                                                    <div class="input-container input-control">
-                                                        <input class="js-cpass" type="password" id="cpassword" name="cpassword">
-                                                        <div class="error"></div>
-                                                        <span onclick="togglePassword('cpassword')">
-                                                            <svg class="showpass" id="eyeIconOpenCPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                                                <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z" />
-                                                            </svg>
-                                                            <svg class="hidepass" id="eyeIconClosedCPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                                                <path fill="currentColor" d="M11.83 9L15 12.16V12a3 3 0 0 0-3-3h-.17m-4.3.8l1.55 1.55c-.05.21-.08.42-.08.65a3 3 0 0 0 3 3c.22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53a5 5 0 0 1-5-5c0-.79.2-1.53.53-2.2M2 4.27l2.28 2.28l.45.45C3.08 8.3 1.78 10 1 12c1.73 4.39 6 7.5 11 7.5c1.55 0 3.03-.3 4.38-.84l.43.42L19.73 22L21 20.73L3.27 3M12 7a5 5 0 0 1 5 5c0 .64-.13 1.26-.36 1.82l2.93 2.93c1.5-1.25 2.7-2.89 3.43-4.75c-1.73-4.39-6-7.5-11-7.5c-1.4 0-2.74.25-4 .7l2.17 2.15C10.74 7.13 11.35 7 12 7Z" />
-                                                            </svg>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </section>
-                                    <?php
-                                    }
-                                } else {
-                                    ?>
-                                    <p>Empty</p>
-                                <?php
+                                        </div>
+                                    </div>
+                                </section>
 
-                                }
-                                ?>
                             </div>
                             <button name="submit" type="submit" class="big-btn">Save</button>
                         </form>
@@ -202,7 +168,7 @@ $EMP_ID = $_GET['EMP_ID'];
                             const firstNameInput = document.getElementById('first-name');
                             const lastNameInput = document.getElementById('last-name');
                             const numberInput = document.getElementById('number');
-                            const branchInput = document.getElementById('branch');
+
                             const usernameInput = document.getElementById('username');
                             const passwordInput = document.getElementById('password');
                             const cpasswordInput = document.getElementById('cpassword');
@@ -223,7 +189,7 @@ $EMP_ID = $_GET['EMP_ID'];
                                 const firstNameValue = firstNameInput.value.trim();
                                 const lastNameValue = lastNameInput.value.trim();
                                 const numberValue = numberInput.value.trim();
-                                const branchValue = branchInput.value.trim();
+
                                 const usernameValue = usernameInput.value.trim();
                                 const passwordValue = passwordInput.value.trim();
                                 const cpasswordValue = cpasswordInput.value.trim();
@@ -255,13 +221,6 @@ $EMP_ID = $_GET['EMP_ID'];
                                     isValid = false;
                                 } else {
                                     clearError(numberInput);
-                                }
-
-                                if (branchValue === '') {
-                                    setError(branchInput, 'Please enter your branch');
-                                    isValid = false;
-                                } else {
-                                    clearError(branchInput);
                                 }
 
                                 if (usernameValue === '') {
@@ -297,54 +256,57 @@ $EMP_ID = $_GET['EMP_ID'];
                         <?php
 
                         if (isset($_POST['submit'])) {
-                            $EMP_FNAME = mysqli_real_escape_string($conn, $_POST['first-name']);
-                            $EMP_LNAME = mysqli_real_escape_string($conn, $_POST['last-name']);
-                            $EMP_BRANCH =  $_POST['branch'];
-                            $PRSN_PHONE = $_POST['number'];
+                            $WHL_FNAME = mysqli_real_escape_string($conn, $_POST['first-name']);
+                            $WHL_LNAME = mysqli_real_escape_string($conn, $_POST['last-name']);
+                            $PRSN_PHONE = str_replace(' ', '', $_POST['number']);
                             $PRSN_UNAME = mysqli_real_escape_string($conn, $_POST['username']);
                             $PRSN_PASSWORD = md5($_POST['password']);
                             $PRSN_CPASSWORD = md5($_POST['cpassword']);
-                            $PRSN_ROLE = $_POST['role'];
-                            $current_image = $EMP_IMAGE;
+                            $current_image = $_GET['WHL_IMAGE'];
 
-                            if (isset($_FILES['image']['name'])) {
-                                //get the image details
-                                $EMP_IMG = $_FILES['image']['name'];
+                            // Check if a new image is uploaded
+                            if (isset($_FILES['image']['name']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                                // Get the image details
+                                $WHL_IMG = $_FILES['image']['name'];
 
-                                //check whether image is available
-                                if ($EMP_IMG != "") {
-                                    $image_info = explode(".", $EMP_IMG);
-                                    $ext = end($image_info);
+                                // Check if the uploaded file is an image
+                                $image_info = getimagesize($_FILES['image']['tmp_name']);
+                                if ($image_info === false) {
+                                    // Handle non-image files here
+                                    $_SESSION['upload'] = "<div class='error'>Please upload a valid image file</div>";
+                                    header('location:' . $_SERVER['PHP_SELF'] . '?WHL_ID=' . $WHL_ID);
+                                    exit();
+                                }
 
-                                    $EMP_IMG = "EMP_IMAGE_" . $EMP_LNAME . "." . $ext;
+                                // Generate a unique filename for the image
+                                $image_info = pathinfo($FOOD_IMG);
+                                $ext = strtolower($image_info['extension']);
+                                $FOOD_IMG = "WHL_IMAGE_" . $WHL_LNAME . $ext;
 
-                                    $src = $_FILES['image']['tmp_name'];
-                                    $dst = "images/" . $EMP_IMG;
+                                // Set the destination path for the uploaded image
+                                $dst = "images/" . $WHL_IMG;
 
-                                    $upload    = move_uploaded_file($src, $dst);
+                                // Upload the image
+                                if (!move_uploaded_file($_FILES['image']['tmp_name'], $dst)) {
+                                    // Handle upload failure
+                                    $_SESSION['upload'] = "<div class='error'>Failed To Upload Image</div>";
+                                    header('location:' . $_SERVER['PHP_SELF'] . '?WHL_ID=' . $WHL_ID);
+                                    exit();
+                                }
 
-                                    //check whether the image is uploaded
-                                    if ($upload == false) {
-                                        $_SESSION['upload'] = "<div class='error'>Failed To Upload Image</div>";
-                                        header('loaction:' . SITEURL . 'admin/manage_food.php');
-                                        die();
+                                // Remove the previous image if it exists
+                                if (!empty($current_image)) {
+                                    $remove_path = "images/" . $current_image;
+                                    if (!unlink($remove_path)) {
+                                        // Handle image removal failure
+                                        $_SESSION['failed-remove'] = "<div class='error'>Failed To Remove Current Image</div>";
+                                        header('location:' . SITEURL . 'admin-home.php');
+                                        exit();
                                     }
-                                    //remove current image if available
-                                    if ($current_image != "") {
-                                        $remove_path = "images/" . $EMP_IMAGE;
-                                        $remove = unlink($remove_path);
-                                        //check whether image is removed
-                                        if ($remove == false) {
-                                            $_SESSION['failed-remove'] = "<div class='error'>Failed To Remove Current Image</div>";
-                                            header('location:' . SITEURL . 'admin-home.php');
-                                            die();
-                                        }
-                                    }
-                                } else {
-                                    $image_name = $current_image;
                                 }
                             } else {
-                                $image_name = $current_image;
+                                // No new image uploaded, retain the current image
+                                $WHL_IMG = $current_image;
                             }
 
 
@@ -353,18 +315,16 @@ $EMP_ID = $_GET['EMP_ID'];
                             } else {
                                 $update = "UPDATE person 
         SET PRSN_NAME = '$PRSN_UNAME',
-            PRSN_EMAIL = '$PRSN_EMAIL',
             PRSN_PASSWORD = '$PRSN_PASSWORD',
             PRSN_PHONE = '$PRSN_PHONE'
         WHERE PRSN_ID = $PRSN_ID";
 
                                 if (mysqli_query($conn, $update)) {
-                                    $update2 = "UPDATE employee SET
-                                        EMP_FNAME = '$EMP_FNAME',
-                                        EMP_LNAME = '$EMP_LNAME',
-                                        EMP_IMAGE = '$EMP_IMG',
-                                        EMP_BRANCH = '$EMP_BRANCH'
-                                        WHERE EMP_ID = $EMP_ID
+                                    $update2 = "UPDATE wholesaler SET
+                                        WHL_FNAME = '$WHL_FNAME',
+                                        WHL_LNAME = '$WHL_LNAME',
+                                        WHL_IMAGE = '$WHL_IMG'
+                                        WHERE WHL_ID = $WHL_ID
                                         ";
                                     if (!mysqli_query($conn, $update2)) {
                                         $error[] = "Error updating data into employee table: " . mysqli_error($conn);
