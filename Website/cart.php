@@ -160,8 +160,10 @@ if (isset($_SESSION['prsn_id'])) {
                                 </table>
                             </div>
                             <div class="payment">
-                                <h3>Total Payment:</h3>
-                                <h3>₱<?php echo $total ?></h3>
+                                <div class="text">
+                                    <h3>Total Payment:</h3>
+                                    <h3>₱<?php echo $total; ?></h3>
+                                </div>
                             </div>
                         </div>
                     </section>

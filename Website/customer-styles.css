@@ -65,7 +65,7 @@ img {
 .section-heading {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 5px;
     margin-bottom: 1.8rem;
 }
 
@@ -79,6 +79,7 @@ img {
     width: 7rem;
     border-radius: 3px;
 }
+
 .section-body {
     display: flex;
     flex-direction: column;
@@ -181,9 +182,15 @@ div.circle {
 
 /* order summary table in cart, checkout, and order tracking */
 
+.table-wrap {
+    overflow-x: auto;
+}
+
 table.order {
     border-collapse: collapse;
     width: 100%;
+    min-width: 650px;
+    border: 1px solid yellow;
 }
 
 table.order .header {
@@ -267,14 +274,17 @@ table .error {
 
 .payment {
     width: 100%;
-    display: flex;
     margin-top: 1.1rem;
+    border: 1px solid red;
+    display: flex;
+    justify-content: flex-end;
 }
 
-.payment h3:first-of-type {
-    width: 86%;
-    text-align: right;
-    margin-right: 1rem;
+.payment .text {
+    height: 100%;
+    display: flex;
+    gap: 1rem;
+    margin-right: 7.5%;
 }
 
 .cart .payment h3:first-of-type {
@@ -289,11 +299,13 @@ table .error {
 }
 
 .contact-info-blk {
-    width: 80%;
+    width: 100%;
+    max-width: 900px;
     min-height: max-content;
     display: flex;
     justify-content: space-between;
     gap: 2.5rem;
+    border: 1px solid yellow;
 }
 
 .contact-info-blk .left, .contact-info-blk .right {
@@ -344,22 +356,36 @@ table .error {
     background-color: var(--block);
 }
 
-.left-side-dvd {
-    width: 100%;
+#delivery-block {
+    display: flex;
+    flex-direction: row;
+    border-radius: 1rem;
 }
 
-.radio {
+#delivery-block label {
+    text-wrap: nowrap;
+}
+
+#delivery-block .left-side{
+    width: 100%;
+    border: 1px solid yellow;
+    background-color: transparent;
+    margin: 1.3rem;
+}
+
+#delivery-block .radio {
     display: flex;
     gap: 3rem;
 }
 
-.radio .date {
-    margin-left: 0.75rem;
+#delivery-block .radio .date {
+    margin-left: -2rem;
 }
 
-.time-slot {
+#delivery-block .time-slot {
     background-color: #F8745E;
     width: 40%;
+    min-height: 100%;
 }
 
 .red-theme {
@@ -383,7 +409,7 @@ table .error {
 }
 
 div.btn-container {
-    margin-top: 2rem;
+    margin-top: clamp(1rem, 1.5vw,2rem);
     display: flex;
     gap: 2rem;
     justify-content: space-between;
@@ -742,6 +768,22 @@ a.back {
         grid-template-columns: repeat(2,1fr); 
         gap: 2rem;
     }
+
+    .contact-info-blk, #delivery-block .radio {
+        gap: 5%;
+    }
+
+    #delivery-block .radio .date {
+        margin-left: -0.5rem;
+    }
+
+    table.order .first-col {
+        width: 55%;
+    }
+
+    .payment .text {
+        margin-right: 8%;
+    }
 }
 
 @media only screen and (width <= 640px) {
@@ -756,6 +798,24 @@ a.back {
     }
 
     .product-info-page .block .img-wrapper {
+        width: 100%;
+    }
+}
+
+@media only screen and (width <= 560px) {
+    .block {
+        padding: 5%;
+    }
+
+    #delivery-block, .contact-info-blk {
+        flex-direction: column;
+    }
+
+    #delivery-block .left-side{
+        width: auto;
+    }
+
+    #delivery-block .time-slot{
         width: 100%;
     }
 }
