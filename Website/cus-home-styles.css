@@ -315,15 +315,30 @@ h1.section-heading {
     font-size: 1.625rem;
 }
 
+.date.available{
+    background: var(--available);
+    color: white;
+}
+.date.fullybooked{
+    background: var(--fully-booked);
+    color: white;
+}
+ .date.closed{
+    background: var(--closed);
+    color: white;
+} 
+
 /* .date:hover,
 .date.active {
     background: red;
     color: white;
 } */
 
+
 .date.inactive {
     color: var(--bg);
 }
+
 
 /* .date.inactive:hover {
     color: white;
@@ -545,3 +560,4 @@ p.amount {
     padding: 0.7rem 1.3rem;
     border-radius: 50px;
 }
+

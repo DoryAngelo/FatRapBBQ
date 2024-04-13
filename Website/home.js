@@ -17,49 +17,125 @@ const updateCalendar = () => {
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth();
 
+    const today = new Date();
+    var maxDate = new Date();
+    var numberOfDaysToAdd = 30;
+    var resultDate = maxDate.setDate(maxDate.getDate() + numberOfDaysToAdd);
+
     const firstDay = new Date(currentYear, currentMonth, 0);
     const lastDay = new Date(currentYear, currentMonth + 1, 0);
     const totalDays = lastDay.getDate();
     const firstDayIndex = firstDay.getDay();
     const lastDayIndex = lastDay.getDay();
 
-    const monthYearString = currentDate.toLocaleString
-        ('default', { month: 'long', year: 'numeric' });
+    const monthYearString = currentDate.toLocaleString('default', { month: 'long', year: 'numeric' });
     monthYearElement.textContent = monthYearString;
 
     let datesHTML = '';
+    const displayedMonthYear = monthYearElement.innerText.split(' ');
 
     for (let i = firstDayIndex; i > 0; i--) {
         const prevDate = new Date(currentYear, currentMonth, 0 - i + 1);
-        datesHTML += `<div class="date inactive">${prevDate.getDate()}</div>`;
+        datesHTML += `<div class="date inactive ${currentDate.getMonth() - 1} ${prevDate.getDate()}">${prevDate.getDate()}</div>`;
     }
 
     for (let i = 1; i <= totalDays; i++) {
         const date = new Date(currentYear, currentMonth, i);
-        const activeClass = date.toDateString === new Date().toDateString() ? 'active' : '';
-        datesHTML += `<div class="date ${activeClass}">${i}</div>`;
+        if (date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth() && date.getDate() === today.getDate()) {
+            datesHTML += `<div id="${getMonthName(currentDate.getMonth())} ${i} ${currentDate.getFullYear()}" class="date active ">${i}</div>`;
+        } else if (date <= today || date > resultDate || (date < today && today.getHours() > -1)) {
+            datesHTML += `<div class="date inactive ${currentDate.getMonth()} ${i}">${i}</div>`;
+        } else {
+            datesHTML += `<div id="${getMonthName(currentDate.getMonth())} ${i} ${currentDate.getFullYear()}" class="date active ">${i}</div>`;
+        }
     }
 
-    if(lastDayIndex != 0) {
-        for(let i = 1; i <= 7 - lastDayIndex; i++) {
+    if (lastDayIndex != 0) {
+        for (let i = 1; i <= 7 - lastDayIndex; i++) {
             const nextDate = new Date(currentYear, currentMonth + 1, i);
             datesHTML += `<div class="date inactive">${nextDate.getDate()}</div>`;
         }
     }
 
     datesElement.innerHTML = datesHTML;
+
+    const displayedMonth = getMonthIndex(displayedMonthYear[0]);
+    const displayedYear = parseInt(displayedMonthYear[1]);
+
+    if (currentDate.getFullYear() === displayedYear && currentDate.getMonth() === displayedMonth) {
+        if (currentDate.getMonth() === today.getMonth() && currentDate.getFullYear() === today.getFullYear()) {
+            prevBtn.classList.add("disabled");
+        }
+    } else {
+        prevBtn.classList.remove("disabled");
+    }
+
+    if (currentDate.getMonth() == maxDate.getMonth()) {
+        nextBtn.classList.add("disabled");
+    }
+    else {
+        nextBtn.classList.remove("disabled");
+    }
+
+    calendarData.forEach(function (databasedate) {
+        var month = databasedate.CALENDAR_DATE.split(' ');
+        console.log(month);
+        var settingDate;
+        if (month[0] == getMonthName(currentDate.getMonth())) {
+            settingDate = document.getElementById(databasedate.CALENDAR_DATE);
+            console.log(settingDate)
+            if (databasedate.DATE_STATUS == "available") {
+                settingDate.classList.add("available");
+                settingDate.classList.remove("fullybooked");
+                settingDate.classList.remove("closed");
+            }
+            else if (databasedate.DATE_STATUS == "fullybooked") {
+                settingDate.classList.remove("available");
+                settingDate.classList.add("fullybooked");
+                settingDate.classList.remove("closed");
+            }
+            else if (databasedate.DATE_STATUS == "closed") {
+                settingDate.classList.remove("available");
+                settingDate.classList.remove("fullybooked");
+                settingDate.classList.add("closed");
+            }
+        }
+    });
+    //updateNumbers();
 }
 
 prevBtn.addEventListener('click', () => {
-    currentDate.setMonth(currentDate.getMonth() - 1);
-    updateCalendar(); // Call the function to update the calendar
+    if (!prevBtn.classList.contains("disabled")) {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        updateCalendar();
+    }
 });
 
 nextBtn.addEventListener('click', () => {
-    currentDate.setMonth(currentDate.getMonth() + 1);
-    updateCalendar(); // Call the function to update the calendar
+    if (!nextBtn.classList.contains("disabled")) {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        prevBtn.classList.remove("disabled");
+        updateCalendar();
+    }
 });
 
+function getMonthIndex(monthName) {
+    const months = [
+        'January', 'February', 'March', 'April',
+        'May', 'June', 'July', 'August',
+        'September', 'October', 'November', 'December'
+    ];
+    return months.indexOf(monthName);
+}
+
+function getMonthName(monthIndex) {
+    const months = [
+        'January', 'February', 'March', 'April',
+        'May', 'June', 'July', 'August',
+        'September', 'October', 'November', 'December'
+    ];
+    return months[monthIndex];
+}
 updateCalendar();
 
 // //input validation for order tracking section
