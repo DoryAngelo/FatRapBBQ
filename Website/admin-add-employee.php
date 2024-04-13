@@ -176,6 +176,7 @@ if (isset($_POST['submit'])) {
                                     <div class="form-field">
                                         <div class="form-field-input input-control">
                                             <label for="username">Username</label>
+                                            <p>Username should exclude special characters.</p>
                                             <input name="username" id="username" class="js-user" type="text">
                                             <div class="error"></div>
                                         </div>
