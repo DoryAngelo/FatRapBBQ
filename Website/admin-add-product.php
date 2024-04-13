@@ -167,80 +167,97 @@ if (isset($_POST['submit'])) {
         </section>
     </main>
     <script>
-        const productNameInput = document.getElementById('product-name');
-        const productDescInput = document.getElementById('product-desc');
-        const priceInput = document.getElementById('price');
-        const stockInput = document.getElementById('stock');
+    const productNameInput = document.getElementById('product-name');
+    const productDescInput = document.getElementById('product-desc');
+    const priceInput = document.getElementById('price');
+    const stockInput = document.getElementById('stock');
+    const imageInput = document.getElementById('image');
 
-        function setError(input, message) {
-            const errorDiv = input.nextElementSibling;
-            errorDiv.innerHTML = `<span class="error-text">${message}</span>`;
+    function setError(input, message) {
+        const errorDiv = input.nextElementSibling;
+        errorDiv.innerHTML = `<span class="error-text">${message}</span>`;
+    }
+
+    function clearError(input) {
+        const errorDiv = input.nextElementSibling;
+        errorDiv.innerHTML = ''; // Clear the error message
+    }
+
+    function validateInputs() {
+        let isValid = true;
+
+        const productNameValue = productNameInput.value.trim();
+        const productDescValue = productDescInput.value.trim();
+        const priceValue = priceInput.value.trim();
+        const stockValue = stockInput.value.trim();
+        const imageValue = imageInput.value.trim();
+
+        const nameRegex = /^[a-zA-Z\s]+$/;
+
+        if (productNameValue === '') {
+            setError(productNameInput, 'Please enter the product name');
+            isValid = false;
+        } else if (!nameRegex.test(productNameValue)) {
+            setError(productNameInput, 'Invalid product name');
+            isValid = false;
+        } else {
+            clearError(productNameInput);
         }
 
-        function clearError(input) {
-            const errorDiv = input.nextElementSibling;
-            errorDiv.innerHTML = ''; // Clear the error message
+        if (productDescValue === '') {
+            setError(productDescInput, 'Please enter the product description');
+            isValid = false;
+        } else if (!nameRegex.test(productDescValue)) {
+            setError(productDescInput, 'Invalid product description');
+            isValid = false;
+        } else {
+            clearError(productDescInput);
         }
 
-        function validateInputs() {
-            let isValid = true;
-
-            const productNameValue = productNameInput.value.trim();
-            const productDescValue = productDescInput.value.trim();
-            const priceValue = priceInput.value.trim();
-            const stockValue = stockInput.value.trim();
-
-            const nameRegex = /^[a-zA-Z\s]+$/;
-
-            if (productNameValue === '') {
-                setError(productNameInput, 'Please enter the product name');
-                isValid = false;
-            } else if (!nameRegex.test(productNameValue)) {
-                setError(productNameInput, 'Invalid product name');
-                isValid = false;
-            } else {
-                clearError(productNameInput);
-            }
-
-            if (productDescValue === '') {
-                setError(productDescInput, 'Please enter the product description');
-                isValid = false;
-            } else if (!nameRegex.test(productDescValue)) {
-                setError(productDescInput, 'Invalid product description');
-                isValid = false;
-            } else {
-                clearError(productDescInput);
-            }
-
-            if (priceValue === '') {
-                setError(priceInput, 'Please enter the price');
-                isValid = false;
-            } else if (isNaN(parseFloat(priceValue))) {
-                setError(priceInput, 'Price must be a number');
-                isValid = false;
-            } else if (parseInt(priceValue) < 0) {
-                setError(priceInput, 'Price cannot be negative');
-                isValid = false;
-            } else {
-                clearError(priceInput);
-            }
-
-            if (stockValue === '') {
-                setError(stockInput, 'Please enter the stock');
-                isValid = false;
-            } else if (isNaN(parseInt(stockValue))) {
-                setError(stockInput, 'Stock must be a number');
-                isValid = false;
-            } else if (parseInt(stockValue) < 0) {
-                setError(stockInput, 'Stock cannot be negative');
-                isValid = false;
-            } else {
-                clearError(stockInput);
-            }
-
-            return isValid;
+        if (priceValue === '') {
+            setError(priceInput, 'Please enter the price');
+            isValid = false;
+        } else if (isNaN(parseFloat(priceValue))) {
+            setError(priceInput, 'Price must be a number');
+            isValid = false;
+        } else if (parseInt(priceValue) < 0) {
+            setError(priceInput, 'Price cannot be negative');
+            isValid = false;
+        } else {
+            clearError(priceInput);
         }
-    </script>
+
+        if (stockValue === '') {
+            setError(stockInput, 'Please enter the stock');
+            isValid = false;
+        } else if (isNaN(parseInt(stockValue))) {
+            setError(stockInput, 'Stock must be a number');
+            isValid = false;
+        } else if (parseInt(stockValue) < 0) {
+            setError(stockInput, 'Stock cannot be negative');
+            isValid = false;
+        } else {
+            clearError(stockInput);
+        }
+
+        // Check if file extension is valid
+        const validExtensions = ['png', 'jpg', 'jpeg'];
+        const fileExtension = imageValue.split('.').pop().toLowerCase();
+        if (imageValue === '') {
+            setError(imageInput, 'Please select an image file');
+            isValid = false;
+        } else if (!validExtensions.includes(fileExtension)) {
+            setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
+            isValid = false;
+        } else {
+            clearError(imageInput);
+        }
+
+        return isValid;
+    }
+</script>
+
+
 
 
 </body>
