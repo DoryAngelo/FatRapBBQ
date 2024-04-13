@@ -117,7 +117,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                             </td>
                                             <td data-cell="Price"><?php echo $FOOD_TYPE ?></td>
                                             <td data-cell="Action"><a href="<?php echo SITEURL ;?>admin-edit-product.php?FOOD_ID=<?php echo $FOOD_ID?>"  class="edit">Edit</a></td>
-                                            <td data-cell="Action"><a href="delete_in_order.php?IN_ORDER_ID=<?php echo $IN_ORDER_ID; ?>" class="bx bxs-trash-alt trash"></a></td>
+                                            <td data-cell="Action"><a href="delete_food.php?FOOD_ID=<?php echo $FOOD_ID; ?>" class="bx bxs-trash-alt trash"></a></td>
                                         </tr>
                                     <?php
                                     }

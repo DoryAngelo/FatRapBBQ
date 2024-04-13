@@ -87,41 +87,61 @@ $FOOD_ID = $_GET['FOOD_ID'];
 
                             <section class="section-body">
                                 <section class="main-section column">
-                                    <form action="#" class="column" method="post" enctype="multipart/form-data">
+                                    <style>
+                                        .error-text {
+                                            color: red;
+                                            font-size: 12px;
+                                        }
+                                    </style>
+                                    <form class="column" method="post" enctype="multipart/form-data" onsubmit="return validateInputs()">
                                         <div class="block">
                                             <div class="form-field">
                                                 <div class="form-field-input">
                                                     <label for="product-name">Product Name</label>
-                                                    <input value="<?php echo $FOOD_NAME ?>" class="js-user" type="text" id="product-name" name="product-name" required pattern="[a-zA-Z ]{1,20}$"><!-- 20 characters only, letter only, with spaces -->
+                                                    <input class="js-user" type="text" id="product-name" name="product-name"><!-- 20 characters only, letter only, with spaces -->
+                                                    <div class="error"></div>
                                                 </div>
                                                 <div class="form-field-input">
-                                                    <label for="product-name">Product Description</label>
-                                                    <input value="<?php echo $FOOD_DESC ?>" class="js-user" type="text" id="product-name" name="product-desc" required pattern="[a-zA-Z ]{1,20}$"><!-- 20 characters only, letter only, with spaces -->
+                                                    <label for="product-name">Description</label>
+                                                    <input class="js-user" type="text" id="product-desc" name="product-desc"><!-- 20 characters only, letter only, with spaces -->
+                                                    <div class="error"></div>
                                                 </div>
                                                 <div class="form-field-input">
                                                     <label for="price">Price ₱ </label>
-                                                    <input value="<?php echo $FOOD_PRICE ?>" class="js-user" type="number" id="price" name="price" required><!-- numbers only, starts with 09, must have 11-digits -->
+                                                    <input class="js-user" type="text" id="price" name="price">
+                                                    <div class="error"></div>
                                                 </div>
+
                                                 <div class="form-field-input">
                                                     <label for="price">Stock </label>
-                                                    <input value="<?php echo $FOOD_STOCK ?>" class="js-user" type="number" id="price" name="stock" required><!-- numbers only, starts with 09, must have 11-digits -->
+                                                    <input class="js-user" type="number" id="stock" name="stock">
+                                                    <div class="error"></div>
+                                                </div>
+                                                <div class="form-field-input">
+                                                    <label for="type">Type</label>
+                                                    <select class="dropdown" name="type" id="type">
+                                                        <option value="Customer">Customer</option>
+                                                        <option value="Wholesaler">Wholesaler</option>
+                                                    </select>
+                                                    <div class="error"></div>
                                                 </div>
                                                 <div class="form-field-input">
                                                     <label for="active">Active</label>
-                                                    <select class="dropdown" name="active" id="active" required>
-                                                        <option value="inactive">INACTIVE</option>
-                                                        <option value="active">ACTIVE</option>
+                                                    <select class="dropdown" name="active" id="active">
+                                                        <option value="No">No</option>
+                                                        <option value="Yes">Yes</option>
                                                     </select>
+                                                    <div class="error"></div>
                                                 </div>
                                                 <div class="form-field-input">
                                                     <label for="valid-id">Image</label>
                                                     <p class="label-desc">(accepted files: .jpg, .png)</p>
-                                                    <input class="image" type="file" name="image" id="image" required><!-- numbers only, starts with 09, must have 11-digits -->
+                                                    <input class="image" type="file" name="image" id="image">
+                                                    <div class="error"></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <input type="hidden" name="FOOD_IMG" value="<?php echo $FOOD_IMG; ?>"> -->
-                                        <a href="<?php echo SITEURL; ?>employee-add-product.php" class="page-btn"><button class="big-btn">Add a new product</button></a>
+                                        <button class="big-btn" name="submit">Save</button>
                                     </form>
                                 </section>
                             </section>
@@ -132,71 +152,160 @@ $FOOD_ID = $_GET['FOOD_ID'];
 
                 </div>
             </div>
-            
+
         </section>
     </main>
+
+    <script>
+        const productNameInput = document.getElementById('product-name');
+        const productDescInput = document.getElementById('product-desc');
+        const priceInput = document.getElementById('price');
+        const stockInput = document.getElementById('stock');
+
+        function setError(input, message) {
+            const errorDiv = input.nextElementSibling;
+            errorDiv.innerHTML = `<span class="error-text">${message}</span>`;
+        }
+
+        function clearError(input) {
+            const errorDiv = input.nextElementSibling;
+            errorDiv.innerHTML = ''; // Clear the error message
+        }
+
+        function validateInputs() {
+            let isValid = true;
+
+            const productNameValue = productNameInput.value.trim();
+            const productDescValue = productDescInput.value.trim();
+            const priceValue = priceInput.value.trim();
+            const stockValue = stockInput.value.trim();
+
+            const nameRegex = /^[a-zA-Z\s]+$/;
+
+            if (productNameValue === '') {
+                setError(productNameInput, 'Please enter the product name');
+                isValid = false;
+            } else if (!nameRegex.test(productNameValue)) {
+                setError(productNameInput, 'Invalid product name');
+                isValid = false;
+            } else {
+                clearError(productNameInput);
+            }
+
+            if (productDescValue === '') {
+                setError(productDescInput, 'Please enter the product description');
+                isValid = false;
+            } else if (!nameRegex.test(productDescValue)) {
+                setError(productDescInput, 'Invalid product description');
+                isValid = false;
+            } else {
+                clearError(productDescInput);
+            }
+
+            if (priceValue === '') {
+                setError(priceInput, 'Please enter the price');
+                isValid = false;
+            } else if (isNaN(parseFloat(priceValue))) {
+                setError(priceInput, 'Price must be a number');
+                isValid = false;
+            } else if (parseInt(priceValue) < 0) {
+                setError(priceInput, 'Price cannot be negative');
+                isValid = false;
+            } else {
+                clearError(priceInput);
+            }
+
+            if (stockValue === '') {
+                setError(stockInput, 'Please enter the stock');
+                isValid = false;
+            } else if (isNaN(parseInt(stockValue))) {
+                setError(stockInput, 'Stock must be a number');
+                isValid = false;
+            } else if (parseInt(stockValue) < 0) {
+                setError(stockInput, 'Stock cannot be negative');
+                isValid = false;
+            } else {
+                clearError(stockInput);
+            }
+
+            return isValid;
+        }
+    </script>
 </body>
 
 </html>
 <?php
 if (isset($_POST['submit'])) {
 
+    // Retrieve form data
     $FOOD_NAME = mysqli_real_escape_string($conn, $_POST['product-name']);
     $FOOD_DESC = mysqli_real_escape_string($conn, $_POST['product-desc']);
     $FOOD_PRICE =  $_POST['price'];
     $FOOD_STOCK = $_POST['stock'];
     $FOOD_ACTIVE = $_POST['active'];
+    $FOOD_TYPE = $_POST['type'];
     $current_image = $FOOD_IMAGE;
 
-    if (isset($_FILES['image']['name'])) {
-        //get the image details
+    // Check if a new image is uploaded
+    if (isset($_FILES['image']['name']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        // Get the image details
         $FOOD_IMG = $_FILES['image']['name'];
 
-        //check whether image is available
-        if ($FOOD_IMG != "") {
-            $image_info = explode(".", $FOOD_IMG);
-            $ext = end($image_info);
+        // Check if the uploaded file is an image
+        $image_info = getimagesize($_FILES['image']['tmp_name']);
+        if ($image_info === false) {
+            // Handle non-image files here
+            $_SESSION['upload'] = "<div class='error'>Please upload a valid image file</div>";
+            header('location:' . $_SERVER['PHP_SELF'] . '?FOOD_ID=' . $FOOD_ID);
+            exit();
+        }
 
-            $FOOD_IMG = "FOOD_IMAGE_" . $FOOD_NAME . "." . $ext;
+        // Generate a unique filename for the image
+        $image_info = pathinfo($FOOD_IMG);
+        $ext = strtolower($image_info['extension']);
+        $FOOD_IMG = "FOOD_IMAGE_" . $FOOD_NAME . "_" . uniqid() . "." . $ext;
 
-            $src = $_FILES['image']['tmp_name'];
-            $dst = "images/" . $FOOD_IMG;
+        // Set the destination path for the uploaded image
+        $dst = "images/" . $FOOD_IMG;
 
-            $upload    = move_uploaded_file($src, $dst);
+        // Upload the image
+        if (!move_uploaded_file($_FILES['image']['tmp_name'], $dst)) {
+            // Handle upload failure
+            $_SESSION['upload'] = "<div class='error'>Failed To Upload Image</div>";
+            header('location:' . $_SERVER['PHP_SELF'] . '?FOOD_ID=' . $FOOD_ID);
+            exit();
+        }
 
-            //check whether the image is uploaded
-            if ($upload == false) {
-                $_SESSION['upload'] = "<div class='error'>Failed To Upload Image</div>";
-                die();
+        // Remove the previous image if it exists
+        if (!empty($current_image)) {
+            $remove_path = "images/" . $current_image;
+            if (!unlink($remove_path)) {
+                // Handle image removal failure
+                $_SESSION['failed-remove'] = "<div class='error'>Failed To Remove Current Image</div>";
+                header('location:' . SITEURL . 'employee-home.php');
+                exit();
             }
-            //remove current image if available
-            if ($current_image != "") {
-                $remove_path = "images/" . $FOOD_IMAGE;
-                $remove = unlink($remove_path);
-                //check whether image is removed
-                if ($remove == false) {
-                    $_SESSION['failed-remove'] = "<div class='error'>Failed To Remove Current Image</div>";
-                    header('location:' . SITEURL . 'employee-home.php');
-                    die();
-                }
-            }
-        } else {
-            $image_name = $current_image;
         }
     } else {
-        $image_name = $current_image;
+        // No new image uploaded, retain the current image
+        $FOOD_IMG = $current_image;
     }
 
-
+    // Update the database with the new data
     $update = "UPDATE food 
         SET FOOD_NAME = '$FOOD_NAME',
             FOOD_DESC = '$FOOD_DESC',
             FOOD_IMG = '$FOOD_IMG',
             FOOD_PRICE = '$FOOD_PRICE',
             FOOD_STOCK = '$FOOD_STOCK',
-            FOOD_ACTIVE = '$FOOD_ACTIVE'
+            FOOD_ACTIVE = '$FOOD_ACTIVE',
+            FOOD_TYPE = '$FOOD_TYPE'
         WHERE FOOD_ID = '$FOOD_ID'";
 
     mysqli_query($conn, $update);
+
+    // Redirect to the edit page with the updated data
+    header('location:employee-inventory.php');
+    exit();
 }
 ?>

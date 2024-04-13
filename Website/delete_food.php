@@ -3,6 +3,7 @@
 @include 'constants.php';
 
 $PRSN_ID = $_SESSION['prsn_id'];
+$PRSN_ROLE = $_SESSION['prsn_role'];
 
 $FOOD_ID = $_GET['FOOD_ID'];
 
@@ -26,5 +27,7 @@ if ($result) {
 $sql = "DELETE FROM food WHERE FOOD_ID=$FOOD_ID";
 $res = mysqli_query($conn, $sql);
 
-header('location:' . SITEURL . 'admin-edit-menu.php');
+header('Location: ' . SITEURL . $PRSN_ROLE . '-inventory.php');
+exit();
+
 ?>
