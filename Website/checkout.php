@@ -198,9 +198,9 @@ if (isset($_POST['submit'])) {
                                             <thead>
                                                 <tr>
                                                     <th class="header first-col"></th>
-                                                    <th class="header">Quantity</th>
-                                                    <th class="header">Price</th>
-                                                    <th class="header">Sub Total</th>
+                                                    <th class="header"><p>Quantity</p></th>
+                                                    <th class="header"><p>Price</p></th>
+                                                    <th class="header"><p>Sub Total</p></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -232,9 +232,9 @@ if (isset($_POST['submit'])) {
                                                                     <p><?php echo $FOOD_NAME; ?></p>
                                                                 </div>
                                                             </td> <!--Pic and Name-->
-                                                            <td><?php echo $IN_ORDER_QUANTITY ?></td> <!--Quantity-->
-                                                            <td>₱<?php echo $FOOD_PRICE; ?></td><!--Price-->
-                                                            <td>₱<?php echo $IN_ORDER_TOTAL; ?></td><!--Sub Total-->
+                                                            <td><p><?php echo $IN_ORDER_QUANTITY ?></p></td> <!--Quantity-->
+                                                            <td><p>₱<?php echo $FOOD_PRICE; ?></p></td><!--Price-->
+                                                            <td><p>₱<?php echo $IN_ORDER_TOTAL; ?></p></td><!--Sub Total-->
                                                         </tr>
                                                 <?php
                                                     }
@@ -345,24 +345,6 @@ if (isset($_POST['submit'])) {
                                     </div>
                             </div>
                         </section>
-                        <!-- <section class="wrapper red-theme">
-                            <div class="block left-side-dvd red-theme">
-                                <h3 class="block-heading">When do you want your order to be delivered?</h2>
-                                    <div class="block-body radio">
-                                        <label for=""><input id="" type="radio" name="" class="" /> Today</label>
-                                        <label for=""><input id="" type="radio" name="" class="" /> Select a date:</label>
-                                        <input type="date" name="date" min="2024-04-01" max="2024-05-31">
-                                        <div class="error"></div>
-                                    </div>
-                            </div>
-                            <div class="block time-slot">
-                                <h3 class="block-heading">Time Slot</h2>
-                                    <div class="block-body">
-                                        <input type="time" name="time" min="09:00:00" max="17:00:00">
-                                        <div class="error"></div>
-                                    </div>
-                            </div>
-                        </section> -->
                         <!-- customer note block-->
                         <section class="block red-theme">
                             <h3 class="block-heading">Additional Notes</h2>
