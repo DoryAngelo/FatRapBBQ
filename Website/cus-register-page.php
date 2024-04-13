@@ -6,7 +6,7 @@ if (isset($_POST['submit'])) {
 
     $PRSN_NAME =  mysqli_real_escape_string($conn, $_POST['name']);
     $PRSN_EMAIL =  mysqli_real_escape_string($conn, $_POST['email']);
-    $PRSN_PHONE =  $_POST['number'];
+    $PRSN_PHONE = str_replace(' ', '', $_POST['number']);
     $PRSN_PASSWORD =  md5($_POST['password']);
     $PRSN_CPASSWORD =  md5($_POST['cpassword']);
     $PRSN_ROLE = 'Customer';
@@ -160,7 +160,7 @@ if (isset($_POST['submit'])) {
         const cpasswordValue = cpasswordInput.value.trim();
 
         const nameRegex = /^[a-zA-Z\s]+$/;
-        const numberRegex = /^09\d{9}$/;
+        const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
         const passwordRegex = /^(?=.*\d)[a-zA-Z0-9]{8,}$/; // Password should not contain special characters
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Email must contain an '@'
 
