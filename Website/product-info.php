@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
-                    <h1>Fat Rap's Barbeque's Online Store</h1>
+                    <h1>Fat Rap's Barbeque</h1>
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
@@ -105,57 +105,62 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     </header>
     <main>
         <section class="section product-info-page">
-            <div class="section-heading"></div>
-            <a href="<?php echo SITEURL; ?>menu.php" class="back">Back</a>
-            <?php
+            <div class="container">
+                <div class="section-heading"></div>
+                <!-- <a href="<?php echo SITEURL; ?>menu.php" class="back">Back</a> -->
+                <?php
 
-            $sql = "SELECT * FROM food WHERE FOOD_ID = '$FOOD_ID'";
-            $res = mysqli_query($conn, $sql);
-            $count = mysqli_num_rows($res);
-            if ($count > 0) {
-                while ($row = mysqli_fetch_assoc($res)) {
-                    $FOOD_ID = $row['FOOD_ID'];
-                    $FOOD_NAME = $row['FOOD_NAME'];
-                    $FOOD_DESC = $row['FOOD_DESC'];
-                    $FOOD_IMG = $row['FOOD_IMG'];
-                    $FOOD_PRICE = $row['FOOD_PRICE'];
-                    $FOOD_STOCK = $row['FOOD_STOCK'];
-            ?>
-                    <section class="block">
-                        <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
-                        <div class="right-grp">
-                            <div class="top">
-                                <h1><?php echo $FOOD_NAME ?></h1>
-                                <p><?php echo $FOOD_DESC ?></p>
+                $sql = "SELECT * FROM food WHERE FOOD_ID = '$FOOD_ID'";
+                $res = mysqli_query($conn, $sql);
+                $count = mysqli_num_rows($res);
+                if ($count > 0) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                        $FOOD_ID = $row['FOOD_ID'];
+                        $FOOD_NAME = $row['FOOD_NAME'];
+                        $FOOD_DESC = $row['FOOD_DESC'];
+                        $FOOD_IMG = $row['FOOD_IMG'];
+                        $FOOD_PRICE = $row['FOOD_PRICE'];
+                        $FOOD_STOCK = $row['FOOD_STOCK'];
+                ?>
+                        <section class="block">
+                            <div class="img-container">
+                                <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
                             </div>
-                            <form class="bottom" method="POST">
-                                <input type="hidden" name="product_id" value="<?= $product['id'] ?>"><!--hidden product name to accompany the product's quantity-->
-                                <div class="inline">
-                                    <h1>₱<?php echo $FOOD_PRICE ?></h1>
-                                    <div class="quantity-grp">
-                                        <i class='bx bxs-minus-circle js-minus' data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
-                                        <p class="amount js-num">1</p>
-                                        <i class='bx bxs-plus-circle js-plus' data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
-                                    </div>
-                                    <p class="remaining"><?php echo $FOOD_STOCK ?> sticks available</p>
+                            <div class="right-grp">
+                                <div class="top">
+                                    <h1><?php echo $FOOD_NAME ?></h1>
+                                    <p><?php echo $FOOD_DESC ?></p>
                                 </div>
-                                <input type="hidden" id="quantity" name="quantity" value="1">
-                                <input type="hidden" name="price" value="<?php echo $FOOD_PRICE ?>">
-                                <button name="order" type="submit">Add to Cart</button>
-                            </form>
-                        </div>
-                    </section>
-            <?php
+                                <form class="bottom" method="POST">
+                                    <input type="hidden" name="product_id" value="<?= $product['id'] ?>"><!--hidden product name to accompany the product's quantity-->
+                                    <div class="inline">
+                                        <h1>₱<?php echo $FOOD_PRICE ?></h1>
+                                        <div class="quantity-grp">
+                                            <i class='bx bxs-minus-circle js-minus' data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
+                                            <p class="amount js-num">1</p>
+                                            <i class='bx bxs-plus-circle js-plus' data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
+                                        </div>
+                                        <p class="remaining"><?php echo $FOOD_STOCK ?> sticks available</p>
+                                    </div>
+                                    <input type="hidden" id="quantity" name="quantity" value="1">
+                                    <input type="hidden" name="price" value="<?php echo $FOOD_PRICE ?>">
+                                    <button name="order" type="submit">Add to Cart</button>
+                                </form>
+                            </div>
+                        </section>
+                <?php
+                    }
                 }
-            }
-            ?>
+                ?>
+            </div>
+            
 
         </section>
     </main>
     <footer>
         <div class="footer-container">
             <div class="left-container">
-                <h1>Fat Rap's Barbeque's Online Store</h1>
+                <h1>Fat Rap's Barbeque</h1>
                 <div class="list">
                     <ul>
                         <li><a href="<?php echo SITEURL; ?>cus-home-page.php">Home</a></li>
