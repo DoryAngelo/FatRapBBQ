@@ -340,7 +340,6 @@ table td:not(.first-col), table th:not(.first-col) {
 
 .contact-info-blk input, .track-order input {
     margin-top: 8px;
-    margin-bottom: 1.25rem;
 }
 
 .contact-info-blk input, .customer-note {
@@ -387,7 +386,12 @@ table td:not(.first-col), table th:not(.first-col) {
     gap: 3rem;
 }
 
-#delivery-block .radio .date {
+#delivery-block .radio .date-grp {
+    display: flex;
+    flex-direction: column;
+}
+
+#delivery-block .radio .date, #delivery-block .radio .date-grp .error {
     margin-left: -2rem;
 }
 
@@ -761,6 +765,28 @@ a.back {
     display: none;
 }
 
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.input-control {
+    position: relative;
+}
+
+.input-control.error input {
+    border-color: var(--text2);
+}
+
+.input-control .error {
+    position: absolute;
+    top: 100%; /* Position it just below the input */
+    color: var(--text2);
+    font-size: 0.7rem;
+    margin-top: 2px;
+}
+
 @media only screen and (width <= 950px) {
     /* .menu .section-body {
         grid-template-columns: repeat(auto-fit, minmax(150px, 150px)); 
@@ -786,7 +812,7 @@ a.back {
         gap: 5%;
     }
 
-    #delivery-block .radio .date {
+    #delivery-block .radio .date, #delivery-block .radio .date-grp .error {
         margin-left: -0.5rem;
     }
 

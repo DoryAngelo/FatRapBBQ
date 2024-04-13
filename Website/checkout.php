@@ -274,55 +274,60 @@ if (isset($_POST['submit'])) {
                                 <!-- TODO: validate inputs -->
                                 <div class="left">
                                     <h3 class="block-heading">Contact Information</h3>
-                                    <div class="input-grp">
-                                        <p>First Name</p>
-                                        <input type="text" id="first-name" name="first-name">
-                                        <div class="error"></div>
-                                    </div>
-                                    <div class="input-grp">
-                                        <p>Last Name</p>
-                                        <input type="text" id="last-name" name="last-name">
-                                        <div class="error"></div>
-                                    </div>
-                                    <div class="input-grp">
-                                        <p>Contact Number</p>
-                                        <input type="text" id="contact-number" name="contact-number">
-                                        <div class="error"></div>
-                                    </div>
-                                    <div class="input-grp">
-                                        <p>Email</p>
-                                        <input type="email" id="email" name="email">
-                                        <div class="error"></div>
+                                    <div class="form-field">
+                                        <div class="input-grp">
+                                            <p>First Name</p>
+                                            <input type="text" id="first-name" name="first-name">
+                                            <div class="error"></div>
+                                        </div>
+                                        <div class="input-grp">
+                                            <p>Last Name</p>
+                                            <input type="text" id="last-name" name="last-name">
+                                            <div class="error"></div>
+                                        </div>
+                                        <div class="input-grp">
+                                            <p>Contact Number</p>
+                                            <input type="text" id="contact-number" name="contact-number">
+                                            <div class="error"></div>
+                                        </div>
+                                        <div class="input-grp">
+                                            <p>Email</p>
+                                            <input type="email" id="email" name="email">
+                                            <div class="error"></div>
+                                        </div>
                                     </div>
                                 </div>
                                 <hr>
                                 <div class="right">
                                     <h3 class="block-heading">Address</h3>
-                                    <div class="input-grp">
-                                        <p>Region</p>
-                                        <input type="text" name="region">
-                                        <div class="error"></div>
+                                    <div class="form-field">
+                                        <div class="input-grp">
+                                            <p>Region</p>
+                                            <input type="text" name="region">
+                                            <div class="error"></div>
+                                        </div>
+                                        <div class="input-grp">
+                                            <p>Province</p>
+                                            <input type="text" name="province">
+                                            <div class="error"></div>
+                                        </div>
+                                        <div class="input-grp">
+                                            <p>City</p>
+                                            <input type="text" name="city">
+                                            <div class="error"></div>
+                                        </div>
+                                        <div class="input-grp">
+                                            <p>Barangay</p>
+                                            <input type="text" name="barangay">
+                                            <div class="error"></div>
+                                        </div>
+                                        <div class="input-grp">
+                                            <p>House no./Bldg./Street</p>
+                                            <input type="text" name="street">
+                                            <div class="error"></div>
+                                        </div>
                                     </div>
-                                    <div class="input-grp">
-                                        <p>Province</p>
-                                        <input type="text" name="province">
-                                        <div class="error"></div>
-                                    </div>
-                                    <div class="input-grp">
-                                        <p>City</p>
-                                        <input type="text" name="city">
-                                        <div class="error"></div>
-                                    </div>
-                                    <div class="input-grp">
-                                        <p>Barangay</p>
-                                        <input type="text" name="barangay">
-                                        <div class="error"></div>
-                                    </div>
-                                    <div class="input-grp">
-                                        <p>House no./Bldg./Street</p>
-                                        <input type="text" name="street">
-                                        <div class="error"></div>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </section>
@@ -333,8 +338,10 @@ if (isset($_POST['submit'])) {
                                 <div class="radio">
                                     <label for=""><input id="" type="radio" name="" class="" /> Today</label>
                                     <label for=""><input id="" type="radio" name="" class="" /> Select a date:</label>
-                                    <input class="date" type="date" name="date" min="2024-04-01" max="2024-05-31">
-                                    <div class="error"></div>
+                                    <div class="date-grp">
+                                        <input class="date" type="date" name="date" min="2024-04-01" max="2024-05-31">
+                                        <div class="error"></div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="block time-slot">
