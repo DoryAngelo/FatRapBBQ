@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 13, 2024 at 06:44 AM
+-- Generation Time: Apr 13, 2024 at 06:47 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -134,14 +134,6 @@ CREATE TABLE `in_order` (
   `PLACED_ORDER_ID` int(18) UNSIGNED DEFAULT NULL,
   `GUEST_ORDER_IDENTIFIER` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `in_order`
---
-
-INSERT INTO `in_order` (`IN_ORDER_ID`, `FOOD_ID`, `PRSN_ID`, `IN_ORDER_QUANTITY`, `IN_ORDER_TOTAL`, `IN_ORDER_STATUS`, `PLACED_ORDER_ID`, `GUEST_ORDER_IDENTIFIER`) VALUES
-(144, 9, 33, 1, 5.00, 'Ordered', NULL, ''),
-(147, 16, 15, 4, 100.00, 'Ordered', NULL, '');
 
 -- --------------------------------------------------------
 
