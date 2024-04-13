@@ -130,7 +130,7 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout | Fat Rap's Barbeque's Online Store</title>
+    <title>Checkout | Fat Rap's Barbeque</title>
     <link rel="stylesheet" href="header-styles.css">
     <link rel="stylesheet" href="customer-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -148,7 +148,7 @@ if (isset($_POST['submit'])) {
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
-                    <h1>Fat Rap's Barbeque's Online Store</h1>
+                    <h1>Fat Rap's Barbeque</h1>
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
@@ -181,187 +181,210 @@ if (isset($_POST['submit'])) {
                 font-size: 10px;
             }
         </style>
-        <form method="POST" onsubmit="return validateInputs()">
-            <section class="section">
+        <section class="section" id="checkout">
+            <div class="container">
                 <div class="section-heading">
                     <h2>Checkout</h2>
                     <p>You are about to place your order</p>
                 </div>
-                <section class="section-body">
-                    <!--order summary block-->
-                    <section class="block">
-                        <h3 class="block-heading">Order Summary</h2>
-                            <div class="block-body">
-                                <div class="table-wrap">
-                                    <table class="order">
-                                        <thead>
-                                            <tr>
-                                                <th class="header first-col"></th>
-                                                <th class="header">Quantity</th>
-                                                <th class="header">Price</th>
-                                                <th class="header">Sub Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            if (isset($_SESSION['prsn_id'])) {
-                                                $CUS_ID = $_SESSION['prsn_id'];
-                                                $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, FOOD_STOCK, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
-                                    FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND PRSN_ID = $PRSN_ID AND PLACED_ORDER_ID IS NULL";
-                                            } else {
-                                                $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, FOOD_STOCK, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
-                                    FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND GUEST_ORDER_IDENTIFIER = '$GUEST_ID' AND PLACED_ORDER_ID IS NULL";
-                                            }
-                                            $res = mysqli_query($conn, $sql);
-                                            $count = mysqli_num_rows($res);
-                                            if ($count > 0) {
-                                                while ($row = mysqli_fetch_assoc($res)) {
-                                                    $IN_ORDER_ID = $row['IN_ORDER_ID'];
-                                                    $FOOD_NAME = $row['FOOD_NAME'];
-                                                    $FOOD_PRICE = $row['FOOD_PRICE'];
-                                                    $FOOD_IMG = $row['FOOD_IMG'];
-                                                    $FOOD_STOCK = $row['FOOD_STOCK'];
-                                                    $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
-                                                    $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
-                                            ?>
-                                                    <tr>
-                                                        <td data-cell="customer" class="first-col">
-                                                            <div class="pic-grp">
-                                                                <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
-                                                                <p><?php echo $FOOD_NAME; ?></p>
-                                                            </div>
-                                                        </td> <!--Pic and Name-->
-                                                        <td><?php echo $IN_ORDER_QUANTITY ?></td> <!--Quantity-->
-                                                        <td>₱<?php echo $FOOD_PRICE; ?></td><!--Price-->
-                                                        <td>₱<?php echo $IN_ORDER_TOTAL; ?></td><!--Sub Total-->
-                                                    </tr>
-                                            <?php
+                <section>
+                    <form method="POST" class="section-body"onsubmit="return validateInputs()">
+                        <!--order summary block-->
+                        <section class="block">
+                            <h3 class="block-heading">Order Summary</h2>
+                                <div class="block-body">
+                                    <div class="table-wrap">
+                                        <table class="order">
+                                            <thead>
+                                                <tr>
+                                                    <th class="header first-col"></th>
+                                                    <th class="header">Quantity</th>
+                                                    <th class="header">Price</th>
+                                                    <th class="header">Sub Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                if (isset($_SESSION['prsn_id'])) {
+                                                    $CUS_ID = $_SESSION['prsn_id'];
+                                                    $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, FOOD_STOCK, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
+                                        FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND PRSN_ID = $PRSN_ID AND PLACED_ORDER_ID IS NULL";
+                                                } else {
+                                                    $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, FOOD_STOCK, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
+                                        FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND GUEST_ORDER_IDENTIFIER = '$GUEST_ID' AND PLACED_ORDER_ID IS NULL";
                                                 }
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
+                                                $res = mysqli_query($conn, $sql);
+                                                $count = mysqli_num_rows($res);
+                                                if ($count > 0) {
+                                                    while ($row = mysqli_fetch_assoc($res)) {
+                                                        $IN_ORDER_ID = $row['IN_ORDER_ID'];
+                                                        $FOOD_NAME = $row['FOOD_NAME'];
+                                                        $FOOD_PRICE = $row['FOOD_PRICE'];
+                                                        $FOOD_IMG = $row['FOOD_IMG'];
+                                                        $FOOD_STOCK = $row['FOOD_STOCK'];
+                                                        $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
+                                                        $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
+                                                ?>
+                                                        <tr>
+                                                            <td data-cell="customer" class="first-col">
+                                                                <div class="pic-grp">
+                                                                    <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
+                                                                    <p><?php echo $FOOD_NAME; ?></p>
+                                                                </div>
+                                                            </td> <!--Pic and Name-->
+                                                            <td><?php echo $IN_ORDER_QUANTITY ?></td> <!--Quantity-->
+                                                            <td>₱<?php echo $FOOD_PRICE; ?></td><!--Price-->
+                                                            <td>₱<?php echo $IN_ORDER_TOTAL; ?></td><!--Sub Total-->
+                                                        </tr>
+                                                <?php
+                                                    }
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="payment">
+                                        <div class="text">
+                                            <h3>Total Payment:</h3>
+                                            <h3>₱<?php echo $total; ?></h3>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="payment">
-                                    <h3>Total Payment:</h3>
-                                    <h3>₱<?php echo $total; ?></h3>
+                        </section>
+                        <!-- contact info block-->
+                        <section class="block red-theme">
+                            <div class="block-body contact-info-blk ">
+                                <?php
+
+                                if (isset($_SESSION['prsn_id'])) {
+                                    $sql2 = "SELECT * FROM person WHERE PRSN_ID=$PRSN_ID";
+
+                                    $res2 = mysqli_query($conn, $sql2);
+
+                                    $row2 = mysqli_fetch_assoc($res2);
+
+                                    //get individual values
+                                    $PRSN_NAME = $row2['PRSN_NAME'];
+                                    $PRSN_PHONE = $row2['PRSN_PHONE'];
+                                    $PRSN_EMAIL = $row2['PRSN_EMAIL'];
+                                } else {
+                                    $sql2 = "SELECT * FROM person WHERE GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
+                                }
+                                ?>
+                                <!-- TODO: validate inputs -->
+                                <div class="left">
+                                    <h3 class="block-heading">Contact Information</h3>
+                                    <div class="input-grp">
+                                        <p>First Name</p>
+                                        <input type="text" id="first-name" name="first-name">
+                                        <div class="error"></div>
+                                    </div>
+                                    <div class="input-grp">
+                                        <p>Last Name</p>
+                                        <input type="text" id="last-name" name="last-name">
+                                        <div class="error"></div>
+                                    </div>
+                                    <div class="input-grp">
+                                        <p>Contact Number</p>
+                                        <input type="text" id="contact-number" name="contact-number">
+                                        <div class="error"></div>
+                                    </div>
+                                    <div class="input-grp">
+                                        <p>Email</p>
+                                        <input type="email" id="email" name="email">
+                                        <div class="error"></div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="right">
+                                    <h3 class="block-heading">Address</h3>
+                                    <div class="input-grp">
+                                        <p>Region</p>
+                                        <input type="text" name="region">
+                                        <div class="error"></div>
+                                    </div>
+                                    <div class="input-grp">
+                                        <p>Province</p>
+                                        <input type="text" name="province">
+                                        <div class="error"></div>
+                                    </div>
+                                    <div class="input-grp">
+                                        <p>City</p>
+                                        <input type="text" name="city">
+                                        <div class="error"></div>
+                                    </div>
+                                    <div class="input-grp">
+                                        <p>Barangay</p>
+                                        <input type="text" name="barangay">
+                                        <div class="error"></div>
+                                    </div>
+                                    <div class="input-grp">
+                                        <p>House no./Bldg./Street</p>
+                                        <input type="text" name="street">
+                                        <div class="error"></div>
+                                    </div>
                                 </div>
                             </div>
-                    </section>
-                    <!-- contact info block-->
-                    <section class="block red-theme">
-                        <div class="block-body contact-info-blk ">
-                            <?php
-
-                            if (isset($_SESSION['prsn_id'])) {
-                                $sql2 = "SELECT * FROM person WHERE PRSN_ID=$PRSN_ID";
-
-                                $res2 = mysqli_query($conn, $sql2);
-
-                                $row2 = mysqli_fetch_assoc($res2);
-
-                                //get individual values
-                                $PRSN_NAME = $row2['PRSN_NAME'];
-                                $PRSN_PHONE = $row2['PRSN_PHONE'];
-                                $PRSN_EMAIL = $row2['PRSN_EMAIL'];
-                            } else {
-                                $sql2 = "SELECT * FROM person WHERE GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
-                            }
-                            ?>
-                            <!-- TODO: validate inputs -->
-                            <div class="left">
-                                <h3 class="block-heading">Contact Information</h3>
-                                <div class="input-grp">
-                                    <p>First Name</p>
-                                    <input type="text" id="first-name" name="first-name">
-                                    <div class="error"></div>
-                                </div>
-                                <div class="input-grp">
-                                    <p>Last Name</p>
-                                    <input type="text" id="last-name" name="last-name">
-                                    <div class="error"></div>
-                                </div>
-                                <div class="input-grp">
-                                    <p>Contact Number</p>
-                                    <input type="text" id="contact-number" name="contact-number">
-                                    <div class="error"></div>
-                                </div>
-                                <div class="input-grp">
-                                    <p>Email</p>
-                                    <input type="email" id="email" name="email">
-                                    <div class="error"></div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="right">
-                                <h3 class="block-heading">Address</h3>
-                                <div class="input-grp">
-                                    <p>Region</p>
-                                    <input type="text" name="region">
-                                    <div class="error"></div>
-                                </div>
-                                <div class="input-grp">
-                                    <p>Province</p>
-                                    <input type="text" name="province">
-                                    <div class="error"></div>
-                                </div>
-                                <div class="input-grp">
-                                    <p>City</p>
-                                    <input type="text" name="city">
-                                    <div class="error"></div>
-                                </div>
-                                <div class="input-grp">
-                                    <p>Barangay</p>
-                                    <input type="text" name="barangay">
-                                    <div class="error"></div>
-                                </div>
-                                <div class="input-grp">
-                                    <p>House no./Bldg./Street</p>
-                                    <input type="text" name="street">
-                                    <div class="error"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <!-- delivery info block-->
-                    <section class="wrapper red-theme">
-                        <div class="block left-side-dvd red-theme">
-                            <h3 class="block-heading">When do you want your order to be delivered?</h2>
-                                <div class="block-body radio">
+                        </section>
+                        <!-- delivery info block-->
+                        <section class="red-theme" id="delivery-block">
+                            <div class="left-side">
+                                <h3 class="block-heading">When do you want your order to be delivered?</h2>
+                                <div class="radio">
                                     <label for=""><input id="" type="radio" name="" class="" /> Today</label>
                                     <label for=""><input id="" type="radio" name="" class="" /> Select a date:</label>
-                                    <input type="date" name="date" min="2024-04-01" max="2024-05-31">
+                                    <input class="date" type="date" name="date" min="2024-04-01" max="2024-05-31">
                                     <div class="error"></div>
                                 </div>
-                        </div>
-                        <div class="block time-slot">
-                            <h3 class="block-heading">Time Slot</h2>
-                                <div class="block-body">
-                                    <input type="time" name="time" min="09:00:00" max="17:00:00">
-                                    <div class="error"></div>
-                                </div>
-                        </div>
-                    </section>
-                    <!-- customer note block-->
-                    <section class="block red-theme">
-                        <h3 class="block-heading">Additional Notes</h2>
+                            </div>
+                            <div class="block time-slot">
+                                <h3 class="block-heading">Time Slot</h2>
+                                    <div class="block-body">
+                                        <input type="time" name="time" min="09:00:00" max="17:00:00">
+                                        <div class="error"></div>
+                                    </div>
+                            </div>
+                        </section>
+                        <!-- <section class="wrapper red-theme">
+                            <div class="block left-side-dvd red-theme">
+                                <h3 class="block-heading">When do you want your order to be delivered?</h2>
+                                    <div class="block-body radio">
+                                        <label for=""><input id="" type="radio" name="" class="" /> Today</label>
+                                        <label for=""><input id="" type="radio" name="" class="" /> Select a date:</label>
+                                        <input type="date" name="date" min="2024-04-01" max="2024-05-31">
+                                        <div class="error"></div>
+                                    </div>
+                            </div>
+                            <div class="block time-slot">
+                                <h3 class="block-heading">Time Slot</h2>
+                                    <div class="block-body">
+                                        <input type="time" name="time" min="09:00:00" max="17:00:00">
+                                        <div class="error"></div>
+                                    </div>
+                            </div>
+                        </section> -->
+                        <!-- customer note block-->
+                        <section class="block red-theme">
+                            <h3 class="block-heading">Additional Notes</h2>
                             <div class="block-body">
                                 <label for="customer-note"></label>
                                 <textarea id="customer-note" class="customer-note" name="customer-note" rows="4">Enter text here...</textarea>
                             </div>
-                    </section>
-                    <!-- note block-->
-                    <div class="block note">
-                        <p>Note: We can only deliver from 9AM to 5PM. Moreover, delivery will be shouldered by third-party couriers.</p>
-                    </div>
-                    <div class="btn-container center">
-                        <a href="<?php echo SITEURL; ?>cart.php" class="page-button clear-bg">Back</a>
-                        <button name="submit" class="page-button">Place Order</button>
-                        <!-- <a href="place_order.php" class="page-button">Place Order</a> -->
-                    </div>
+                        </section>
+                        <!-- note block-->
+                        <div class="block note">
+                            <p>Note: We can only deliver from 9AM to 5PM. Moreover, delivery will be shouldered by third-party couriers.</p>
+                        </div>
+                        <div class="btn-container center">
+                            <a href="<?php echo SITEURL; ?>cart.php" class="page-button clear-bg">Back</a>
+                                <button name="submit" class="page-button">Place Order</button>
+                                <!-- <a href="place_order.php" class="page-button">Place Order</a> -->
+                        </div>
+                    </form>
                 </section>
-            </section>
-        </form>
+            </div>
+        </section>
+        
         <script>
             const firstNameInput = document.getElementById('first-name');
             const lastNameInput = document.getElementById('last-name');
@@ -507,7 +530,7 @@ if (isset($_POST['submit'])) {
     <footer>
         <div class="footer-container">
             <div class="left-container">
-                <h1>Fat Rap's Barbeque's Online Store</h1>
+                <h1>Fat Rap's Barbeque</h1>
                 <div class="list">
                     <ul>
                         <li><a href="#">Home</a></li>

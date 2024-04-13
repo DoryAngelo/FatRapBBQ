@@ -5,7 +5,7 @@
 if (isset($_POST['submit'])) {
 
     $PRSN_NAME =  mysqli_real_escape_string($conn, $_POST['name']);
-    $PRSN_EMAIL =  mysqli_real_escape_string($conn, $_POST['email']);
+    $PRSN_EMAIL =  mysqli_real_escape_string($conn, trim($_POST['email']));
     $PRSN_PHONE = str_replace(' ', '', $_POST['number']);
     $PRSN_PASSWORD =  md5($_POST['password']);
     $PRSN_CPASSWORD =  md5($_POST['cpassword']);
@@ -95,7 +95,7 @@ if (isset($_POST['submit'])) {
                         <div class="form-field-input">
                             <div class="with-desc">
                                 <label for="password">Password</label>
-                                <small>Password must be 8 characters long, and include at least 1 uppercase, 1 lowercase, and 1 digit</small>
+                                <small>Password must be 8 characters long. Include at least 1 uppercase, 1 lowercase, and 1 digit. Exclude special characters.</small>
                             </div>
                             <div class="input-container input-control">
                                 <input class="js-pass" type="password" id="password" name="password">
