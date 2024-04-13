@@ -5,11 +5,11 @@
 $PRSN_ID = $_SESSION['prsn_id'];
 
 if (isset($_POST['submit'])) {
-    $PRSN_FNAME = mysqli_real_escape_string($conn, $_POST['first-name']);
-    $PRSN_LNAME = mysqli_real_escape_string($conn, $_POST['last-name']);
+    $PRSN_FNAME = mysqli_real_escape_string($conn, trim($_POST['first-name']));
+    $PRSN_LNAME = mysqli_real_escape_string($conn, trim($_POST['last-name']));
     $PRSN_PHONE = str_replace(' ', '', $_POST['number']);
-    $PRSN_UNAME = mysqli_real_escape_string($conn, $_POST['username']);
-    $EMP_BRANCH = mysqli_real_escape_string($conn, $_POST['branch']);
+    $PRSN_UNAME = mysqli_real_escape_string($conn, trim($_POST['username']));
+    $EMP_BRANCH = mysqli_real_escape_string($conn, trim($_POST['branch']));
     $PRSN_PASSWORD = md5($_POST['password']);
     $PRSN_CPASSWORD = md5($_POST['cpassword']);
     $PRSN_ROLE = 'Admin';
@@ -146,6 +146,7 @@ if (isset($_POST['submit'])) {
                                         </div>
                                         <div class="form-field-input input-control">
                                             <label for="number">Phone Number</label>
+                                            <p>(e.g. 09xxxxxxxxx)</p>
                                             <input class="js-user" type="text" id="number" name="number">
                                             <div class="error"></div>
                                         </div>
@@ -155,16 +156,16 @@ if (isset($_POST['submit'])) {
                                             <div class="error"></div>
                                         </div>
                                         <div class="form-field-input">
-                                            <label for="image">Image</label>
-                                            <p>(accepted files: .jpg, .png)</p>
-                                            <input name="image" id="image" class="image" type="file">
-                                        </div>
-                                        <div class="form-field-input">
                                             <label for="role">Role</label>
                                             <select class="dropdown" name="role" id="role" required>
                                                 <option value="Employee">Employee</option>
                                                 <option value="Admin">Admin</option>
                                             </select>
+                                        </div>
+                                        <div class="form-field-input">
+                                            <label for="image">Image</label>
+                                            <p>(accepted files: .jpg, .png)</p>
+                                            <input name="image" id="image" class="image" type="file">
                                         </div>
                                     </div>
                                 </section>
@@ -175,13 +176,14 @@ if (isset($_POST['submit'])) {
                                     <div class="form-field">
                                         <div class="form-field-input input-control">
                                             <label for="username">Username</label>
+                                            <p>Username should exclude special characters.</p>
                                             <input name="username" id="username" class="js-user" type="text">
                                             <div class="error"></div>
                                         </div>
                                         <div class="form-field-input">
                                             <div class="with-desc">
                                                 <label for="password">Password</label>
-                                                <p>Password must be 8 characters long, and includes at least 1 uppercase, 1 lowercase, 1 digit</p>
+                                                <p>Password at least 8 characters long. Include at least 1 uppercase, 1 lowercase, and 1 digit. Exclude special characters.</p>
                                             </div>
                                             <div class="input-container input-control">
                                                 <input class="js-pass" type="password" id="password" name="password">
@@ -270,12 +272,16 @@ if (isset($_POST['submit'])) {
             const cpasswordValue = cpasswordInput.value.trim();
 
             const nameRegex = /^[a-zA-Z\s]+$/;
-            const numberRegex = /^09\d{9}$/;
-            const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/; // Password should include at least 1 digit, 1 lowercase, 1 uppercase
+            const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
+            const usernameRegex = /^[a-zA-Z0-9]+$/;
+            const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/; // Password should include at least 1 digit, 1 lowercase, 1 uppercase, exclude special characters.
             // Email and username regex are omitted assuming they can be validated on the backend
 
             if (firstNameValue === '') {
                 setError(firstNameInput, 'Please enter your first name');
+                isValid = false;
+            } else if (!nameRegex.test(firstNameValue)) {
+                setError(firstNameInput, 'First name must contain only letters');
                 isValid = false;
             } else {
                 clearError(firstNameInput);
@@ -283,6 +289,9 @@ if (isset($_POST['submit'])) {
 
             if (lastNameValue === '') {
                 setError(lastNameInput, 'Please enter your last name');
+                isValid = false;
+            } else if (!nameRegex.test(lastNameValue)) {
+                setError(lastNameInput, 'Last name must contain only letters');
                 isValid = false;
             } else {
                 clearError(lastNameInput);
@@ -307,6 +316,9 @@ if (isset($_POST['submit'])) {
 
             if (usernameValue === '') {
                 setError(usernameInput, 'Please enter your username');
+                isValid = false;
+            } else if (!usernameRegex.test(usernameValue)) {
+                setError(usernameInput, 'Invalid username format');
                 isValid = false;
             } else {
                 clearError(usernameInput);

@@ -47,10 +47,10 @@ $PRSN_ID = $_SESSION['prsn_id'];
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                </li>
-                    <?php
+                    </li>
+                <?php
                 } else {
-                    ?>
+                ?>
                     <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
                 <?php
                 }
@@ -118,7 +118,16 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                             </td>
                                             <td data-cell="Price"><?php echo $FOOD_TYPE ?></td>
                                             <td data-cell="Action"><a href="<?php echo SITEURL; ?>employee-edit-product.php?FOOD_ID=<?php echo $FOOD_ID ?>" class="edit">Edit</a></td>
-                                            <td data-cell="Action"><a href="delete_food.php?FOOD_ID=<?php echo $FOOD_ID; ?>" class="bx bxs-trash-alt trash"></a></td>
+                                            <td data-cell="Action"><a href="#" onclick="confirmDelete(<?php echo $FOOD_ID; ?>)" class="bx bxs-trash-alt trash"></a></td>
+                                            <script>
+                                                function confirmDelete(foodId) {
+                                                    if (confirm("Are you sure you want to delete this item?")) {
+                                                        window.location.href = "delete_food.php?FOOD_ID=" + foodId;
+                                                    } else {
+                                                        // Do nothing
+                                                    }
+                                                }
+                                            </script>
                                         </tr>
                                     <?php
                                     }
@@ -138,7 +147,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                     </section>
                 </section>
             </div>
-            
+
         </section>
     </main>
 </body>

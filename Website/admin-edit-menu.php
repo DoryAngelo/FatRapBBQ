@@ -120,7 +120,16 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                             <td data-cell="Display"><?php echo $FOOD_ACTIVE ?></td>
                                             <td data-cell="Display"><?php echo $FOOD_TYPE ?></td>
                                             <td data-cell="Action"><a href="<?php echo SITEURL; ?>admin-edit-product.php?FOOD_ID=<?php echo $FOOD_ID ?>" class="edit">Edit</a></td>
-                                            <td data-cell="Action"><a href="delete_food.php?FOOD_ID=<?php echo $FOOD_ID; ?>" class="bx bxs-trash-alt trash"></a></td>
+                                            <td data-cell="Action"><a href="#" onclick="confirmDelete(<?php echo $FOOD_ID; ?>)" class="bx bxs-trash-alt trash"></a></td>
+                                            <script>
+                                                function confirmDelete(foodId) {
+                                                    if (confirm("Are you sure you want to delete this item?")) {
+                                                        window.location.href = "delete_food.php?FOOD_ID=" + foodId;
+                                                    } else {
+                                                        // Do nothing
+                                                    }
+                                                }
+                                            </script>
                                         </tr>
                                     <?php
                                     }

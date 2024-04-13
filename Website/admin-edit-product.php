@@ -156,6 +156,7 @@ $FOOD_ID = $_GET['FOOD_ID'];
                 const productDescInput = document.getElementById('product-desc');
                 const priceInput = document.getElementById('price');
                 const stockInput = document.getElementById('stock');
+                const imageInput = document.getElementById('image');
 
                 function setError(input, message) {
                     const errorDiv = input.nextElementSibling;
@@ -174,6 +175,7 @@ $FOOD_ID = $_GET['FOOD_ID'];
                     const productDescValue = productDescInput.value.trim();
                     const priceValue = priceInput.value.trim();
                     const stockValue = stockInput.value.trim();
+                    const imageValue = imageInput.value.trim();
 
                     const nameRegex = /^[a-zA-Z\s]+$/;
 
@@ -221,6 +223,19 @@ $FOOD_ID = $_GET['FOOD_ID'];
                         isValid = false;
                     } else {
                         clearError(stockInput);
+                    }
+
+                    // Check if file extension is valid
+                    const validExtensions = ['png', 'jpg', 'jpeg'];
+                    const fileExtension = imageValue.split('.').pop().toLowerCase();
+                    if (imageValue === '') {
+                        setError(imageInput, 'Please select an image file');
+                        isValid = false;
+                    } else if (!validExtensions.includes(fileExtension)) {
+                        setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
+                        isValid = false;
+                    } else {
+                        clearError(imageInput);
                     }
 
                     return isValid;

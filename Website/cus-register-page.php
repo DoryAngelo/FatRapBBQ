@@ -2,31 +2,29 @@
 
 @include 'constants.php';
 
-if (isset($_POST['submit'])) {
 
-    $PRSN_NAME =  mysqli_real_escape_string($conn, $_POST['name']);
+
+if (isset($_POST['submit'])) {
+    $PRSN_NAME =  mysqli_real_escape_string($conn, trim($_POST['name']));
     $PRSN_EMAIL =  mysqli_real_escape_string($conn, trim($_POST['email']));
     $PRSN_PHONE = str_replace(' ', '', $_POST['number']);
     $PRSN_PASSWORD =  md5($_POST['password']);
     $PRSN_CPASSWORD =  md5($_POST['cpassword']);
     $PRSN_ROLE = 'Customer';
 
-    $select = " SELECT * FROM `person` WHERE PRSN_EMAIL = '$PRSN_EMAIL' && PRSN_NAME= '$PRSN_NAME' ";
+    $select = "SELECT * FROM `person` WHERE PRSN_EMAIL = '$PRSN_EMAIL' ";
 
     $result = mysqli_query($conn, $select);
 
     if (mysqli_num_rows($result) > 0) {
-
-        $error[] = "User already exists";
+        // User already exists, set error message in session
+        $_SESSION['error_message'] = "User already exists";
+        header('Location: cus-register-page.php');
     } else {
-        if ($PRSN_PASSWORD != $PRSN_CPASSWORD) {
-            $error[] = "Password not matched";
-        } else {
-            $insert = "INSERT INTO person(PRSN_NAME, PRSN_EMAIL, PRSN_PASSWORD, PRSN_PHONE, PRSN_ROLE) 
-			VALUES('$PRSN_NAME', '$PRSN_EMAIL',	'$PRSN_PASSWORD',	'$PRSN_PHONE', '$PRSN_ROLE')";
-            mysqli_query($conn, $insert);
-            header('location:login-page.php');
-        }
+        $insert = "INSERT INTO person(PRSN_NAME, PRSN_EMAIL, PRSN_PASSWORD, PRSN_PHONE, PRSN_ROLE) 
+            VALUES('$PRSN_NAME', '$PRSN_EMAIL', '$PRSN_PASSWORD', '$PRSN_PHONE', '$PRSN_ROLE')";
+        mysqli_query($conn, $insert);
+        header('Location: login-page.php');
     }
 }
 ?>
@@ -72,6 +70,14 @@ if (isset($_POST['submit'])) {
                 <form action="#" class="form reg-form" method="post" onsubmit="return validateInputs()">
                     <div class="form-title">
                         <h1>Register</h1>
+                        <?php
+
+                        if (isset($_SESSION['error_message'])) {
+                            echo "<div class='error-text'>" . $_SESSION['error_message'] . "</div>";
+                            unset($_SESSION['error_message']);
+                        }
+                        ?>
+
                     </div>
                     <div class="form-field">
                         <div class="form-field-input input-control">
@@ -95,7 +101,7 @@ if (isset($_POST['submit'])) {
                         <div class="form-field-input">
                             <div class="with-desc">
                                 <label for="password">Password</label>
-                                <small>Password must be 8 characters long. Include at least 1 uppercase, 1 lowercase, and 1 digit. Exclude special characters.</small>
+                                <small>Password at least 8 characters long. Include at least 1 uppercase, 1 lowercase, and 1 digit. Exclude special characters.</small>
                             </div>
                             <div class="input-container input-control">
                                 <input class="js-pass" type="password" id="password" name="password">
@@ -131,92 +137,92 @@ if (isset($_POST['submit'])) {
                 </form>
             </div>
         </section>
-        
+
     </main>
     <script>
-    const nameInput = document.getElementById('name');
-    const emailInput = document.getElementById('email');
-    const numberInput = document.getElementById('number');
-    const passwordInput = document.getElementById('password');
-    const cpasswordInput = document.getElementById('cpassword');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const numberInput = document.getElementById('number');
+        const passwordInput = document.getElementById('password');
+        const cpasswordInput = document.getElementById('cpassword');
 
-    function setError(input, message) {
-        const errorDiv = input.nextElementSibling;
-        errorDiv.innerHTML = `<span class="error-text">${message}</span>`;
-    }
-
-    function clearError(input) {
-        const errorDiv = input.nextElementSibling;
-        errorDiv.innerHTML = ''; // Clear the error message
-    }
-
-    function validateInputs() {
-        let isValid = true;
-
-        const nameValue = nameInput.value.trim();
-        const emailValue = emailInput.value.trim();
-        const numberValue = numberInput.value.trim();
-        const passwordValue = passwordInput.value.trim();
-        const cpasswordValue = cpasswordInput.value.trim();
-
-        const nameRegex = /^[a-zA-Z\s]+$/;
-        const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
-        const passwordRegex = /^(?=.*\d)[a-zA-Z0-9]{8,}$/; // Password should not contain special characters
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Email must contain an '@'
-
-        if (nameValue === '') {
-            setError(nameInput, 'Please enter your name');
-            isValid = false;
-        } else if (!nameRegex.test(nameValue)) {
-            setError(nameInput, 'Name must contain only letters');
-            isValid = false;
-        } else {
-            clearError(nameInput);
+        function setError(input, message) {
+            const errorDiv = input.nextElementSibling;
+            errorDiv.innerHTML = `<span class="error-text">${message}</span>`;
         }
 
-        if (emailValue === '') {
-            setError(emailInput, 'Please enter your email');
-            isValid = false;
-        } else if (!emailRegex.test(emailValue)) {
-            setError(emailInput, 'Invalid email format');
-            isValid = false;
-        } else {
-            clearError(emailInput);
+        function clearError(input) {
+            const errorDiv = input.nextElementSibling;
+            errorDiv.innerHTML = ''; // Clear the error message
         }
 
-        if (numberValue === '') {
-            setError(numberInput, 'Please enter your number');
-            isValid = false;
-        } else if (!numberRegex.test(numberValue)) {
-            setError(numberInput, 'Invalid number');
-            isValid = false;
-        } else {
-            clearError(numberInput);
-        }
+        function validateInputs() {
+            let isValid = true;
 
-        if (passwordValue === '') {
-            setError(passwordInput, 'Please enter your password');
-            isValid = false;
-        } else if (!passwordRegex.test(passwordValue)) {
-            setError(passwordInput, 'Invalid password format');
-            isValid = false;
-        } else {
-            clearError(passwordInput);
-        }
+            const nameValue = nameInput.value.trim();
+            const emailValue = emailInput.value.trim();
+            const numberValue = numberInput.value.trim();
+            const passwordValue = passwordInput.value.trim();
+            const cpasswordValue = cpasswordInput.value.trim();
 
-        if (cpasswordValue === '') {
-            setError(cpasswordInput, 'Please confirm your password');
-            isValid = false;
-        } else if (cpasswordValue !== passwordValue) {
-            setError(cpasswordInput, 'Passwords do not match');
-            isValid = false;
-        } else {
-            clearError(cpasswordInput);
-        }
+            const nameRegex = /^[a-zA-Z\s]+$/;
+            const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
+            const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/; // Password should not contain special characters
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Email must contain an '@'
 
-        return isValid;
-    }
-</script>
+            if (nameValue === '') {
+                setError(nameInput, 'Please enter your name');
+                isValid = false;
+            } else if (!nameRegex.test(nameValue)) {
+                setError(nameInput, 'Name must contain only letters');
+                isValid = false;
+            } else {
+                clearError(nameInput);
+            }
+
+            if (emailValue === '') {
+                setError(emailInput, 'Please enter your email');
+                isValid = false;
+            } else if (!emailRegex.test(emailValue)) {
+                setError(emailInput, 'Invalid email format');
+                isValid = false;
+            } else {
+                clearError(emailInput);
+            }
+
+            if (numberValue === '') {
+                setError(numberInput, 'Please enter your number');
+                isValid = false;
+            } else if (!numberRegex.test(numberValue)) {
+                setError(numberInput, 'Invalid number');
+                isValid = false;
+            } else {
+                clearError(numberInput);
+            }
+
+            if (passwordValue === '') {
+                setError(passwordInput, 'Please enter your password');
+                isValid = false;
+            } else if (!passwordRegex.test(passwordValue)) {
+                setError(passwordInput, 'Invalid password format');
+                isValid = false;
+            } else {
+                clearError(passwordInput);
+            }
+
+            if (cpasswordValue === '') {
+                setError(cpasswordInput, 'Please confirm your password');
+                isValid = false;
+            } else if (cpasswordValue !== passwordValue) {
+                setError(cpasswordInput, 'Passwords do not match');
+                isValid = false;
+            } else {
+                clearError(cpasswordInput);
+            }
+
+            return isValid;
+        }
+    </script>
     <footer>
         <div class="footer-container">
             <div class="left-container">
