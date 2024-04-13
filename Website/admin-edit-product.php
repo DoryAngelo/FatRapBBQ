@@ -115,14 +115,14 @@ $FOOD_ID = $_GET['FOOD_ID'];
                                                 <div class="form-field-input">
                                                     <label for="active">Active</label>
                                                     <select class="dropdown" name="active" id="active" required>
-                                                        <option value="No">INACTIVE</option>
-                                                        <option value="Yes">ACTIVE</option>
+                                                        <option value="No">No</option>
+                                                        <option value="Yes">Yes</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-field-input">
                                                     <label for="valid-id">Image</label>
                                                     <p class="label-desc">(accepted files: .jpg, .png)</p>
-                                                    <input class="image" type="file" name="image" id="image" required><!-- numbers only, starts with 09, must have 11-digits -->
+                                                    <input class="image" type="file" name="image" id="image"><!-- numbers only, starts with 09, must have 11-digits -->
                                                 </div>
                                             </div>
                                         </div>
@@ -147,6 +147,7 @@ $FOOD_ID = $_GET['FOOD_ID'];
 <?php
 if (isset($_POST['submit'])) {
 
+    // Retrieve form data
     $FOOD_NAME = mysqli_real_escape_string($conn, $_POST['product-name']);
     $FOOD_DESC = mysqli_real_escape_string($conn, $_POST['product-desc']);
     $FOOD_PRICE =  $_POST['price'];
@@ -155,46 +156,52 @@ if (isset($_POST['submit'])) {
     $FOOD_TYPE = $_POST['type'];
     $current_image = $FOOD_IMAGE;
 
-    if (isset($_FILES['image']['name'])) {
-        //get the image details
+    // Check if a new image is uploaded
+    if (isset($_FILES['image']['name']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        // Get the image details
         $FOOD_IMG = $_FILES['image']['name'];
 
-        //check whether image is available
-        if ($FOOD_IMG != "") {
-            $image_info = explode(".", $FOOD_IMG);
-            $ext = end($image_info);
+        // Check if the uploaded file is an image
+        $image_info = getimagesize($_FILES['image']['tmp_name']);
+        if ($image_info === false) {
+            // Handle non-image files here
+            $_SESSION['upload'] = "<div class='error'>Please upload a valid image file</div>";
+            header('location:' . $_SERVER['PHP_SELF'] . '?FOOD_ID=' . $FOOD_ID);
+            exit();
+        }
 
-            $FOOD_IMG = "FOOD_IMAGE_" . $FOOD_NAME . "." . $ext;
+        // Generate a unique filename for the image
+        $image_info = pathinfo($FOOD_IMG);
+        $ext = strtolower($image_info['extension']);
+        $FOOD_IMG = "FOOD_IMAGE_" . $FOOD_NAME . "_" . uniqid() . "." . $ext;
 
-            $src = $_FILES['image']['tmp_name'];
-            $dst = "images/" . $FOOD_IMG;
+        // Set the destination path for the uploaded image
+        $dst = "images/" . $FOOD_IMG;
 
-            $upload    = move_uploaded_file($src, $dst);
+        // Upload the image
+        if (!move_uploaded_file($_FILES['image']['tmp_name'], $dst)) {
+            // Handle upload failure
+            $_SESSION['upload'] = "<div class='error'>Failed To Upload Image</div>";
+            header('location:' . $_SERVER['PHP_SELF'] . '?FOOD_ID=' . $FOOD_ID);
+            exit();
+        }
 
-            //check whether the image is uploaded
-            if ($upload == false) {
-                $_SESSION['upload'] = "<div class='error'>Failed To Upload Image</div>";
-                die();
+        // Remove the previous image if it exists
+        if (!empty($current_image)) {
+            $remove_path = "images/" . $current_image;
+            if (!unlink($remove_path)) {
+                // Handle image removal failure
+                $_SESSION['failed-remove'] = "<div class='error'>Failed To Remove Current Image</div>";
+                header('location:' . SITEURL . 'admin-home.php');
+                exit();
             }
-            //remove current image if available
-            if ($current_image != "") {
-                $remove_path = "images/" . $FOOD_IMAGE;
-                $remove = unlink($remove_path);
-                //check whether image is removed
-                if ($remove == false) {
-                    $_SESSION['failed-remove'] = "<div class='error'>Failed To Remove Current Image</div>";
-                    header('location:' . SITEURL . 'admin-home.php');
-                    die();
-                }
-            }
-        } else {
-            $image_name = $current_image;
         }
     } else {
-        $image_name = $current_image;
+        // No new image uploaded, retain the current image
+        $FOOD_IMG = $current_image;
     }
 
-
+    // Update the database with the new data
     $update = "UPDATE food 
         SET FOOD_NAME = '$FOOD_NAME',
             FOOD_DESC = '$FOOD_DESC',
@@ -206,5 +213,9 @@ if (isset($_POST['submit'])) {
         WHERE FOOD_ID = '$FOOD_ID'";
 
     mysqli_query($conn, $update);
+
+    // Redirect to the edit page with the updated data
+    header('location:admin-inventory.php');
+    exit();
 }
 ?>

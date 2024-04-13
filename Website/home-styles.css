@@ -228,6 +228,19 @@ img {
     font-size: 1.625rem;
 }
 
+.date.available{
+    background: var(--available);
+    color: white;
+}
+.date.fullybooked{
+    background: var(--fully-booked);
+    color: white;
+}
+ .date.closed{
+    background: var(--closed);
+    color: white;
+} 
+
 .date.inactive {
     color: var(--bg);
 }
