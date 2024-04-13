@@ -5,8 +5,8 @@
 if (isset($_POST['submit'])) {
 
     $PRSN_NAME =  mysqli_real_escape_string($conn, $_POST['name']);
-    $PRSN_EMAIL =  mysqli_real_escape_string($conn, $_POST['email']);
-    $PRSN_PHONE =  $_POST['number'];
+    $PRSN_EMAIL =  mysqli_real_escape_string($conn, trim($_POST['email']));
+    $PRSN_PHONE = str_replace(' ', '', $_POST['number']);
     $PRSN_PASSWORD =  md5($_POST['password']);
     $PRSN_CPASSWORD =  md5($_POST['cpassword']);
     $PRSN_ROLE = 'Customer';
@@ -95,10 +95,11 @@ if (isset($_POST['submit'])) {
                         <div class="form-field-input">
                             <div class="with-desc">
                                 <label for="password">Password</label>
-                                <small>Password must be 8 characters long, and include at least 1 uppercase, 1 lowercase, and 1 digit</small>
+                                <small>Password must be 8 characters long. Include at least 1 uppercase, 1 lowercase, and 1 digit. Exclude special characters.</small>
                             </div>
                             <div class="input-container input-control">
                                 <input class="js-pass" type="password" id="password" name="password">
+                                <div class="error"></div> <!-- Error message for password -->
                                 <span onclick="togglePassword('password')">
                                     <svg class="showpass" id="eyeIconOpenPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                                         <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z" />
@@ -107,13 +108,13 @@ if (isset($_POST['submit'])) {
                                         <path fill="currentColor" d="M11.83 9L15 12.16V12a3 3 0 0 0-3-3h-.17m-4.3.8l1.55 1.55c-.05.21-.08.42-.08.65a3 3 0 0 0 3 3c.22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53a5 5 0 0 1-5-5c0-.79.2-1.53.53-2.2M2 4.27l2.28 2.28l.45.45C3.08 8.3 1.78 10 1 12c1.73 4.39 6 7.5 11 7.5c1.55 0 3.03-.3 4.38-.84l.43.42L19.73 22L21 20.73L3.27 3M12 7a5 5 0 0 1 5 5c0 .64-.13 1.26-.36 1.82l2.93 2.93c1.5-1.25 2.7-2.89 3.43-4.75c-1.73-4.39-6-7.5-11-7.5c-1.4 0-2.74.25-4 .7l2.17 2.15C10.74 7.13 11.35 7 12 7Z" />
                                     </svg>
                                 </span>
-                                <div class="error"></div> <!-- Error message for password -->
                             </div>
                         </div>
                         <div class="form-field-input">
                             <label for="cpassword">Re-enter Password</label>
                             <div class="input-container input-control">
                                 <input class="js-cpass" type="password" id="cpassword" name="cpassword">
+                                <div class="error"></div> <!-- Error message for confirm password -->
                                 <span onclick="togglePassword('cpassword')">
                                     <svg class="showpass" id="eyeIconOpenCPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                                         <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z" />
@@ -122,7 +123,6 @@ if (isset($_POST['submit'])) {
                                         <path fill="currentColor" d="M11.83 9L15 12.16V12a3 3 0 0 0-3-3h-.17m-4.3.8l1.55 1.55c-.05.21-.08.42-.08.65a3 3 0 0 0 3 3c.22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53a5 5 0 0 1-5-5c0-.79.2-1.53.53-2.2M2 4.27l2.28 2.28l.45.45C3.08 8.3 1.78 10 1 12c1.73 4.39 6 7.5 11 7.5c1.55 0 3.03-.3 4.38-.84l.43.42L19.73 22L21 20.73L3.27 3M12 7a5 5 0 0 1 5 5c0 .64-.13 1.26-.36 1.82l2.93 2.93c1.5-1.25 2.7-2.89 3.43-4.75c-1.73-4.39-6-7.5-11-7.5c-1.4 0-2.74.25-4 .7l2.17 2.15C10.74 7.13 11.35 7 12 7Z" />
                                     </svg>
                                 </span>
-                                <div class="error"></div> <!-- Error message for confirm password -->
                             </div>
                         </div>
                         <button class="primary-btn" type="submit" name="submit">Register</button>
@@ -160,8 +160,8 @@ if (isset($_POST['submit'])) {
         const cpasswordValue = cpasswordInput.value.trim();
 
         const nameRegex = /^[a-zA-Z\s]+$/;
-        const numberRegex = /^09\d{9}$/;
-        const passwordRegex = /^[a-zA-Z0-9]{8,}$/; // Password should not contain special characters
+        const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
+        const passwordRegex = /^(?=.*\d)[a-zA-Z0-9]{8,}$/; // Password should not contain special characters
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Email must contain an '@'
 
         if (nameValue === '') {

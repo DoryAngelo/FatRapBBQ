@@ -300,7 +300,7 @@ $EMP_ID = $_GET['EMP_ID'];
                             $EMP_FNAME = mysqli_real_escape_string($conn, $_POST['first-name']);
                             $EMP_LNAME = mysqli_real_escape_string($conn, $_POST['last-name']);
                             $EMP_BRANCH =  $_POST['branch'];
-                            $PRSN_PHONE = $_POST['number'];
+                            $PRSN_PHONE = str_replace(' ', '', $_POST['number']);
                             $PRSN_UNAME = mysqli_real_escape_string($conn, $_POST['username']);
                             $PRSN_PASSWORD = md5($_POST['password']);
                             $PRSN_CPASSWORD = md5($_POST['cpassword']);
@@ -353,7 +353,6 @@ $EMP_ID = $_GET['EMP_ID'];
                             } else {
                                 $update = "UPDATE person 
         SET PRSN_NAME = '$PRSN_UNAME',
-            PRSN_EMAIL = '$PRSN_EMAIL',
             PRSN_PASSWORD = '$PRSN_PASSWORD',
             PRSN_PHONE = '$PRSN_PHONE'
         WHERE PRSN_ID = $PRSN_ID";

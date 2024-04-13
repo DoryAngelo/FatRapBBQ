@@ -86,33 +86,29 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                     <th class="header">Action</th>
                                 </tr>
                                 <?php
-                                $sql = "SELECT *
-                                FROM person
-                                INNER JOIN employee ON person.PRSN_ID = employee.PRSN_ID
-                                WHERE person.PRSN_ROLE= 'Employee' 
-                                OR person.PRSN_ROLE= 'Admin';
-                                ";
+                                $sql = "SELECT * FROM person, wholesaler WHERE wholesaler.PRSN_ID = person.PRSN_ID AND PRSN_ROLE = 'Wholesaler'";
                                 $res = mysqli_query($conn, $sql);
                                 $count = mysqli_num_rows($res);
+
                                 if ($count > 0) {
                                     while ($row = mysqli_fetch_assoc($res)) {
                                         $PRSN_ID = $row['PRSN_ID'];
-                                        $EMP_ID = $row['EMP_ID'];
-                                        $EMP_IMAGE = $row['EMP_IMAGE'];
-                                        $EMP_FNAME = $row['EMP_FNAME'];
-                                        $EMP_LNAME = $row['EMP_LNAME'];
+                                        $WHL_ID = $row['WHL_ID'];
+                                        $WHL_IMAGE = $row['WHL_IMAGE'];
+                                        $WHL_FNAME = $row['WHL_FNAME'];
+                                        $WHL_LNAME = $row['WHL_LNAME'];
                                         $PRSN_NUMBER = $row['PRSN_PHONE'];
                                         $PRSN_NAME = $row['PRSN_NAME'];
                                 ?>
                                         <tr>
                                             <td data-cell="Image">
-                                                <img src="<?php echo SITEURL; ?>images/<?php echo $EMP_IMAGE; ?>" alt="">
+                                                <img src="<?php echo SITEURL; ?>images/<?php echo $WHL_IMAGE; ?>" alt="">
                                             </td>
-                                            <td data-cell="Name"><?php echo $EMP_FNAME ?></td>
-                                            <td data-cell="Name"><?php echo $EMP_LNAME ?></td>
+                                            <td data-cell="Name"><?php echo $WHL_FNAME ?></td>
+                                            <td data-cell="Name"><?php echo $WHL_LNAME ?></td>
                                             <td data-cell="Contact #"><?php echo $PRSN_NUMBER ?></td>
                                             <td data-cell="Username"><?php echo $PRSN_NAME ?></td>
-                                            <td data-cell="Action"><a href="<?php echo SITEURL; ?>admin-edit-wholesaler.php?PRSN_ID=<?php echo $PRSN_ID ?>&EMP_ID=<?php echo $EMP_ID ?>" class="edit">Edit</a></td>
+                                            <td data-cell="Action"><a href="<?php echo SITEURL; ?>admin-edit-wholesaler.php?PRSN_ID=<?php echo $PRSN_ID ?>&WHL_ID=<?php echo $WHL_ID ?>&WHL_IMAGE=<?php echo $WHL_IMAGE?>" class="edit">Edit</a></td>
                                         </tr>
                                     <?php
                                     }

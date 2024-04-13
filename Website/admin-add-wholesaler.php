@@ -7,24 +7,23 @@ $PRSN_ID = $_SESSION['prsn_id'];
 if (isset($_POST['submit'])) {
     $PRSN_FNAME = mysqli_real_escape_string($conn, $_POST['first-name']);
     $PRSN_LNAME = mysqli_real_escape_string($conn, $_POST['last-name']);
-    $PRSN_PHONE = $_POST['number'];
+    $PRSN_PHONE = str_replace(' ', '', $_POST['number']);
     $PRSN_UNAME = mysqli_real_escape_string($conn, $_POST['username']);
-    $EMP_BRANCH = mysqli_real_escape_string($conn, $_POST['branch']);
     $PRSN_PASSWORD = md5($_POST['password']);
     $PRSN_CPASSWORD = md5($_POST['cpassword']);
-    $PRSN_ROLE = 'Admin';
+    $PRSN_ROLE = 'Wholesaler';
 
     if (isset($_FILES['image']['name'])) {
-        $EMP_IMG = $_FILES['image']['name'];
+        $WHL_IMG = $_FILES['image']['name'];
 
-        if ($EMP_IMG != "") {
-            $image_info = explode(".", $EMP_IMG);
+        if ($WHL_IMG != "") {
+            $image_info = explode(".", $WHL_IMG);
             $ext = end($image_info);
 
-            $EMP_IMG = "EMP_IMAGE_" . $PRSN_LNAME . "." . $ext;
+            $WHL_IMG = "WHL_IMAGE_" . $PRSN_LNAME . "." . $ext;
 
             $src = $_FILES['image']['tmp_name'];
-            $dst = "images/" . $EMP_IMG;
+            $dst = "images/" . $WHL_IMG;
 
             $upload    = move_uploaded_file($src, $dst);
 
@@ -35,7 +34,7 @@ if (isset($_POST['submit'])) {
             }
         }
     } else {
-        $EMP_IMG = "";
+        $WHL_IMG = "";
     }
 
 
@@ -46,10 +45,10 @@ if (isset($_POST['submit'])) {
                        VALUES('$PRSN_UNAME', '$PRSN_PASSWORD', '$PRSN_PHONE', '$PRSN_ROLE')";
         if (mysqli_query($conn, $insert)) {
             $PRSN_ID = mysqli_insert_id($conn);
-            $insert2 = "INSERT INTO employee(PRSN_ID, EMP_FNAME, EMP_LNAME, EMP_IMAGE, EMP_BRANCH) 
-                            VALUES('$PRSN_ID', '$PRSN_FNAME', '$PRSN_LNAME', '$EMP_IMG', '$EMP_BRANCH')";
+            $insert2 = "INSERT INTO wholesaler(PRSN_ID, WHL_FNAME, WHL_LNAME, WHL_IMAGE) 
+                            VALUES('$PRSN_ID', '$PRSN_FNAME', '$PRSN_LNAME', '$WHL_IMG')";
             if (!mysqli_query($conn, $insert2)) {
-                echo "Error inserting data into employee table: " . mysqli_error($conn);
+                echo "Error inserting data into wholesaler table: " . mysqli_error($conn);
             }
         } else {
             echo "Error inserting data into person table: " . mysqli_error($conn);
@@ -149,22 +148,10 @@ if (isset($_POST['submit'])) {
                                             <input class="js-user" type="text" id="number" name="number">
                                             <div class="error"></div>
                                         </div>
-                                        <div class="form-field-input input-control">
-                                            <label for="branch">Branch</label>
-                                            <input name="branch" id="branch" class="js-user" type="text">
-                                            <div class="error"></div>
-                                        </div>
                                         <div class="form-field-input">
                                             <label for="image">Image</label>
                                             <p>(accepted files: .jpg, .png)</p>
                                             <input name="image" id="image" class="image" type="file">
-                                        </div>
-                                        <div class="form-field-input">
-                                            <label for="role">Role</label>
-                                            <select class="dropdown" name="role" id="role" required>
-                                                <option value="Employee">Employee</option>
-                                                <option value="Admin">Admin</option>
-                                            </select>
                                         </div>
                                     </div>
                                 </section>
@@ -214,7 +201,7 @@ if (isset($_POST['submit'])) {
                                     </div>
                                 </section>
                             </div>
-                            <button name="submit" type="submit" class="big-btn">Add New Customer</button>
+                            <button name="submit" type="submit" class="big-btn">Add New Wholesaler</button>
                         </form>
                     </section>
                 </section>
@@ -243,7 +230,6 @@ if (isset($_POST['submit'])) {
         const firstNameInput = document.getElementById('first-name');
         const lastNameInput = document.getElementById('last-name');
         const numberInput = document.getElementById('number');
-        const branchInput = document.getElementById('branch');
         const usernameInput = document.getElementById('username');
         const passwordInput = document.getElementById('password');
         const cpasswordInput = document.getElementById('cpassword');
@@ -264,7 +250,6 @@ if (isset($_POST['submit'])) {
             const firstNameValue = firstNameInput.value.trim();
             const lastNameValue = lastNameInput.value.trim();
             const numberValue = numberInput.value.trim();
-            const branchValue = branchInput.value.trim();
             const usernameValue = usernameInput.value.trim();
             const passwordValue = passwordInput.value.trim();
             const cpasswordValue = cpasswordInput.value.trim();
@@ -298,12 +283,6 @@ if (isset($_POST['submit'])) {
                 clearError(numberInput);
             }
 
-            if (branchValue === '') {
-                setError(branchInput, 'Please enter your branch');
-                isValid = false;
-            } else {
-                clearError(branchInput);
-            }
 
             if (usernameValue === '') {
                 setError(usernameInput, 'Please enter your username');
