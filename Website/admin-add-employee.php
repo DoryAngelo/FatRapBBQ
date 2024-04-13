@@ -7,7 +7,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
 if (isset($_POST['submit'])) {
     $PRSN_FNAME = mysqli_real_escape_string($conn, $_POST['first-name']);
     $PRSN_LNAME = mysqli_real_escape_string($conn, $_POST['last-name']);
-    $PRSN_PHONE = $_POST['number'];
+    $PRSN_PHONE = str_replace(' ', '', $_POST['number']);
     $PRSN_UNAME = mysqli_real_escape_string($conn, $_POST['username']);
     $EMP_BRANCH = mysqli_real_escape_string($conn, $_POST['branch']);
     $PRSN_PASSWORD = md5($_POST['password']);
