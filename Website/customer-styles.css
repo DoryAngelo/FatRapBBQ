@@ -460,17 +460,31 @@ a.clear-bg, a.clear-bg:hover {
 }
 
 a.back {
-    width: 80%;
-    margin: 0 auto;
+    width: 100%;
     margin-bottom: 0.75rem;
+}
+
+.product-info-page a.back {
+    margin: 0;
+}
+
+.product-info-page .wrapper {
+    padding: 0;
+    background-color: transparent;
+    max-width: 915px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem;
+    border: 1px solid yellow;
+    margin: 0 auto;
 }
 
 .product-info-page .block {
     padding: 0;
     width: 100%;
-    max-width: 915px;
     height: 17rem;
-    margin: 0 auto;
     display: flex;
     align-items: flex-start;
     overflow-y: hidden;
