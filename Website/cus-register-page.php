@@ -5,7 +5,7 @@
 if (isset($_POST['submit'])) {
 
     $PRSN_NAME =  mysqli_real_escape_string($conn, $_POST['name']);
-    $PRSN_EMAIL =  mysqli_real_escape_string($conn, $_POST['email']);
+    $PRSN_EMAIL =  mysqli_real_escape_string($conn, trim($_POST['email']));
     $PRSN_PHONE = str_replace(' ', '', $_POST['number']);
     $PRSN_PASSWORD =  md5($_POST['password']);
     $PRSN_CPASSWORD =  md5($_POST['cpassword']);
