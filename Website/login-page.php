@@ -158,8 +158,8 @@ if (session_status() == PHP_SESSION_NONE) {
                         const passwordValue = passwordInput.value.trim();
 
                         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                        const passwordRegex = /^[a-zA-Z0-9]{8,}$/;
-
+                        const passwordRegex = /^(?=.*\d)[a-zA-Z0-9]{8,}$/; // Password should not contain special characters
+                        
                         if (loginValue === '') { // Check if login value is empty
                             setError(loginInput, 'Please enter your email or username');
                             isValid = false;

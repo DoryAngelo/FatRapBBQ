@@ -70,41 +70,38 @@ $PRSN_ID = $_SESSION['prsn_id'];
                         <div class="table-wrapper">
                             <table class="alternating">
                                 <tr>
-                                    <th class="header">Picture</th>
-                                    <th class="header">First Name</th>
-                                    <th class="header">Last Name</th>
-                                    <th class="header">Contact #</th>
-                                    <th class="header">Username</th>
-                                    <th class="header">Action</th>
+                                    <th class="header">Date and Time</th>
+                                    <th class="header">Application #</th>
+                                    <th class="header">Name</th>
+                                    <th class="header">Email</th>
+                                    <th class="header"></th>
                                 </tr>
                                 <?php
-                                $sql = "SELECT *
-                                FROM person
-                                INNER JOIN employee ON person.PRSN_ID = employee.PRSN_ID
-                                WHERE person.PRSN_ROLE= 'Employee' 
-                                OR person.PRSN_ROLE= 'Admin';
-                                ";
+                                $sql = "SELECT * FROM person, wholesaler WHERE wholesaler.PRSN_ID = person.PRSN_ID AND PRSN_ROLE = 'Wholesaler' AND WHL_STATUS = 'New' ";
                                 $res = mysqli_query($conn, $sql);
                                 $count = mysqli_num_rows($res);
+
                                 if ($count > 0) {
                                     while ($row = mysqli_fetch_assoc($res)) {
-                                        $PRSN_ID = $row['PRSN_ID'];
-                                        $EMP_ID = $row['EMP_ID'];
-                                        $EMP_IMAGE = $row['EMP_IMAGE'];
-                                        $EMP_FNAME = $row['EMP_FNAME'];
-                                        $EMP_LNAME = $row['EMP_LNAME'];
-                                        $PRSN_NUMBER = $row['PRSN_PHONE'];
+                                        $DATE_OF_REGISTRATION = $row['DATE_OF_REGISTRATION'];
+                                        $WHL_ID = $row['WHL_ID'];
                                         $PRSN_NAME = $row['PRSN_NAME'];
+                                        $PRSN_EMAIL = $row['PRSN_EMAIL'];
+                                        $WHL_IMAGE = $row['WHL_IMAGE'];
                                 ?>
                                         <tr>
-                                            <td data-cell="Image">
-                                                <img src="<?php echo SITEURL; ?>images/<?php echo $EMP_IMAGE; ?>" alt="">
+                                            <td data-cell="Date and Time"><?php echo $DATE_OF_REGISTRATION ?></td>
+                                            <td data-cell="Application #"><a class="link" href="<?php echo SITEURL ?>admin-application-details.php?WHL_ID=<?php echo $WHL_ID; ?>&PRSN_NAME=<?php echo $PRSN_NAME ?>&PRSN_EMAIL=<?php echo $PRSN_EMAIL ?>&WHL_IMAGE=<?php echo $WHL_IMAGE ?>"><?php echo $WHL_ID ?></a></td>
+                                            <td data-cell="Name"><?php echo $PRSN_NAME ?></td>
+                                            <td data-cell="Email"><?php echo $PRSN_EMAIL ?></td>
+                                            <td data-cell="Confimed">
+                                                <div class="btn-wrapper">
+                                                    <!-- <form method="post"> -->
+                                                    <button name="accept" class="btn-check"><i class='bx bxs-check-circle js-accept' data-whl-id="<?php echo $WHL_ID; ?>"></i></button>
+                                                    <button name="reject" class="btn-cross"><i class='bx bxs-x-circle js-reject' data-whl-id="<?php echo $WHL_ID; ?>"></i></button>
+                                                    <!-- </form> -->
+                                                </div>
                                             </td>
-                                            <td data-cell="Name"><?php echo $EMP_FNAME ?></td>
-                                            <td data-cell="Name"><?php echo $EMP_LNAME ?></td>
-                                            <td data-cell="Contact #"><?php echo $PRSN_NUMBER ?></td>
-                                            <td data-cell="Username"><?php echo $PRSN_NAME ?></td>
-                                            <td data-cell="Action"><a href="<?php echo SITEURL; ?>admin-edit-wholesaler.php?PRSN_ID=<?php echo $PRSN_ID ?>&EMP_ID=<?php echo $EMP_ID ?>" class="edit">Edit</a></td>
                                         </tr>
                                     <?php
                                     }
