@@ -85,10 +85,10 @@ if (isset($_POST['submit'])) {
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
-                </li>
-                    <?php
+                    </li>
+                <?php
                 } else {
-                    ?>
+                ?>
                     <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
                 <?php
                 }
@@ -106,67 +106,57 @@ if (isset($_POST['submit'])) {
                     </div>
                     <section class="section-body">
                         <section class="main-section column">
-                            <form action="#" class="column" method="post" enctype="multipart/form-data">
+                            <style>
+                                .error-text {
+                                    color: red;
+                                    font-size: 12px;
+                                }
+                            </style>
+                            <form class="column" method="post" enctype="multipart/form-data" onsubmit="return validateInputs()">
                                 <div class="block">
                                     <div class="form-field">
                                         <div class="form-field-input">
                                             <label for="product-name">Product Name</label>
-                                            <input class="js-user" type="text" id="product-name" name="product-name" required pattern="[a-zA-Z ]{1,20}$"><!-- 20 characters only, letter only, with spaces -->
+                                            <input class="js-user" type="text" id="product-name" name="product-name"><!-- 20 characters only, letter only, with spaces -->
+                                            <div class="error"></div>
                                         </div>
                                         <div class="form-field-input">
                                             <label for="product-name">Description</label>
-                                            <input class="js-user" type="text" id="product-name" name="product-desc" required pattern="[a-zA-Z ]{1,50}$"><!-- 20 characters only, letter only, with spaces -->
+                                            <input class="js-user" type="text" id="product-desc" name="product-desc"><!-- 20 characters only, letter only, with spaces -->
+                                            <div class="error"></div>
                                         </div>
                                         <div class="form-field-input">
                                             <label for="price">Price ₱ </label>
-                                            <input class="js-user" type="number" id="price" name="price" required><!-- numbers only, starts with 09, must have 11-digits -->
+                                            <input class="js-user" type="text" id="price" name="price">
+                                            <div class="error"></div>
                                         </div>
+
                                         <div class="form-field-input">
                                             <label for="price">Stock </label>
-                                            <input class="js-user" type="number" id="price" name="stock" required><!-- numbers only, starts with 09, must have 11-digits -->
-                                        </div>
-                                        <div class="form-field-input">
-                                            <label for="category">Category</label>
-                                            <select class="dropdown" name="category" id="category" required>
-                                                <?php
-                                                    $sql = "SELECT * FROM category WHERE CTGY_ACTIVE='Yes'";
-                                                    $res = mysqli_query($conn, $sql);
-                                                    $count = mysqli_num_rows($res);
-                                                    if ($count > 0) {
-                                                        while ($row = mysqli_fetch_assoc($res)) {
-                                                            //get the details of category
-                                                            $CTGY_ID = $row['CTGY_ID'];
-                                                            $CTGY_NAME = $row['CTGY_NAME'];
-                                                ?>
-                                                            <option value="<?php echo $CTGY_ID; ?>"><?php echo $CTGY_NAME; ?></option>
-                                                <?php
-                                                        }
-                                                    } else {
-                                                ?>
-                                                        <option value="0">No Category Found</option>
-                                                <?php
-                                                    }
-                                                ?>
-                                            </select>
+                                            <input class="js-user" type="number" id="stock" name="stock">
+                                            <div class="error"></div>
                                         </div>
                                         <div class="form-field-input">
                                             <label for="type">Type</label>
-                                            <select class="dropdown" name="type" id="type" required>
+                                            <select class="dropdown" name="type" id="type">
                                                 <option value="Customer">Customer</option>
                                                 <option value="Wholesaler">Wholesaler</option>
                                             </select>
+                                            <div class="error"></div>
                                         </div>
                                         <div class="form-field-input">
                                             <label for="active">Active</label>
-                                            <select class="dropdown" name="active" id="active" required>
+                                            <select class="dropdown" name="active" id="active">
                                                 <option value="No">No</option>
                                                 <option value="Yes">Yes</option>
                                             </select>
+                                            <div class="error"></div>
                                         </div>
                                         <div class="form-field-input">
                                             <label for="valid-id">Image</label>
                                             <p class="label-desc">(accepted files: .jpg, .png)</p>
-                                            <input class="image" type="file" name="image" id="image" required><!-- numbers only, starts with 09, must have 11-digits -->
+                                            <input class="image" type="file" name="image" id="image">
+                                            <div class="error"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -179,5 +169,80 @@ if (isset($_POST['submit'])) {
         </section>
     </main>
 </body>
+<script>
+    const productNameInput = document.getElementById('product-name');
+    const productDescInput = document.getElementById('product-desc');
+    const priceInput = document.getElementById('price');
+    const stockInput = document.getElementById('stock');
+
+    function setError(input, message) {
+        const errorDiv = input.nextElementSibling;
+        errorDiv.innerHTML = `<span class="error-text">${message}</span>`;
+    }
+
+    function clearError(input) {
+        const errorDiv = input.nextElementSibling;
+        errorDiv.innerHTML = ''; // Clear the error message
+    }
+
+    function validateInputs() {
+        let isValid = true;
+
+        const productNameValue = productNameInput.value.trim();
+        const productDescValue = productDescInput.value.trim();
+        const priceValue = priceInput.value.trim();
+        const stockValue = stockInput.value.trim();
+
+        const nameRegex = /^[a-zA-Z\s]+$/;
+
+        if (productNameValue === '') {
+            setError(productNameInput, 'Please enter the product name');
+            isValid = false;
+        } else if (!nameRegex.test(productNameValue)) {
+            setError(productNameInput, 'Invalid product name');
+            isValid = false;
+        } else {
+            clearError(productNameInput);
+        }
+
+        if (productDescValue === '') {
+            setError(productDescInput, 'Please enter the product description');
+            isValid = false;
+        } else if (!nameRegex.test(productDescValue)) {
+            setError(productDescInput, 'Invalid product description');
+            isValid = false;
+        } else {
+            clearError(productDescInput);
+        }
+
+        if (priceValue === '') {
+            setError(priceInput, 'Please enter the price');
+            isValid = false;
+        } else if (isNaN(parseFloat(priceValue))) {
+            setError(priceInput, 'Price must be a number');
+            isValid = false;
+        } else if (parseInt(priceValue) < 0) {
+            setError(priceInput, 'Price cannot be negative');
+            isValid = false;
+        } else {
+            clearError(priceInput);
+        }
+
+        if (stockValue === '') {
+            setError(stockInput, 'Please enter the stock');
+            isValid = false;
+        } else if (isNaN(parseInt(stockValue))) {
+            setError(stockInput, 'Stock must be a number');
+            isValid = false;
+        } else if (parseInt(stockValue) < 0) {
+            setError(stockInput, 'Stock cannot be negative');
+            isValid = false;
+        } else {
+            clearError(stockInput);
+        }
+
+        return isValid;
+    }
+</script>
 
 </html>
