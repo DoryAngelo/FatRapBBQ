@@ -62,8 +62,16 @@ $PRSN_ID = $_SESSION['prsn_id'];
     <main>
         <section class="section">
             <div class="container">
-                <div class="section-heading row">
+                <div class="section-heading">
                     <h2>Wholesale Customers</h2>
+                    <!-- for filtering hidden accounts-->
+                    <!-- <div class="inline">
+                        <p>Filter:</p>
+                        <select name="customer-type" id="customer-type" class="dropdown">
+                            <option value="regular">REGULAR</option>
+                            <option value="wholesale">WHOLESALE</option>
+                        </select>
+                    </div> -->
                 </div>
                 <section class="section-body">
                     <section class="main-section column">
