@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
             echo "Error inserting data into person table: " . mysqli_error($conn);
         }
     }
-    header("location: admin-inventory.php");
+    header("location: admin-employee-accounts.php");
 }
 
 
