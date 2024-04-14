@@ -168,13 +168,6 @@ if (isset($_POST['submit'])) {
                                             <div class="error"></div>
                                         </div>
                                         <div class="form-field-input">
-                                            <label for="image">Image</label>
-                                            <p>(accepted files: .jpg, .png)</p>
-                                            <input name="image" id="image" class="image" type="file">
-                                            <div class="error"></div>
-                                        </div>
-                                        <div class="form-field-input">
-
                                             <label for="role">Role</label>
                                             <select class="dropdown" name="role" id="role" required>
                                                 <option value="Employee">Employee</option>
@@ -185,6 +178,7 @@ if (isset($_POST['submit'])) {
                                             <label for="image">Image</label>
                                             <p>(accepted files: .jpg, .png)</p>
                                             <input name="image" id="image" class="image" type="file">
+                                            <div class="error"></div>
                                         </div>
                                     </div>
                                 </section>
