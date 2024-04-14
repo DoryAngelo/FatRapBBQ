@@ -104,7 +104,7 @@ $WHL_ID = $_GET['WHL_ID'];
                                         <div class="form-field-input input-control">
                                             <label for="number">Phone Number</label>
                                             <p>(e.g. 09xxxxxxxxx)</p>
-                                            <input class="js-user" type="text" id="number" name="number">
+                                            <input class="js-user" type="text" id="number" name="number" value="<?php echo $PRSN_NUMBER ?>">
                                             <div class="error"></div>
                                         </div>
                                         <div class="form-field-input">
