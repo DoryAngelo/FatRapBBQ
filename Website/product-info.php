@@ -27,8 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     if ($count > 0) {
         while ($row = mysqli_fetch_assoc($res)) {
             $IN_ORDER_ID = $row['IN_ORDER_ID'];
-            $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'] + $quantity;
-            $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'] + ($quantity * $FOOD_PRICE);
+            $IN_ORDER_QUANTITY = $quantity;
+            $IN_ORDER_TOTAL = $quantity * $FOOD_PRICE;
             $sql = "UPDATE in_order SET 
                             IN_ORDER_QUANTITY = $IN_ORDER_QUANTITY,
                             IN_ORDER_TOTAL = $IN_ORDER_TOTAL
@@ -107,10 +107,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         <section class="section product-info-page">
             <div class="container">
                 <div class="wrapper">
-                        <a href="<?php echo SITEURL; ?>menu.php" class="back">Back</a>
+                    <a href="<?php echo SITEURL; ?>menu.php" class="back">Back</a>
                     <?php
 
-                    $sql = "SELECT * FROM food WHERE FOOD_ID = '$FOOD_ID'";
+                    $sql = "SELECT f.*, io.in_order_quantity 
+                    FROM food f 
+                    LEFT JOIN in_order io ON f.FOOD_ID = io.food_id 
+                    WHERE f.FOOD_ID = '$FOOD_ID'";
                     $res = mysqli_query($conn, $sql);
                     $count = mysqli_num_rows($res);
                     if ($count > 0) {
@@ -121,25 +124,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                             $FOOD_IMG = $row['FOOD_IMG'];
                             $FOOD_PRICE = $row['FOOD_PRICE'];
                             $FOOD_STOCK = $row['FOOD_STOCK'];
+                            $IN_ORDER_QUANTITY= $row['in_order_quantity'];
                     ?>
                             <section class="block">
                                 <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
                                 <div class="right-grp">
-                                     <div class="top">
+                                    <div class="top">
                                         <h1><?php echo $FOOD_NAME ?></h1>
                                         <p><?php echo $FOOD_DESC ?></p>
                                     </div>
                                     <form class="bottom" method="POST">
                                         <input type="hidden" name="product_id" value="<?= $product['id'] ?>"><!--hidden product name to accompany the product's quantity-->
-                                            <div class="inline"> 
-                                                <h1>₱<?php echo $FOOD_PRICE ?></h1>
-                                                <div class="quantity-grp">
-                                                    <i class='bx bxs-minus-circle js-minus' data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
-                                                    <p class="amount js-num">1</p>
-                                                    <i class='bx bxs-plus-circle js-plus' data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
-                                                </div>
-                                                <p class="remaining"><?php echo $FOOD_STOCK ?> sticks available</p>
+                                        <div class="inline">
+                                            <h1>₱<?php echo $FOOD_PRICE ?></h1>
+                                            <div class="quantity-grp">
+                                                <i class='bx bxs-minus-circle js-minus' data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
+                                                <p class="amount js-num"><?php echo $IN_ORDER_QUANTITY?></p>
+                                                <i class='bx bxs-plus-circle js-plus' data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
                                             </div>
+                                            <p class="remaining"><?php echo $FOOD_STOCK ?> sticks available</p>
+                                        </div>
                                         <input type="hidden" id="quantity" name="quantity" value="1">
                                         <input type="hidden" name="price" value="<?php echo $FOOD_PRICE ?>">
                                         <button name="order" type="submit">Add to Cart</button>

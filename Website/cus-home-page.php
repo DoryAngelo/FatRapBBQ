@@ -50,8 +50,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     if ($count > 0) {
         while ($row = mysqli_fetch_assoc($res)) {
             $IN_ORDER_ID = $row['IN_ORDER_ID'];
-            $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'] + $quantity;
-            $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'] + ($quantity * $FOOD_PRICE);
+            $IN_ORDER_QUANTITY = $quantity;
+            $IN_ORDER_TOTAL =  ($quantity * $FOOD_PRICE);
             $sql = "UPDATE in_order SET 
                             IN_ORDER_QUANTITY = $IN_ORDER_QUANTITY,
                             IN_ORDER_TOTAL = $IN_ORDER_TOTAL
@@ -201,10 +201,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                             <input type="hidden" id="quantity" name="quantity" value="1"> <!-- Hidden input to store the quantity -->
                             <button name="order" type="submit" class="button">Order Now</button>
                         </form>
+                        <?php                    
+                        $sql = "SELECT f.*, io.in_order_quantity 
+                    FROM food f 
+                    LEFT JOIN in_order io ON f.FOOD_ID = io.food_id 
+                    WHERE f.FOOD_ID = '$FOOD_ID'";
+                    $res = mysqli_query($conn, $sql);
+                    $count = mysqli_num_rows($res);
+                    if ($count > 0) {
+                        while ($row = mysqli_fetch_assoc($res)) {
+                            $IN_ORDER_QUANTITY= $row['in_order_quantity'];
+                        }
+                    }
+                            ?>
                         <div class="with-remaining">
                             <div class="quantity-group">
                                 <i class='bx bxs-minus-circle js-minus circle' data-stock="<?php echo $FOOD_STOCK; ?>"></i>
-                                <p class="amount js-num">1</p>
+                                <p class="amount js-num"><?php echo $IN_ORDER_QUANTITY?></p>
                                 <i class='bx bxs-plus-circle js-plus circle' data-stock="<?php echo $FOOD_STOCK; ?>"></i>
                             </div>
                             <p class="remaining"><?php echo $FOOD_STOCK; ?> sticks remaining</p>
