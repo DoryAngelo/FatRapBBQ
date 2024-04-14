@@ -15,7 +15,6 @@ let currentStep = 1;
 
 // function that updates the current step and updates the DOM
 const updateSteps = (e) => {
-
   // update current step based on the text of p tag that serves as a status
   switch (pstatus) {
     case "Placed":

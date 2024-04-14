@@ -88,10 +88,10 @@ $WHL_ID = $_GET['WHL_ID'];
                                 ?>
                                 <section>
                                     <?php
-                                        if (isset($_SESSION['error_message'])) {
-                                            echo "<div class='error-text'>" . $_SESSION['error_message'] . "</div>";
-                                            unset($_SESSION['error_message']);
-                                        }
+                                    if (isset($_SESSION['error_message'])) {
+                                        echo "<div class='error-text'>" . $_SESSION['error_message'] . "</div>";
+                                        unset($_SESSION['error_message']);
+                                    }
                                     ?>
                                     <div class="form-title">
                                         <h1>Contact Information</h1>
@@ -233,7 +233,7 @@ $WHL_ID = $_GET['WHL_ID'];
                                 } else if (!nameRegex.test(firstNameValue)) {
                                     setError(firstNameInput, 'First name must contain only letters');
                                     isValid = false;
-                                }   else {
+                                } else {
                                     clearError(firstNameInput);
                                 }
 
@@ -243,7 +243,7 @@ $WHL_ID = $_GET['WHL_ID'];
                                 } else if (!nameRegex.test(lastNameValue)) {
                                     setError(lastNameInput, 'Last name must contain only letters');
                                     isValid = false;
-                                }   else {
+                                } else {
                                     clearError(lastNameInput);
                                 }
 
@@ -263,7 +263,7 @@ $WHL_ID = $_GET['WHL_ID'];
                                 } else if (!usernameRegex.test(usernameValue)) {
                                     setError(usernameInput, 'Invalid username format');
                                     isValid = false;
-                                }   else {
+                                } else {
                                     clearError(usernameInput);
                                 }
 
@@ -371,31 +371,42 @@ $WHL_ID = $_GET['WHL_ID'];
 
                             $PRSN_NAME = $WHL_FNAME . " " . $WHL_LNAME;
 
-                            // Update the person table
-                            $updatePerson = "UPDATE person 
+                            $select = "SELECT * FROM `person` WHERE PRSN_EMAIL = '$PRSN_UNAME' AND PRSN_ID != '$PRSN_ID'";
+
+                            $result = mysqli_query($conn, $select);
+
+                            if (mysqli_num_rows($result) > 0) {
+                                // User already exists, set error message in session
+                                $_SESSION['error_message'] = "User already exists";
+                                header('Location: admin-add-wholesaler.php');
+                                exit();
+                            } else {
+                                // Update the person table
+                                $updatePerson = "UPDATE person 
                     SET PRSN_NAME = '$PRSN_NAME',
                         PRSN_EMAIL = '$PRSN_UNAME',
                         $updatePassword
                         PRSN_PHONE = '$PRSN_PHONE'
                     WHERE PRSN_ID = $PRSN_ID";
 
-                            if (mysqli_query($conn, $updatePerson)) {
-                                // Update the employee table
-                                $updateEmployee = "UPDATE wholesaler 
+                                if (mysqli_query($conn, $updatePerson)) {
+                                    // Update the employee table
+                                    $updateEmployee = "UPDATE wholesaler 
                             SET WHL_FNAME = '$WHL_FNAME',
                                 WHL_LNAME = '$WHL_LNAME',
                                 WHL_IMAGE = '$WHL_IMG'
                             WHERE WHL_ID = $WHL_ID";
 
-                                if (!mysqli_query($conn, $updateEmployee)) {
-                                    $error[] = "Error updating data into wholesaler table: " . mysqli_error($conn);
+                                    if (!mysqli_query($conn, $updateEmployee)) {
+                                        $error[] = "Error updating data into wholesaler table: " . mysqli_error($conn);
+                                    }
+                                } else {
+                                    $error[] = "Error updating data into person table: " . mysqli_error($conn);
                                 }
-                            } else {
-                                $error[] = "Error updating data into person table: " . mysqli_error($conn);
-                            }
 
-                            // Redirect to employee accounts page
-                            echo "<script> window.location.href = 'admin-wholesaler-accounts.php'; </script>";
+                                // Redirect to employee accounts page
+                                echo "<script> window.location.href = 'admin-wholesaler-accounts.php'; </script>";
+                            }
                         }
 
 

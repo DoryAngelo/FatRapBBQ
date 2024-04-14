@@ -62,6 +62,7 @@ if (isset($_POST['submit'])) {
         }
     }
     header("location: admin-wholesaler-accounts.php");
+    exit();
 }
 
 

@@ -93,6 +93,12 @@ $EMP_ID = $_GET['EMP_ID'];
                                             }
                                             ?>
                                             <div class="form-title">
+                                                <?php
+                                                if (isset($_SESSION['error_message'])) {
+                                                    echo "<div class='error-text'>" . $_SESSION['error_message'] . "</div>";
+                                                    unset($_SESSION['error_message']);
+                                                }
+                                                ?>
                                                 <h1>Contact Information</h1>
                                             </div>
                                             <div class="form-field">
@@ -396,32 +402,44 @@ $EMP_ID = $_GET['EMP_ID'];
 
                             $PRSN_NAME = $EMP_FNAME . " " . $EMP_LNAME;
 
-                            // Update the person table
-                            $updatePerson = "UPDATE person 
+                            $select = "SELECT * FROM `person` WHERE PRSN_EMAIL = '$PRSN_UNAME' AND PRSN_ID != '$PRSN_ID'";
+
+                            $result = mysqli_query($conn, $select);
+
+                            if (mysqli_num_rows($result) > 0) {
+                                // User already exists, set error message in session
+                                $_SESSION['error_message'] = "User already exists";
+                                header('Location: admin-edit-employee.php');
+                                exit();
+                            } else {
+                                // Update the person table
+                                $updatePerson = "UPDATE person 
                     SET PRSN_NAME = '$PRSN_NAME',
                         PRSN_EMAIL = '$PRSN_UNAME',
                         $updatePassword
                         PRSN_PHONE = '$PRSN_PHONE'
                     WHERE PRSN_ID = $PRSN_ID";
 
-                            if (mysqli_query($conn, $updatePerson)) {
-                                // Update the employee table
-                                $updateEmployee = "UPDATE employee 
+                                if (mysqli_query($conn, $updatePerson)) {
+                                    // Update the employee table
+                                    $updateEmployee = "UPDATE employee 
                             SET EMP_FNAME = '$EMP_FNAME',
                                 EMP_LNAME = '$EMP_LNAME',
                                 EMP_IMAGE = '$EMP_IMG',
                                 EMP_BRANCH = '$EMP_BRANCH'
                             WHERE EMP_ID = $EMP_ID";
 
-                                if (!mysqli_query($conn, $updateEmployee)) {
-                                    $error[] = "Error updating data into employee table: " . mysqli_error($conn);
+                                    if (!mysqli_query($conn, $updateEmployee)) {
+                                        $error[] = "Error updating data into employee table: " . mysqli_error($conn);
+                                    }
+                                } else {
+                                    $error[] = "Error updating data into person table: " . mysqli_error($conn);
                                 }
-                            } else {
-                                $error[] = "Error updating data into person table: " . mysqli_error($conn);
-                            }
 
-                            // Redirect to employee accounts page
-                            echo "<script> window.location.href = 'admin-employee-accounts.php'; </script>";
+                                // Redirect to employee accounts page
+                                echo "<script> window.location.href = 'admin-employee-accounts.php'; </script>";
+                                exit();
+                            }
                         }
 
                         ?>
