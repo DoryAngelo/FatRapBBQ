@@ -125,7 +125,7 @@ $EMP_ID = $_GET['EMP_ID'];
                                                 <div class="form-field-input">
                                                     <label for="image">Image</label>
                                                     <p>(accepted files: .jpg, .png)</p>
-                                                    <input required name="image" id="image" class="image" type="file">
+                                                    <input name="image" id="image" class="image" type="file">
                                                     <div class="error"></div>
                                                 </div>
                                             </div>
@@ -298,17 +298,17 @@ $EMP_ID = $_GET['EMP_ID'];
                                     clearError(cpasswordInput);
                                 }
 
-                                // Check if file extension is valid
-                                const validExtensions = ['png', 'jpg', 'jpeg'];
-                                const fileExtension = imageValue.split('.').pop().toLowerCase();
-                                if (imageValue === '') {
-                                    setError(imageInput, 'Please select an image file');
-                                    isValid = false;
-                                } else if (!validExtensions.includes(fileExtension)) {
-                                    setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
-                                    isValid = false;
-                                } else {
-                                    clearError(imageInput);
+                                // Check if file extension is valid only if an image is selected
+                                if (imageValue !== '') {
+                                    const validExtensions = ['png', 'jpg', 'jpeg'];
+                                    const fileExtension = imageValue.split('.').pop().toLowerCase();
+
+                                    if (!validExtensions.includes(fileExtension)) {
+                                        setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
+                                        isValid = false;
+                                    } else {
+                                        clearError(imageInput);
+                                    }
                                 }
 
 
