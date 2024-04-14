@@ -357,7 +357,7 @@ if (isset($_POST['submit'])) {
                             <h3 class="block-heading">Additional Notes</h2>
                             <div class="block-body">
                                 <label for="customer-note"></label>
-                                <textarea id="customer-note" class="customer-note" name="customer-note" rows="4">Enter text here...</textarea>
+                                <textarea id="customer-note" class="customer-note" name="customer-note" rows="4" placeholder="You may send an additional note such as extra spoon and fork, extra sauce, etc."></textarea>
                             </div>
                         </section>
                         <!-- note block-->

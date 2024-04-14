@@ -123,25 +123,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                             $FOOD_STOCK = $row['FOOD_STOCK'];
                     ?>
                             <section class="block">
-                                <div class="img-container">
-                                    <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
-                                </div>
+                                <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
                                 <div class="right-grp">
-                                    <div class="top">
+                                     <div class="top">
                                         <h1><?php echo $FOOD_NAME ?></h1>
                                         <p><?php echo $FOOD_DESC ?></p>
                                     </div>
                                     <form class="bottom" method="POST">
                                         <input type="hidden" name="product_id" value="<?= $product['id'] ?>"><!--hidden product name to accompany the product's quantity-->
-                                            <div class="inline">
-                                            <h1>₱<?php echo $FOOD_PRICE ?></h1>
-                                            <div class="quantity-grp">
-                                                <i class='bx bxs-minus-circle js-minus' data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
-                                                <p class="amount js-num">1</p>
-                                                <i class='bx bxs-plus-circle js-plus' data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
+                                            <div class="inline"> 
+                                                <h1>₱<?php echo $FOOD_PRICE ?></h1>
+                                                <div class="quantity-grp">
+                                                    <i class='bx bxs-minus-circle js-minus' data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
+                                                    <p class="amount js-num">1</p>
+                                                    <i class='bx bxs-plus-circle js-plus' data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
+                                                </div>
+                                                <p class="remaining"><?php echo $FOOD_STOCK ?> sticks available</p>
                                             </div>
-                                            <p class="remaining"><?php echo $FOOD_STOCK ?> sticks available</p>
-                                        </div>
                                         <input type="hidden" id="quantity" name="quantity" value="1">
                                         <input type="hidden" name="price" value="<?php echo $FOOD_PRICE ?>">
                                         <button name="order" type="submit">Add to Cart</button>
