@@ -87,7 +87,7 @@ img {
 }
 
 .cart .section-body {
-    gap: 2.5rem;
+    gap: clamp(1rem, 1.5vw,2rem);
 }
 
 .block {
@@ -99,6 +99,10 @@ img {
 h3.block-heading {
     font-size: 1.25rem;
     margin-bottom: 1rem;
+}
+
+.track-order h3.block-heading {
+    margin-bottom: 0;
 }
 
 .order h3.block-heading {
@@ -130,13 +134,6 @@ div.circle {
     text-align: center;
     color: var(--green);
 }
-
-/* .order-status::before {
-    content: "";
-    border: 1px solid var(--gray);
-    display: block;
-    margin-bottom: 1.25rem;
-} */
 
 .track-order #status {
     display: none;
@@ -189,12 +186,11 @@ div.circle {
 table.order {
     border-collapse: collapse;
     width: 100%;
-    min-width: 650px;
+    /* min-width: 450px; */
     border: 1px solid yellow;
 }
 
 table.order .header {
-    padding: 5px 0;
     text-align: left;
     border-bottom: 1px solid #DFDCCB;
     font-size: 0.9rem;
@@ -221,24 +217,24 @@ table.order .pic-grp {
 
 table.order .first-col {
     width: 70%;
+    text-overflow: ellipsis;
 }
 
 table.order .quantity-col {
-    width: max-content !important;
-    height: 100%;
+    /* height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding-top: 0.9rem;
+    align-items: flex-start; */
+    border: 1px solid green;
 }
 
-table.order .narrow-col {
+/* table.order .narrow-col {
     width: 13%;
 }
 
 table.order .price-col {
     width: 10%;
-}
+} */
 
 table.order tr:last-of-type {
     border-bottom: 1px solid #DFDCCB;
@@ -249,6 +245,15 @@ table .error {
     text-align: center;
     font-style: italic;
     padding: 1.5rem 0;
+}
+
+table th {
+    text-wrap: nowrap;
+}
+
+table td:not(.first-col), table th:not(.first-col) {
+    border: 1px solid red;
+    padding-inline: 5px;
 }
 
 /* end of table */
@@ -270,6 +275,7 @@ table .error {
     font-size: 0.8rem;
     font-style: italic;
     margin-top: 4px;
+    text-wrap: nowrap;
 }
 
 .payment {
@@ -331,7 +337,6 @@ table .error {
 
 .contact-info-blk input, .track-order input {
     margin-top: 8px;
-    margin-bottom: 1.25rem;
 }
 
 .contact-info-blk input, .customer-note {
@@ -378,7 +383,12 @@ table .error {
     gap: 3rem;
 }
 
-#delivery-block .radio .date {
+#delivery-block .radio .date-grp {
+    display: flex;
+    flex-direction: column;
+}
+
+#delivery-block .radio .date, #delivery-block .radio .date-grp .error {
     margin-left: -2rem;
 }
 
@@ -494,19 +504,21 @@ a.back {
     margin: 0;
 }
 
-.product-info-page .wrapper {
+ .wrapper {
     padding: 0;
     background-color: transparent;
-    max-width: 915px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 0.8rem;
     border: 1px solid yellow;
     margin: 0 auto;
+    max-width: 1200px;
 }
-
+.product-info-page  .wrapper {
+    max-width: 915px;
+    gap: 0.8rem;
+}
 .product-info-page .block {
     padding: 0;
     width: 100%;
@@ -566,9 +578,11 @@ a.back {
 }
 
 .quantity-grp {
+    width: 80%;
+    max-width: 7rem;
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: space-between;
 }
 
 .product-info-page .quantity-grp i {
@@ -620,13 +634,15 @@ a.back {
 }
 
 /*order tracking progress bar*/
-.track-order .container {
+.track-order .block-body .container {
+    margin: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 40px;
     width: 100%;
     padding: 2rem 0;
+    border: none;
   }
   
   .track-order .container .steps {
@@ -688,7 +704,7 @@ a.back {
     width: 95%;
     background: #DFDCCB;
     bottom: 58%;
-    margin-left: 8px;
+    margin-left: 1.33%;
   }
   .progress-bar .indicator {
     position: absolute;
@@ -752,11 +768,37 @@ a.back {
     display: none;
 }
 
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.input-control {
+    position: relative;
+}
+
+.input-control.error input {
+    border-color: var(--text2);
+}
+
+.input-control .error {
+    position: absolute;
+    top: 100%; /* Position it just below the input */
+    color: var(--text2);
+    font-size: 0.7rem;
+    margin-top: 2px;
+}
+
 @media only screen and (width <= 950px) {
     /* .menu .section-body {
         grid-template-columns: repeat(auto-fit, minmax(150px, 150px)); 
         gap: 2rem;
     } */
+    table.order .pic-grp img {
+        margin-left: 10%;
+        margin-right: 8%;
+    }
 }
 
 @media only screen and (width <= 860px) {
@@ -773,7 +815,7 @@ a.back {
         gap: 5%;
     }
 
-    #delivery-block .radio .date {
+    #delivery-block .radio .date, #delivery-block .radio .date-grp .error {
         margin-left: -0.5rem;
     }
 
@@ -783,6 +825,15 @@ a.back {
 
     .payment .text {
         margin-right: 8%;
+    }
+}
+
+@media only screen and (width <= 680px) {
+    .track-order .block-body .container {
+        padding: 5% 0;
+    }
+    .track-order .block-body .steps {
+        width: 100%;
     }
 }
 
@@ -800,15 +851,70 @@ a.back {
     .product-info-page .block .img-wrapper {
         width: 100%;
     }
+
+    div.order-status-desc {
+        flex-direction: column;
+    }
+
+    #generate-receipt-btn {
+        width: 100%;
+        font-size: clamp(1rem,4.4vw,1.25rem);
+    }
 }
 
 @media only screen and (width <= 560px) {
+    .section-heading h2 {
+        font-size: clamp(1.5rem,5.5vw,2.0625rem);
+    }
+
+    h3.block-heading, .payment .text h3, .menu-item h2, .page-button {
+        font-size: clamp(1rem,4.4vw,1.25rem);
+    }
+
+    .cart .quantity-grp i {
+        font-size: 1rem;
+    }
+
+    .cart .narrow-col.quantity-col .with-remaining {
+        text-overflow: ellipsis;
+    }
+
+    .cart .amount {
+        width: 2rem;
+    }
+
+    p, .radio label, .amount {
+        font-size: 0.8rem;
+    }
+
+    table.order .pic-grp img {
+        width: 2.75rem;
+        height: 2.75rem;
+        margin-left: 0;
+    }
+
+    .radio .date { 
+        font-size: 0.65rem;
+    }
+
     .block {
         padding: 5%;
     }
 
+    .block.note {
+        padding: 3%;
+    }
+
     #delivery-block, .contact-info-blk {
         flex-direction: column;
+    }
+
+    .contact-info-blk {
+        gap: 1.33rem;
+    }
+
+    .contact-info-blk .input-grp:last-of-type input {
+        margin-bottom: 0;
     }
 
     #delivery-block .left-side{
@@ -817,6 +923,30 @@ a.back {
 
     #delivery-block .time-slot{
         width: 100%;
+    }
+    
+    .steps .circle {
+        width: clamp(1.5rem,5.5vw,2.0625rem);
+        height: clamp(1.5rem,5.5vw,2.0625rem);
+    }
+
+    .steps .circle i {
+        font-size: 1.25rem;
+    }
+    
+    .steps .label {
+        font-size: clamp(0.6rem,3vw,1rem);
+    }
+
+    .steps .progress-bar {
+        width: 90%;
+        height: 10%;
+        margin-left: 2.5%;
+        bottom: 65%;
+    }
+    
+    .order-status-desc p {
+        font-size: 3rem;
     }
 }
 

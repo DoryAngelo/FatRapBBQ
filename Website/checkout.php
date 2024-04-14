@@ -198,9 +198,9 @@ if (isset($_POST['submit'])) {
                                             <thead>
                                                 <tr>
                                                     <th class="header first-col"></th>
-                                                    <th class="header">Quantity</th>
-                                                    <th class="header">Price</th>
-                                                    <th class="header">Sub Total</th>
+                                                    <th class="header"><p>Quantity</p></th>
+                                                    <th class="header"><p>Price</p></th>
+                                                    <th class="header"><p>Sub Total</p></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -232,9 +232,9 @@ if (isset($_POST['submit'])) {
                                                                     <p><?php echo $FOOD_NAME; ?></p>
                                                                 </div>
                                                             </td> <!--Pic and Name-->
-                                                            <td><?php echo $IN_ORDER_QUANTITY ?></td> <!--Quantity-->
-                                                            <td>₱<?php echo $FOOD_PRICE; ?></td><!--Price-->
-                                                            <td>₱<?php echo $IN_ORDER_TOTAL; ?></td><!--Sub Total-->
+                                                            <td><p><?php echo $IN_ORDER_QUANTITY ?></p></td> <!--Quantity-->
+                                                            <td><p>₱<?php echo $FOOD_PRICE; ?></p></td><!--Price-->
+                                                            <td><p>₱<?php echo $IN_ORDER_TOTAL; ?></p></td><!--Sub Total-->
                                                         </tr>
                                                 <?php
                                                     }
@@ -274,55 +274,60 @@ if (isset($_POST['submit'])) {
                                 <!-- TODO: validate inputs -->
                                 <div class="left">
                                     <h3 class="block-heading">Contact Information</h3>
-                                    <div class="input-grp">
-                                        <p>First Name</p>
-                                        <input type="text" id="first-name" name="first-name">
-                                        <div class="error"></div>
-                                    </div>
-                                    <div class="input-grp">
-                                        <p>Last Name</p>
-                                        <input type="text" id="last-name" name="last-name">
-                                        <div class="error"></div>
-                                    </div>
-                                    <div class="input-grp">
-                                        <p>Contact Number</p>
-                                        <input type="text" id="contact-number" name="contact-number">
-                                        <div class="error"></div>
-                                    </div>
-                                    <div class="input-grp">
-                                        <p>Email</p>
-                                        <input type="email" id="email" name="email">
-                                        <div class="error"></div>
+                                    <div class="form-field">
+                                        <div class="input-grp">
+                                            <p>First Name</p>
+                                            <input type="text" id="first-name" name="first-name">
+                                            <div class="error"></div>
+                                        </div>
+                                        <div class="input-grp">
+                                            <p>Last Name</p>
+                                            <input type="text" id="last-name" name="last-name">
+                                            <div class="error"></div>
+                                        </div>
+                                        <div class="input-grp">
+                                            <p>Contact Number</p>
+                                            <input type="text" id="contact-number" name="contact-number">
+                                            <div class="error"></div>
+                                        </div>
+                                        <div class="input-grp">
+                                            <p>Email</p>
+                                            <input type="email" id="email" name="email">
+                                            <div class="error"></div>
+                                        </div>
                                     </div>
                                 </div>
                                 <hr>
                                 <div class="right">
                                     <h3 class="block-heading">Address</h3>
-                                    <div class="input-grp">
-                                        <p>Region</p>
-                                        <input type="text" name="region">
-                                        <div class="error"></div>
+                                    <div class="form-field">
+                                        <div class="input-grp">
+                                            <p>Region</p>
+                                            <input type="text" name="region">
+                                            <div class="error"></div>
+                                        </div>
+                                        <div class="input-grp">
+                                            <p>Province</p>
+                                            <input type="text" name="province">
+                                            <div class="error"></div>
+                                        </div>
+                                        <div class="input-grp">
+                                            <p>City</p>
+                                            <input type="text" name="city">
+                                            <div class="error"></div>
+                                        </div>
+                                        <div class="input-grp">
+                                            <p>Barangay</p>
+                                            <input type="text" name="barangay">
+                                            <div class="error"></div>
+                                        </div>
+                                        <div class="input-grp">
+                                            <p>House no./Bldg./Street</p>
+                                            <input type="text" name="street">
+                                            <div class="error"></div>
+                                        </div>
                                     </div>
-                                    <div class="input-grp">
-                                        <p>Province</p>
-                                        <input type="text" name="province">
-                                        <div class="error"></div>
-                                    </div>
-                                    <div class="input-grp">
-                                        <p>City</p>
-                                        <input type="text" name="city">
-                                        <div class="error"></div>
-                                    </div>
-                                    <div class="input-grp">
-                                        <p>Barangay</p>
-                                        <input type="text" name="barangay">
-                                        <div class="error"></div>
-                                    </div>
-                                    <div class="input-grp">
-                                        <p>House no./Bldg./Street</p>
-                                        <input type="text" name="street">
-                                        <div class="error"></div>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </section>
@@ -333,8 +338,10 @@ if (isset($_POST['submit'])) {
                                 <div class="radio">
                                     <label for=""><input id="" type="radio" name="" class="" /> Today</label>
                                     <label for=""><input id="" type="radio" name="" class="" /> Select a date:</label>
-                                    <input class="date" type="date" name="date" min="2024-04-01" max="2024-05-31">
-                                    <div class="error"></div>
+                                    <div class="date-grp">
+                                        <input class="date" type="date" name="date" min="2024-04-01" max="2024-05-31">
+                                        <div class="error"></div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="block time-slot">
@@ -345,24 +352,6 @@ if (isset($_POST['submit'])) {
                                     </div>
                             </div>
                         </section>
-                        <!-- <section class="wrapper red-theme">
-                            <div class="block left-side-dvd red-theme">
-                                <h3 class="block-heading">When do you want your order to be delivered?</h2>
-                                    <div class="block-body radio">
-                                        <label for=""><input id="" type="radio" name="" class="" /> Today</label>
-                                        <label for=""><input id="" type="radio" name="" class="" /> Select a date:</label>
-                                        <input type="date" name="date" min="2024-04-01" max="2024-05-31">
-                                        <div class="error"></div>
-                                    </div>
-                            </div>
-                            <div class="block time-slot">
-                                <h3 class="block-heading">Time Slot</h2>
-                                    <div class="block-body">
-                                        <input type="time" name="time" min="09:00:00" max="17:00:00">
-                                        <div class="error"></div>
-                                    </div>
-                            </div>
-                        </section> -->
                         <!-- customer note block-->
                         <section class="block red-theme">
                             <h3 class="block-heading">Additional Notes</h2>

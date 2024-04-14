@@ -15,7 +15,7 @@ if (isset($_POST['submit'])) {
     $PRSN_CPASSWORD =  md5($_POST['cpassword']);
     $PRSN_ROLE = 'Customer';
 
-    $select = "SELECT * FROM `person` WHERE PRSN_EMAIL = '$PRSN_EMAIL' OR PRSN_NAME= '$PRSN_NAME' ";
+    $select = "SELECT * FROM `person` WHERE PRSN_EMAIL = '$PRSN_EMAIL' ";
 
     $result = mysqli_query($conn, $select);
 
@@ -104,7 +104,7 @@ if (isset($_POST['submit'])) {
                         <div class="form-field-input">
                             <div class="with-desc">
                                 <label for="password">Password</label>
-                                <small>Password must be 8 characters long. Include at least 1 uppercase, 1 lowercase, and 1 digit. Exclude special characters.</small>
+                                <small>Password at least 8 characters long. Include at least 1 uppercase, 1 lowercase, and 1 digit. Exclude special characters.</small>
                             </div>
                             <div class="input-container input-control">
                                 <input class="js-pass" type="password" id="password" name="password">
@@ -170,7 +170,7 @@ if (isset($_POST['submit'])) {
 
             const nameRegex = /^[a-zA-Z\s]+$/;
             const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
-            const passwordRegex = /^(?=.*\d)[a-zA-Z0-9]{8,}$/; // Password should not contain special characters
+            const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/; // Password should not contain special characters
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Email must contain an '@'
 
             if (nameValue === '') {
