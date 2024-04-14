@@ -85,6 +85,12 @@ $EMP_ID = $_GET['EMP_ID'];
                                         $PRSN_EMAIL = $row['PRSN_EMAIL'];
                                 ?>
                                         <section>
+                                            <?php
+                                            if (isset($_SESSION['error_message'])) {
+                                                echo "<div class='error-text'>" . $_SESSION['error_message'] . "</div>";
+                                                unset($_SESSION['error_message']);
+                                            }
+                                            ?>
                                             <div class="form-title">
                                                 <h1>Contact Information</h1>
                                             </div>
@@ -113,6 +119,7 @@ $EMP_ID = $_GET['EMP_ID'];
                                                     <label for="image">Image</label>
                                                     <p>(accepted files: .jpg, .png)</p>
                                                     <input required name="image" id="image" class="image" type="file">
+                                                    <div class="error"></div>
                                                 </div>
                                                 <div class="form-field-input">
                                                     <label for="role">Role</label>
@@ -206,6 +213,7 @@ $EMP_ID = $_GET['EMP_ID'];
                             const usernameInput = document.getElementById('username');
                             const passwordInput = document.getElementById('password');
                             const cpasswordInput = document.getElementById('cpassword');
+                            const imageInput = document.getElementById('image');
 
                             function setError(input, message) {
                                 const errorDiv = input.nextElementSibling;
@@ -227,11 +235,11 @@ $EMP_ID = $_GET['EMP_ID'];
                                 const usernameValue = usernameInput.value.trim();
                                 const passwordValue = passwordInput.value.trim();
                                 const cpasswordValue = cpasswordInput.value.trim();
+                                const imageValue = imageInput.value.trim();
 
                                 const nameRegex = /^[a-zA-Z\s]+$/;
                                 const numberRegex = /^09\d{9}$/;
-                                const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/; // Password should include at least 1 digit, 1 lowercase, 1 uppercase
-                                // Email and username regex are omitted assuming they can be validated on the backend
+                                const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[\w\d]{8,}$/; // Password should include at least 1 digit, 1 lowercase, 1 uppercase
 
                                 if (firstNameValue === '') {
                                     setError(firstNameInput, 'Please enter your first name');
@@ -291,19 +299,33 @@ $EMP_ID = $_GET['EMP_ID'];
                                     clearError(cpasswordInput);
                                 }
 
+                                // Check if file extension is valid
+                                const validExtensions = ['png', 'jpg', 'jpeg'];
+                                const fileExtension = imageValue.split('.').pop().toLowerCase();
+                                if (imageValue === '') {
+                                    setError(imageInput, 'Please select an image file');
+                                    isValid = false;
+                                } else if (!validExtensions.includes(fileExtension)) {
+                                    setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
+                                    isValid = false;
+                                } else {
+                                    clearError(imageInput);
+                                }
+
+
                                 return isValid;
                             }
                         </script>
                         <?php
 
                         if (isset($_POST['submit'])) {
-                            $EMP_FNAME = mysqli_real_escape_string($conn, $_POST['first-name']);
-                            $EMP_LNAME = mysqli_real_escape_string($conn, $_POST['last-name']);
+                            $EMP_FNAME = mysqli_real_escape_string($conn, trim($_POST['first-name']));
+                            $EMP_LNAME = mysqli_real_escape_string($conn, trim($_POST['last-name']));
                             $EMP_BRANCH =  $_POST['branch'];
                             $PRSN_PHONE = str_replace(' ', '', $_POST['number']);
-                            $PRSN_UNAME = mysqli_real_escape_string($conn, $_POST['username']);
-                            $PRSN_PASSWORD = md5($_POST['password']);
-                            $PRSN_CPASSWORD = md5($_POST['cpassword']);
+                            $PRSN_UNAME = mysqli_real_escape_string($conn, trim($_POST['username']));
+                            $PRSN_PASSWORD = md5(trim($_POST['password']));
+                            $PRSN_CPASSWORD = md5(trim($_POST['cpassword']));
                             $PRSN_ROLE = $_POST['role'];
                             $current_image = $EMP_IMAGE;
 
@@ -348,8 +370,15 @@ $EMP_ID = $_GET['EMP_ID'];
                             }
 
 
-                            if ($PRSN_PASSWORD != $PRSN_CPASSWORD) {
-                                $error[] = "Password not matched";
+                            $select = "SELECT * FROM `person` WHERE PRSN_NAME= '$PRSN_UNAME'";
+
+                            $result = mysqli_query($conn, $select);
+
+                            if (mysqli_num_rows($result) > 0) {
+                                // User already exists, set error message in session
+                                $_SESSION['error_message'] = "User already exists";
+                                header('Location: admin-add-employee.php');
+                                exit();
                             } else {
                                 $update = "UPDATE person 
         SET PRSN_NAME = '$PRSN_UNAME',

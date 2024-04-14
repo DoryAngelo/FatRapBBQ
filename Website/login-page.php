@@ -44,9 +44,11 @@ if (isset($_POST['submit'])) {
     } else {
         $_SESSION['error_message'] = "Incorrect email or password";
         header('Location: login-page.php');
+        exit();
     }
 } else if (isset($_POST['guest'])) {
     header('location:home.php');
+    exit();
 }
 ?>
 
