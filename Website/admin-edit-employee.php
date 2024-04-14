@@ -358,7 +358,7 @@ $EMP_ID = $_GET['EMP_ID'];
                                 // Generate a unique filename for the image
                                 $image_info = pathinfo($EMP_IMG);
                                 $ext = strtolower($image_info['extension']);
-                                $EMP_IMG = "EMP_IMAGE_" . $PRSN_UNAME . $ext;
+                                $EMP_IMG = "EMP_IMAGE_" . $PRSN_UNAME . "." . $ext;
 
                                 // Set the destination path for the uploaded image
                                 $dst = "images/" . $EMP_IMG;

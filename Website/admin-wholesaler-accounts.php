@@ -108,7 +108,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                             <td data-cell="Name"><?php echo $WHL_LNAME ?></td>
                                             <td data-cell="Contact #"><?php echo $PRSN_NUMBER ?></td>
                                             <td data-cell="Username"><?php echo $PRSN_NAME ?></td>
-                                            <td data-cell="Action"><a href="<?php echo SITEURL; ?>admin-edit-wholesaler.php?PRSN_ID=<?php echo $PRSN_ID ?>&WHL_ID=<?php echo $WHL_ID ?>&WHL_IMAGE=<?php echo $WHL_IMAGE?>" class="edit">Edit</a></td>
+                                            <td data-cell="Action"><a href="<?php echo SITEURL; ?>admin-edit-wholesaler.php?PRSN_ID=<?php echo $PRSN_ID ?>&WHL_ID=<?php echo $WHL_ID ?>" class="edit">Edit</a></td>
                                         </tr>
                                     <?php
                                     }
