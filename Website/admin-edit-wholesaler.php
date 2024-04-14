@@ -5,6 +5,124 @@
 $PRSN_ID = $_GET['PRSN_ID'];
 $WHL_ID = $_GET['WHL_ID'];
 
+$sql = "SELECT * FROM person, wholesaler WHERE wholesaler.PRSN_ID = person.PRSN_ID AND WHL_ID = '$WHL_ID'";
+$res = mysqli_query($conn, $sql);
+$count = mysqli_num_rows($res);
+
+if ($count > 0) {
+    while ($row = mysqli_fetch_assoc($res)) {
+        $WHL_IMAGE = $row['WHL_IMAGE'];
+        $WHL_FNAME = $row['WHL_FNAME'];
+        $WHL_LNAME = $row['WHL_LNAME'];
+        $PRSN_NUMBER = $row['PRSN_PHONE'];
+        $PRSN_NAME = $row['PRSN_NAME'];
+        $PRSN_EMAIL = $row['PRSN_EMAIL'];
+    }
+}
+
+
+if (isset($_POST['submit'])) {
+    $WHL_FNAME = mysqli_real_escape_string($conn, trim($_POST['first-name']));
+    $WHL_LNAME = mysqli_real_escape_string($conn, trim($_POST['last-name']));
+    $PRSN_PHONE = str_replace(' ', '', $_POST['number']);
+    $PRSN_UNAME = mysqli_real_escape_string($conn, trim($_POST['username']));
+    $PRSN_PASSWORD = md5($_POST['password']);
+    $PRSN_CPASSWORD = md5($_POST['cpassword']);
+    $current_image = $WHL_IMAGE;
+
+    // Check if a new image is uploaded
+    if (isset($_FILES['image']['name']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        // Get the image details
+        $WHL_IMG = $_FILES['image']['name'];
+
+        // Check if the uploaded file is an image
+        $image_info = getimagesize($_FILES['image']['tmp_name']);
+        if ($image_info === false) {
+            // Handle non-image files here
+            $_SESSION['upload'] = "<div class='error'>Please upload a valid image file</div>";
+            header('location:' . $_SERVER['PHP_SELF'] . '?PRSN_ID=' . $PRSN_ID);
+            exit();
+        }
+
+        // Generate a unique filename for the image
+        $image_info = pathinfo($WHL_IMG);
+        $ext = strtolower($image_info['extension']);
+        $WHL_IMG = "WHL_IMAGE_" . $PRSN_UNAME . "." . $ext;
+
+        // Set the destination path for the uploaded image
+        $dst = "images/" . $WHL_IMG;
+
+        // Upload the image
+        if (!move_uploaded_file($_FILES['image']['tmp_name'], $dst)) {
+            // Handle upload failure
+            $_SESSION['upload'] = "<div class='error'>Failed To Upload Image</div>";
+            header('location:' . $_SERVER['PHP_SELF'] . '?RPSN_ID=' . $PRSN_ID);
+            exit();
+        }
+
+        // Remove the previous image if it exists
+        if (!empty($current_image)) {
+            $remove_path = "images/" . $current_image;
+            if (!unlink($remove_path)) {
+                // Handle image removal failure
+                $_SESSION['failed-remove'] = "<div class='error'>Failed To Remove Current Image</div>";
+                header('location:' . SITEURL . 'admin-home.php');
+                exit();
+            }
+        }
+    } else {
+        // No new image uploaded, retain the current image
+        $WHL_IMG = $current_image;
+    }
+
+    // Check if password is provided
+    if (!empty($_POST['password'])) {
+        $PRSN_PASSWORD = md5($_POST['password']);
+        $updatePassword = "PRSN_PASSWORD = '$PRSN_PASSWORD',";
+    } else {
+        $updatePassword = ""; // If no password is provided, leave the password unchanged
+    }
+
+    $PRSN_NAME = $WHL_FNAME . " " . $WHL_LNAME;
+
+    $select = "SELECT * FROM `person` WHERE PRSN_EMAIL = '$PRSN_UNAME' AND PRSN_ID != '$PRSN_ID'";
+
+    $result = mysqli_query($conn, $select);
+
+    if (mysqli_num_rows($result) > 0) {
+        // User already exists, set error message in session
+        // $_SESSION['error_message'] = "User already exists";
+        //  header('location:' . $_SERVER['PHP_SELF'] . '?RPSN_ID=' . $PRSN_ID);
+        //exit();
+        echo "<script>alert('User already exists!');</script>";
+    } else {
+        // Update the person table
+        $updatePerson = "UPDATE person 
+SET PRSN_NAME = '$PRSN_NAME',
+PRSN_EMAIL = '$PRSN_UNAME',
+$updatePassword
+PRSN_PHONE = '$PRSN_PHONE'
+WHERE PRSN_ID = $PRSN_ID";
+
+        if (mysqli_query($conn, $updatePerson)) {
+            // Update the employee table
+            $updateEmployee = "UPDATE wholesaler 
+    SET WHL_FNAME = '$WHL_FNAME',
+        WHL_LNAME = '$WHL_LNAME',
+        WHL_IMAGE = '$WHL_IMG'
+    WHERE WHL_ID = $WHL_ID";
+
+            if (!mysqli_query($conn, $updateEmployee)) {
+                $error[] = "Error updating data into wholesaler table: " . mysqli_error($conn);
+            }
+        } else {
+            $error[] = "Error updating data into person table: " . mysqli_error($conn);
+        }
+
+        // Redirect to employee accounts page
+        echo "<script> window.location.href = 'admin-wholesaler-accounts.php'; </script>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -70,29 +188,7 @@ $WHL_ID = $_GET['WHL_ID'];
                     <section class="main-section column">
                         <form id="form" class="column" method="post" enctype="multipart/form-data" onsubmit="return validateInputs()">
                             <div class="block layout">
-                                <?php
-                                $sql = "SELECT * FROM person, wholesaler WHERE wholesaler.PRSN_ID = person.PRSN_ID AND WHL_ID = $WHL_ID";
-                                $res = mysqli_query($conn, $sql);
-                                $count = mysqli_num_rows($res);
-                                if ($count > 0) {
-                                    while ($row = mysqli_fetch_assoc($res)) {
-                                        $PRSN_ID = $row['PRSN_ID'];
-                                        $WHL_IMAGE = $row['WHL_IMAGE'];
-                                        $WHL_FNAME = $row['WHL_FNAME'];
-                                        $WHL_LNAME = $row['WHL_LNAME'];
-                                        $PRSN_NUMBER = $row['PRSN_PHONE'];
-                                        $PRSN_NAME = $row['PRSN_NAME'];
-                                        $PRSN_EMAIL = $row['PRSN_EMAIL'];
-                                    }
-                                }
-                                ?>
                                 <section>
-                                    <?php
-                                    if (isset($_SESSION['error_message'])) {
-                                        echo "<div class='error-text'>" . $_SESSION['error_message'] . "</div>";
-                                        unset($_SESSION['error_message']);
-                                    }
-                                    ?>
                                     <div class="form-title">
                                         <h1>Contact Information</h1>
                                     </div>
@@ -305,109 +401,3 @@ $WHL_ID = $_GET['WHL_ID'];
                                 return isValid;
                             }
                         </script>
-                        <?php
-
-                        if (isset($_POST['submit'])) {
-                            $WHL_FNAME = mysqli_real_escape_string($conn, trim($_POST['first-name']));
-                            $WHL_LNAME = mysqli_real_escape_string($conn, trim($_POST['last-name']));
-                            $PRSN_PHONE = str_replace(' ', '', $_POST['number']);
-                            $PRSN_UNAME = mysqli_real_escape_string($conn, trim($_POST['username']));
-                            $PRSN_PASSWORD = md5($_POST['password']);
-                            $PRSN_CPASSWORD = md5($_POST['cpassword']);
-                            $current_image = $WHL_IMAGE;
-
-                            // Check if a new image is uploaded
-                            if (isset($_FILES['image']['name']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-                                // Get the image details
-                                $WHL_IMG = $_FILES['image']['name'];
-
-                                // Check if the uploaded file is an image
-                                $image_info = getimagesize($_FILES['image']['tmp_name']);
-                                if ($image_info === false) {
-                                    // Handle non-image files here
-                                    $_SESSION['upload'] = "<div class='error'>Please upload a valid image file</div>";
-                                    header('location:' . $_SERVER['PHP_SELF'] . '?PRSN_ID=' . $PRSN_ID);
-                                    exit();
-                                }
-
-                                // Generate a unique filename for the image
-                                $image_info = pathinfo($WHL_IMG);
-                                $ext = strtolower($image_info['extension']);
-                                $WHL_IMG = "WHL_IMAGE_" . $PRSN_UNAME . "." . $ext;
-
-                                // Set the destination path for the uploaded image
-                                $dst = "images/" . $WHL_IMG;
-
-                                // Upload the image
-                                if (!move_uploaded_file($_FILES['image']['tmp_name'], $dst)) {
-                                    // Handle upload failure
-                                    $_SESSION['upload'] = "<div class='error'>Failed To Upload Image</div>";
-                                    header('location:' . $_SERVER['PHP_SELF'] . '?RPSN_ID=' . $PRSN_ID);
-                                    exit();
-                                }
-
-                                // Remove the previous image if it exists
-                                if (!empty($current_image)) {
-                                    $remove_path = "images/" . $current_image;
-                                    if (!unlink($remove_path)) {
-                                        // Handle image removal failure
-                                        $_SESSION['failed-remove'] = "<div class='error'>Failed To Remove Current Image</div>";
-                                        header('location:' . SITEURL . 'admin-home.php');
-                                        exit();
-                                    }
-                                }
-                            } else {
-                                // No new image uploaded, retain the current image
-                                $WHL_IMG = $current_image;
-                            }
-
-                            // Check if password is provided
-                            if (!empty($_POST['password'])) {
-                                $PRSN_PASSWORD = md5($_POST['password']);
-                                $updatePassword = "PRSN_PASSWORD = '$PRSN_PASSWORD',";
-                            } else {
-                                $updatePassword = ""; // If no password is provided, leave the password unchanged
-                            }
-
-                            $PRSN_NAME = $WHL_FNAME . " " . $WHL_LNAME;
-
-                            $select = "SELECT * FROM `person` WHERE PRSN_EMAIL = '$PRSN_UNAME' AND PRSN_ID != '$PRSN_ID'";
-
-                            $result = mysqli_query($conn, $select);
-
-                            if (mysqli_num_rows($result) > 0) {
-                                // User already exists, set error message in session
-                                $_SESSION['error_message'] = "User already exists";
-                                header('Location: admin-add-wholesaler.php');
-                                exit();
-                            } else {
-                                // Update the person table
-                                $updatePerson = "UPDATE person 
-                    SET PRSN_NAME = '$PRSN_NAME',
-                        PRSN_EMAIL = '$PRSN_UNAME',
-                        $updatePassword
-                        PRSN_PHONE = '$PRSN_PHONE'
-                    WHERE PRSN_ID = $PRSN_ID";
-
-                                if (mysqli_query($conn, $updatePerson)) {
-                                    // Update the employee table
-                                    $updateEmployee = "UPDATE wholesaler 
-                            SET WHL_FNAME = '$WHL_FNAME',
-                                WHL_LNAME = '$WHL_LNAME',
-                                WHL_IMAGE = '$WHL_IMG'
-                            WHERE WHL_ID = $WHL_ID";
-
-                                    if (!mysqli_query($conn, $updateEmployee)) {
-                                        $error[] = "Error updating data into wholesaler table: " . mysqli_error($conn);
-                                    }
-                                } else {
-                                    $error[] = "Error updating data into person table: " . mysqli_error($conn);
-                                }
-
-                                // Redirect to employee accounts page
-                                echo "<script> window.location.href = 'admin-wholesaler-accounts.php'; </script>";
-                            }
-                        }
-
-
-                        ?>

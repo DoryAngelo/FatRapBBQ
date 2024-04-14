@@ -71,7 +71,7 @@ $EMP_ID = $_GET['EMP_ID'];
                         <form id="form" class="column" method="post" enctype="multipart/form-data" onsubmit="return validateInputs()">
                             <div class="block layout">
                                 <?php
-                                $sql = "SELECT * FROM person, employee WHERE employee.PRSN_ID = person.PRSN_ID AND EMP_ID = $EMP_ID";
+                                $sql = "SELECT * FROM person, employee WHERE employee.PRSN_ID = person.PRSN_ID AND EMP_ID = '$EMP_ID'";
                                 $res = mysqli_query($conn, $sql);
                                 $count = mysqli_num_rows($res);
                                 if ($count > 0) {
@@ -408,9 +408,10 @@ $EMP_ID = $_GET['EMP_ID'];
 
                             if (mysqli_num_rows($result) > 0) {
                                 // User already exists, set error message in session
-                                $_SESSION['error_message'] = "User already exists";
-                                header('Location: admin-edit-employee.php');
-                                exit();
+                                // $_SESSION['error_message'] = "User already exists";
+                                // echo "<script> window.location.href = 'admin-edit-employee.php'; </script>";
+                                // exit();
+                                echo "<script>alert('User already exists!');</script>";
                             } else {
                                 // Update the person table
                                 $updatePerson = "UPDATE person 
