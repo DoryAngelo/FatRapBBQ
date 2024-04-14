@@ -3,6 +3,9 @@
 @include 'constants.php';
 
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 if (isset($_POST['submit'])) {
     $PRSN_NAME =  mysqli_real_escape_string($conn, trim($_POST['name']));
@@ -20,11 +23,13 @@ if (isset($_POST['submit'])) {
         // User already exists, set error message in session
         $_SESSION['error_message'] = "User already exists";
         header('Location: cus-register-page.php');
+        exit();
     } else {
         $insert = "INSERT INTO person(PRSN_NAME, PRSN_EMAIL, PRSN_PASSWORD, PRSN_PHONE, PRSN_ROLE) 
             VALUES('$PRSN_NAME', '$PRSN_EMAIL', '$PRSN_PASSWORD', '$PRSN_PHONE', '$PRSN_ROLE')";
         mysqli_query($conn, $insert);
         header('Location: login-page.php');
+        exit();
     }
 }
 ?>
@@ -71,13 +76,11 @@ if (isset($_POST['submit'])) {
                     <div class="form-title">
                         <h1>Register</h1>
                         <?php
-
                         if (isset($_SESSION['error_message'])) {
                             echo "<div class='error-text'>" . $_SESSION['error_message'] . "</div>";
                             unset($_SESSION['error_message']);
                         }
                         ?>
-
                     </div>
                     <div class="form-field">
                         <div class="form-field-input input-control">
