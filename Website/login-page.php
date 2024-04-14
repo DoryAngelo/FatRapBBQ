@@ -165,8 +165,8 @@ if (isset($_POST['submit'])) {
                         const loginValue = loginInput.value.trim();
                         const passwordValue = passwordInput.value.trim();
 
-                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                        const passwordRegex = /^(?=.*\d)[a-zA-Z0-9]{8,}$/; // Password should not contain special characters
+                        const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]+$/;
+                        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/; // Password should not contain special characters
 
                         if (loginValue === '') { // Check if login value is empty
                             setError(loginInput, 'Please enter your email or username');
