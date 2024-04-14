@@ -47,6 +47,10 @@ header.backend {
     background-color: #FBFEFF;
 }
 
+header.wholesaler {
+  background-color: #F2FFE1;
+}
+
 .header-container, .footer-container {
     margin-inline: auto;
     margin-top: 2rem;
