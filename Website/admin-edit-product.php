@@ -97,28 +97,28 @@ $FOOD_ID = $_GET['FOOD_ID'];
                                             <div class="form-field">
                                                 <div class="form-field-input">
                                                     <label for="product-name">Product Name</label>
-                                                    <input class="js-user" type="text" id="product-name" name="product-name"><!-- 20 characters only, letter only, with spaces -->
+                                                    <input class="js-user" type="text" id="product-name" name="product-name" value="<?php echo $FOOD_NAME; ?>"><!-- 20 characters only, letter only, with spaces -->
                                                     <div class="error"></div>
                                                 </div>
                                                 <div class="form-field-input">
                                                     <label for="product-name">Description</label>
-                                                    <input class="js-user" type="text" id="product-desc" name="product-desc"><!-- 20 characters only, letter only, with spaces -->
+                                                    <input class="js-user" type="text" id="product-desc" name="product-desc" value="<?php echo $FOOD_DESC; ?>"><!-- 20 characters only, letter only, with spaces -->
                                                     <div class="error"></div>
                                                 </div>
                                                 <div class="form-field-input">
                                                     <label for="price">Price ₱ </label>
-                                                    <input class="js-user" type="text" id="price" name="price">
+                                                    <input class="js-user" type="text" id="price" name="price" value="<?php echo $FOOD_PRICE; ?>">
                                                     <div class="error"></div>
                                                 </div>
 
                                                 <div class="form-field-input">
                                                     <label for="price">Stock </label>
-                                                    <input class="js-user" type="number" id="stock" name="stock">
+                                                    <input class="js-user" type="number" id="stock" name="stock" value="<?php echo $FOOD_STOCK; ?>">
                                                     <div class="error"></div>
                                                 </div>
                                                 <div class="form-field-input">
                                                     <label for="type">Type</label>
-                                                    <select class="dropdown" name="type" id="type">
+                                                    <select class="dropdown" name="type" id="type" value="<?php echo $FOOD_TYPE; ?>">
                                                         <option value="Customer">Customer</option>
                                                         <option value="Wholesaler">Wholesaler</option>
                                                     </select>
@@ -126,7 +126,7 @@ $FOOD_ID = $_GET['FOOD_ID'];
                                                 </div>
                                                 <div class="form-field-input">
                                                     <label for="active">Active</label>
-                                                    <select class="dropdown" name="active" id="active">
+                                                    <select class="dropdown" name="active" id="active" value="<?php echo $FOOD_ACTIVE; ?>">
                                                         <option value="No">No</option>
                                                         <option value="Yes">Yes</option>
                                                     </select>
@@ -318,7 +318,7 @@ if (isset($_POST['submit'])) {
     mysqli_query($conn, $update);
 
     // Redirect to the edit page with the updated data
-    header('location:admin-inventory.php');
+    echo "<script> window.location.href = 'admin-inventory.php'; </script>";
     exit();
 }
 ?>
