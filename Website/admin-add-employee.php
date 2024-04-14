@@ -7,21 +7,12 @@ $PRSN_ID = $_SESSION['prsn_id'];
 if (isset($_POST['submit'])) {
     $PRSN_FNAME = mysqli_real_escape_string($conn, trim($_POST['first-name']));
     $PRSN_LNAME = mysqli_real_escape_string($conn, trim($_POST['last-name']));
-<<<<<<< HEAD
     $PRSN_PHONE = str_replace(' ', '', trim($_POST['number']));
     $PRSN_UNAME = mysqli_real_escape_string($conn, trim($_POST['username']));
     $EMP_BRANCH = mysqli_real_escape_string($conn, trim($_POST['branch']));
     $PRSN_PASSWORD = md5(trim($_POST['password']));
     $PRSN_CPASSWORD = md5(trim($_POST['cpassword']));
     $PRSN_ROLE = $_POST['role'];
-=======
-    $PRSN_PHONE = str_replace(' ', '', $_POST['number']);
-    $PRSN_UNAME = mysqli_real_escape_string($conn, trim($_POST['username']));
-    $EMP_BRANCH = mysqli_real_escape_string($conn, trim($_POST['branch']));
-    $PRSN_PASSWORD = md5($_POST['password']);
-    $PRSN_CPASSWORD = md5($_POST['cpassword']);
-    $PRSN_ROLE = 'Admin';
->>>>>>> 54b8726c7c5e47828cee8204de2036d00aefaa12
 
     if (isset($_FILES['image']['name'])) {
         $EMP_IMG = $_FILES['image']['name'];
@@ -177,15 +168,13 @@ if (isset($_POST['submit'])) {
                                             <div class="error"></div>
                                         </div>
                                         <div class="form-field-input">
-<<<<<<< HEAD
                                             <label for="image">Image</label>
                                             <p>(accepted files: .jpg, .png)</p>
                                             <input name="image" id="image" class="image" type="file">
                                             <div class="error"></div>
                                         </div>
                                         <div class="form-field-input">
-=======
->>>>>>> 54b8726c7c5e47828cee8204de2036d00aefaa12
+
                                             <label for="role">Role</label>
                                             <select class="dropdown" name="role" id="role" required>
                                                 <option value="Employee">Employee</option>
@@ -305,15 +294,11 @@ if (isset($_POST['submit'])) {
             const cpasswordValue = cpasswordInput.value.trim();
             const imageValue = imageInput.value.trim();
 
-            const nameRegex = /^[a-zA-Z\s]+$/;
-<<<<<<< HEAD
-            const numberRegex = /^09\d{9}$/;
-            const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[\w\d]{8,}$/;// Password should include at least 1 digit, 1 lowercase, 1 uppercase
-=======
+            const nameRegex = /^[a-zA-Z\s]+$/; 
             const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
             const usernameRegex = /^[a-zA-Z0-9]+$/;
             const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/; // Password should include at least 1 digit, 1 lowercase, 1 uppercase, exclude special characters.
->>>>>>> 54b8726c7c5e47828cee8204de2036d00aefaa12
+
             // Email and username regex are omitted assuming they can be validated on the backend
 
             if (firstNameValue === '') {
