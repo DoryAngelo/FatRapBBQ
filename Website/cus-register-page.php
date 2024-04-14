@@ -171,7 +171,7 @@ if (isset($_POST['submit'])) {
             const nameRegex = /^[a-zA-Z\s]+$/;
             const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
             const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/; // Password should not contain special characters
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Email must contain an '@'
+            const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]+$/; // Email must contain an '@'
 
             if (nameValue === '') {
                 setError(nameInput, 'Please enter your name');
