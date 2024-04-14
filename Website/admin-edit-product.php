@@ -225,17 +225,17 @@ $FOOD_ID = $_GET['FOOD_ID'];
                         clearError(stockInput);
                     }
 
-                    // Check if file extension is valid
-                    const validExtensions = ['png', 'jpg', 'jpeg'];
-                    const fileExtension = imageValue.split('.').pop().toLowerCase();
-                    if (imageValue === '') {
-                        setError(imageInput, 'Please select an image file');
-                        isValid = false;
-                    } else if (!validExtensions.includes(fileExtension)) {
-                        setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
-                        isValid = false;
-                    } else {
-                        clearError(imageInput);
+                    // Check if file extension is valid only if an image is selected
+                    if (imageValue !== '') {
+                        const validExtensions = ['png', 'jpg', 'jpeg'];
+                        const fileExtension = imageValue.split('.').pop().toLowerCase();
+
+                        if (!validExtensions.includes(fileExtension)) {
+                            setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
+                            isValid = false;
+                        } else {
+                            clearError(imageInput);
+                        }
                     }
 
                     return isValid;
