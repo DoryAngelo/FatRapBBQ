@@ -83,6 +83,7 @@ $EMP_ID = $_GET['EMP_ID'];
                                         $PRSN_NUMBER = $row['PRSN_PHONE'];
                                         $PRSN_NAME = $row['PRSN_NAME'];
                                         $PRSN_EMAIL = $row['PRSN_EMAIL'];
+                                        $EMP_BRANCH = $row['EMP_BRANCH'];
                                 ?>
                                         <section>
                                             <?php
@@ -97,23 +98,23 @@ $EMP_ID = $_GET['EMP_ID'];
                                             <div class="form-field">
                                                 <div class="form-field-input input-control">
                                                     <label for="first-name">First Name</label>
-                                                    <input name="first-name" id="first-name" class="js-user" type="text">
+                                                    <input name="first-name" id="first-name" class="js-user" type="text" value="<?php echo $EMP_FNAME; ?>">
                                                     <div class="error"></div>
                                                 </div>
                                                 <div class="form-field-input input-control">
                                                     <label for="last-name">Last Name</label>
-                                                    <input name="last-name" id="last-name" class="js-user" type="text">
+                                                    <input name="last-name" id="last-name" class="js-user" type="text" value="<?php echo $EMP_LNAME; ?>">
                                                     <div class="error"></div>
                                                 </div>
                                                 <div class="form-field-input input-control">
                                                     <label for="number">Phone Number</label>
                                                     <p>(e.g. 09xxxxxxxxx)</p>
-                                                    <input class="js-user" type="text" id="number" name="number">
+                                                    <input class="js-user" type="text" id="number" name="number" value="<?php echo $PRSN_NUMBER; ?>">
                                                     <div class="error"></div>
                                                 </div>
                                                 <div class="form-field-input input-control">
                                                     <label for="branch">Branch</label>
-                                                    <input name="branch" id="branch" class="js-user" type="text">
+                                                    <input name="branch" id="branch" class="js-user" type="text" value="<?php echo $EMP_BRANCH; ?>">
                                                     <div class="error"></div>
                                                 </div>
                                                 <div class="form-field-input">
@@ -139,7 +140,7 @@ $EMP_ID = $_GET['EMP_ID'];
                                                 <div class="form-field-input input-control">
                                                     <label for="username">Username</label>
                                                     <p>Username should exclude special characters.</p>
-                                                    <input name="username" id="username" class="js-user" type="text">
+                                                    <input name="username" id="username" class="js-user" type="text" value="<?php echo $PRSN_EMAIL; ?>">
                                                     <div class="error"></div>
                                                 </div>
                                                 <div class="form-field-input">
@@ -420,6 +421,7 @@ $EMP_ID = $_GET['EMP_ID'];
                                     $error[] = "Error updating data into person table: " . mysqli_error($conn);
                                 }
                             }
+                            echo "<script> window.location.href = 'admin-employee-accounts.php'; </script>";
                         }
 
                         ?>

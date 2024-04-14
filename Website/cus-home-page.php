@@ -14,6 +14,8 @@ if (isset($_SESSION['prsn_id'])) {
     $_SESSION['guest_id'] =   $GUEST_ID;
 }
 
+$PRSN_ROLE = $_SESSION['prsn_role'];
+
 $FOOD_NAME = 'Barbeque';
 
 $sql = "SELECT * FROM food WHERE FOOD_ACTIVE='Yes' AND FOOD_NAME = '$FOOD_NAME'";
@@ -89,8 +91,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     <script src="home.js" defer></script>
 </head>
 
-<body>
-    <header>
+<body class="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'wholesaler' : ''; ?>">
+    <header class="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'wholesaler' : ''; ?>">
         <div class="header-container ">
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">

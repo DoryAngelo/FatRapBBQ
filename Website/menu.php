@@ -33,8 +33,8 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
-<body>
-    <header>
+<body class="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'wholesaler' : ''; ?>">
+    <header class="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'wholesaler' : ''; ?>">
         <div class="header-container">
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">

@@ -142,8 +142,8 @@ if (isset($_POST['submit'])) {
 
 </head>
 
-<body>
-    <header>
+<body class="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'wholesaler' : ''; ?>">
+    <header class="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'wholesaler' : ''; ?>">
         <div class="header-container">
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
