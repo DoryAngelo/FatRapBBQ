@@ -33,6 +33,10 @@ body {
     min-width: 320px;
 }
 
+body.wholesaler {
+    background-color: #F2FFE1;
+}
+
 main {
     padding-top: 8rem; /*height of header */
     /* padding-bottom: 7rem; */
@@ -218,6 +222,7 @@ table.order .pic-grp {
 table.order .first-col {
     width: 70%;
     text-overflow: ellipsis;
+    padding-right: 5px;
 }
 
 table.order .quantity-col {
@@ -897,7 +902,7 @@ a.back {
         width: 2rem;
     }
 
-    p:not(.product-info-page p), .radio label, .amount {
+    p:not(.product-info-page p), .radio label, .amount, input, textarea, ::placeholder {
         font-size: 0.8rem;
     }
 
@@ -964,7 +969,7 @@ a.back {
     }
 }
 
-@media only screen and (width <= 400px) {
+@media only screen and (width <= 425px) {
     .product-info-page .right-grp h1 {
         font-size: 6vw;
     }
