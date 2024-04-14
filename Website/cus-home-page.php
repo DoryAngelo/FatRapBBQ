@@ -308,7 +308,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             <div class="container responsive">
                 <div class="text">
                     <h1>Looking for wholesale deals?</h1>
-                    <a href="<?php echo SITEURL; ?>wc-register.php" class="button">Sign up as a Wholesale Customer</a>
+                    <!-- <a href=">wc-register.php" class="button">Sign up as a Wholesale Customer</a> -->
+                    <p>For wholesale inquiries, contact +639_______</p>
                 </div>
             </div>
         </section>
