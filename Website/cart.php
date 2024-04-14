@@ -126,16 +126,18 @@ if (isset($_SESSION['prsn_id'])) {
                                                         </div>
                                                     </td> <!--Pic and Name-->
                                                     <td class="narrow-col quantity-col">
-                                                        <div class="quantity-grp">
-                                                            <i class='bx bxs-minus-circle js-minus' data-in-order-id="<?php echo $IN_ORDER_ID; ?>" data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
-                                                            <p class="amount js-num"><?php echo $IN_ORDER_QUANTITY ?></p>
-                                                            <i class='bx bxs-plus-circle js-plus' data-in-order-id="<?php echo $IN_ORDER_ID; ?>" data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
+                                                        <div class="with-remaining">
+                                                            <div class="quantity-grp">
+                                                                <i class='bx bxs-minus-circle js-minus' data-in-order-id="<?php echo $IN_ORDER_ID; ?>" data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
+                                                                <p class="amount js-num"><?php echo $IN_ORDER_QUANTITY ?></p>
+                                                                <i class='bx bxs-plus-circle js-plus' data-in-order-id="<?php echo $IN_ORDER_ID; ?>" data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
+                                                            </div>
+                                                            <p class="remaining"><?php echo $FOOD_STOCK ?> sticks remaining</p>
                                                         </div>
-                                                        <p class="remaining"><?php echo $FOOD_STOCK ?> sticks remaining</p>
                                                     </td> <!--Quantity-->
-                                                    <td class="narrow-col price-col">₱<?php echo $IN_ORDER_TOTAL ?></td><!--Price-->
+                                                    <td class="narrow-col price-col"><p>₱<?php echo $IN_ORDER_TOTAL ?></p></td><!--Price-->
                                                     <td class="narrow-col">
-                                                        <a href="delete_in_order.php?IN_ORDER_ID=<?php echo $IN_ORDER_ID; ?>" class="bx bxs-trash-alt trash"></a><!-- pa remove na lang ng underline sa link -->
+                                                        <p><a href="delete_in_order.php?IN_ORDER_ID=<?php echo $IN_ORDER_ID; ?>" class="bx bxs-trash-alt trash"></a><p><!-- pa remove na lang ng underline sa link -->
                                                     </td><!--Action-->
                                                 </tr>
                                             <?php

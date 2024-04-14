@@ -87,7 +87,7 @@ img {
 }
 
 .cart .section-body {
-    gap: 2.5rem;
+    gap: clamp(1rem, 1.5vw,2rem);
 }
 
 .block {
@@ -221,21 +221,20 @@ table.order .first-col {
 }
 
 table.order .quantity-col {
-    width: max-content !important;
-    height: 100%;
+    /* height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding-top: 0.9rem;
+    align-items: flex-start; */
+    border: 1px solid green;
 }
 
-table.order .narrow-col {
+/* table.order .narrow-col {
     width: 13%;
 }
 
 table.order .price-col {
     width: 10%;
-}
+} */
 
 table.order tr:last-of-type {
     border-bottom: 1px solid #DFDCCB;
@@ -276,6 +275,7 @@ table td:not(.first-col), table th:not(.first-col) {
     font-size: 0.8rem;
     font-style: italic;
     margin-top: 4px;
+    text-wrap: nowrap;
 }
 
 .payment {
@@ -578,9 +578,11 @@ a.back {
 }
 
 .quantity-grp {
+    width: 80%;
+    max-width: 7rem;
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: space-between;
 }
 
 .product-info-page .quantity-grp i {
@@ -869,7 +871,19 @@ a.back {
         font-size: clamp(1rem,4.4vw,1.25rem);
     }
 
-    p, .radio label { 
+    .cart .quantity-grp i {
+        font-size: 1rem;
+    }
+
+    .cart .narrow-col.quantity-col .with-remaining {
+        text-overflow: ellipsis;
+    }
+
+    .cart .amount {
+        width: 2rem;
+    }
+
+    p, .radio label, .amount {
         font-size: 0.8rem;
     }
 
