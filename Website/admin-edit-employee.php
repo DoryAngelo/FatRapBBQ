@@ -116,17 +116,17 @@ $EMP_ID = $_GET['EMP_ID'];
                                                     <div class="error"></div>
                                                 </div>
                                                 <div class="form-field-input">
-                                                    <label for="image">Image</label>
-                                                    <p>(accepted files: .jpg, .png)</p>
-                                                    <input required name="image" id="image" class="image" type="file">
-                                                    <div class="error"></div>
-                                                </div>
-                                                <div class="form-field-input">
                                                     <label for="role">Role</label>
                                                     <select class="dropdown" name="role" id="role" required>
                                                         <option value="Employee">Employee</option>
                                                         <option value="Admin">Admin</option>
                                                     </select>
+                                                </div>
+                                                <div class="form-field-input">
+                                                    <label for="image">Image</label>
+                                                    <p>(accepted files: .jpg, .png)</p>
+                                                    <input required name="image" id="image" class="image" type="file">
+                                                    <div class="error"></div>
                                                 </div>
                                             </div>
                                         </section>
@@ -329,48 +329,55 @@ $EMP_ID = $_GET['EMP_ID'];
                             $PRSN_ROLE = $_POST['role'];
                             $current_image = $EMP_IMAGE;
 
-                            if (isset($_FILES['image']['name'])) {
-                                //get the image details
+                            $PRSN_NAME = $EMP_FNAME . " " . $EMP_LNAME;
+
+                            // Check if a new image is uploaded
+                            if (isset($_FILES['image']['name']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                                // Get the image details
                                 $EMP_IMG = $_FILES['image']['name'];
 
-                                //check whether image is available
-                                if ($EMP_IMG != "") {
-                                    $image_info = explode(".", $EMP_IMG);
-                                    $ext = end($image_info);
+                                // Check if the uploaded file is an image
+                                $image_info = getimagesize($_FILES['image']['tmp_name']);
+                                if ($image_info === false) {
+                                    // Handle non-image files here
+                                    $_SESSION['upload'] = "<div class='error'>Please upload a valid image file</div>";
+                                    header('location:' . $_SERVER['PHP_SELF'] . '?PRSN_ID=' . $PRSN_ID);
+                                    exit();
+                                }
 
-                                    $EMP_IMG = "EMP_IMAGE_" . $EMP_LNAME . "." . $ext;
+                                // Generate a unique filename for the image
+                                $image_info = pathinfo($EMP_IMG);
+                                $ext = strtolower($image_info['extension']);
+                                $EMP_IMG = "EMP_IMAGE_" . $PRSN_UNAME . $ext;
 
-                                    $src = $_FILES['image']['tmp_name'];
-                                    $dst = "images/" . $EMP_IMG;
+                                // Set the destination path for the uploaded image
+                                $dst = "images/" . $EMP_IMG;
 
-                                    $upload    = move_uploaded_file($src, $dst);
+                                // Upload the image
+                                if (!move_uploaded_file($_FILES['image']['tmp_name'], $dst)) {
+                                    // Handle upload failure
+                                    $_SESSION['upload'] = "<div class='error'>Failed To Upload Image</div>";
+                                    header('location:' . $_SERVER['PHP_SELF'] . '?RPSN_ID=' . $PRSN_ID);
+                                    exit();
+                                }
 
-                                    //check whether the image is uploaded
-                                    if ($upload == false) {
-                                        $_SESSION['upload'] = "<div class='error'>Failed To Upload Image</div>";
-                                        header('loaction:' . SITEURL . 'admin/manage_food.php');
-                                        die();
+                                // Remove the previous image if it exists
+                                if (!empty($current_image)) {
+                                    $remove_path = "images/" . $current_image;
+                                    if (!unlink($remove_path)) {
+                                        // Handle image removal failure
+                                        $_SESSION['failed-remove'] = "<div class='error'>Failed To Remove Current Image</div>";
+                                        header('location:' . SITEURL . 'admin-home.php');
+                                        exit();
                                     }
-                                    //remove current image if available
-                                    if ($current_image != "") {
-                                        $remove_path = "images/" . $EMP_IMAGE;
-                                        $remove = unlink($remove_path);
-                                        //check whether image is removed
-                                        if ($remove == false) {
-                                            $_SESSION['failed-remove'] = "<div class='error'>Failed To Remove Current Image</div>";
-                                            header('location:' . SITEURL . 'admin-home.php');
-                                            die();
-                                        }
-                                    }
-                                } else {
-                                    $image_name = $current_image;
                                 }
                             } else {
-                                $image_name = $current_image;
+                                // No new image uploaded, retain the current image
+                                $EMP_IMG = $current_image;
                             }
 
 
-                            $select = "SELECT * FROM `person` WHERE PRSN_NAME= '$PRSN_UNAME'";
+                            $select = "SELECT * FROM `person` WHERE PRSN_EMAIL= '$PRSN_UNAME' AND PRSN_ID != '$PRSN_ID'";
 
                             $result = mysqli_query($conn, $select);
 
@@ -381,7 +388,8 @@ $EMP_ID = $_GET['EMP_ID'];
                                 exit();
                             } else {
                                 $update = "UPDATE person 
-        SET PRSN_NAME = '$PRSN_UNAME',
+        SET PRSN_NAME = '$PRSN_NAME',
+        PRSN_EMAIL = '$PRSN_UNAME',
             PRSN_PASSWORD = '$PRSN_PASSWORD',
             PRSN_PHONE = '$PRSN_PHONE'
         WHERE PRSN_ID = $PRSN_ID";

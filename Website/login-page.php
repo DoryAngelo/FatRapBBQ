@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
     if ($identifier === 'email') {
         $select = "SELECT * FROM `person` WHERE PRSN_EMAIL = '$loginValue' && PRSN_PASSWORD = '$PRSN_PASSWORD'";
     } else {
-        $select = "SELECT * FROM `person` WHERE PRSN_NAME = '$loginValue' && PRSN_PASSWORD = '$PRSN_PASSWORD'";
+        $select = "SELECT * FROM `person` WHERE (PRSN_NAME = '$loginValue' OR PRSN_EMAIL = '$loginValue') AND PRSN_PASSWORD = '$PRSN_PASSWORD'";
     }
 
     $result = mysqli_query($conn, $select);

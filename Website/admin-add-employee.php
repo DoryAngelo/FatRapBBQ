@@ -38,7 +38,7 @@ if (isset($_POST['submit'])) {
         $EMP_IMG = "";
     }
 
-    $select = "SELECT * FROM `person` WHERE PRSN_NAME= '$PRSN_UNAME'";
+    $select = "SELECT * FROM `person` WHERE PRSN_EMAIL = '$PRSN_UNAME'";
 
     $result = mysqli_query($conn, $select);
 
@@ -48,8 +48,9 @@ if (isset($_POST['submit'])) {
         header('Location: admin-add-employee.php');
         exit();
     } else {
-        $insert = "INSERT INTO person(PRSN_NAME, PRSN_PASSWORD, PRSN_PHONE, PRSN_ROLE) 
-                       VALUES('$PRSN_UNAME', '$PRSN_PASSWORD', '$PRSN_PHONE', '$PRSN_ROLE')";
+        $PRSN_NAME = $PRSN_FNAME . " " . $PRSN_LNAME;
+        $insert = "INSERT INTO person(PRSN_NAME, PRSN_EMAIL, PRSN_PASSWORD, PRSN_PHONE, PRSN_ROLE) 
+                       VALUES('$PRSN_NAME', '$PRSN_UNAME', '$PRSN_PASSWORD', '$PRSN_PHONE', '$PRSN_ROLE')";
         if (mysqli_query($conn, $insert)) {
             $PRSN_ID = mysqli_insert_id($conn);
             $insert2 = "INSERT INTO employee(PRSN_ID, EMP_FNAME, EMP_LNAME, EMP_IMAGE, EMP_BRANCH) 
