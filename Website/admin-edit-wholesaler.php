@@ -103,7 +103,12 @@ $WHL_ID = $_GET['WHL_ID'];
                                         </div>
                                         <div class="form-field-input input-control">
                                             <label for="number">Phone Number</label>
+<<<<<<< HEAD
                                             <input class="js-user" type="text" id="number" name="number" value="<?php echo $PRSN_NUMBER ?>">
+=======
+                                            <p>(e.g. 09xxxxxxxxx)</p>
+                                            <input class="js-user" type="text" id="number" name="number">
+>>>>>>> 1b53b728a940f0938ad1f883f77b87f82a73b642
                                             <div class="error"></div>
                                         </div>
                                         <div class="form-field-input">
@@ -120,13 +125,18 @@ $WHL_ID = $_GET['WHL_ID'];
                                     <div class="form-field">
                                         <div class="form-field-input input-control">
                                             <label for="username">Username</label>
+<<<<<<< HEAD
                                             <input name="username" id="username" class="js-user" type="text" value="<?php echo $PRSN_NAME ?>">
+=======
+                                            <p>Username should exclude special characters.</p>
+                                            <input name="username" id="username" class="js-user" type="text">
+>>>>>>> 1b53b728a940f0938ad1f883f77b87f82a73b642
                                             <div class="error"></div>
                                         </div>
                                         <div class="form-field-input">
                                             <div class="with-desc">
                                                 <label for="password">Password</label>
-                                                <p>Password must be 8 characters long, and includes at least 1 uppercase, 1 lowercase, and 1 digit</p>
+                                                <p>Password at least 8 characters long. Include at least 1 uppercase, 1 lowercase, and 1 digit. Exclude special characters.</p>
                                             </div>
                                             <div class="input-container input-control">
                                                 <input class="js-pass" type="password" id="password" name="password">
@@ -212,21 +222,28 @@ $WHL_ID = $_GET['WHL_ID'];
                                 const imageValue = imageInput.value.trim();
 
                                 const nameRegex = /^[a-zA-Z\s]+$/;
-                                const numberRegex = /^09\d{9}$/;
-                                const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/; // Password should include at least 1 digit, 1 lowercase, 1 uppercase
+                                const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
+                                const usernameRegex = /^[a-zA-Z0-9]+$/;
+                                const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/; // Password should include at least 1 digit, 1 lowercase, 1 uppercase
                                 // Email and username regex are omitted assuming they can be validated on the backend
 
                                 if (firstNameValue === '') {
                                     setError(firstNameInput, 'Please enter your first name');
                                     isValid = false;
-                                } else {
+                                } else if (!nameRegex.test(firstNameValue)) {
+                                    setError(firstNameInput, 'First name must contain only letters');
+                                    isValid = false;
+                                }   else {
                                     clearError(firstNameInput);
                                 }
 
                                 if (lastNameValue === '') {
                                     setError(lastNameInput, 'Please enter your last name');
                                     isValid = false;
-                                } else {
+                                } else if (!nameRegex.test(lastNameValue)) {
+                                    setError(lastNameInput, 'Last name must contain only letters');
+                                    isValid = false;
+                                }   else {
                                     clearError(lastNameInput);
                                 }
 
@@ -243,7 +260,10 @@ $WHL_ID = $_GET['WHL_ID'];
                                 if (usernameValue === '') {
                                     setError(usernameInput, 'Please enter your username');
                                     isValid = false;
-                                } else {
+                                } else if (!usernameRegex.test(usernameValue)) {
+                                    setError(usernameInput, 'Invalid username format');
+                                    isValid = false;
+                                }   else {
                                     clearError(usernameInput);
                                 }
 
@@ -288,10 +308,10 @@ $WHL_ID = $_GET['WHL_ID'];
                         <?php
 
                         if (isset($_POST['submit'])) {
-                            $WHL_FNAME = mysqli_real_escape_string($conn, $_POST['first-name']);
-                            $WHL_LNAME = mysqli_real_escape_string($conn, $_POST['last-name']);
+                            $WHL_FNAME = mysqli_real_escape_string($conn, trinm($_POST['first-name']));
+                            $WHL_LNAME = mysqli_real_escape_string($conn, trim($_POST['last-name']));
                             $PRSN_PHONE = str_replace(' ', '', $_POST['number']);
-                            $PRSN_UNAME = mysqli_real_escape_string($conn, $_POST['username']);
+                            $PRSN_UNAME = mysqli_real_escape_string($conn, trim($_POST['username']));
                             $PRSN_PASSWORD = md5($_POST['password']);
                             $PRSN_CPASSWORD = md5($_POST['cpassword']);
                             $current_image = $WHL_IMAGE;
