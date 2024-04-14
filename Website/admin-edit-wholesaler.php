@@ -103,18 +103,15 @@ $WHL_ID = $_GET['WHL_ID'];
                                         </div>
                                         <div class="form-field-input input-control">
                                             <label for="number">Phone Number</label>
-<<<<<<< HEAD
-                                            <input class="js-user" type="text" id="number" name="number" value="<?php echo $PRSN_NUMBER ?>">
-=======
                                             <p>(e.g. 09xxxxxxxxx)</p>
                                             <input class="js-user" type="text" id="number" name="number">
->>>>>>> 1b53b728a940f0938ad1f883f77b87f82a73b642
                                             <div class="error"></div>
                                         </div>
                                         <div class="form-field-input">
                                             <label for="image">Image</label>
                                             <p>(accepted files: .jpg, .png)</p>
                                             <input name="image" id="image" class="image" type="file">
+                                            <div class="error"></div>
                                         </div>
                                     </div>
                                 </section>
@@ -125,12 +122,9 @@ $WHL_ID = $_GET['WHL_ID'];
                                     <div class="form-field">
                                         <div class="form-field-input input-control">
                                             <label for="username">Username</label>
-<<<<<<< HEAD
-                                            <input name="username" id="username" class="js-user" type="text" value="<?php echo $PRSN_NAME ?>">
-=======
                                             <p>Username should exclude special characters.</p>
-                                            <input name="username" id="username" class="js-user" type="text">
->>>>>>> 1b53b728a940f0938ad1f883f77b87f82a73b642
+                                            <input name="username" id="username" class="js-user" type="text" value="<?php echo $PRSN_NAME ?>">
+
                                             <div class="error"></div>
                                         </div>
                                         <div class="form-field-input">
@@ -308,7 +302,7 @@ $WHL_ID = $_GET['WHL_ID'];
                         <?php
 
                         if (isset($_POST['submit'])) {
-                            $WHL_FNAME = mysqli_real_escape_string($conn, trinm($_POST['first-name']));
+                            $WHL_FNAME = mysqli_real_escape_string($conn, trim($_POST['first-name']));
                             $WHL_LNAME = mysqli_real_escape_string($conn, trim($_POST['last-name']));
                             $PRSN_PHONE = str_replace(' ', '', $_POST['number']);
                             $PRSN_UNAME = mysqli_real_escape_string($conn, trim($_POST['username']));
