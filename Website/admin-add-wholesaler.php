@@ -37,12 +37,19 @@ if (isset($_POST['submit'])) {
         $WHL_IMG = "";
     }
 
+    $select = "SELECT * FROM `person` WHERE PRSN_EMAIL = '$PRSN_UNAME'";
 
-    if ($PRSN_PASSWORD != $PRSN_CPASSWORD) {
-        echo  "Password not matched";
+    $result = mysqli_query($conn, $select);
+
+    if (mysqli_num_rows($result) > 0) {
+        // User already exists, set error message in session
+        $_SESSION['error_message'] = "User already exists";
+        header('Location: admin-add-wholesaler.php');
+        exit();
     } else {
-        $insert = "INSERT INTO person(PRSN_NAME, PRSN_PASSWORD, PRSN_PHONE, PRSN_ROLE) 
-                       VALUES('$PRSN_UNAME', '$PRSN_PASSWORD', '$PRSN_PHONE', '$PRSN_ROLE')";
+        $PRSN_NAME = $PRSN_FNAME . " " . $PRSN_LNAME;
+        $insert = "INSERT INTO person(PRSN_NAME, PRSN_EMAIL, PRSN_PASSWORD, PRSN_PHONE, PRSN_ROLE) 
+                       VALUES('$PRSN_NAME', '$PRSN_UNAME', '$PRSN_PASSWORD', '$PRSN_PHONE', '$PRSN_ROLE')";
         if (mysqli_query($conn, $insert)) {
             $PRSN_ID = mysqli_insert_id($conn);
             $insert2 = "INSERT INTO wholesaler(PRSN_ID, WHL_FNAME, WHL_LNAME, WHL_IMAGE) 
@@ -54,6 +61,7 @@ if (isset($_POST['submit'])) {
             echo "Error inserting data into person table: " . mysqli_error($conn);
         }
     }
+    header("location: admin-wholesaler-accounts.php");
 }
 
 
@@ -129,6 +137,12 @@ if (isset($_POST['submit'])) {
                         <form class="column" method="post" enctype="multipart/form-data" onsubmit="return validateInputs()">
                             <div class="block layout">
                                 <section>
+                                    <?php
+                                    if (isset($_SESSION['error_message'])) {
+                                        echo "<div class='error-text'>" . $_SESSION['error_message'] . "</div>";
+                                        unset($_SESSION['error_message']);
+                                    }
+                                    ?>
                                     <div class="form-title">
                                         <h1>Contact Information</h1>
                                     </div>

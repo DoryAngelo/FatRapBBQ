@@ -87,6 +87,12 @@ $WHL_ID = $_GET['WHL_ID'];
                                 }
                                 ?>
                                 <section>
+                                    <?php
+                                        if (isset($_SESSION['error_message'])) {
+                                            echo "<div class='error-text'>" . $_SESSION['error_message'] . "</div>";
+                                            unset($_SESSION['error_message']);
+                                        }
+                                    ?>
                                     <div class="form-title">
                                         <h1>Contact Information</h1>
                                     </div>
@@ -104,7 +110,7 @@ $WHL_ID = $_GET['WHL_ID'];
                                         <div class="form-field-input input-control">
                                             <label for="number">Phone Number</label>
                                             <p>(e.g. 09xxxxxxxxx)</p>
-                                            <input class="js-user" type="text" id="number" name="number">
+                                            <input class="js-user" type="text" id="number" name="number" value="<?php echo $PRSN_NUMBER ?>">
                                             <div class="error"></div>
                                         </div>
                                         <div class="form-field-input">
@@ -123,7 +129,7 @@ $WHL_ID = $_GET['WHL_ID'];
                                         <div class="form-field-input input-control">
                                             <label for="username">Username</label>
                                             <p>Username should exclude special characters.</p>
-                                            <input name="username" id="username" class="js-user" type="text" value="<?php echo $PRSN_NAME ?>">
+                                            <input name="username" id="username" class="js-user" type="text" value="<?php echo $PRSN_EMAIL ?>">
 
                                             <div class="error"></div>
                                         </div>

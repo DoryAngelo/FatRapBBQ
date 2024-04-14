@@ -99,6 +99,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                         $WHL_LNAME = $row['WHL_LNAME'];
                                         $PRSN_NUMBER = $row['PRSN_PHONE'];
                                         $PRSN_NAME = $row['PRSN_NAME'];
+                                        $PRSN_EMAIL = $row['PRSN_EMAIL'];
                                 ?>
                                         <tr>
                                             <td data-cell="Image">
@@ -107,7 +108,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                             <td data-cell="Name"><?php echo $WHL_FNAME ?></td>
                                             <td data-cell="Name"><?php echo $WHL_LNAME ?></td>
                                             <td data-cell="Contact #"><?php echo $PRSN_NUMBER ?></td>
-                                            <td data-cell="Username"><?php echo $PRSN_NAME ?></td>
+                                            <td data-cell="Username"><?php echo $PRSN_EMAIL ?></td>
                                             <td data-cell="Action"><a href="<?php echo SITEURL; ?>admin-edit-wholesaler.php?PRSN_ID=<?php echo $PRSN_ID ?>&WHL_ID=<?php echo $WHL_ID ?>" class="edit">Edit</a></td>
                                         </tr>
                                     <?php
