@@ -250,7 +250,7 @@ $EMP_ID = $_GET['EMP_ID'];
                                 } else if (!nameRegex.test(firstNameValue)) {
                                     setError(firstNameInput, 'First name must contain only letters');
                                     isValid = false;
-                                }  else {
+                                } else {
                                     clearError(firstNameInput);
                                 }
 
@@ -260,7 +260,7 @@ $EMP_ID = $_GET['EMP_ID'];
                                 } else if (!nameRegex.test(lastNameValue)) {
                                     setError(lastNameInput, 'Last name must contain only letters');
                                     isValid = false;
-                                }  else {
+                                } else {
                                     clearError(lastNameInput);
                                 }
 
@@ -287,28 +287,30 @@ $EMP_ID = $_GET['EMP_ID'];
                                 } else if (!usernameRegex.test(usernameValue)) {
                                     setError(usernameInput, 'Invalid username format');
                                     isValid = false;
-                                }  else {
+                                } else {
                                     clearError(usernameInput);
                                 }
 
-                                if (passwordValue === '') {
-                                    setError(passwordInput, 'Please enter your password');
-                                    isValid = false;
-                                } else if (!passwordRegex.test(passwordValue)) {
-                                    setError(passwordInput, 'Invalid password format');
-                                    isValid = false;
-                                } else {
-                                    clearError(passwordInput);
-                                }
+                                if (passwordValue !== '') {
+                                    if (passwordValue === '') {
+                                        setError(passwordInput, 'Please enter your password');
+                                        isValid = false;
+                                    } else if (!passwordRegex.test(passwordValue)) {
+                                        setError(passwordInput, 'Invalid password format');
+                                        isValid = false;
+                                    } else {
+                                        clearError(passwordInput);
+                                    }
 
-                                if (cpasswordValue === '') {
-                                    setError(cpasswordInput, 'Please confirm your password');
-                                    isValid = false;
-                                } else if (cpasswordValue !== passwordValue) {
-                                    setError(cpasswordInput, 'Passwords do not match');
-                                    isValid = false;
-                                } else {
-                                    clearError(cpasswordInput);
+                                    if (cpasswordValue === '') {
+                                        setError(cpasswordInput, 'Please confirm your password');
+                                        isValid = false;
+                                    } else if (cpasswordValue !== passwordValue) {
+                                        setError(cpasswordInput, 'Passwords do not match');
+                                        isValid = false;
+                                    } else {
+                                        clearError(cpasswordInput);
+                                    }
                                 }
 
                                 // Check if file extension is valid only if an image is selected
@@ -336,12 +338,8 @@ $EMP_ID = $_GET['EMP_ID'];
                             $EMP_BRANCH =  $_POST['branch'];
                             $PRSN_PHONE = str_replace(' ', '', $_POST['number']);
                             $PRSN_UNAME = mysqli_real_escape_string($conn, trim($_POST['username']));
-                            $PRSN_PASSWORD = md5($_POST['password']);
-                            $PRSN_CPASSWORD = md5($_POST['cpassword']);
                             $PRSN_ROLE = $_POST['role'];
                             $current_image = $EMP_IMAGE;
-
-                            $PRSN_NAME = $EMP_FNAME . " " . $EMP_LNAME;
 
                             // Check if a new image is uploaded
                             if (isset($_FILES['image']['name']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
@@ -388,39 +386,41 @@ $EMP_ID = $_GET['EMP_ID'];
                                 $EMP_IMG = $current_image;
                             }
 
-
-                            $select = "SELECT * FROM `person` WHERE PRSN_EMAIL= '$PRSN_UNAME' AND PRSN_ID != '$PRSN_ID'";
-
-                            $result = mysqli_query($conn, $select);
-
-                            if (mysqli_num_rows($result) > 0) {
-                                // User already exists, set error message in session
-                                $_SESSION['error_message'] = "User already exists";
-                                header('Location: admin-add-employee.php');
-                                exit();
+                            // Check if password is provided
+                            if (!empty($_POST['password'])) {
+                                $PRSN_PASSWORD = md5($_POST['password']);
+                                $updatePassword = "PRSN_PASSWORD = '$PRSN_PASSWORD',";
                             } else {
-                                $update = "UPDATE person 
-                                SET PRSN_NAME = '$PRSN_NAME',
-                                    PRSN_EMAIL = '$PRSN_UNAME',
-                                    PRSN_PASSWORD = '$PRSN_PASSWORD',
-                                    PRSN_PHONE = '$PRSN_PHONE'
-                                    WHERE PRSN_ID = $PRSN_ID";
-
-                                if (mysqli_query($conn, $update)) {
-                                    $update2 = "UPDATE employee SET
-                                        EMP_FNAME = '$EMP_FNAME',
-                                        EMP_LNAME = '$EMP_LNAME',
-                                        EMP_IMAGE = '$EMP_IMG',
-                                        EMP_BRANCH = '$EMP_BRANCH'
-                                        WHERE EMP_ID = $EMP_ID
-                                        ";
-                                    if (!mysqli_query($conn, $update2)) {
-                                        $error[] = "Error updating data into employee table: " . mysqli_error($conn);
-                                    }
-                                } else {
-                                    $error[] = "Error updating data into person table: " . mysqli_error($conn);
-                                }
+                                $updatePassword = ""; // If no password is provided, leave the password unchanged
                             }
+
+                            $PRSN_NAME = $EMP_FNAME . " " . $EMP_LNAME;
+
+                            // Update the person table
+                            $updatePerson = "UPDATE person 
+                    SET PRSN_NAME = '$PRSN_NAME',
+                        PRSN_EMAIL = '$PRSN_UNAME',
+                        $updatePassword
+                        PRSN_PHONE = '$PRSN_PHONE'
+                    WHERE PRSN_ID = $PRSN_ID";
+
+                            if (mysqli_query($conn, $updatePerson)) {
+                                // Update the employee table
+                                $updateEmployee = "UPDATE employee 
+                            SET EMP_FNAME = '$EMP_FNAME',
+                                EMP_LNAME = '$EMP_LNAME',
+                                EMP_IMAGE = '$EMP_IMG',
+                                EMP_BRANCH = '$EMP_BRANCH'
+                            WHERE EMP_ID = $EMP_ID";
+
+                                if (!mysqli_query($conn, $updateEmployee)) {
+                                    $error[] = "Error updating data into employee table: " . mysqli_error($conn);
+                                }
+                            } else {
+                                $error[] = "Error updating data into person table: " . mysqli_error($conn);
+                            }
+
+                            // Redirect to employee accounts page
                             echo "<script> window.location.href = 'admin-employee-accounts.php'; </script>";
                         }
 
