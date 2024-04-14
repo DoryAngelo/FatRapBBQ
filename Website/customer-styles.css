@@ -326,7 +326,7 @@ table td:not(.first-col), table th:not(.first-col) {
     font-weight: bold;
 }
 
-.contact-info-blk input, .track-order input, .customer-note{
+.contact-info-blk input, .track-order input, .customer-note {
     width: 100%;
     border-radius: 5px;
     border: none;
@@ -344,8 +344,8 @@ table td:not(.first-col), table th:not(.first-col) {
     color: white;
 }
 
-.customer-note { 
-    /* min-height: 5rem; */
+#checkout input:focus, #checkout textarea:focus{
+    border: 2px solid white;
 }
 
 .track-order #payment-section input {
@@ -405,6 +405,10 @@ table td:not(.first-col), table th:not(.first-col) {
 
 .customer-note {
     width: 100%;
+}
+
+.red-theme ::placeholder {
+    color: #a7321d;
 }
 
 .note {
