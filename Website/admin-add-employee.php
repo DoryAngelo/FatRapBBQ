@@ -10,8 +10,8 @@ if (isset($_POST['submit'])) {
     $PRSN_PHONE = str_replace(' ', '', trim($_POST['number']));
     $PRSN_UNAME = mysqli_real_escape_string($conn, trim($_POST['username']));
     $EMP_BRANCH = mysqli_real_escape_string($conn, trim($_POST['branch']));
-    $PRSN_PASSWORD = md5(trim($_POST['password']));
-    $PRSN_CPASSWORD = md5(trim($_POST['cpassword']));
+    $PRSN_PASSWORD = md5($_POST['password']);
+    $PRSN_CPASSWORD = md5($_POST['cpassword']);
     $PRSN_ROLE = $_POST['role'];
 
     if (isset($_FILES['image']['name'])) {
