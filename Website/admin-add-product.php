@@ -39,6 +39,9 @@ if (isset($_POST['submit'])) {
     $insert = "INSERT INTO food(FOOD_NAME, FOOD_PRICE, FOOD_DESC, FOOD_IMG, FOOD_STOCK, FOOD_ACTIVE, FOOD_TYPE) 
                        VALUES('$FOOD_NAME', '$FOOD_PRICE', '$FOOD_DESC', '$FOOD_IMG', '$FOOD_STOCK', '$FOOD_ACTIVE', '$FOOD_TYPE')";
     mysqli_query($conn, $insert);
+
+    header("location: admin-edit-menu.php");
+    exit();
 }
 
 ?>
