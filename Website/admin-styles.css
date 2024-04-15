@@ -345,18 +345,6 @@ table button {
     margin-left: 0;
 }
 
-p.notif {
-    width: max-content;
-    height: max-content;
-    font-size: 0.75rem;
-    font-weight: bold;
-    background-color: red;
-    color: #fff;
-    padding: 0.4rem 0.2rem;
-    border-radius: 50%;
-    margin-right: -11rem;
-}
-
 .side-menu {
     display: flex;
     flex-direction: column;
@@ -423,21 +411,29 @@ a.big-font {
 }
 
 .position-notif {
-    width: 100%;
-    height: max-content;
-    border: 1px solid pink;
-    display: flex;
-    align-items: center;
     position: relative;
 }
 
 .position-notif .view {
-    width: 100%;
     z-index: 0;
 }
 
 .position-notif .notif {
-    margin-left: -20%;
+    position: absolute;
+    right: 1rem;
+    top: 20%;
+    width: max-content;
+    min-width: 1.8rem;
+    height: max-content;
+    min-height: 1.8rem;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: bold;
+    background-color: red;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 1;
 }
 
