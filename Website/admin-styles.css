@@ -80,7 +80,6 @@ main {
     gap: 3rem;
 }
 
-
 .back {
     justify-content: space-between;
 }
@@ -236,7 +235,8 @@ table img {
 .btn-wrapper {
     display: flex;
     justify-content: flex-start;
-    gap: 1rem;
+    flex-wrap: wrap;
+    gap: 0.6rem 1rem;
 }
 
 button {
@@ -283,6 +283,7 @@ table button {
     text-decoration: none;
     text-align: center;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center; 
     position: relative;
@@ -290,21 +291,13 @@ table button {
     /* box-shadow: var(--db-highlight-blue) 0px 3px 4px 0px; pick a better color db-higlight0blue as shadow is good for lightblue but not for the same color */
 }
 
+.grid-container .blue {
+    background-color: var(--db-highlight-blue);
+}
+
 .grid-container .box:hover {
     cursor: pointer;
     box-shadow: #cfd9e3 0px 2px 4px 0px;
-}
-
-#admin-calendar .grid-container .box:hover {
-    cursor: default;
-}
-
-#admin-calendar .grid-container .box {
-    height: 8rem;
-}
-
-.grid-container .blue {
-    background-color: var(--db-highlight-blue);
 }
 
 .grid-container .box p {
@@ -312,13 +305,44 @@ table button {
     font-size: 0.9rem;
 }
 
+.grid-container .box h1 {
+    font-size: 3rem;
+}
+
 #dashboard .grid-container .box p {
     position: absolute;
     top: 1rem;
 }
 
-.grid-container .box h1 {
-    font-size: 3rem;
+#admin-calendar .grid-container {
+    width: 100%;
+    margin-top: 1rem;
+    grid-template-columns: repeat(3,1fr);
+}
+
+#admin-calendar .grid-container .box {
+    height: 8rem;
+    /* gap: 1rem; */
+    background-color: #fff;
+    box-shadow: #cfd9e3 0px 2px 4px 0px;
+}
+
+#admin-calendar .grid-container .box:hover {
+    cursor: default;
+}
+
+#admin-calendar .grid-container .green {
+    color: #90BD7A;
+}
+
+#admin-calendar .grid-container .red {
+    color: var(--reject-red);
+}
+
+#admin-calendar .grid-container p {
+    font-weight: normal;
+    font-size: 0.9rem;
+    margin-left: 0;
 }
 
 p.notif {
@@ -590,31 +614,6 @@ input.image {
     font-size: 1.625rem;
 }
 
-.right-side .grid-container {
-    width: 100%;
-    margin-top: 1rem;
-    grid-template-columns: repeat(3,1fr);
-}
-
-.right-side .grid-container .box {
-    /* gap: 1rem; */
-    background-color: #fff;
-    box-shadow: #cfd9e3 0px 2px 4px 0px;
-}
-
-.right-side .grid-container .green {
-    color: #90BD7A;
-}
-
-.right-side .grid-container .red {
-    color: var(--reject-red);
-}
-
-.right-side .grid-container p {
-    font-weight: normal;
-    font-size: 0.9rem;
-}
-
 .right-side .block {
     height: 100%;
     max-height: 55rem;
@@ -656,7 +655,9 @@ input.image {
 }
 
 .save-btn {
-    width: 30%;
+    width: 100%;
+    max-width: 10rem;
+    min-width: max-content;
     font-size: 1.25rem;
     font-weight: bold;
     background-color: #5FA9FF;
