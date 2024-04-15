@@ -2,9 +2,6 @@
 
 @include 'constants.php';
 
-if ($countNO > 0) {
-    echo "<script>notifyNewOrder();</script>";
-}
 
 if (isset($_POST['confirmed'])) {
 
@@ -15,20 +12,20 @@ if (isset($_POST['confirmed'])) {
     $PLACED_ORDER_CONFIRMATION = "Confirmed";
 
     switch ($PLACED_ORDER_STATUS) {
-        case "Placed":
-            $PLACED_ORDER_STATUS = "Awaiting Payment";
-            break;
-        case "Awaiting Payment":
+        case "Paid":
             $PLACED_ORDER_STATUS = "Preparing";
             break;
         case "Preparing":
             $PLACED_ORDER_STATUS = "For Delivery";
             break;
         case "For Delivery":
+            $PLACED_ORDER_STATUS = "Shipped";
+            break;
+        case "Shipped":
             $PLACED_ORDER_STATUS = "Completed";
             break;
         case "Cancelled":
-            $PLACED_ORDER_STATUS = "Placed";
+            $PLACED_ORDER_STATUS = "Ordered";
             break;
     }
 
@@ -40,7 +37,7 @@ if (isset($_POST['confirmed'])) {
 
     $res = mysqli_query($conn, $sql);
 
-    header('location:admin-completed-orders.php');
+    header('location:employee-to-deliver-orders.php');
 }
 
 if (isset($_POST['not-confirmed'])) {
@@ -58,12 +55,8 @@ if (isset($_POST['not-confirmed'])) {
 
     $res = mysqli_query($conn, $sql);
 
-    header('location:admin-completed-orders.php');
+    header('location:employee-to-deliver-orders.php');
 }
-
-
-
-
 
 ?>
 
@@ -75,7 +68,7 @@ if (isset($_POST['not-confirmed'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--change title-->
-    <title>Completed Orders | Admin</title>
+    <title>Shipped Orders | Employee</title>
     <link rel="stylesheet" href="header-styles.css">
     <link rel="stylesheet" href="admin-styles.css"><!--change css file-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -92,7 +85,7 @@ if (isset($_POST['not-confirmed'])) {
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
-                    <h1>Fat Rap's Barbeque</h1>
+                    <h1>Fat Rap's Barbeque's Online Store</h1>
                     <p>ADMIN</p>
                 </div>
             </div>
@@ -101,11 +94,9 @@ if (isset($_POST['not-confirmed'])) {
                 <div class='menu-button'></div>
             </label>
             <ul class='menubar'>
-                <!--TODO: ADD LINKS-->
                 <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
                 <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
                 <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
-                <!-- Text below should change to 'Logout'once user logged in-->
                 <?php
                 if (isset($_SESSION['prsn_id'])) {
                 ?>
@@ -125,7 +116,7 @@ if (isset($_POST['not-confirmed'])) {
         <section class="section" id="orders-page">
             <div class="container">
                 <div class="section-heading">
-                    <h2>Completed Orders</h2>
+                    <h2>Shipped Orders</h2>
                     <div class="inline">
                         <p>Date range:</p>
                         <input type="date">
@@ -139,12 +130,11 @@ if (isset($_POST['not-confirmed'])) {
                                 <th class="header">Customer</th>
                                 <th class="header">Order #</th>
                                 <th class="header">Payment</th>
-                                <th class="header">Status</th>
                                 <th class="header">Confirmed</th>
                             </tr>
                             <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
                             <?php
-                            $sql = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'Completed'";
+                            $sql = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'Shipped'";
                             $res = mysqli_query($conn, $sql);
                             $count = mysqli_num_rows($res);
                             if ($count > 0) {
@@ -163,7 +153,6 @@ if (isset($_POST['not-confirmed'])) {
                                         <td data-cell="customer"><?php echo $CUS_NAME ?></td>
                                         <td data-cell="Order #"><a href="<?php echo SITEURL ?>admin-order-details.php?PLACED_ORDER_ID=<?php echo $PLACED_ORDER_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
                                         <td data-cell="Payment">₱<?php echo $PLACED_ORDER_TOTAL ?></td>
-                                        <td data-cell="Payment"><?php echo $PLACED_ORDER_STATUS ?></td>
                                         <td data-cell="Confimed">
                                             <div class="btn-wrapper">
                                                 <form method="POST">
@@ -181,7 +170,7 @@ if (isset($_POST['not-confirmed'])) {
                                 ?>
                                 <!-- <div class="error">No new orders</div> -->
                                 <tr>
-                                    <td colspan="5" class="error">No new orders</td>
+                                    <td colspan="5" class="error">No orders yet to deliver</td>
                                 </tr>
                             <?php
 
@@ -213,7 +202,7 @@ if (isset($_POST['not-confirmed'])) {
                                     }
                                 }
                                 ?>
-                                <a href="<?php echo SITEURL; ?>admin-edit-inventory.php" class="edit">Edit</a>
+                                <a href="<?php echo SITEURL; ?>employee-inventory.php" class="edit">Edit</a>
                             </div>
                         </div>
                         <div class="group">
@@ -228,33 +217,57 @@ if (isset($_POST['not-confirmed'])) {
                     </section>
                 </section>
             </div>
-
+        </section>
+            
         </section>
     </main>
-    <script>
-        // Function to check for new orders via AJAX
-        function checkForNewOrders() {
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    if (this.responseText.trim() === "NewOrder") {
-                        notifyNewOrder(); // Play notification sound
-                    }
-                }
-            };
-            xhttp.open("GET", "order-notification.php", true);
-            xhttp.send();
-        }
-
-        // Function to play notification sound
-        function notifyNewOrder() {
-            var audio = new Audio('sound/notification.mp3'); // Replace with correct path
-            audio.play();
-        }
-
-        // Check for new orders every 5 seconds 
-        setInterval(checkForNewOrders, 2000);
-    </script>
 </body>
+<script>
+    // Function to check for new orders via AJAX
+    function checkForNewOrders() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                if (this.responseText.trim() === "NewOrder") {
+                    notifyNewOrder(); // Play notification sound
+                }
+            }
+        };
+        xhttp.open("GET", "order-notification.php", true);
+        xhttp.send();
+    }
+
+    // Function to play notification sound
+    function notifyNewOrder() {
+        var audio = new Audio('sound/notification.mp3'); // Replace with correct path
+        audio.play();
+    }
+
+    // Check for new orders every 5 seconds 
+    setInterval(checkForNewOrders, 2000);
+</script>
 
 </html>
+
+<?php
+if (isset($_POST['confirmed'])) {
+
+    $PLACED_ORDER_CONFIRMATION = "Confirmed";
+
+    $sql = "UPDATE placed_order SET
+	PLACED_ORDER_CONFIRMATION = '$PLACED_ORDER_CONFIRMATION'
+	WHERE PRSN_ID = '$PRSN_ID'
+	";
+
+    $res = mysqli_query($conn, $sql);
+} else if (isset($_POST['not-confirmed'])) {
+    $PLACED_ORDER_CONFIRMATION = "Not Confirmed";
+
+    $sql = "UPDATE placed_order SET
+	PLACED_ORDER_CONFIRMATION = '$PLACED_ORDER_CONFIRMATION'
+	WHERE PRSN_ID = '$PRSN_ID'
+	";
+
+    $res = mysqli_query($conn, $sql);
+}
+?>
