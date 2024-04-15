@@ -3,6 +3,7 @@ displaying a message after clicking the submit button in the payment section*/
 
 // DOM Elements
 const circles = document.querySelectorAll(".circle"),
+  stepsContainer = document.getElementById("stepsContainer"),
   progressBar = document.querySelector(".indicator"),
   buttons = document.querySelectorAll("button"),
   pstatus = document.getElementById("status").innerHTML,
@@ -38,6 +39,9 @@ const updateSteps = (e) => {
       break;
     case "Completed":
       currentStep = 6;
+      break;
+    case "Canceled":
+      stepsContainer.style.display = "none"; //hide the enter progress bar
       break;
   }
   // // update current step based on the button clicked

@@ -651,15 +651,17 @@ a.back {
 }
 
 /*order tracking progress bar*/
-.track-order .block-body .container {
+
+  #stepsContainer {
     margin: 0;
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     align-items: center;
+    justify-content: center;
     gap: 40px;
     width: 100%;
     padding: 2rem 0;
-    border: none;
+    border-bottom: 1px solid var(--gray);
   }
   
   .track-order .container .steps {
@@ -758,7 +760,6 @@ a.back {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-top: 1px solid var(--gray);
     padding-top: 1.25rem;
     }
 
