@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Password reset | Fat Rap's Barbeque's Online Store</title>
+    <title>Password reset | Fat Rap's Barbeque</title>
     <link rel="stylesheet" href="header-styles.css">
     <link rel="stylesheet" href="success-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,26 +19,28 @@
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
-                    <h1>Fat Rap's Barbeque's Online Store</h1>
+                    <h1>Fat Rap's Barbeque</h1>
                 </div>
             </div>
         </div>
     </header>
     <main>
-        <div class="success-box reset-style">
-            <div class="center">
-                <div class="success-title">
-                    <h1>Success!</h1>
-                    <p class="title-desc"><i>Your password has been changed.</i></p>
+        <section class="section product-info-page">
+                <div class="container">
+                    <div class="success-box">
+                        <div class="success-title">
+                            <h1>Success!</h1>
+                            <p class="title-desc"><i>Your password has been changed.</i></p>
+                            <p class="small-text"><i>Click here to <a class="login-link" href="login-page.php">Login</a></i></p>
+                        </div>
+                    </div> 
                 </div>
-                <p class="small-text"><i>Click here to <a class="login-link" href="login-page.php">Login</a></i></p>
-            </div>
-        </div> 
+        <section>
     </main>
     <footer>
         <div class="footer-container">
             <div class="left-container">
-                <h1>Fat Rap's Barbeque's Online Store</h1>
+                <h1>Fat Rap's Barbeque</h1>
                 <div class="list">
                     <ul>
                         <li><a href="<?php echo SITEURL; ?>cus-home-page.php">Home</a></li>

@@ -24,26 +24,51 @@ body{
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     min-height: 100vh;
+    min-width: 320px;
 }
 
-main {
+/* main {
     padding-top: 210px;
     padding-bottom: 120px;
     background-color: var(--bg);
     display: flex;
     justify-content: center;
+} */
+
+main {
+    padding-top: 8rem; /*height of header */
+    height: max-content;
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+.section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid red;
+}
+
+.container {
+    width: 90%;
+    height: 100%;
+    max-width: 1200px;
+    margin: 4.5rem;
+    border: 1px solid red;
 }
 
 /* success block */
 .success-box {
     background: var(--form-bg);
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    padding: 80px 40px;
     border-radius: 25px;
-    width: max(40%, 400px);
-     /*100% of parent's width, 425px minimum width (default size), */
+    width: 100%;
+    max-width: 500px;
     position: relative;
     margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .reset-style {
@@ -58,26 +83,57 @@ main {
 }
 
 .success-title{
-    margin: auto;
+    width: 100%;
+    margin: 2.5rem;
     text-align: center;
+    height: 100%;
+    border: 1px solid red;
+    display: flex;
+    flex-direction: column;
+    /* gap: 2vw; */
+    gap: 1.5rem;
 }
 
 .success-title h1{
     color: var(--block);
-    font-size: clamp(2rem, 1rem + 5vw, 4rem);
+    /* font-size: clamp(2rem, 1rem + 5vw, 4rem); */
+    font-size: 4rem;
+}
+
+.title-desc, a.button {
+    font-size: 1.25rem;
 }
 
 .title-desc{
     color: var(--text);
-    margin-top: 1.5rem;
-    margin-left: 2rem;
-    margin-right: 2rem;
-    /*font-size: 1.25rem;*/
-    font-size: clamp(0.625rem, 0.3125rem + 2.5vw, 1.25rem);
+}
+
+a.back {
+    text-decoration: none;
+}
+
+a.button {
+    width: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 1.3rem;
+    font-weight: bold;
+    border-radius: 30px;
+    background-color: var(--primary);
+    text-decoration: none;
+    color: var(--text);
+    margin-inline: auto;
+}
+
+a.button:hover {
+    background-color: var(--active-primary);
+    cursor: pointer;
 }
 
 .justified {
     text-align: justify;
+    line-height: 1.6rem;
 }
 
 .small-text {
@@ -96,3 +152,30 @@ main {
 }
 
 /* end of success block */
+@media only screen and (width <= 860px) {
+    main {
+        padding-top: 4rem;
+    }
+    .container {
+        margin: clamp(1rem, 10vw, 4.5rem) auto;
+    }
+}
+@media only screen and (width <= 648) {
+    
+}
+@media only screen and (width <= 560px) {
+    .success-title{
+        margin: 7%;
+        gap: 1rem;
+    } 
+    .success-title h1{
+        font-size: 11vw;
+    }
+    .success-title p, a.button {
+        font-size: clamp(0.625rem, 0.3125rem + 2.5vw, 1.25rem);
+        line-height: 5vw;
+    }
+    .success-title p {
+        line-height: 5vw;
+    }
+}

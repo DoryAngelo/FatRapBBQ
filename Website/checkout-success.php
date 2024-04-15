@@ -12,7 +12,7 @@ $PLACED_ORDER_TRACKER = $_SESSION['PLACED_ORDER_TRACKER'];
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout success! | Fat Rap's Barbeque's Online Store</title>
+    <title>Checkout success! | Fat Rap's Barbeque</title>
     <link rel="stylesheet" href="header-styles.css">
     <link rel="stylesheet" href="success-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,24 +28,30 @@ $PLACED_ORDER_TRACKER = $_SESSION['PLACED_ORDER_TRACKER'];
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
-                    <h1>Fat Rap's Barbeque's Online Store</h1>
+                    <h1>Fat Rap's Barbeque</h1>
                 </div>
             </div>
         </div>
     </header>
     <main>
-        <div class="success-box">
-            <div class="success-title">
-                <h1>Success!</h1>
-                <p class="title-desc">Your order tracker is: <?php echo $PLACED_ORDER_TRACKER; ?></p>
-                <p class="title-desc justified"><i>Your order has been placed. Please allot 5 to 10 minutes of waiting time for the confirmation of your order. Confirmation will be sent via email.</i></p>
+        <section class="section product-info-page">
+            <div class="container">
+                <div class="success-box">
+                    <div class="success-title">
+                        <h1>Success!</h1>
+                        <p class="title-desc">Your order tracker is: <?php echo $PLACED_ORDER_TRACKER; ?></p>
+                        <p class="title-desc justified"><i>Your order has been placed. Please allot 5 to 10 minutes of waiting time for the confirmation of your order. Confirmation will be sent via email.</i></p>
+                        <a href="cus-home-page.php" class="button">Go to Home</a>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
+       
     </main>
     <footer>
         <div class="footer-container">
             <div class="left-container">
-                <h1>Fat Rap's Barbeque's Online Store</h1>
+                <h1>Fat Rap's Barbeque</h1>
                 <div class="list">
                     <ul>
                         <li><a href="<?php echo SITEURL; ?>cus-home-page.php">Home</a></li>
