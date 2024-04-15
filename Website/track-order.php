@@ -46,7 +46,7 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
-                    <h1>Fat Rap's Barbeque's Online Store</h1>
+                    <h1>Fat Rap's Barbeque</h1>
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
@@ -82,8 +82,8 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                         <section class="block">
                             <h3 class="block-heading">Order code: <?php echo $PLACED_ORDER_ID ?></h3>
                             <div class="block-body">
-                                <div class="container">
-                                    <div class="steps">
+                                <div class="container" id="stepsContainer"> <!-- hidden when order status is canceled-->
+                                    <div class="steps" >
                                         <?php
                                         if ($count2 > 0) {
                                             $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
@@ -126,7 +126,12 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                                 case "Completed": //DELIVERED
                                                 ?>
                                                     <p id="status">Completed</p>
-                                        <?php
+                                                <?php
+                                                    break;
+                                                case "Canceled": 
+                                                ?>
+                                                    <p id="status">Canceled</p>
+                                                <?php
                                                     break;
                                             }
                                         }
@@ -313,7 +318,7 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
     <footer>
         <div class="footer-container">
             <div class="left-container">
-                <h1>Fat Rap's Barbeque's Online Store</h1>
+                <h1>Fat Rap's Barbeque</h1>
                 <div class="list">
                     <ul>
                         <li><a href="#">Home</a></li>

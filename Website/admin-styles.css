@@ -282,7 +282,7 @@ table button {
     border-radius: 1rem;
     text-decoration: none;
     text-align: center;
-     display: flex;
+    display: flex;
     justify-content: center;
     align-items: center; 
     position: relative;
@@ -308,17 +308,13 @@ table button {
 }
 
 .grid-container .box p {
-    position: absolute;
     font-weight: bold;
     font-size: 0.9rem;
 }
 
-.grid-container .box p:not(p.bottom) {
+#dashboard .grid-container .box p {
+    position: absolute;
     top: 1rem;
-}
-
-.grid-container .box p.bottom {
-    bottom: 1rem;
 }
 
 .grid-container .box h1 {
@@ -601,7 +597,7 @@ input.image {
 }
 
 .right-side .grid-container .box {
-    gap: 1rem;
+    /* gap: 1rem; */
     background-color: #fff;
     box-shadow: #cfd9e3 0px 2px 4px 0px;
 }

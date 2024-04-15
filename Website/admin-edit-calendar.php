@@ -107,23 +107,17 @@ if ($res) {
                             <div class="grid-container">
                                 <div class="box green">
                                     <p>Available</p>
-                                    <div>
-                                        <h1><?php echo $available_count ?></h1>
-                                    </div>
+                                    <h1><?php echo $available_count ?></h1>
                                     <p class="bottom">days</p>
                                 </div>
                                 <div class="box red">
                                     <p>Fully Booked</p>
-                                    <div>
-                                        <h1><?php echo $fullybooked_count ?></h1>
-                                    </div>
+                                    <h1><?php echo $fullybooked_count ?></h1>
                                     <p class="bottom">days</p>
                                 </div>
                                 <div class="box">
                                     <p>Closed</p>
-                                    <div>
-                                        <h1><?php echo $closed_count ?></h1>
-                                    </div>
+                                    <h1><?php echo $closed_count ?></h1>
                                     <p class="bottom">days</p>
                                 </div>
                             </div>
