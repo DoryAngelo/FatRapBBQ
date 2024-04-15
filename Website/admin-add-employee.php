@@ -63,6 +63,7 @@ if (isset($_POST['submit'])) {
         }
     }
     header("location: admin-employee-accounts.php");
+    exit();
 }
 
 
