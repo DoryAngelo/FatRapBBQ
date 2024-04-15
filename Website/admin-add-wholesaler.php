@@ -5,10 +5,10 @@
 $PRSN_ID = $_SESSION['prsn_id'];
 
 if (isset($_POST['submit'])) {
-    $PRSN_FNAME = mysqli_real_escape_string($conn, $_POST['first-name']);
-    $PRSN_LNAME = mysqli_real_escape_string($conn, $_POST['last-name']);
+    $PRSN_FNAME = mysqli_real_escape_string($conn, trim($_POST['first-name']));
+    $PRSN_LNAME = mysqli_real_escape_string($conn, trim($_POST['last-name']));
     $PRSN_PHONE = str_replace(' ', '', $_POST['number']);
-    $PRSN_UNAME = mysqli_real_escape_string($conn, $_POST['username']);
+    $PRSN_UNAME = mysqli_real_escape_string($conn, trim($_POST['username']));
     $PRSN_PASSWORD = md5($_POST['password']);
     $PRSN_CPASSWORD = md5($_POST['cpassword']);
     $PRSN_ROLE = 'Wholesaler';
@@ -37,12 +37,19 @@ if (isset($_POST['submit'])) {
         $WHL_IMG = "";
     }
 
+    $select = "SELECT * FROM `person` WHERE PRSN_EMAIL = '$PRSN_UNAME'";
 
-    if ($PRSN_PASSWORD != $PRSN_CPASSWORD) {
-        echo  "Password not matched";
+    $result = mysqli_query($conn, $select);
+
+    if (mysqli_num_rows($result) > 0) {
+        // User already exists, set error message in session
+        $_SESSION['error_message'] = "User already exists";
+        header('Location: admin-add-wholesaler.php');
+        exit();
     } else {
-        $insert = "INSERT INTO person(PRSN_NAME, PRSN_PASSWORD, PRSN_PHONE, PRSN_ROLE) 
-                       VALUES('$PRSN_UNAME', '$PRSN_PASSWORD', '$PRSN_PHONE', '$PRSN_ROLE')";
+        $PRSN_NAME = $PRSN_FNAME . " " . $PRSN_LNAME;
+        $insert = "INSERT INTO person(PRSN_NAME, PRSN_EMAIL, PRSN_PASSWORD, PRSN_PHONE, PRSN_ROLE) 
+                       VALUES('$PRSN_NAME', '$PRSN_UNAME', '$PRSN_PASSWORD', '$PRSN_PHONE', '$PRSN_ROLE')";
         if (mysqli_query($conn, $insert)) {
             $PRSN_ID = mysqli_insert_id($conn);
             $insert2 = "INSERT INTO wholesaler(PRSN_ID, WHL_FNAME, WHL_LNAME, WHL_IMAGE) 
@@ -54,6 +61,8 @@ if (isset($_POST['submit'])) {
             echo "Error inserting data into person table: " . mysqli_error($conn);
         }
     }
+    header("location: admin-wholesaler-accounts.php");
+    exit();
 }
 
 
@@ -129,6 +138,12 @@ if (isset($_POST['submit'])) {
                         <form class="column" method="post" enctype="multipart/form-data" onsubmit="return validateInputs()">
                             <div class="block layout">
                                 <section>
+                                    <?php
+                                    if (isset($_SESSION['error_message'])) {
+                                        echo "<div class='error-text'>" . $_SESSION['error_message'] . "</div>";
+                                        unset($_SESSION['error_message']);
+                                    }
+                                    ?>
                                     <div class="form-title">
                                         <h1>Contact Information</h1>
                                     </div>
@@ -145,6 +160,7 @@ if (isset($_POST['submit'])) {
                                         </div>
                                         <div class="form-field-input input-control">
                                             <label for="number">Phone Number</label>
+                                            <p>(e.g. 09xxxxxxxxx)</p>
                                             <input class="js-user" type="text" id="number" name="number">
                                             <div class="error"></div>
                                         </div>
@@ -152,6 +168,7 @@ if (isset($_POST['submit'])) {
                                             <label for="image">Image</label>
                                             <p>(accepted files: .jpg, .png)</p>
                                             <input name="image" id="image" class="image" type="file">
+                                            <div class="error"></div>
                                         </div>
                                     </div>
                                 </section>
@@ -162,40 +179,43 @@ if (isset($_POST['submit'])) {
                                     <div class="form-field">
                                         <div class="form-field-input input-control">
                                             <label for="username">Username</label>
+                                            <p>Username should exclude special characters.</p>
                                             <input name="username" id="username" class="js-user" type="text">
                                             <div class="error"></div>
                                         </div>
                                         <div class="form-field-input">
                                             <div class="with-desc">
                                                 <label for="password">Password</label>
-                                                <p>Password must be 8 characters long, and includes at least 1 uppercase, 1 lowercase, 1 digit</p>
+                                                <p>Password at least 8 characters long. Include at least 1 uppercase, 1 lowercase, and 1 digit. Exclude special characters.</p>
                                             </div>
                                             <div class="input-container input-control">
                                                 <input class="js-pass" type="password" id="password" name="password">
+                                                <div class="error"></div>
                                                 <span onclick="togglePassword('password')">
-                                                    <svg class="showpass" id="eyeIconOpenPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                                    <svg class="showpass" id="eyeIconClosedPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                                                         <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z" />
                                                     </svg>
-                                                    <svg class="hidepass" id="eyeIconClosedPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                                    <svg class="hidepass" id="eyeIconOpenPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                                                         <path fill="currentColor" d="M11.83 9L15 12.16V12a3 3 0 0 0-3-3h-.17m-4.3.8l1.55 1.55c-.05.21-.08.42-.08.65a3 3 0 0 0 3 3c.22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53a5 5 0 0 1-5-5c0-.79.2-1.53.53-2.2M2 4.27l2.28 2.28l.45.45C3.08 8.3 1.78 10 1 12c1.73 4.39 6 7.5 11 7.5c1.55 0 3.03-.3 4.38-.84l.43.42L19.73 22L21 20.73L3.27 3M12 7a5 5 0 0 1 5 5c0 .64-.13 1.26-.36 1.82l2.93 2.93c1.5-1.25 2.7-2.89 3.43-4.75c-1.73-4.39-6-7.5-11-7.5c-1.4 0-2.74.25-4 .7l2.17 2.15C10.74 7.13 11.35 7 12 7Z" />
                                                     </svg>
                                                 </span>
-                                                <div class="error"></div>
+
                                             </div>
                                         </div>
                                         <div class="form-field-input">
                                             <label for="cpassword">Re-enter Password</label>
                                             <div class="input-container input-control">
                                                 <input class="js-cpass" type="password" id="cpassword" name="cpassword">
+                                                <div class="error"></div>
                                                 <span onclick="togglePassword('cpassword')">
-                                                    <svg class="showpass" id="eyeIconOpenCPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                                    <svg class="showpass" id="eyeIconClosedCPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                                                         <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z" />
                                                     </svg>
-                                                    <svg class="hidepass" id="eyeIconClosedCPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                                    <svg class="hidepass" id="eyeIconOpenCPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                                                         <path fill="currentColor" d="M11.83 9L15 12.16V12a3 3 0 0 0-3-3h-.17m-4.3.8l1.55 1.55c-.05.21-.08.42-.08.65a3 3 0 0 0 3 3c.22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53a5 5 0 0 1-5-5c0-.79.2-1.53.53-2.2M2 4.27l2.28 2.28l.45.45C3.08 8.3 1.78 10 1 12c1.73 4.39 6 7.5 11 7.5c1.55 0 3.03-.3 4.38-.84l.43.42L19.73 22L21 20.73L3.27 3M12 7a5 5 0 0 1 5 5c0 .64-.13 1.26-.36 1.82l2.93 2.93c1.5-1.25 2.7-2.89 3.43-4.75c-1.73-4.39-6-7.5-11-7.5c-1.4 0-2.74.25-4 .7l2.17 2.15C10.74 7.13 11.35 7 12 7Z" />
                                                     </svg>
                                                 </span>
-                                                <div class="error"></div>
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -255,21 +275,28 @@ if (isset($_POST['submit'])) {
             const cpasswordValue = cpasswordInput.value.trim();
 
             const nameRegex = /^[a-zA-Z\s]+$/;
-            const numberRegex = /^09\d{9}$/;
-            const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/; // Password should include at least 1 digit, 1 lowercase, 1 uppercase
+            const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
+            const usernameRegex = /^[a-zA-Z0-9]+$/;
+            const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/; // Password should include at least 1 digit, 1 lowercase, 1 uppercase
             // Email and username regex are omitted assuming they can be validated on the backend
 
             if (firstNameValue === '') {
                 setError(firstNameInput, 'Please enter your first name');
                 isValid = false;
-            } else {
+            } else if (!nameRegex.test(firstNameValue)) {
+                setError(firstNameInput, 'First name must contain only letters');
+                isValid = false;
+            }  else {
                 clearError(firstNameInput);
             }
 
             if (lastNameValue === '') {
                 setError(lastNameInput, 'Please enter your last name');
                 isValid = false;
-            } else {
+            } else if (!nameRegex.test(lastNameValue)) {
+                setError(lastNameInput, 'Last name must contain only letters');
+                isValid = false;
+            }  else {
                 clearError(lastNameInput);
             }
 
@@ -287,7 +314,10 @@ if (isset($_POST['submit'])) {
             if (usernameValue === '') {
                 setError(usernameInput, 'Please enter your username');
                 isValid = false;
-            } else {
+            } else if (!usernameRegex.test(usernameValue)) {
+                setError(usernameInput, 'Invalid username format');
+                isValid = false;
+            }  else {
                 clearError(usernameInput);
             }
 

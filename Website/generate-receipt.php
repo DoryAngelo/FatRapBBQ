@@ -36,8 +36,9 @@ class PDF extends FPDF
     }
 }
 
-if (isset($_GET['id'])) {
-    $PLACED_ORDER_ID = $_GET['id'];
+//if (isset($_GET['id'])) {
+    //$PLACED_ORDER_ID = $_GET['id'];
+    $PLACED_ORDER_ID = 73;
 
     $pdf = new PDF('P', 'mm', "A4");
     $pdf->AliasNbPages();
@@ -77,7 +78,7 @@ if (isset($_GET['id'])) {
             // Add the details to the PDF
             $pdf->SetFont('Arial', "B", 15);
             $pdf->Cell(2);
-            $pdf->Cell(130, 5, 'Order Details', 0, 0);
+            $pdf->Cell(120, 5, 'Order Details', 0, 0);
             $pdf->Cell(59, 5, 'Ship To', 0, 1);
             $pdf->SetFont('Arial', "", 10);
             $pdf->Cell(2);
@@ -159,7 +160,7 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
 
 
     $pdf->Output();
-} else {
-    // If PLACED_ORDER_ID is not provided, handle the error
-    die("Error: PLACED_ORDER_ID is not provided");
-}
+// } else {
+//     // If PLACED_ORDER_ID is not provided, handle the error
+//     die("Error: PLACED_ORDER_ID is not provided");
+// }

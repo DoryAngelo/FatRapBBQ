@@ -188,7 +188,7 @@ if (isset($_POST['submit'])) {
                     <p>You are about to place your order</p>
                 </div>
                 <section>
-                    <form method="POST" class="section-body"onsubmit="return validateInputs()">
+                    <form method="POST" class="section-body" onsubmit="return validateInputs()">
                         <!--order summary block-->
                         <section class="block">
                             <h3 class="block-heading">Order Summary</h2>
@@ -198,9 +198,15 @@ if (isset($_POST['submit'])) {
                                             <thead>
                                                 <tr>
                                                     <th class="header first-col"></th>
-                                                    <th class="header"><p>Quantity</p></th>
-                                                    <th class="header"><p>Price</p></th>
-                                                    <th class="header"><p>Sub Total</p></th>
+                                                    <th class="header">
+                                                        <p>Quantity</p>
+                                                    </th>
+                                                    <th class="header">
+                                                        <p>Price</p>
+                                                    </th>
+                                                    <th class="header">
+                                                        <p>Sub Total</p>
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -232,9 +238,15 @@ if (isset($_POST['submit'])) {
                                                                     <p><?php echo $FOOD_NAME; ?></p>
                                                                 </div>
                                                             </td> <!--Pic and Name-->
-                                                            <td><p><?php echo $IN_ORDER_QUANTITY ?></p></td> <!--Quantity-->
-                                                            <td><p>₱<?php echo $FOOD_PRICE; ?></p></td><!--Price-->
-                                                            <td><p>₱<?php echo $IN_ORDER_TOTAL; ?></p></td><!--Sub Total-->
+                                                            <td>
+                                                                <p><?php echo $IN_ORDER_QUANTITY ?></p>
+                                                            </td> <!--Quantity-->
+                                                            <td>
+                                                                <p>₱<?php echo $FOOD_PRICE; ?></p>
+                                                            </td><!--Price-->
+                                                            <td>
+                                                                <p>₱<?php echo $IN_ORDER_TOTAL; ?></p>
+                                                            </td><!--Sub Total-->
                                                         </tr>
                                                 <?php
                                                     }
@@ -327,7 +339,7 @@ if (isset($_POST['submit'])) {
                                             <div class="error"></div>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </section>
@@ -335,14 +347,54 @@ if (isset($_POST['submit'])) {
                         <section class="red-theme" id="delivery-block">
                             <div class="left-side">
                                 <h3 class="block-heading">When do you want your order to be delivered?</h2>
-                                <div class="radio">
-                                    <label for=""><input id="" type="radio" name="" class="" /> Today</label>
-                                    <label for=""><input id="" type="radio" name="" class="" /> Select a date:</label>
+                                    <?php
+                                    $sql = "SELECT CALENDAR_DATE, DATE_STATUS FROM calendar";
+                                    $res = mysqli_query($conn, $sql);
+                                    $calendar_data = array();
+
+                                    if ($res) {
+                                        while ($row = mysqli_fetch_assoc($res)) {
+                                            // Convert date string to a format JavaScript can understand
+                                            $date = date_create_from_format("F d Y", $row['CALENDAR_DATE']);
+                                            $dateStr = date_format($date, "Y-m-d");
+                                            $calendar_data[$dateStr] = $row['DATE_STATUS'];
+                                        }
+                                    }
+                                    $calendar_json = json_encode($calendar_data);
+                                    ?>
+                                    <script>
+                                        var calendarData = <?php echo $calendar_json; ?>;
+                                    </script>
                                     <div class="date-grp">
-                                        <input class="date" type="date" name="date" min="2024-04-01" max="2024-05-31">
-                                        <div class="error"></div>
+                                        <?php
+                                        $today = date("Y-m-d");
+                                        $oneMonthFromNow = date("Y-m-d", strtotime("+1 month"));
+                                        ?>
+                                        <input class="date" type="date" name="date" min="<?php echo $today ?>" max="<?php echo $oneMonthFromNow ?>" oninput="disableInvalidDates(this)">
+                                        <script>
+                                            function disableInvalidDates(input) {
+                                                var selectedDate = new Date(input.value);
+                                                var currentDate = new Date();
+                                                currentDate.setHours(0, 0, 0, 0);
+                                                var dateStr = selectedDate.toISOString().slice(0, 10);
+                                                var currentTime = new Date().toLocaleTimeString('en-US', {
+                                                    hour12: false,
+                                                    hour: '2-digit',
+                                                    minute: '2-digit'
+                                                });
+
+                                                if (selectedDate < currentDate) {
+                                                    input.setCustomValidity("Date invalid.");
+                                                } else if (calendarData[dateStr] === 'fullybooked' || calendarData[dateStr] === 'closed') {
+                                                    input.setCustomValidity("This date is not available.");
+                                                } else if (selectedDate.getTime() === currentDate.getTime() && input.value < currentTime) {
+                                                    input.setCustomValidity("Time invalid.");
+                                                } else {
+                                                    input.setCustomValidity("");
+                                                }
+                                            }
+                                        </script>
                                     </div>
-                                </div>
                             </div>
                             <div class="block time-slot">
                                 <h3 class="block-heading">Time Slot</h2>
@@ -351,14 +403,15 @@ if (isset($_POST['submit'])) {
                                         <div class="error"></div>
                                     </div>
                             </div>
+
                         </section>
                         <!-- customer note block-->
                         <section class="block red-theme">
                             <h3 class="block-heading">Additional Notes</h2>
-                            <div class="block-body">
-                                <label for="customer-note"></label>
-                                <textarea id="customer-note" class="customer-note" name="customer-note" rows="4" placeholder="You may send an additional note such as extra spoon and fork, extra sauce, etc."></textarea>
-                            </div>
+                                <div class="block-body">
+                                    <label for="customer-note"></label>
+                                    <textarea id="customer-note" class="customer-note" name="customer-note" rows="4" placeholder="You may send an additional note such as extra spoon and fork, extra sauce, etc."></textarea>
+                                </div>
                         </section>
                         <!-- note block-->
                         <div class="block note">
@@ -366,14 +419,14 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="btn-container center">
                             <a href="<?php echo SITEURL; ?>cart.php" class="page-button clear-bg">Back</a>
-                                <button name="submit" class="page-button">Place Order</button>
-                                <!-- <a href="place_order.php" class="page-button">Place Order</a> -->
+                            <button name="submit" class="page-button">Place Order</button>
+                            <!-- <a href="place_order.php" class="page-button">Place Order</a> -->
                         </div>
                     </form>
                 </section>
             </div>
         </section>
-        
+
         <script>
             const firstNameInput = document.getElementById('first-name');
             const lastNameInput = document.getElementById('last-name');
@@ -417,9 +470,9 @@ if (isset($_POST['submit'])) {
                 const timeValue = timeInput.value.trim();
 
                 const nameRegex = /^[a-zA-Z\s]+$/;
-                const numberRegex = /^09\d{9}$/;
-                const passwordRegex = /^[a-zA-Z0-9]{8,}$/; // Password should not contain special characters
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Email must contain an '@'
+                const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
+                const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/; // Password should not contain special characters
+                const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]+$/; // Email must contain an '@'
 
                 if (firstNameValue === '') {
                     setError(firstNameInput, 'Please enter your name');

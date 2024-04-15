@@ -5,6 +5,124 @@
 $PRSN_ID = $_GET['PRSN_ID'];
 $WHL_ID = $_GET['WHL_ID'];
 
+$sql = "SELECT * FROM person, wholesaler WHERE wholesaler.PRSN_ID = person.PRSN_ID AND WHL_ID = '$WHL_ID'";
+$res = mysqli_query($conn, $sql);
+$count = mysqli_num_rows($res);
+
+if ($count > 0) {
+    while ($row = mysqli_fetch_assoc($res)) {
+        $WHL_IMAGE = $row['WHL_IMAGE'];
+        $WHL_FNAME = $row['WHL_FNAME'];
+        $WHL_LNAME = $row['WHL_LNAME'];
+        $PRSN_NUMBER = $row['PRSN_PHONE'];
+        $PRSN_NAME = $row['PRSN_NAME'];
+        $PRSN_EMAIL = $row['PRSN_EMAIL'];
+    }
+}
+
+
+if (isset($_POST['submit'])) {
+    $WHL_FNAME = mysqli_real_escape_string($conn, trim($_POST['first-name']));
+    $WHL_LNAME = mysqli_real_escape_string($conn, trim($_POST['last-name']));
+    $PRSN_PHONE = str_replace(' ', '', $_POST['number']);
+    $PRSN_UNAME = mysqli_real_escape_string($conn, trim($_POST['username']));
+    $PRSN_PASSWORD = md5($_POST['password']);
+    $PRSN_CPASSWORD = md5($_POST['cpassword']);
+    $current_image = $WHL_IMAGE;
+
+    // Check if a new image is uploaded
+    if (isset($_FILES['image']['name']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        // Get the image details
+        $WHL_IMG = $_FILES['image']['name'];
+
+        // Check if the uploaded file is an image
+        $image_info = getimagesize($_FILES['image']['tmp_name']);
+        if ($image_info === false) {
+            // Handle non-image files here
+            $_SESSION['upload'] = "<div class='error'>Please upload a valid image file</div>";
+            header('location:' . $_SERVER['PHP_SELF'] . '?PRSN_ID=' . $PRSN_ID);
+            exit();
+        }
+
+        // Generate a unique filename for the image
+        $image_info = pathinfo($WHL_IMG);
+        $ext = strtolower($image_info['extension']);
+        $WHL_IMG = "WHL_IMAGE_" . $PRSN_UNAME . "." . $ext;
+
+        // Set the destination path for the uploaded image
+        $dst = "images/" . $WHL_IMG;
+
+        // Upload the image
+        if (!move_uploaded_file($_FILES['image']['tmp_name'], $dst)) {
+            // Handle upload failure
+            $_SESSION['upload'] = "<div class='error'>Failed To Upload Image</div>";
+            header('location:' . $_SERVER['PHP_SELF'] . '?RPSN_ID=' . $PRSN_ID);
+            exit();
+        }
+
+        // Remove the previous image if it exists
+        if (!empty($current_image)) {
+            $remove_path = "images/" . $current_image;
+            if (!unlink($remove_path)) {
+                // Handle image removal failure
+                $_SESSION['failed-remove'] = "<div class='error'>Failed To Remove Current Image</div>";
+                header('location:' . SITEURL . 'admin-home.php');
+                exit();
+            }
+        }
+    } else {
+        // No new image uploaded, retain the current image
+        $WHL_IMG = $current_image;
+    }
+
+    // Check if password is provided
+    if (!empty($_POST['password'])) {
+        $PRSN_PASSWORD = md5($_POST['password']);
+        $updatePassword = "PRSN_PASSWORD = '$PRSN_PASSWORD',";
+    } else {
+        $updatePassword = ""; // If no password is provided, leave the password unchanged
+    }
+
+    $PRSN_NAME = $WHL_FNAME . " " . $WHL_LNAME;
+
+    $select = "SELECT * FROM `person` WHERE PRSN_EMAIL = '$PRSN_UNAME' AND PRSN_ID != '$PRSN_ID'";
+
+    $result = mysqli_query($conn, $select);
+
+    if (mysqli_num_rows($result) > 0) {
+        // User already exists, set error message in session
+        // $_SESSION['error_message'] = "User already exists";
+        //  header('location:' . $_SERVER['PHP_SELF'] . '?RPSN_ID=' . $PRSN_ID);
+        //exit();
+        echo "<script>alert('User already exists!');</script>";
+    } else {
+        // Update the person table
+        $updatePerson = "UPDATE person 
+SET PRSN_NAME = '$PRSN_NAME',
+PRSN_EMAIL = '$PRSN_UNAME',
+$updatePassword
+PRSN_PHONE = '$PRSN_PHONE'
+WHERE PRSN_ID = $PRSN_ID";
+
+        if (mysqli_query($conn, $updatePerson)) {
+            // Update the employee table
+            $updateEmployee = "UPDATE wholesaler 
+    SET WHL_FNAME = '$WHL_FNAME',
+        WHL_LNAME = '$WHL_LNAME',
+        WHL_IMAGE = '$WHL_IMG'
+    WHERE WHL_ID = $WHL_ID";
+
+            if (!mysqli_query($conn, $updateEmployee)) {
+                $error[] = "Error updating data into wholesaler table: " . mysqli_error($conn);
+            }
+        } else {
+            $error[] = "Error updating data into person table: " . mysqli_error($conn);
+        }
+
+        // Redirect to employee accounts page
+        echo "<script> window.location.href = 'admin-wholesaler-accounts.php'; </script>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -77,23 +195,25 @@ $WHL_ID = $_GET['WHL_ID'];
                                     <div class="form-field">
                                         <div class="form-field-input input-control">
                                             <label for="first-name">First Name</label>
-                                            <input name="first-name" id="first-name" class="js-user" type="text">
+                                            <input name="first-name" id="first-name" class="js-user" type="text" value="<?php echo $WHL_FNAME ?>">
                                             <div class="error"></div>
                                         </div>
                                         <div class="form-field-input input-control">
                                             <label for="last-name">Last Name</label>
-                                            <input name="last-name" id="last-name" class="js-user" type="text">
+                                            <input name="last-name" id="last-name" class="js-user" type="text" value="<?php echo $WHL_LNAME ?>">
                                             <div class="error"></div>
                                         </div>
                                         <div class="form-field-input input-control">
                                             <label for="number">Phone Number</label>
-                                            <input class="js-user" type="text" id="number" name="number">
+                                            <p>(e.g. 09xxxxxxxxx)</p>
+                                            <input class="js-user" type="text" id="number" name="number" value="<?php echo $PRSN_NUMBER ?>">
                                             <div class="error"></div>
                                         </div>
                                         <div class="form-field-input">
                                             <label for="image">Image</label>
                                             <p>(accepted files: .jpg, .png)</p>
                                             <input name="image" id="image" class="image" type="file">
+                                            <div class="error"></div>
                                         </div>
                                     </div>
                                 </section>
@@ -104,22 +224,24 @@ $WHL_ID = $_GET['WHL_ID'];
                                     <div class="form-field">
                                         <div class="form-field-input input-control">
                                             <label for="username">Username</label>
-                                            <input name="username" id="username" class="js-user" type="text">
+                                            <p>Username should exclude special characters.</p>
+                                            <input name="username" id="username" class="js-user" type="text" value="<?php echo $PRSN_EMAIL ?>">
+
                                             <div class="error"></div>
                                         </div>
                                         <div class="form-field-input">
                                             <div class="with-desc">
                                                 <label for="password">Password</label>
-                                                <p>Password must be 8 characters long, and includes at least 1 uppercase, 1 lowercase, and 1 digit</p>
+                                                <p>Password at least 8 characters long. Include at least 1 uppercase, 1 lowercase, and 1 digit. Exclude special characters.</p>
                                             </div>
                                             <div class="input-container input-control">
                                                 <input class="js-pass" type="password" id="password" name="password">
                                                 <div class="error"></div>
                                                 <span onclick="togglePassword('password')">
-                                                    <svg class="showpass" id="eyeIconOpenPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                                    <svg class="showpass" id="eyeIconClosedPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                                                         <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z" />
                                                     </svg>
-                                                    <svg class="hidepass" id="eyeIconClosedPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                                    <svg class="hidepass" id="eyeIconOpenPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                                                         <path fill="currentColor" d="M11.83 9L15 12.16V12a3 3 0 0 0-3-3h-.17m-4.3.8l1.55 1.55c-.05.21-.08.42-.08.65a3 3 0 0 0 3 3c.22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53a5 5 0 0 1-5-5c0-.79.2-1.53.53-2.2M2 4.27l2.28 2.28l.45.45C3.08 8.3 1.78 10 1 12c1.73 4.39 6 7.5 11 7.5c1.55 0 3.03-.3 4.38-.84l.43.42L19.73 22L21 20.73L3.27 3M12 7a5 5 0 0 1 5 5c0 .64-.13 1.26-.36 1.82l2.93 2.93c1.5-1.25 2.7-2.89 3.43-4.75c-1.73-4.39-6-7.5-11-7.5c-1.4 0-2.74.25-4 .7l2.17 2.15C10.74 7.13 11.35 7 12 7Z" />
                                                     </svg>
                                                 </span>
@@ -131,10 +253,10 @@ $WHL_ID = $_GET['WHL_ID'];
                                                 <input class="js-cpass" type="password" id="cpassword" name="cpassword">
                                                 <div class="error"></div>
                                                 <span onclick="togglePassword('cpassword')">
-                                                    <svg class="showpass" id="eyeIconOpenCPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                                    <svg class="showpass" id="eyeIconClosedCPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                                                         <path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z" />
                                                     </svg>
-                                                    <svg class="hidepass" id="eyeIconClosedCPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                                    <svg class="hidepass" id="eyeIconOpenCPASSWORD" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                                                         <path fill="currentColor" d="M11.83 9L15 12.16V12a3 3 0 0 0-3-3h-.17m-4.3.8l1.55 1.55c-.05.21-.08.42-.08.65a3 3 0 0 0 3 3c.22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53a5 5 0 0 1-5-5c0-.79.2-1.53.53-2.2M2 4.27l2.28 2.28l.45.45C3.08 8.3 1.78 10 1 12c1.73 4.39 6 7.5 11 7.5c1.55 0 3.03-.3 4.38-.84l.43.42L19.73 22L21 20.73L3.27 3M12 7a5 5 0 0 1 5 5c0 .64-.13 1.26-.36 1.82l2.93 2.93c1.5-1.25 2.7-2.89 3.43-4.75c-1.73-4.39-6-7.5-11-7.5c-1.4 0-2.74.25-4 .7l2.17 2.15C10.74 7.13 11.35 7 12 7Z" />
                                                     </svg>
                                                 </span>
@@ -168,10 +290,11 @@ $WHL_ID = $_GET['WHL_ID'];
                             const firstNameInput = document.getElementById('first-name');
                             const lastNameInput = document.getElementById('last-name');
                             const numberInput = document.getElementById('number');
-
                             const usernameInput = document.getElementById('username');
                             const passwordInput = document.getElementById('password');
                             const cpasswordInput = document.getElementById('cpassword');
+                            const imageInput = document.getElementById('image');
+
 
                             function setError(input, message) {
                                 const errorDiv = input.nextElementSibling;
@@ -189,18 +312,22 @@ $WHL_ID = $_GET['WHL_ID'];
                                 const firstNameValue = firstNameInput.value.trim();
                                 const lastNameValue = lastNameInput.value.trim();
                                 const numberValue = numberInput.value.trim();
-
                                 const usernameValue = usernameInput.value.trim();
                                 const passwordValue = passwordInput.value.trim();
                                 const cpasswordValue = cpasswordInput.value.trim();
+                                const imageValue = imageInput.value.trim();
 
                                 const nameRegex = /^[a-zA-Z\s]+$/;
-                                const numberRegex = /^09\d{9}$/;
-                                const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/; // Password should include at least 1 digit, 1 lowercase, 1 uppercase
+                                const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
+                                const usernameRegex = /^[a-zA-Z0-9]+$/;
+                                const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/; // Password should include at least 1 digit, 1 lowercase, 1 uppercase
                                 // Email and username regex are omitted assuming they can be validated on the backend
 
                                 if (firstNameValue === '') {
                                     setError(firstNameInput, 'Please enter your first name');
+                                    isValid = false;
+                                } else if (!nameRegex.test(firstNameValue)) {
+                                    setError(firstNameInput, 'First name must contain only letters');
                                     isValid = false;
                                 } else {
                                     clearError(firstNameInput);
@@ -208,6 +335,9 @@ $WHL_ID = $_GET['WHL_ID'];
 
                                 if (lastNameValue === '') {
                                     setError(lastNameInput, 'Please enter your last name');
+                                    isValid = false;
+                                } else if (!nameRegex.test(lastNameValue)) {
+                                    setError(lastNameInput, 'Last name must contain only letters');
                                     isValid = false;
                                 } else {
                                     clearError(lastNameInput);
@@ -226,113 +356,48 @@ $WHL_ID = $_GET['WHL_ID'];
                                 if (usernameValue === '') {
                                     setError(usernameInput, 'Please enter your username');
                                     isValid = false;
+                                } else if (!usernameRegex.test(usernameValue)) {
+                                    setError(usernameInput, 'Invalid username format');
+                                    isValid = false;
                                 } else {
                                     clearError(usernameInput);
                                 }
 
-                                if (passwordValue === '') {
-                                    setError(passwordInput, 'Please enter your password');
-                                    isValid = false;
-                                } else if (!passwordRegex.test(passwordValue)) {
-                                    setError(passwordInput, 'Invalid password format');
-                                    isValid = false;
-                                } else {
-                                    clearError(passwordInput);
+                                if (passwordValue !== '') {
+                                    if (passwordValue === '') {
+                                        setError(passwordInput, 'Please enter your password');
+                                        isValid = false;
+                                    } else if (!passwordRegex.test(passwordValue)) {
+                                        setError(passwordInput, 'Invalid password format');
+                                        isValid = false;
+                                    } else {
+                                        clearError(passwordInput);
+                                    }
+
+                                    if (cpasswordValue === '') {
+                                        setError(cpasswordInput, 'Please confirm your password');
+                                        isValid = false;
+                                    } else if (cpasswordValue !== passwordValue) {
+                                        setError(cpasswordInput, 'Passwords do not match');
+                                        isValid = false;
+                                    } else {
+                                        clearError(cpasswordInput);
+                                    }
                                 }
 
-                                if (cpasswordValue === '') {
-                                    setError(cpasswordInput, 'Please confirm your password');
-                                    isValid = false;
-                                } else if (cpasswordValue !== passwordValue) {
-                                    setError(cpasswordInput, 'Passwords do not match');
-                                    isValid = false;
-                                } else {
-                                    clearError(cpasswordInput);
+                                // Check if file extension is valid only if an image is selected
+                                if (imageValue !== '') {
+                                    const validExtensions = ['png', 'jpg', 'jpeg'];
+                                    const fileExtension = imageValue.split('.').pop().toLowerCase();
+
+                                    if (!validExtensions.includes(fileExtension)) {
+                                        setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
+                                        isValid = false;
+                                    } else {
+                                        clearError(imageInput);
+                                    }
                                 }
 
                                 return isValid;
                             }
                         </script>
-                        <?php
-
-                        if (isset($_POST['submit'])) {
-                            $WHL_FNAME = mysqli_real_escape_string($conn, $_POST['first-name']);
-                            $WHL_LNAME = mysqli_real_escape_string($conn, $_POST['last-name']);
-                            $PRSN_PHONE = str_replace(' ', '', $_POST['number']);
-                            $PRSN_UNAME = mysqli_real_escape_string($conn, $_POST['username']);
-                            $PRSN_PASSWORD = md5($_POST['password']);
-                            $PRSN_CPASSWORD = md5($_POST['cpassword']);
-                            $current_image = $_GET['WHL_IMAGE'];
-
-                            // Check if a new image is uploaded
-                            if (isset($_FILES['image']['name']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-                                // Get the image details
-                                $WHL_IMG = $_FILES['image']['name'];
-
-                                // Check if the uploaded file is an image
-                                $image_info = getimagesize($_FILES['image']['tmp_name']);
-                                if ($image_info === false) {
-                                    // Handle non-image files here
-                                    $_SESSION['upload'] = "<div class='error'>Please upload a valid image file</div>";
-                                    header('location:' . $_SERVER['PHP_SELF'] . '?WHL_ID=' . $WHL_ID);
-                                    exit();
-                                }
-
-                                // Generate a unique filename for the image
-                                $image_info = pathinfo($FOOD_IMG);
-                                $ext = strtolower($image_info['extension']);
-                                $FOOD_IMG = "WHL_IMAGE_" . $WHL_LNAME . $ext;
-
-                                // Set the destination path for the uploaded image
-                                $dst = "images/" . $WHL_IMG;
-
-                                // Upload the image
-                                if (!move_uploaded_file($_FILES['image']['tmp_name'], $dst)) {
-                                    // Handle upload failure
-                                    $_SESSION['upload'] = "<div class='error'>Failed To Upload Image</div>";
-                                    header('location:' . $_SERVER['PHP_SELF'] . '?WHL_ID=' . $WHL_ID);
-                                    exit();
-                                }
-
-                                // Remove the previous image if it exists
-                                if (!empty($current_image)) {
-                                    $remove_path = "images/" . $current_image;
-                                    if (!unlink($remove_path)) {
-                                        // Handle image removal failure
-                                        $_SESSION['failed-remove'] = "<div class='error'>Failed To Remove Current Image</div>";
-                                        header('location:' . SITEURL . 'admin-home.php');
-                                        exit();
-                                    }
-                                }
-                            } else {
-                                // No new image uploaded, retain the current image
-                                $WHL_IMG = $current_image;
-                            }
-
-
-                            if ($PRSN_PASSWORD != $PRSN_CPASSWORD) {
-                                $error[] = "Password not matched";
-                            } else {
-                                $update = "UPDATE person 
-        SET PRSN_NAME = '$PRSN_UNAME',
-            PRSN_PASSWORD = '$PRSN_PASSWORD',
-            PRSN_PHONE = '$PRSN_PHONE'
-        WHERE PRSN_ID = $PRSN_ID";
-
-                                if (mysqli_query($conn, $update)) {
-                                    $update2 = "UPDATE wholesaler SET
-                                        WHL_FNAME = '$WHL_FNAME',
-                                        WHL_LNAME = '$WHL_LNAME',
-                                        WHL_IMAGE = '$WHL_IMG'
-                                        WHERE WHL_ID = $WHL_ID
-                                        ";
-                                    if (!mysqli_query($conn, $update2)) {
-                                        $error[] = "Error updating data into employee table: " . mysqli_error($conn);
-                                    }
-                                } else {
-                                    $error[] = "Error updating data into person table: " . mysqli_error($conn);
-                                }
-                            }
-                        }
-
-                        ?>

@@ -84,6 +84,7 @@ $PLACED_ORDER_ID = $_GET['PLACED_ORDER_ID'];
                                     $DELIVERY_DATE = $row['DELIVERY_DATE'];
                                     $PLACED_ORDER_STATUS = $row['PLACED_ORDER_STATUS'];
                                     $REFERENCE_NUMBER = $row['REFERENCE_NUMBER'];
+                                    $PLACED_ORDER_TRACKER = $row['PLACED_ORDER_TRACKER'];
                             ?>
                                     <div>
                                         <table class="contact-info">
@@ -94,6 +95,10 @@ $PLACED_ORDER_ID = $_GET['PLACED_ORDER_ID'];
                                             <tr>
                                                 <th>Order Status:</th>
                                                 <td><?php echo $PLACED_ORDER_STATUS ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Order Tracker:</th>
+                                                <td><?php echo $PLACED_ORDER_TRACKER ?></td>
                                             </tr>
                                             <tr>
                                                 <th>Date and time placed:</th>
