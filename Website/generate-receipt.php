@@ -154,7 +154,7 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
     $total = $row2['Total'];
 
     $pdf->Cell(118, 6, '', 0, 0);
-    $pdf->Cell(25, 6, 'Sutotal', 0, 0);
+    $pdf->Cell(25, 6, 'Subtotal', 0, 0);
     $pdf->Cell(35, 6, $total, 1, 1, 'R');
 
 

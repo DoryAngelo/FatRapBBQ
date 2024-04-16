@@ -111,9 +111,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                     <?php
 
                     $sql = "SELECT f.*, io.in_order_quantity 
-                    FROM food f 
-                    LEFT JOIN in_order io ON f.FOOD_ID = io.food_id 
-                    WHERE f.FOOD_ID = '$FOOD_ID'";
+        FROM food f 
+        LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
+        WHERE f.FOOD_ID = '$FOOD_ID'";
+
+
                     $res = mysqli_query($conn, $sql);
                     $count = mysqli_num_rows($res);
                     if ($count > 0) {
@@ -124,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                             $FOOD_IMG = $row['FOOD_IMG'];
                             $FOOD_PRICE = $row['FOOD_PRICE'];
                             $FOOD_STOCK = $row['FOOD_STOCK'];
-                            $IN_ORDER_QUANTITY= $row['in_order_quantity'];
+                            $IN_ORDER_QUANTITY = $row['in_order_quantity'];
                     ?>
                             <section class="block">
                                 <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
@@ -139,10 +141,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                             <h1>₱<?php echo $FOOD_PRICE ?></h1>
                                             <div class="quantity-grp">
                                                 <i class='bx bxs-minus-circle js-minus' data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
-                                                <p class="amount js-num"><?php echo $IN_ORDER_QUANTITY?></p>
+                                                <p class="amount js-num"><?php echo ($IN_ORDER_QUANTITY == NULL) ? 1 : $IN_ORDER_QUANTITY; ?></p>
                                                 <i class='bx bxs-plus-circle js-plus' data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
                                             </div>
-                                            <p class="remaining"><?php echo $FOOD_STOCK ?> sticks available</p>
+                                            <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?>
+                                                sticks available</p>
                                         </div>
                                         <input type="hidden" id="quantity" name="quantity" value="1">
                                         <input type="hidden" name="price" value="<?php echo $FOOD_PRICE ?>">

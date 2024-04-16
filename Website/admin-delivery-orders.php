@@ -21,6 +21,9 @@ if (isset($_POST['confirmed'])) {
             $PLACED_ORDER_STATUS = "For Delivery";
             break;
         case "For Delivery":
+            $PLACED_ORDER_STATUS = "Shipped";
+            break;
+        case "Shipped":
             $PLACED_ORDER_STATUS = "Completed";
             break;
         case "Cancelled":

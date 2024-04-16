@@ -37,7 +37,7 @@ if (isset($_POST['confirmed'])) {
 
     $res = mysqli_query($conn, $sql);
 
-    header('location:employee-to-deliver-orders.php');
+    header('location:admin-shipped-orders.php');
 }
 
 if (isset($_POST['not-confirmed'])) {
@@ -55,7 +55,7 @@ if (isset($_POST['not-confirmed'])) {
 
     $res = mysqli_query($conn, $sql);
 
-    header('location:employee-to-deliver-orders.php');
+    header('location:admin-shipped-orders.php');
 }
 
 ?>

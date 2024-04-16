@@ -201,26 +201,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                             <input type="hidden" id="quantity" name="quantity" value="1"> <!-- Hidden input to store the quantity -->
                             <button name="order" type="submit" class="button">Order Now</button>
                         </form>
-                        <?php                    
+                        <?php
                         $sql = "SELECT f.*, io.in_order_quantity 
                     FROM food f 
                     LEFT JOIN in_order io ON f.FOOD_ID = io.food_id 
                     WHERE f.FOOD_ID = '$FOOD_ID'";
-                    $res = mysqli_query($conn, $sql);
-                    $count = mysqli_num_rows($res);
-                    if ($count > 0) {
-                        while ($row = mysqli_fetch_assoc($res)) {
-                            $IN_ORDER_QUANTITY= $row['in_order_quantity'];
+                        $res = mysqli_query($conn, $sql);
+                        $count = mysqli_num_rows($res);
+                        if ($count > 0) {
+                            while ($row = mysqli_fetch_assoc($res)) {
+                                $IN_ORDER_QUANTITY = $row['in_order_quantity'];
+                            }
                         }
-                    }
-                            ?>
+                        ?>
                         <div class="with-remaining">
                             <div class="quantity-group">
                                 <i class='bx bxs-minus-circle js-minus circle' data-stock="<?php echo $FOOD_STOCK; ?>"></i>
-                                <p class="amount js-num"><?php echo $IN_ORDER_QUANTITY?></p>
+                                <p class="amount js-num"><?php echo $IN_ORDER_QUANTITY ?></p>
                                 <i class='bx bxs-plus-circle js-plus circle' data-stock="<?php echo $FOOD_STOCK; ?>"></i>
                             </div>
-                            <p class="remaining"><?php echo $FOOD_STOCK; ?> sticks remaining</p>
+                            <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?>
+                                sticks remaining</p>
                         </div>
                     </div>
                 </div>
