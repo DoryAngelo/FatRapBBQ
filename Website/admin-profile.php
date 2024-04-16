@@ -82,6 +82,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                 if ($count > 0) {
                                     while ($row = mysqli_fetch_assoc($res)) {
                                         $PRSN_NAME = $row['PRSN_NAME'];
+                                        $EMP_ID = $row['EMP_ID'];
                                         $EMP_IMG = $row['EMP_IMAGE'];
                                         $EMP_BRANCH = $row['EMP_BRANCH'];
                                         $PRSN_ROLE = $row['PRSN_ROLE'];
@@ -111,7 +112,8 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                     ?>
 
                                         </div>
-                                        <a href="<?php echo SITEURL; ?>admin-edit-profile.php?PRSN_ID=<?php echo $PRSN_ID?>&EMP_IMAGE=<?php echo $EMP_IMG?>" class="big-btn">Edit</a>
+                                        <a href="<?php echo SITEURL; ?>admin-edit-profile.php?PRSN_ID=<?php echo $PRSN_ID ?>&EMP_ID=<?php echo $EMP_ID ?>" class="big-btn">Edit</a>
+                                        
                             </form>
                         </section>
                     </section>

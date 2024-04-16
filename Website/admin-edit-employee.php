@@ -66,6 +66,12 @@ $EMP_ID = $_GET['EMP_ID'];
                     <h2>Edit Employee Information</h2>
                     <a href="<?php echo SITEURL; ?>admin-employee-accounts.php">Back</a>
                 </div>
+                <style>
+                    .error-text {
+                        color: red;
+                        font-size: 12px;
+                    }
+                </style>
                 <section class="section-body">
                     <section class="main-section column">
                         <form id="form" class="column" method="post" enctype="multipart/form-data" onsubmit="return validateInputs()">
@@ -100,6 +106,7 @@ $EMP_ID = $_GET['EMP_ID'];
                                                 }
                                                 ?>
                                                 <h1>Contact Information</h1>
+                                                <div class="error"></div>
                                             </div>
                                             <div class="form-field">
                                                 <div class="form-field-input input-control">
@@ -234,6 +241,9 @@ $EMP_ID = $_GET['EMP_ID'];
                             }
 
                             function validateInputs() {
+
+                                document.querySelector('.error').innerHTML = '';
+
                                 let isValid = true;
 
                                 const firstNameValue = firstNameInput.value.trim();
@@ -339,6 +349,7 @@ $EMP_ID = $_GET['EMP_ID'];
                         <?php
 
                         if (isset($_POST['submit'])) {
+
                             $EMP_FNAME = mysqli_real_escape_string($conn, trim($_POST['first-name']));
                             $EMP_LNAME = mysqli_real_escape_string($conn, trim($_POST['last-name']));
                             $EMP_BRANCH =  $_POST['branch'];
@@ -407,11 +418,8 @@ $EMP_ID = $_GET['EMP_ID'];
                             $result = mysqli_query($conn, $select);
 
                             if (mysqli_num_rows($result) > 0) {
-                                // User already exists, set error message in session
-                                // $_SESSION['error_message'] = "User already exists";
-                                // echo "<script> window.location.href = 'admin-edit-employee.php'; </script>";
-                                // exit();
-                                echo "<script>alert('User already exists!');</script>";
+                                $errorMessage = "User already exists!";
+                                echo "<script>document.querySelector('.error').innerHTML = '<span class=\"error-text\">$errorMessage</span>';</script>";
                             } else {
                                 // Update the person table
                                 $updatePerson = "UPDATE person 

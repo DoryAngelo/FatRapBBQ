@@ -158,7 +158,7 @@ $countW = mysqli_num_rows($resW);
                                 <p>For Delivery Orders</p>
                                 <h1><?php echo $countFD ?></h1>
                             </a>
-                            <a class="box" href="<?php echo SITEURL; ?>admin-shipped.php">
+                            <a class="box" href="<?php echo SITEURL; ?>admin-shipped-orders.php">
                                 <p>Shipped</p>
                                 <h1><?php echo $countS ?></h1>
                             </a>
