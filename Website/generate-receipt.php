@@ -36,9 +36,10 @@ class PDF extends FPDF
     }
 }
 
-//if (isset($_GET['id'])) {
-    //$PLACED_ORDER_ID = $_GET['id'];
-    $PLACED_ORDER_ID = 73;
+
+
+if (isset($_GET['id'])) {
+    $PLACED_ORDER_ID = $_GET['id'];
 
     $pdf = new PDF('P', 'mm', "A4");
     $pdf->AliasNbPages();
@@ -53,7 +54,6 @@ class PDF extends FPDF
 
     if ($count > 0) {
         while ($row = mysqli_fetch_assoc($res)) {
-            // Retrieve the details from the fetched row
             $PLACED_ORDER_ID = $row['PLACED_ORDER_ID'];
             $CUS_NAME = $row['CUS_NAME'];
             $CUS_NUMBER = $row['CUS_NUMBER'];
@@ -64,50 +64,42 @@ class PDF extends FPDF
             $DELIVERY_DATE_TIME = $row['DELIVERY_DATE'];
             $PLACED_ORDER_STATUS = $row['PLACED_ORDER_STATUS'];
             $REFERENCE_NUMBER = $row['REFERENCE_NUMBER'];
-    
-            // Separate date and time for placed order
+
             $placedOrderDateTime = strtotime($PLACED_ORDER_DATE_TIME);
             $placedOrderDate = date('Y-m-d', $placedOrderDateTime); // Date format
             $placedOrderTime = date('h:i:sa', $placedOrderDateTime); // Time format
-    
-            // Separate date and time for delivery
+
             $deliveryDateTime = strtotime($DELIVERY_DATE_TIME);
             $deliveryDate = date('Y-m-d', $deliveryDateTime); // Date format
             $deliveryTime = date('h:i:sa', $deliveryDateTime); // Time format
-    
+
             // Add the details to the PDF
             $pdf->SetFont('Arial', "B", 15);
             $pdf->Cell(2);
-            $pdf->Cell(120, 5, 'Order Details', 0, 0);
-            $pdf->Cell(59, 5, 'Ship To', 0, 1);
+            $pdf->Cell(100, 5, 'Order Details', 0, 0);
+            $pdf->Cell(50, 5, 'Ship To', 0, 1);
             $pdf->SetFont('Arial', "", 10);
             $pdf->Cell(2);
-            $pdf->Cell(130, 5, "Order #: $PLACED_ORDER_ID", 0, 0);
-            $pdf->Cell(59, 5, "Name: $CUS_NAME", 0, 1);
+            $pdf->Cell(100, 5, "Order #: $PLACED_ORDER_ID", 0, 0);
+            $pdf->Cell(50, 5, "Name: $CUS_NAME", 0, 1);
             $pdf->Cell(2);
-            $pdf->Cell(130, 5, "Date: $placedOrderDate", 0, 0); // Display placed order date
-            $pdf->Cell(59, 5, "Contact Number: $CUS_NUMBER", 0, 1);
+            $pdf->Cell(100, 5, "Date: $placedOrderDate", 0, 0); // Display placed order date
+            $pdf->Cell(50, 5, "Contact Number: $CUS_NUMBER", 0, 1);
             $pdf->Cell(2);
-            $pdf->Cell(130, 5, "Time: $placedOrderTime", 0, 0); // Display placed order time
-            $pdf->Cell(59, 5, "Email: $CUS_EMAIL", 0, 1);
+            $pdf->Cell(100, 5, "Time: $placedOrderTime", 0, 0); // Display placed order time
+            $pdf->Cell(50, 5, "Email: $CUS_EMAIL", 0, 1);
             $pdf->Cell(2);
-            $pdf->Cell(130, 5, '', 0, 0);
-            $pdf->Cell(59, 5, "Delivery Date: $deliveryDate", 0, 1); // Display delivery date
+            $pdf->Cell(100, 5, '', 0, 0);
+            $pdf->Cell(50, 5, "Delivery Date: $deliveryDate", 0, 1); // Display delivery date
             $pdf->Cell(2);
-            $pdf->Cell(130, 5, '', 0, 0);
-            $pdf->Cell(59, 5, "Delivery Time: $deliveryTime", 0, 1); // Display delivery time
+            $pdf->Cell(100, 5, '', 0, 0);
+            $pdf->Cell(50, 5, "Delivery Time: $deliveryTime", 0, 1); // Display delivery time
             $pdf->Cell(2);
-            $pdf->Cell(130, 5, '', 0, 0);
-            $pdf->Cell(59, 5, "Delivery Address: $DELIVERY_ADDRESS", 0, 1);
+            $pdf->Cell(100, 5, '', 0, 0);
+            $pdf->MultiCell(0, 5, "Delivery Address: $DELIVERY_ADDRESS"); // MultiCell for wrapping
             $pdf->Cell(2);
         }
     }
-
-
-
-
-
-
 
 
     $pdf->SetFont('Arial', "B", 10);
@@ -160,7 +152,6 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
 
 
     $pdf->Output();
-// } else {
-//     // If PLACED_ORDER_ID is not provided, handle the error
-//     die("Error: PLACED_ORDER_ID is not provided");
-// }
+} else {
+    die("Error: PLACED_ORDER_ID is not provided");
+}
