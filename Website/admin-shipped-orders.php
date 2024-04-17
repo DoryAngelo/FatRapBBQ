@@ -131,6 +131,7 @@ if (isset($_POST['not-confirmed'])) {
                                 <th class="header">Order #</th>
                                 <th class="header">Payment</th>
                                 <th class="header">Confirmed</th>
+                                <th class="header"></th>
                             </tr>
                             <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
                             <?php
@@ -160,6 +161,16 @@ if (isset($_POST['not-confirmed'])) {
                                                     <input type="hidden" name="PLACED_ORDER_STATUS" value="<?php echo $PLACED_ORDER_STATUS; ?>">
                                                     <button class="btn-check" name="confirmed"><i class='bx bxs-check-circle'></i></button>
                                                     <button class="btn-cross" name="not-confirmed"><i class='bx bxs-x-circle'></i></button>
+                                                    <td><a href="#" onclick="confirmDelete(<?php echo $PLACED_ORDER_ID; ?>)" class="bx bxs-trash-alt trash"></a></td>
+                                                    <script>
+                                                        function confirmDelete(PLACED_ORDER_ID) {
+                                                        if (confirm("Are you sure you want to delete this item?")) {
+                                                        window.location.href = "delete_placed_order.php?PLACED_ORDER_ID=" + PLACED_ORDER_ID;
+                                                        } else {
+                                                        // Do nothing
+                                                        }
+                                                        }
+                                                        </script>
                                                 </form>
                                             </div>
                                         </td>
