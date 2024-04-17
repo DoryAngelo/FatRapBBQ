@@ -138,6 +138,13 @@ $EMP_ID = $_GET['EMP_ID'];
                                                     </select>
                                                 </div>
                                                 <div class="form-field-input">
+                                                    <label for="role">Status</label>
+                                                    <select class="dropdown" name="status" id="status" required>
+                                                        <option value="Active">Active</option>
+                                                        <option value="Inactive">Inactive</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-field-input">
                                                     <label for="image">Image</label>
                                                     <p>(accepted files: .jpg, .png)</p>
                                                     <input name="image" id="image" class="image" type="file">
@@ -203,7 +210,30 @@ $EMP_ID = $_GET['EMP_ID'];
                             </div>
                             <button name="submit" type="submit" class="big-btn">Save</button>
                         </form>
+                        <script>
+                            // Function to check for new orders via AJAX
+                            function checkForNewOrders() {
+                                var xhttp = new XMLHttpRequest();
+                                xhttp.onreadystatechange = function() {
+                                    if (this.readyState == 4 && this.status == 200) {
+                                        if (this.responseText.trim() === "NewOrder") {
+                                            notifyNewOrder(); // Play notification sound
+                                        }
+                                    }
+                                };
+                                xhttp.open("GET", "order-notification.php", true);
+                                xhttp.send();
+                            }
 
+                            // Function to play notification sound
+                            function notifyNewOrder() {
+                                var audio = new Audio('sound/notification.mp3'); // Replace with correct path
+                                audio.play();
+                            }
+
+                            // Check for new orders every 5 seconds 
+                            setInterval(checkForNewOrders, 2000);
+                        </script>
                         <script>
                             function togglePassword(passwordFieldId) {
                                 const passwordField = document.getElementById(passwordFieldId);
@@ -356,6 +386,7 @@ $EMP_ID = $_GET['EMP_ID'];
                             $PRSN_PHONE = str_replace(' ', '', $_POST['number']);
                             $PRSN_UNAME = mysqli_real_escape_string($conn, trim($_POST['username']));
                             $PRSN_ROLE = $_POST['role'];
+                            $EMP_STATUS = $_POST['status'];
                             $current_image = $EMP_IMAGE;
 
                             // Check if a new image is uploaded
@@ -435,7 +466,8 @@ $EMP_ID = $_GET['EMP_ID'];
                             SET EMP_FNAME = '$EMP_FNAME',
                                 EMP_LNAME = '$EMP_LNAME',
                                 EMP_IMAGE = '$EMP_IMG',
-                                EMP_BRANCH = '$EMP_BRANCH'
+                                EMP_BRANCH = '$EMP_BRANCH',
+                                EMP_STATUS = '$EMP_STATUS'
                             WHERE EMP_ID = $EMP_ID";
 
                                     if (!mysqli_query($conn, $updateEmployee)) {

@@ -69,12 +69,12 @@ $EMP_ID = $_GET['EMP_ID'];
                 <div class="section-wrapper">
                     <div class="section-heading row back">
                         <h2>Edit Profile</h2>
-                      
+
                         <a href="<?php echo SITEURL; ?>admin-profile.php">Back</a>
                     </div>
                     <section class="section-body">
                         <section class="main-section column">
-                        <div class="error"></div>
+                            <div class="error"></div>
                             <form id="form" class="column" method="post" enctype="multipart/form-data" onsubmit="return validateInputs()">
                                 <?php
                                 $sql = "SELECT * FROM person, employee WHERE employee.PRSN_ID = person.PRSN_ID AND EMP_ID = '$EMP_ID'";
@@ -303,6 +303,30 @@ $EMP_ID = $_GET['EMP_ID'];
 
         </section>
     </main>
+    <script>
+        // Function to check for new orders via AJAX
+        function checkForNewOrders() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.responseText.trim() === "NewOrder") {
+                        notifyNewOrder(); // Play notification sound
+                    }
+                }
+            };
+            xhttp.open("GET", "order-notification.php", true);
+            xhttp.send();
+        }
+
+        // Function to play notification sound
+        function notifyNewOrder() {
+            var audio = new Audio('sound/notification.mp3'); // Replace with correct path
+            audio.play();
+        }
+
+        // Check for new orders every 5 seconds 
+        setInterval(checkForNewOrders, 2000);
+    </script>
 </body>
 
 </html>

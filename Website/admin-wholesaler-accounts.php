@@ -83,6 +83,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                     <th class="header">Last Name</th>
                                     <th class="header">Contact #</th>
                                     <th class="header">Username</th>
+                                    <th class="header">Status</th>
                                     <th class="header">Action</th>
                                 </tr>
                                 <?php
@@ -100,6 +101,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                         $PRSN_NUMBER = $row['PRSN_PHONE'];
                                         $PRSN_NAME = $row['PRSN_NAME'];
                                         $PRSN_EMAIL = $row['PRSN_EMAIL'];
+                                        $WHL_STATUS = $row['WHL_STATUS'];
                                 ?>
                                         <tr>
                                             <td data-cell="Image">
@@ -109,6 +111,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                             <td data-cell="Name"><?php echo $WHL_LNAME ?></td>
                                             <td data-cell="Contact #"><?php echo $PRSN_NUMBER ?></td>
                                             <td data-cell="Username"><?php echo $PRSN_EMAIL ?></td>
+                                            <td data-cell="Status"><?php echo $WHL_STATUS ?></td>
                                             <td data-cell="Action"><a href="<?php echo SITEURL; ?>admin-edit-wholesaler.php?PRSN_ID=<?php echo $PRSN_ID ?>&WHL_ID=<?php echo $WHL_ID ?>" class="edit">Edit</a></td>
                                         </tr>
                                     <?php
@@ -131,5 +134,29 @@ $PRSN_ID = $_SESSION['prsn_id'];
         </section>
     </main>
 </body>
+<script>
+    // Function to check for new orders via AJAX
+    function checkForNewOrders() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                if (this.responseText.trim() === "NewOrder") {
+                    notifyNewOrder(); // Play notification sound
+                }
+            }
+        };
+        xhttp.open("GET", "order-notification.php", true);
+        xhttp.send();
+    }
+
+    // Function to play notification sound
+    function notifyNewOrder() {
+        var audio = new Audio('sound/notification.mp3'); // Replace with correct path
+        audio.play();
+    }
+
+    // Check for new orders every 5 seconds 
+    setInterval(checkForNewOrders, 2000);
+</script>
 
 </html>

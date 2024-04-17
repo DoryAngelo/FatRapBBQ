@@ -113,8 +113,6 @@ const updateCalendar = () => {
     //updateNumbers();
 }
 
-
-
 const selectedDateElement = document.getElementById('selectedDate');
 const availBtn = document.getElementById('availBtn');
 const fullBtn = document.getElementById('fullBtn');
@@ -135,6 +133,7 @@ closedBtn.addEventListener('click', () => {
 saveBtn.addEventListener('click', () => {
     if (selectedDate && selectedStatus) {
         updateDatabase(selectedDate, selectedStatus);
+        checkCount();
         //updateNumbers();
         updateSelected();
     } else {
@@ -148,6 +147,7 @@ clearBtn.addEventListener('click', () => {
         updateDatabase(selectedDate, selectedStatus);
         //updateNumbers();
         updateSelected();
+        checkCount();
     } else {
         console.error("Date or status is missing");
     }
@@ -165,6 +165,7 @@ function updateDatabase(date, status) {
         .then(response => {
             if (response.ok) {
                 console.log("Data saved successfully");
+                checkCount();
             } else {
                 console.error("Error saving data:", response.statusText);
             }

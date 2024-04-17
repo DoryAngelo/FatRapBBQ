@@ -146,7 +146,30 @@ $PRSN_ID = $_SESSION['prsn_id'];
                     </section>
                 </section>
             </div>
+            <script>
+                // Function to check for new orders via AJAX
+                function checkForNewOrders() {
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            if (this.responseText.trim() === "NewOrder") {
+                                notifyNewOrder(); // Play notification sound
+                            }
+                        }
+                    };
+                    xhttp.open("GET", "order-notification.php", true);
+                    xhttp.send();
+                }
 
+                // Function to play notification sound
+                function notifyNewOrder() {
+                    var audio = new Audio('sound/notification.mp3'); // Replace with correct path
+                    audio.play();
+                }
+
+                // Check for new orders every 5 seconds 
+                setInterval(checkForNewOrders, 2000);
+            </script>
         </section>
     </main>
 </body>

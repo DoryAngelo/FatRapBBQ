@@ -128,9 +128,10 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                                 <p id="status">Completed</p>
                                             <?php
                                                 break;
-                                            case "Canceled":
+                                            case "Cancelled":
                                             ?>
-                                                <p id="status">Canceled</p>
+                                                <p id="status">Cancelled</p>
+                                                <p class="error-text">Your order has been cancelled. Please contact customer support for more information.</p>
                                     <?php
                                                 break;
                                         }
@@ -286,8 +287,14 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                             }
                         </script>
 
+                    </section>
 
-
+                    <!-- Cancelled message section -->
+                    <section class="block" id="cancelled-section" style="display: none;">
+                        <h3 class="block-heading">Order Cancelled</h3>
+                        <div class="block-body">
+                            <p class="cancelled-message">Your order has been cancelled. For more information please contact this number +63_______.</p>
+                        </div>
                     </section>
 
                     <section class="block">

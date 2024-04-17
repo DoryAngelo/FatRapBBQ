@@ -13,6 +13,7 @@ if (isset($_POST['submit'])) {
     $PRSN_PASSWORD = md5($_POST['password']);
     $PRSN_CPASSWORD = md5($_POST['cpassword']);
     $PRSN_ROLE = $_POST['role'];
+    $EMP_STATUS = $_POST['status'];
 
     if (isset($_FILES['image']['name'])) {
         $EMP_IMG = $_FILES['image']['name'];
@@ -53,8 +54,8 @@ if (isset($_POST['submit'])) {
                        VALUES('$PRSN_NAME', '$PRSN_UNAME', '$PRSN_PASSWORD', '$PRSN_PHONE', '$PRSN_ROLE')";
         if (mysqli_query($conn, $insert)) {
             $PRSN_ID = mysqli_insert_id($conn);
-            $insert2 = "INSERT INTO employee(PRSN_ID, EMP_FNAME, EMP_LNAME, EMP_IMAGE, EMP_BRANCH) 
-                            VALUES('$PRSN_ID', '$PRSN_FNAME', '$PRSN_LNAME', '$EMP_IMG', '$EMP_BRANCH')";
+            $insert2 = "INSERT INTO employee(PRSN_ID, EMP_FNAME, EMP_LNAME, EMP_IMAGE, EMP_BRANCH, EMP_STATUS) 
+                            VALUES('$PRSN_ID', '$PRSN_FNAME', '$PRSN_LNAME', '$EMP_IMG', '$EMP_BRANCH', '$EMP_STATUS')";
             if (!mysqli_query($conn, $insert2)) {
                 echo "Error inserting data into employee table: " . mysqli_error($conn);
             }
@@ -175,6 +176,13 @@ if (isset($_POST['submit'])) {
                                             <select class="dropdown" name="role" id="role" required>
                                                 <option value="Employee">Employee</option>
                                                 <option value="Admin">Admin</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-field-input">
+                                            <label for="role">Status</label>
+                                            <select class="dropdown" name="status" id="status" required>
+                                                <option value="Active">Active</option>
+                                                <option value="Inactive">Inactive</option>
                                             </select>
                                         </div>
                                         <div class="form-field-input">
@@ -362,5 +370,29 @@ if (isset($_POST['submit'])) {
         }
     </script>
 </body>
+<script>
+    // Function to check for new orders via AJAX
+    function checkForNewOrders() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                if (this.responseText.trim() === "NewOrder") {
+                    notifyNewOrder(); // Play notification sound
+                }
+            }
+        };
+        xhttp.open("GET", "order-notification.php", true);
+        xhttp.send();
+    }
+
+    // Function to play notification sound
+    function notifyNewOrder() {
+        var audio = new Audio('sound/notification.mp3'); // Replace with correct path
+        audio.play();
+    }
+
+    // Check for new orders every 5 seconds 
+    setInterval(checkForNewOrders, 2000);
+</script>
 
 </html>

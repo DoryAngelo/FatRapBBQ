@@ -39,8 +39,19 @@ const updateSteps = (e) => {
     case "Completed":
       currentStep = 6;
       break;
-    case "Canceled":
-      stepsContainer.style.display = "none"; //hide the enter progress bar
+    case "Cancelled":
+      stepsContainer.style.display = "none";
+      sectionToShowHide.style.display = "none";
+
+      // Display a message indicating that the order has been cancelled
+      const cancelMessage = document.createElement("p");
+      cancelMessage.textContent = "Your order has been cancelled. For more information please contact this number +63_______.";
+      cancelMessage.classList.add("cancel-message");
+
+      // Replace the "Your order has been approved" text with the cancel message
+      const orderStatusDesc = document.querySelector(".order-status-desc");
+      orderStatusDesc.innerHTML = ''; // Clear existing content
+      orderStatusDesc.appendChild(cancelMessage);
       break;
   }
   // // update current step based on the button clicked

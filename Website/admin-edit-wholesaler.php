@@ -114,6 +114,13 @@ if ($count > 0) {
                                             <div class="error"></div>
                                         </div>
                                         <div class="form-field-input">
+                                            <label for="role">Status</label>
+                                            <select class="dropdown" name="status" id="status" required>
+                                                <option value="Active">Active</option>
+                                                <option value="Inactive">Inactive</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-field-input">
                                             <label for="image">Image</label>
                                             <p>(accepted files: .jpg, .png)</p>
                                             <input name="image" id="image" class="image" type="file">
@@ -168,7 +175,30 @@ if ($count > 0) {
                                         </div>
                                     </div>
                                 </section>
+                                <script>
+                                    // Function to check for new orders via AJAX
+                                    function checkForNewOrders() {
+                                        var xhttp = new XMLHttpRequest();
+                                        xhttp.onreadystatechange = function() {
+                                            if (this.readyState == 4 && this.status == 200) {
+                                                if (this.responseText.trim() === "NewOrder") {
+                                                    notifyNewOrder(); // Play notification sound
+                                                }
+                                            }
+                                        };
+                                        xhttp.open("GET", "order-notification.php", true);
+                                        xhttp.send();
+                                    }
 
+                                    // Function to play notification sound
+                                    function notifyNewOrder() {
+                                        var audio = new Audio('sound/notification.mp3'); // Replace with correct path
+                                        audio.play();
+                                    }
+
+                                    // Check for new orders every 5 seconds 
+                                    setInterval(checkForNewOrders, 2000);
+                                </script>
                             </div>
                             <button name="submit" type="submit" class="big-btn">Save</button>
                         </form>
@@ -317,6 +347,7 @@ if ($count > 0) {
                             $PRSN_PASSWORD = md5($_POST['password']);
                             $PRSN_CPASSWORD = md5($_POST['cpassword']);
                             $current_image = $WHL_IMAGE;
+                            $WHL_STATUS = $_POST['status'];
 
                             // Check if a new image is uploaded
                             if (isset($_FILES['image']['name']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
@@ -399,7 +430,8 @@ WHERE PRSN_ID = $PRSN_ID";
                                     $updateEmployee = "UPDATE wholesaler 
     SET WHL_FNAME = '$WHL_FNAME',
         WHL_LNAME = '$WHL_LNAME',
-        WHL_IMAGE = '$WHL_IMG'
+        WHL_IMAGE = '$WHL_IMG',
+        WHL_STATUS = '$WHL_STATUS'
     WHERE WHL_ID = $WHL_ID";
 
                                     if (!mysqli_query($conn, $updateEmployee)) {

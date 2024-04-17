@@ -83,6 +83,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                     <th class="header">Last Name</th>
                                     <th class="header">Contact #</th>
                                     <th class="header">Username</th>
+                                    <th class="header">Status</th>
                                     <th class="header">Action</th>
                                 </tr>
                                 <?php
@@ -104,6 +105,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                         $PRSN_NUMBER = $row['PRSN_PHONE'];
                                         $PRSN_NAME = $row['PRSN_NAME'];
                                         $PRSN_EMAIL = $row['PRSN_EMAIL'];
+                                        $EMP_STATUS = $row['EMP_STATUS'];
                                 ?>
                                         <tr>
                                             <td data-cell="Image">
@@ -113,6 +115,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                             <td data-cell="Name"><?php echo $EMP_LNAME ?></td>
                                             <td data-cell="Contact #"><?php echo $PRSN_NUMBER ?></td>
                                             <td data-cell="Username"><?php echo $PRSN_EMAIL ?></td>
+                                            <td data-cell="Status"><?php echo $EMP_STATUS ?></td>
                                             <td data-cell="Action"><a href="<?php echo SITEURL; ?>admin-edit-employee.php?PRSN_ID=<?php echo $PRSN_ID ?>&EMP_ID=<?php echo $EMP_ID ?>" class="edit">Edit</a></td>
                                         </tr>
                                     <?php
