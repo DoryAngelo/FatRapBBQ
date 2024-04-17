@@ -4,6 +4,8 @@
 
 $PRSN_ID = $_SESSION['prsn_id'];
 
+$food_type = isset($_GET['type']) ? $_GET['type'] : 'all'; 
+
 ?>
 
 <!DOCTYPE html>
@@ -64,11 +66,18 @@ $PRSN_ID = $_SESSION['prsn_id'];
             <div class="container">
                 <div class="section-heading row">
                     <h2>Inventory</h2>
-                    <!-- <select name="customer-type" id="customer-type" class="dropdown">
-                        <option value="regular">REGULAR</option>
-                        <option value="wholesale">WHOLESALE</option>
-                    </select>  -->
+                    <select name="food-type" id="food-type" class="dropdown">
+                        <option value="all" <?php echo ($food_type === 'all') ? 'selected' : ''; ?>>All</option>
+                        <option value="Customer" <?php echo ($food_type === 'Customer') ? 'selected' : ''; ?>>Customer</option>
+                        <option value="Wholesaler" <?php echo ($food_type === 'Wholesaler') ? 'selected' : ''; ?>>Wholesaler</option>
+                    </select>
                 </div>
+                <script>
+                    document.getElementById('food-type').addEventListener('change', function() {
+                        var selectedFoodType = this.value;
+                        window.location.href = "admin-inventory.php?type=" + selectedFoodType;
+                    });
+                </script>
                 <section class="section-body">
                     <section class="main-section column">
                         <div class="table-wrapper">
@@ -83,12 +92,14 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                     <th class="header"></th>
                                 </tr>
                                 <?php
-
                                 $CUS_ID = $_SESSION['prsn_id'];
+                                $food_type = isset($_GET['type']) ? $_GET['type'] : 'all';
 
-                                $sql = "SELECT * 
-                                        FROM food
-                                      ";
+                                if ($food_type === 'all') {
+                                    $sql = "SELECT * FROM food";
+                                } else {
+                                    $sql = "SELECT * FROM food WHERE FOOD_TYPE = '$food_type'";
+                                }
 
                                 $res = mysqli_query($conn, $sql);
 

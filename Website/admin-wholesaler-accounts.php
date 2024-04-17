@@ -4,6 +4,8 @@
 
 $PRSN_ID = $_SESSION['prsn_id'];
 
+$wholesaler_status = isset($_GET['type']) ? $_GET['type'] : 'all';
+
 ?>
 
 <!DOCTYPE html>
@@ -64,15 +66,19 @@ $PRSN_ID = $_SESSION['prsn_id'];
             <div class="container">
                 <div class="section-heading">
                     <h2>Wholesale Customers</h2>
-                    <!-- for filtering hidden accounts-->
-                    <!-- <div class="inline">
-                        <p>Filter:</p>
-                        <select name="customer-type" id="customer-type" class="dropdown">
-                            <option value="regular">REGULAR</option>
-                            <option value="wholesale">WHOLESALE</option>
-                        </select>
-                    </div> -->
+                    <p>Filter:</p>
+                    <select name="wholesaler-status" id="wholesaler-status" class="dropdown">
+                        <option value="all" <?php echo ($wholesaler_status === 'all') ? 'selected' : ''; ?>>All</option>
+                        <option value="Active" <?php echo ($wholesaler_status === 'Active') ? 'selected' : ''; ?>>Active</option>
+                        <option value="Inactive" <?php echo ($wholesaler_status === 'Inactive') ? 'selected' : ''; ?>>Inactive</option>
+                    </select>
                 </div>
+                <script>
+                    document.getElementById('wholesaler-status').addEventListener('change', function() {
+                        var selectedWholesalerStatus = this.value;
+                        window.location.href = "admin-wholesaler-accounts.php?type=" + selectedWholesalerStatus;
+                    });
+                </script>
                 <section class="section-body">
                     <section class="main-section column">
                         <div class="table-wrapper">
@@ -87,7 +93,16 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                     <th class="header">Action</th>
                                 </tr>
                                 <?php
-                                $sql = "SELECT * FROM person, wholesaler WHERE wholesaler.PRSN_ID = person.PRSN_ID AND PRSN_ROLE = 'Wholesaler'";
+
+                                $wholesaler_status = isset($_GET['type']) ? $_GET['type'] : 'all';
+
+
+                                if ($wholesaler_status === 'all') {
+                                    $sql = "SELECT * FROM person, wholesaler WHERE wholesaler.PRSN_ID = person.PRSN_ID AND PRSN_ROLE = 'Wholesaler'";
+                                } else {
+                                    $sql = "SELECT * FROM person, wholesaler WHERE wholesaler.PRSN_ID = person.PRSN_ID AND PRSN_ROLE = 'Wholesaler' AND WHL_STATUS = '$wholesaler_status'";
+                                }
+                                
                                 $res = mysqli_query($conn, $sql);
                                 $count = mysqli_num_rows($res);
 
