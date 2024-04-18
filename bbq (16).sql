@@ -189,7 +189,7 @@ INSERT INTO `person` (`PRSN_ID`, `PRSN_NAME`, `PRSN_EMAIL`, `PRSN_PASSWORD`, `PR
 (86, 'Wholesaler Wholesale', 'Wholesaler', '4ff918a8bde60d5bda668f617164af08', '09123456789', 'Wholesaler');
 
 -- --------------------------------------------------------
-
+    
 --
 -- Table structure for table `placed_order`
 --
