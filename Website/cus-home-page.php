@@ -311,7 +311,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                 if (isset($_SESSION['prsn_id'])) {
                                     $select = "SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER' AND PRSN_ID = '$PRSN_ID'";
                                 } else if (isset($_SESSION['guest_id'])) {
-                                    $select = "SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER' AND PRSN_ID IS NULL";
+                                    $select = "SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER' AND PRSN_ID = '0'";
                                 } 
                                 $res = mysqli_query($conn, $select);
                                 $count = mysqli_num_rows($res);
