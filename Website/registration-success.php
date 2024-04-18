@@ -1,3 +1,23 @@
+<?php
+
+@include 'constants.php';
+
+if (isset($_SESSION['prsn_id'])) {
+    $PRSN_ID = $_SESSION['prsn_id'];
+} else if (isset($_SESSION['guest_id'])) {
+    $_SESSION['prsn_role'] = "Customer";
+    $GUEST_ID = $_SESSION['guest_id'];
+} else {
+    $random = random_bytes(16);
+    $GUEST_ID = bin2hex($random);
+    $_SESSION['prsn_role'] = "Customer";
+    $_SESSION['guest_id'] =   $GUEST_ID;
+}
+
+$PRSN_ROLE = $_SESSION['prsn_role'];
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,49 +50,44 @@
                 <div class="success-box">
                     <div class="success-title">
                         <h1>Success!</h1>
-                        <p class="title-desc justified"><i>Your registration has been sent. Please check if you have been accepted via email after 2-3 business days.</i></p>
+                        <p class="title-desc">Your registration is a success.</p>
+                        <a href="login-page.php" class="button">Go to Login</a>
                     </div>
-                </div> 
+                </div>
             </div>
-        <section>
+        </section>
     </main>
     <footer>
         <div class="footer-container">
             <div class="left-container">
-                <h1>Fat Rap's Barbeque</h1>
+                <h2>Fat Rap's Barbeque</h2>
                 <div class="list">
                     <ul>
                         <li><a href="<?php echo SITEURL; ?>cus-home-page.php">Home</a></li>
                         <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
                         <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
-                        <li><a href="<?php echo SITEURL; ?>track-order.php">Track order</a></li>
+                        <li><a href="cus-home-page.php#track-order-section">Track order</a></li>
                     </ul>
                 </div>
             </div>
             <div class="right-container">
                 <div class="icons-block">
-                    <a href="https://www.youtube.com/">
+                    <a href="https://www.facebook.com/profile.php?id=100077565231475">
                         <i class='bx bxl-facebook-circle'></i>
-                    </a>
-                    <a href="https://www.youtube.com/">
-                        <i class='bx bxl-tiktok'></i>
-                    </a>
-                    <a href="https://www.youtube.com/">
-                        <i class='bx bxl-instagram'></i>
                     </a>
                 </div>
                 <div class="list">
-                    <div class="list-items">
+                    <!-- <div class="list-items">
                         <i class='bx bxs-envelope'></i>
                         <p>email@gmail.com</p>
-                    </div>
+                    </div> -->
                     <div class="list-items">
                         <i class='bx bxs-phone'></i>
-                        <p>0912 345 6789 | 912 1199</p>
+                        <p>09178073760 | 09190873861</p>
                     </div>
                     <div class="list-items">
                         <i class='bx bxs-map'></i>
-                        <p>123 Magaling St., Brgy. Something, Somewhere City</p>
+                        <p>Sta. Ignaciana, Brgy. Kalusugan, Quezon City, Metro Manila, Philippines</p>
                     </div>
                 </div>
             </div>

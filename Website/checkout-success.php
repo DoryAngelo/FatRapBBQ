@@ -61,13 +61,11 @@ $PLACED_ORDER_TRACKER = $_SESSION['PLACED_ORDER_TRACKER'];
                     <div class="success-title">
                         <h1>Success!</h1>
                         <p class="title-desc">Your order tracker is: <?php echo $PLACED_ORDER_TRACKER; ?></p>
-                        <p class="title-desc justified"><i>Your order has been placed. Please allot 5 to 10 minutes of waiting time for the confirmation of your order. You may check your order's status by entering your tracking number to the order tracker found in the home page.</i></p>
                         <a href="cus-home-page.php" class="button">Go to Home</a>
                     </div>
                 </div>
             </div>
         </section>
-       
     </main>
     <footer>
         <div class="footer-container">
