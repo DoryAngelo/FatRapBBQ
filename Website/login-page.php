@@ -31,15 +31,49 @@ if (isset($_POST['submit'])) {
 
         $row = mysqli_fetch_array($result);
         $PRSN_ROLE = $row['PRSN_ROLE'];
+        $PRSN_ID = $row['PRSN_ID'];
         $_SESSION['prsn_id'] = $row['PRSN_ID'];
         $_SESSION['prsn_role'] = $row['PRSN_ROLE'];
 
-        if ($PRSN_ROLE == "Customer" || $PRSN_ROLE == "Wholesaler") {
+        if ($PRSN_ROLE == "Customer" ) {
             header('location:cus-home-page.php');
-        } else if ($PRSN_ROLE == "Admin") {
-            header('location:admin-home.php');
+        }else if ($PRSN_ROLE == "Wholesaler"){
+            $sql = "SELECT * from wholesaler WHERE PRSN_ID = '$PRSN_ID'";
+            $result = mysqli_query($conn, $sql);
+            $row = mysqli_fetch_array($result);
+            $WHL_STATUS = $row['WHL_STATUS'];
+            if ($WHL_STATUS != "Active") {
+                $_SESSION['error_message'] = "Your account is inactive. Please contact support.";
+                header('Location: login-page.php');
+                exit();
+            } else {
+                header('location:cus-home-page.php');
+            }
+        }
+         else if ($PRSN_ROLE == "Admin") {
+            $sql = "SELECT * from employee WHERE PRSN_ID = '$PRSN_ID'";
+            $result = mysqli_query($conn, $sql);
+            $row = mysqli_fetch_array($result);
+            $EMP_STATUS = $row['EMP_STATUS'];
+            if ($EMP_STATUS != "Active") {
+                $_SESSION['error_message'] = "Your account is inactive. Please contact support.";
+                header('Location: login-page.php');
+                exit();
+            } else {
+                header('location:admin-home.php');
+            }
         } else {
-            header('location:employee-home.php');
+            $sql = "SELECT * from employee WHERE PRSN_ID = '$PRSN_ID'";
+            $result = mysqli_query($conn, $sql);
+            $row = mysqli_fetch_array($result);
+            $EMP_STATUS = $row['EMP_STATUS'];
+            if ($EMP_STATUS != "Active") {
+                $_SESSION['error_message'] = "Your account is inactive. Please contact support.";
+                header('Location: login-page.php');
+                exit();
+            } else {
+                header('location:employee-home.php');
+            }
         }
     } else {
         $_SESSION['error_message'] = "Incorrect email or password";

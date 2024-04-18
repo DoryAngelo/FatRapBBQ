@@ -221,12 +221,13 @@ $FOOD_ID = $_GET['FOOD_ID'];
                     if (productDescValue === '') {
                         setError(productDescInput, 'Please enter the product description');
                         isValid = false;
-                    } else if (!nameRegex.test(productDescValue)) {
-                        setError(productDescInput, 'Invalid product description');
+                    } else if (productDescValue.length > 50) {
+                        setError(productDescInput, 'Product description must not exceed 50 characters');
                         isValid = false;
                     } else {
                         clearError(productDescInput);
                     }
+
 
                     if (priceValue === '') {
                         setError(priceInput, 'Please enter the price');

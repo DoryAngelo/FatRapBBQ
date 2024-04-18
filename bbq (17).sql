@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2024 at 06:50 AM
+-- Generation Time: Apr 18, 2024 at 12:08 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -102,7 +102,8 @@ INSERT INTO `employee` (`EMP_ID`, `PRSN_ID`, `EMP_FNAME`, `EMP_LNAME`, `EMP_IMAG
 (11, 38, '', '', 'EMP_IMAGE_.jpg', '', ''),
 (18, 52, 'NewUpdate', 'NewUpdate', 'EMP_IMAGE_NewUpdate.png', 'NewUpdate', ''),
 (24, 83, 'Admin', 'Two', 'EMP_IMAGE_Admin Two_6620a0b1034dd.jpg', 'AdminTwo', 'Active'),
-(25, 84, 'Hi', 'Hello', 'EMP_IMAGE_Hi Hello_6620a0d64df55.jpg', 'HiHello', 'Active');
+(25, 84, 'Employee', 'Employee', 'EMP_IMAGE_Hi Hello_6620a0d64df55.jpg', 'Employee', 'Active'),
+(999, 16, 'Admin', 'Admin', '', 'Admin', 'Active');
 
 -- --------------------------------------------------------
 
@@ -128,7 +129,7 @@ CREATE TABLE `food` (
 
 INSERT INTO `food` (`FOOD_ID`, `CTGY_ID`, `FOOD_NAME`, `FOOD_PRICE`, `FOOD_DESC`, `FOOD_IMG`, `FOOD_STOCK`, `FOOD_ACTIVE`, `FOOD_TYPE`) VALUES
 (49, 0, 'Barbeque', 1000.00, 'NewProduct', 'FOOD_IMAGE_Barbeque.jpg', 49, 'Yes', 'Customer'),
-(50, 0, 'Test', 25.50, 'testttttttttt', 'FOOD_IMAGE_Test.jpg', 100, 'Yes', 'Customer'),
+(50, 0, 'Test', 25.50, 'testttttttttt', 'FOOD_IMAGE_Test.jpg', 90, 'Yes', 'Customer'),
 (51, 0, 'Wholesaler Package 2', 1000.00, '100 bbq sticks', 'FOOD_IMAGE_Wholesaler Package 1_66209eae4d4c7.png', 1, 'No', 'Customer');
 
 -- --------------------------------------------------------
@@ -156,7 +157,13 @@ INSERT INTO `in_order` (`IN_ORDER_ID`, `FOOD_ID`, `PRSN_ID`, `IN_ORDER_QUANTITY`
 (151, 50, 15, 5, 127.50, 'Ordered', 74, ''),
 (152, 49, 15, 1, 1000.00, 'Ordered', 75, ''),
 (153, 50, 15, 7, 178.50, 'Ordered', NULL, ''),
-(154, 49, 15, 4, 4000.00, 'Ordered', NULL, '');
+(154, 49, 15, 4, 4000.00, 'Ordered', NULL, ''),
+(155, 49, 0, 5, 5000.00, 'Ordered', 76, '34e78574289e83ac77ea0ebc181887d2'),
+(156, 49, 0, 3, 3000.00, 'Ordered', 77, '34e78574289e83ac77ea0ebc181887d2'),
+(157, 50, 0, 9, 229.50, 'Ordered', 77, '34e78574289e83ac77ea0ebc181887d2'),
+(158, 49, 0, 6, 6000.00, 'Ordered', 78, '34e78574289e83ac77ea0ebc181887d2'),
+(159, 50, 0, 4, 102.00, 'Ordered', 78, '34e78574289e83ac77ea0ebc181887d2'),
+(160, 49, 0, 13, 13000.00, 'Ordered', 79, '9bb17c86495157e1d35ccf41f69ea484');
 
 -- --------------------------------------------------------
 
@@ -180,11 +187,10 @@ CREATE TABLE `person` (
 INSERT INTO `person` (`PRSN_ID`, `PRSN_NAME`, `PRSN_EMAIL`, `PRSN_PASSWORD`, `PRSN_PHONE`, `PRSN_ROLE`) VALUES
 (15, 'User', 'user@gmail.com', '4792487cdd9c183bfab5e48780837552', '09123456789', 'Customer'),
 (16, 'Admin', 'Test', '2cdcf3ae8d662d2141f8f4b0d5f0465c', '09123456789', 'Admin'),
-(25, 'Employee', 'employee@gmail.com', 'd3d73db423372e0bea89ca659ea9d115', '09123456789', 'Employee'),
 (48, 'New', 'new@gmail.com', '70efb8810172bcaceb5b475652600ed0', '09123456789', 'Customer'),
 (54, 'Number', 'number@gmail.com', 'a7f9f337591ea4d7acbd0073e1ca35d8', '09123456789', 'Customer'),
-(83, 'Admin Two', 'Admin2', 'd41d8cd98f00b204e9800998ecf8427e', '09123456789', 'Admin'),
-(84, 'Hi Hello', 'HiHello', 'ef9ec02399a356803e21b09f0e786c64', '09123456789', 'Employee'),
+(83, 'Admin Two', 'Admin2', 'd41d8cd98f00b204e9800998ecf8427e', '09123456789', 'Employee'),
+(84, 'Employee Employee', 'Employee', 'd3d73db423372e0bea89ca659ea9d115', '09123456789', 'Employee'),
 (85, 'WhNew WhNew', 'WhNew', '7503d4ae5f2684f8d09e30657bfc5809', '09123456789', 'Wholesaler'),
 (86, 'Wholesaler Wholesale', 'Wholesaler', '4ff918a8bde60d5bda668f617164af08', '09123456789', 'Wholesaler');
 
@@ -217,8 +223,12 @@ CREATE TABLE `placed_order` (
 --
 
 INSERT INTO `placed_order` (`PLACED_ORDER_ID`, `PRSN_ID`, `CUS_NAME`, `CUS_NUMBER`, `CUS_EMAIL`, `PLACED_ORDER_DATE`, `PLACED_ORDER_TOTAL`, `DELIVERY_ADDRESS`, `DELIVERY_DATE`, `PLACED_ORDER_STATUS`, `PLACED_ORDER_CONFIRMATION`, `PLACED_ORDER_TRACKER`, `PLACED_ORDER_NOTE`, `REFERENCE_NUMBER`, `GUEST_ORDER_IDENTIFIER`) VALUES
-(74, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-04-18 12:50:43am', 127.50, 'RegionTest, ProvinceTest, CityTest, BarangayTest, StreetTest', '2024-04-25 16:54', 'Cancelled', 'Confirmed', '986041e358b84400', '', '412', ''),
-(75, 15, 'New New', '09123456789', 'user@gmail.com', '2024-04-18 01:42:12am', 1000.00, 'New, New, New, New, New', '2024-04-30 16:42', 'For Delivery', 'Confirmed', 'aaf6cfdfa404f098', '', '41412', '');
+(74, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-04-18 12:50:43am', 127.50, 'RegionTest, ProvinceTest, CityTest, BarangayTest, StreetTest', '2024-04-25 16:54', 'Completed', 'Confirmed', '986041e358b84400', '', '412', ''),
+(75, 15, 'New New', '09123456789', 'user@gmail.com', '2024-04-18 01:42:12am', 1000.00, 'New, New, New, New, New', '2024-04-30 16:42', 'Cancelled', 'Not Confirmed', 'aaf6cfdfa404f098', '', '41412', ''),
+(76, 0, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-04-18 05:34:00pm', 5000.00, 'RegionTest, ProvinceTest, CityTest, BarangayTest, StreetTest', '2024-04-30 15:33', 'Placed', '', 'cdbf26fc148b9b07', '', '', '34e78574289e83ac77ea0ebc181887d2'),
+(77, 0, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-04-18 05:39:41pm', 3229.50, 'RegionTest, ProvinceTest, CityTest, BarangayTest, StreetTest', '2024-04-30 14:39', 'Placed', '', 'cd719804ad6c16ed', '', '', '34e78574289e83ac77ea0ebc181887d2'),
+(78, 0, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-04-18 05:47:11pm', 6102.00, 'RegionTest, ProvinceTest, CityTest, BarangayTest, StreetTest', '2024-04-29 14:47', 'Placed', '', 'e4a5afc76df60e07', '', '', '34e78574289e83ac77ea0ebc181887d2'),
+(79, 0, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-04-18 05:48:00pm', 13000.00, 'RegionTest, ProvinceTest, CityTest, BarangayTest, StreetTest', '2024-04-30 13:47', 'Placed', '', 'b230b7ac2957481d', '', '', '9bb17c86495157e1d35ccf41f69ea484');
 
 -- --------------------------------------------------------
 
@@ -327,7 +337,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `EMP_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `EMP_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1000;
 
 --
 -- AUTO_INCREMENT for table `food`
@@ -339,7 +349,7 @@ ALTER TABLE `food`
 -- AUTO_INCREMENT for table `in_order`
 --
 ALTER TABLE `in_order`
-  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
+  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
 
 --
 -- AUTO_INCREMENT for table `person`
@@ -351,7 +361,7 @@ ALTER TABLE `person`
 -- AUTO_INCREMENT for table `placed_order`
 --
 ALTER TABLE `placed_order`
-  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT for table `wholesaler`

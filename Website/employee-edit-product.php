@@ -103,23 +103,23 @@ $FOOD_ID = $_GET['FOOD_ID'];
                                             <div class="form-field">
                                                 <div class="form-field-input">
                                                     <label for="product-name">Product Name</label>
-                                                    <input class="js-user" type="text" id="product-name" name="product-name" value="<?php echo $FOOD_NAME?>"><!-- 20 characters only, letter only, with spaces -->
+                                                    <input class="js-user" type="text" id="product-name" name="product-name" value="<?php echo $FOOD_NAME ?>"><!-- 20 characters only, letter only, with spaces -->
                                                     <div class="error"></div>
                                                 </div>
                                                 <div class="form-field-input">
                                                     <label for="product-name">Description</label>
-                                                    <input class="js-user" type="text" id="product-desc" name="product-desc" value="<?php echo $FOOD_DESC?>"><!-- 20 characters only, letter only, with spaces -->
+                                                    <input class="js-user" type="text" id="product-desc" name="product-desc" value="<?php echo $FOOD_DESC ?>"><!-- 20 characters only, letter only, with spaces -->
                                                     <div class="error"></div>
                                                 </div>
                                                 <div class="form-field-input">
                                                     <label for="price">Price ₱ </label>
-                                                    <input class="js-user" type="text" id="price" name="price" value="<?php echo $FOOD_PRICE?>">
+                                                    <input class="js-user" type="text" id="price" name="price" value="<?php echo $FOOD_PRICE ?>">
                                                     <div class="error"></div>
                                                 </div>
 
                                                 <div class="form-field-input">
                                                     <label for="price">Stock </label>
-                                                    <input class="js-user" type="number" id="stock" name="stock" value="<?php echo $FOOD_STOCK?>">
+                                                    <input class="js-user" type="number" id="stock" name="stock" value="<?php echo $FOOD_STOCK ?>">
                                                     <div class="error"></div>
                                                 </div>
                                                 <div class="form-field-input">
@@ -202,12 +202,13 @@ $FOOD_ID = $_GET['FOOD_ID'];
             if (productDescValue === '') {
                 setError(productDescInput, 'Please enter the product description');
                 isValid = false;
-            } else if (!nameRegex.test(productDescValue)) {
-                setError(productDescInput, 'Invalid product description');
+            } else if (productDescValue.length > 50) {
+                setError(productDescInput, 'Product description must not exceed 50 characters');
                 isValid = false;
             } else {
                 clearError(productDescInput);
             }
+
 
             if (priceValue === '') {
                 setError(priceInput, 'Please enter the price');

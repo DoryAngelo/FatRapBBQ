@@ -266,6 +266,7 @@ if (isset($_POST['submit'])) {
         const usernameInput = document.getElementById('username');
         const passwordInput = document.getElementById('password');
         const cpasswordInput = document.getElementById('cpassword');
+        const imageInput = document.getElementById('image');
 
         function setError(input, message) {
             const errorDiv = input.nextElementSibling;
@@ -286,6 +287,8 @@ if (isset($_POST['submit'])) {
             const usernameValue = usernameInput.value.trim();
             const passwordValue = passwordInput.value.trim();
             const cpasswordValue = cpasswordInput.value.trim();
+            const imageValue = imageInput.value.trim();
+
 
             const nameRegex = /^[a-zA-Z\s]+$/;
             const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
@@ -352,6 +355,19 @@ if (isset($_POST['submit'])) {
                 isValid = false;
             } else {
                 clearError(cpasswordInput);
+            }
+
+            // Check if file extension is valid only if an image is selected
+            if (imageValue !== '') {
+                const validExtensions = ['png', 'jpg', 'jpeg'];
+                const fileExtension = imageValue.split('.').pop().toLowerCase();
+
+                if (!validExtensions.includes(fileExtension)) {
+                    setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
+                    isValid = false;
+                } else {
+                    clearError(imageInput);
+                }
             }
 
             return isValid;
