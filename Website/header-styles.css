@@ -74,6 +74,9 @@ header img {
 
 header .text {
     margin-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
 }
 
 header h1 {
@@ -355,7 +358,7 @@ footer {
       margin-left: clamp(1rem, 2.5vw, 2rem);
     }
 
-    header.backend .text p {
+    header .text p {
       font-size: clamp(0.6rem, 2vw, 0.8rem);
     }
 

@@ -2,12 +2,28 @@
 
 @include 'constants.php';
 
+// if (isset($_SESSION['prsn_id'])) {
+//     $PRSN_ID = $_SESSION['prsn_id'];
+// } else {
+//     $_SESSION['prsn_role'] = "Customer";
+//     $GUEST_ID = $_SESSION['guest_id'];
+// }
+
+// $PRSN_ROLE = $_SESSION['prsn_role'];
+
 if (isset($_SESSION['prsn_id'])) {
     $PRSN_ID = $_SESSION['prsn_id'];
-} else {
+} else if (isset($_SESSION['guest_id'])) {
     $_SESSION['prsn_role'] = "Customer";
     $GUEST_ID = $_SESSION['guest_id'];
+} else {
+    $random = random_bytes(16);
+    $GUEST_ID = bin2hex($random);
+    $_SESSION['prsn_role'] = "Customer";
+    $_SESSION['guest_id'] =   $GUEST_ID;
 }
+
+$PRSN_ROLE = $_SESSION['prsn_role'];
 
 $FOOD_ID = $_GET['FOOD_ID'];
 
@@ -71,13 +87,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
-<body>
-    <header>
+<body class="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'wholesaler' : ''; ?>">
+    <header class="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'wholesaler' : ''; ?>">
         <div class="header-container">
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
                     <h1>Fat Rap's Barbeque</h1>
+                    <?php
+                    if ($PRSN_ROLE == "Wholesaler") {
+                    ?>
+                        <p>WHOLESALE</p>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">

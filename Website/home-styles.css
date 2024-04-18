@@ -33,6 +33,7 @@ body {
     font-weight: 500;
     min-width: 320px;
     color: var(--text);
+    background-color: var(--bg);
 }
 
 main {
@@ -46,6 +47,10 @@ main {
    display: flex;
    justify-content: center;
    align-items: center;
+}
+
+.wholesaler {
+    background-color: #F2FFE1;
 }
 
 h1 {
@@ -114,7 +119,7 @@ img {
 
 /* section 1 */
 #featured-section {
-    background-color: var(--bg);
+    background-color: transparent;
 }
 
 #featured-section .container{
@@ -386,6 +391,10 @@ img {
 
 #wholesale-section .text {
     align-items: center;
+}
+
+#wholesale-section-hidden {
+    display: none;
 }
 
 /* element sizes shrink before tablet size*/
