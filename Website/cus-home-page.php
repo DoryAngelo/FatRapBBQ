@@ -35,6 +35,7 @@ if ($count > 0) {
     }
 }
 
+$IN_ORDER_QUANTITY = isset($IN_ORDER_QUANTITY) ? $IN_ORDER_QUANTITY : 1;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     $quantity = $_POST['quantity'];
@@ -51,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         while ($row = mysqli_fetch_assoc($res)) {
             $IN_ORDER_ID = $row['IN_ORDER_ID'];
             $IN_ORDER_QUANTITY = $quantity;
-            $IN_ORDER_TOTAL =  ($quantity * $FOOD_PRICE);
+            $IN_ORDER_TOTAL = ($quantity * $FOOD_PRICE);
             $sql = "UPDATE in_order SET 
                             IN_ORDER_QUANTITY = $IN_ORDER_QUANTITY,
                             IN_ORDER_TOTAL = $IN_ORDER_TOTAL
@@ -195,6 +196,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             </div>
         </section>
         <!-- section 3 -->
+        <?php $sql = "SELECT f.*, io.in_order_quantity 
+        FROM food f 
+        LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
+        WHERE f.FOOD_ID = '$FOOD_ID'";
+
+
+        $res = mysqli_query($conn, $sql);
+        $count = mysqli_num_rows($res);
+        if ($count > 0) {
+            while ($row = mysqli_fetch_assoc($res)) {
+                $IN_ORDER_QUANTITY = $row['in_order_quantity'];
+            }
+        } ?>
         <section class="section" id="product-section">
             <div class="container responsive">
                 <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="picture of a pork bbq">
@@ -205,14 +219,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictumsum dolor sit amet</p>
                     <div class="action-grp responsive">
                         <form method="post" class="form">
-                            <input type="hidden" id="quantity" name="quantity" value="1"> <!-- Hidden input to store the quantity -->
-                            <button name="order" type="submit" class="button">Order Now</button>
+                            <input type="hidden" id="quantity" name="quantity" value="<?php echo $IN_ORDER_QUANTITY; ?>">
+                            <button name="order" type="submit" class="button" <?php echo ($FOOD_STOCK <= 0) ? 'disabled' : ''; ?>>Order Now</button>
                         </form>
                         <?php
-                    $sql = "SELECT f.*, io.in_order_quantity 
-                    FROM food f 
-                    LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
-                    WHERE f.FOOD_ID = '$FOOD_ID'";
+                        $sql = "SELECT f.*, io.in_order_quantity 
+                FROM food f 
+                LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
+                WHERE f.FOOD_ID = '$FOOD_ID'";
                         $res = mysqli_query($conn, $sql);
                         $count = mysqli_num_rows($res);
                         if ($count > 0) {
@@ -227,11 +241,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                 <p class="amount js-num"><?php echo ($IN_ORDER_QUANTITY == NULL) ? 1 : $IN_ORDER_QUANTITY; ?></p>
                                 <i class='bx bxs-plus-circle js-plus circle' data-stock="<?php echo $FOOD_STOCK; ?>"></i>
                             </div>
-                            <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?>
-                                sticks remaining</p>
+                            <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> sticks remaining</p>
                         </div>
                     </div>
                 </div>
+
             </div>
         </section>
         <script>

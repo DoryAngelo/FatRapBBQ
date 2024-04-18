@@ -2,6 +2,10 @@
 
 @include 'constants.php';
 
+$PRSN_ROLE = $_SESSION['prsn_role'];
+if ($PRSN_ROLE !== 'Admin') {
+    header('location:' . SITEURL . 'login-page.php');
+}
 $PRSN_ID = $_GET['PRSN_ID'];
 $WHL_ID = $_GET['WHL_ID'];
 

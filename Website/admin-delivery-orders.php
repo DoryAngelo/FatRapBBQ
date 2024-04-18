@@ -2,6 +2,10 @@
 
 @include 'constants.php';
 
+$PRSN_ROLE = $_SESSION['prsn_role'];
+if ($PRSN_ROLE !== 'Admin') {
+    header('location:' . SITEURL . 'login-page.php');
+}
 if (isset($_POST['confirmed'])) {
 
     $PLACED_ORDER_ID = $_POST['PLACED_ORDER_ID'];

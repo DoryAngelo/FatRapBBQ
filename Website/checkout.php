@@ -295,7 +295,6 @@ if (isset($_POST['submit'])) {
                                     $res2 = mysqli_query($conn, $sql2);
 
                                     $row2 = mysqli_fetch_assoc($res2);
-
                                     //get individual values
                                     $PRSN_NAME = $row2['PRSN_NAME'];
                                     $PRSN_PHONE = $row2['PRSN_PHONE'];

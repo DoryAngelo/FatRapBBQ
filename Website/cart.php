@@ -22,7 +22,6 @@ if (isset($_SESSION['prsn_id'])) {
     $_SESSION['prsn_role'] = "Customer";
     $_SESSION['guest_id'] =   $GUEST_ID;
 }
-
 $PRSN_ROLE = $_SESSION['prsn_role'];
 
 ?>

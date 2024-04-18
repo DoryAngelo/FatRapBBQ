@@ -2,6 +2,11 @@
 
 @include 'constants.php';
 
+$PRSN_ROLE = $_SESSION['prsn_role'];
+if ($PRSN_ROLE !== 'Admin') {
+    header('location:' . SITEURL . 'login-page.php');
+}
+
 $PRSN_ID = $_SESSION['prsn_id'];
 
 $food_type = isset($_GET['type']) ? $_GET['type'] : 'all'; 

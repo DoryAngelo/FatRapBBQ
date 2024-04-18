@@ -4,6 +4,11 @@
 
 $PRSN_ID = $_SESSION['prsn_id'];
 
+$PRSN_ROLE = $_SESSION['prsn_role'];
+if ($PRSN_ROLE !== 'Admin') {
+    header('location:' . SITEURL . 'login-page.php');
+}
+
 if (isset($_POST['submit'])) {
     $PRSN_FNAME = mysqli_real_escape_string($conn, trim($_POST['first-name']));
     $PRSN_LNAME = mysqli_real_escape_string($conn, trim($_POST['last-name']));

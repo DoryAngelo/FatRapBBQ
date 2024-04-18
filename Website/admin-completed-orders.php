@@ -2,6 +2,11 @@
 
 @include 'constants.php';
 
+$PRSN_ROLE = $_SESSION['prsn_role'];
+if ($PRSN_ROLE !== 'Admin') {
+    header('location:' . SITEURL . 'login-page.php');
+}
+
 if ($countNO > 0) {
     echo "<script>notifyNewOrder();</script>";
 }

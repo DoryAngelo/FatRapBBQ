@@ -3,6 +3,10 @@
 @include 'constants.php';
 
 $PRSN_ID = $_SESSION['prsn_id'];
+$PRSN_ROLE = $_SESSION['prsn_role'];
+if ($PRSN_ROLE !== 'Employee') {
+    header('location:' . SITEURL . 'login-page.php');
+}
 
 if (isset($_POST['submit'])) {
     $FOOD_NAME = mysqli_real_escape_string($conn, $_POST['product-name']);

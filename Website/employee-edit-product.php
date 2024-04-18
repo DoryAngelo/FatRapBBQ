@@ -2,6 +2,11 @@
 
 @include 'constants.php';
 
+$PRSN_ROLE = $_SESSION['prsn_role'];
+if ($PRSN_ROLE !== 'Employee') {
+    header('location:' . SITEURL . 'login-page.php');
+}
+
 $FOOD_ID = $_GET['FOOD_ID'];
 
 ?>
