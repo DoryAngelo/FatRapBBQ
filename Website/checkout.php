@@ -2,6 +2,12 @@
 
 @include 'constants.php';
 
+// if (isset($_SESSION['prsn_id'])) {
+//     $PRSN_ID = $_SESSION['prsn_id'];
+// } else {
+//     $GUEST_ID = $_SESSION['guest_id'];
+// }
+
 if (isset($_SESSION['prsn_id'])) {
     $PRSN_ID = $_SESSION['prsn_id'];
 } else if (isset($_SESSION['guest_id'])) {
@@ -157,6 +163,13 @@ if (isset($_POST['submit'])) {
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
                     <h1>Fat Rap's Barbeque</h1>
+                    <?php
+                    if ($PRSN_ROLE == "Wholesaler") {
+                    ?>
+                        <p>WHOLESALE</p>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">

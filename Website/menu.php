@@ -3,11 +3,25 @@
 
 @include 'constants.php';
 
+// if (isset($_SESSION['prsn_id'])) {
+//     $PRSN_ID = $_SESSION['prsn_id'];
+// } else {
+//     $_SESSION['prsn_role'] = "Customer";
+//     $GUEST_ID = $_SESSION['guest_id'];
+// }
+
+// $PRSN_ROLE = $_SESSION['prsn_role'];
+
 if (isset($_SESSION['prsn_id'])) {
     $PRSN_ID = $_SESSION['prsn_id'];
-} else {
+} else if (isset($_SESSION['guest_id'])) {
     $_SESSION['prsn_role'] = "Customer";
     $GUEST_ID = $_SESSION['guest_id'];
+} else {
+    $random = random_bytes(16);
+    $GUEST_ID = bin2hex($random);
+    $_SESSION['prsn_role'] = "Customer";
+    $_SESSION['guest_id'] =   $GUEST_ID;
 }
 
 $PRSN_ROLE = $_SESSION['prsn_role'];
@@ -40,6 +54,13 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
                     <h1>Fat Rap's Barbeque</h1>
+                    <?php
+                    if ($PRSN_ROLE == "Wholesaler") {
+                    ?>
+                        <p>WHOLESALE</p>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
@@ -66,17 +87,19 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
         </div>
     </header>
     <main>
+        <?php
+        if ($PRSN_ROLE == "Wholesaler") {
+        ?>
+            <div class="wholesaler-menu-banner">
+                <h1>WHOLESALE DEALS!!!</h1>
+            </div>
+        <?php
+        }
+        ?>
         <section class="section menu">
             <div class="container">
                 <div class="section-heading">
-                    <?php
-                    if ($PRSN_ROLE == "Wholesaler") {
-                    ?>
-                        <h1>WHOLESALE DEALS!!!</h1>
-                    <?php
-                    }
-                    ?>
-
+                    
                     <h2>Menu</h2>
                 </div>
                 <section class="section-body">
@@ -97,6 +120,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                                 <div class="text">
                                     <p class="name"><?php echo $FOOD_NAME ?></p>
                                     <div class="inline">
+<<<<<<< HEAD
                                         <h2>₱<?php echo $FOOD_PRICE ?></h3>
                                             <?php if ($PRSN_ROLE === "Wholesaler") {
                                             } else {
@@ -108,6 +132,10 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                                             }
                                             ?>
 
+=======
+                                        <h2>₱<?php echo $FOOD_PRICE ?></h3><!-- price sa wholesale customer-->
+                                        <p id="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'stick-hidden' : ''; ?>">1 stick</p>
+>>>>>>> ded4bcbe0b0b18d2699df4a73bf180d8a3bbdf13
                                     </div>
                                 </div>
                             </a>

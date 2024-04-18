@@ -31,9 +31,10 @@ body {
     font-weight: 500;
     min-height: 100vh;
     min-width: 320px;
+    background-color: var(--bg);
 }
 
-body.wholesaler {
+.wholesaler {
     background-color: #F2FFE1;
 }
 
@@ -41,7 +42,7 @@ main {
     padding-top: 8rem; /*height of header */
     /* padding-bottom: 7rem; */
     min-height: 70vh;
-    background-color: var(--bg);
+    /* background-color: var(--bg); */
     color: var(--text);
     /* overflow: hidden;    */
 }
@@ -225,13 +226,13 @@ table.order .first-col {
     padding-right: 5px;
 }
 
-table.order .quantity-col {
-    /* height: 100%;
+/*table.order .quantity-col {
+     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start; */
-    /* border: 1px solid green; */
-}
+    /* border: 1px solid green; 
+}*/
 
 /* table.order .narrow-col {
     width: 13%;
@@ -452,7 +453,8 @@ div.btn-container {
 }
 
 a.clear-bg, a.clear-bg:hover {
-    background-color: var(--bg);
+    /* background-color: var(--bg); */
+    background-color: transparent;
 }
 
 .menu .section-body {
@@ -502,6 +504,14 @@ a.clear-bg, a.clear-bg:hover {
 
 .menu .menu-item .inline h2 {
     font-size: 1.625rem;
+}
+
+.wholesaler .menu .inline h2 {
+    color: #78D35A;
+}
+
+#stick-hidden {
+    display: none;
 }
 
 a.back {
@@ -808,6 +818,20 @@ a.back {
     margin-top: 2px;
 }
 
+.wholesaler-menu-banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: clamp(1rem, 3vw, 2rem);
+    background-color: #2AEF5E;
+}
+
+.wholesaler-menu-banner h1{
+    font-size: 2.33rem;
+    color: #115B2D;
+}
+
+
 @media only screen and (width <= 950px) {
     /* .menu .section-body {
         grid-template-columns: repeat(auto-fit, minmax(150px, 150px)); 
@@ -967,6 +991,12 @@ a.back {
     
     .order-status-desc p {
         font-size: 3rem;
+    }
+}
+
+@media only screen and (width <= 480px) {
+    .wholesaler-menu-banner h1 {
+        font-size: clamp(1.5rem,5.5vw,2.0625rem);
     }
 }
 

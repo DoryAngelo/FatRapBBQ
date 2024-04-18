@@ -99,6 +99,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
                     <h1>Fat Rap's Barbeque</h1>
+                    <?php
+                    if ($PRSN_ROLE == "Wholesaler") {
+                    ?>
+                        <p>WHOLESALE</p>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
@@ -332,7 +339,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             </div>
         </section>
         <!-- section 5 -->
-        <section class="section" id="wholesale-section">
+        <section class="section" id="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'wholesale-section-hidden' : 'wholesale-section'; ?>">
             <div class="container responsive">
                 <div class="text">
                     <h1>Looking for wholesale deals?</h1>
