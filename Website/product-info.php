@@ -147,9 +147,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                             <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?>
                                                 sticks available</p>
                                         </div>
-                                        <input type="hidden" id="quantity" name="quantity" value="1">
+                                        <input type="hidden" id="quantity" name="quantity" value="<?php echo ($IN_ORDER_QUANTITY == NULL) ? 1 : $IN_ORDER_QUANTITY; ?>">
                                         <input type="hidden" name="price" value="<?php echo $FOOD_PRICE ?>">
-                                        <button name="order" type="submit">Add to Cart</button>
+                                        <button name="order" type="submit" <?php echo ($FOOD_STOCK <= 0) ? 'disabled' : ''; ?>>Add to Cart</button>
                                     </form>
                                 </div>
                             </section>

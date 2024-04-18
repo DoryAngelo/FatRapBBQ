@@ -4,6 +4,10 @@
 
 $PRSN_ID = $_SESSION['prsn_id'];
 
+if ($PRSN_ROLE !== 'Admin') {
+    header('location:' . SITEURL . 'login-page.php');
+}
+
 
 
 ?>

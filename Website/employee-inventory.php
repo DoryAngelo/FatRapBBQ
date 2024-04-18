@@ -2,6 +2,10 @@
 
 @include 'constants.php';
 
+if ($PRSN_ROLE !== 'Employee') {
+    header('location:' . SITEURL . 'login-page.php');
+}
+
 $PRSN_ID = $_SESSION['prsn_id'];
 
 

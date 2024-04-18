@@ -2,6 +2,10 @@
 
 @include 'constants.php';
 
+if ($PRSN_ROLE !== 'Admin') {
+    header('location:' . SITEURL . 'login-page.php');
+}
+
 $PRSN_ID = $_SESSION['prsn_id'];
 
 $wholesaler_status = isset($_GET['type']) ? $_GET['type'] : 'all';

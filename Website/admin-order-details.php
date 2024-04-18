@@ -4,6 +4,10 @@
 
 $PLACED_ORDER_ID = $_GET['PLACED_ORDER_ID'];
 
+if ($PRSN_ROLE !== 'Admin') {
+    header('location:' . SITEURL . 'login-page.php');
+}
+
 ?>
 
 <!DOCTYPE html>
