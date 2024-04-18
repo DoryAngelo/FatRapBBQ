@@ -118,22 +118,19 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
     <main>
         <section class="section" id="orders-page">
             <div class="container">
-                <div class="section-heading">
+                <div class="section-heading row">
                     <h2>To Prepare</h2>
-                    <div class="inline">
-                        <!-- <p>Date range:</p> -->
-                        <select name="order-type" id="order-type" class="dropdown">
-                            <option value="all" <?php echo ($order_type === 'all') ? 'selected' : ''; ?>>All</option>
-                            <option value="Today" <?php echo ($order_type === 'Today') ? 'selected' : ''; ?>>Today</option>
-                            <option value="Advanced" <?php echo ($order_type === 'Advanced') ? 'selected' : ''; ?>>Advanced</option>
-                        </select>
-                        <script>
-                            document.getElementById('order-type').addEventListener('change', function() {
-                                var selectedOrderType = this.value;
-                                window.location.href = "employee-to-prepare-orders.php?type=" + selectedOrderType;
-                            });
-                        </script>
-                    </div>
+                    <select name="order-type" id="order-type" class="dropdown">
+                        <option value="all" <?php echo ($order_type === 'all') ? 'selected' : ''; ?>>All</option>
+                        <option value="Today" <?php echo ($order_type === 'Today') ? 'selected' : ''; ?>>Today</option>
+                        <option value="Advanced" <?php echo ($order_type === 'Advanced') ? 'selected' : ''; ?>>Advanced</option>
+                    </select>
+                    <script>
+                        document.getElementById('order-type').addEventListener('change', function() {
+                            var selectedOrderType = this.value;
+                            window.location.href = "employee-to-prepare-orders.php?type=" + selectedOrderType;
+                        });
+                    </script>
                 </div>
                 <section class="with-side-menu">
                     <section class="main-section table-wrapper">
@@ -204,31 +201,32 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                         <div class="group inventory">
                             <h3>Inventory</h3>
                             <div class="inventory-box">
-                            <?php
-                                $sql = "SELECT * FROM food WHERE FOOD_STOCK < 100";
-                                $res = mysqli_query($conn, $sql);
-                                $count = mysqli_num_rows($res);
-                                $stockValues = array();
-                                if ($count > 0) {
-                                    while ($row = mysqli_fetch_assoc($res)) {
-                                        $FOOD_NAME = $row['FOOD_NAME'];
-                                        $FOOD_STOCK = $row['FOOD_STOCK'];
-                                ?>
-                                        <div class="inline">
-                                            <p><?php echo $FOOD_NAME ?></p>
-                                            <span class="<?php echo ($FOOD_STOCK < 100) ? 'red-text' : ''; ?>">
-                                                <p><?php echo $FOOD_STOCK ?></p>
-                                            </span>
-                                        </div>
                                 <?php
+                                    $sql = "SELECT * FROM food WHERE FOOD_STOCK < 100";
+                                    $res = mysqli_query($conn, $sql);
+                                    $count = mysqli_num_rows($res);
+                                    $stockValues = array();
+                                    if ($count > 0) {
+                                        while ($row = mysqli_fetch_assoc($res)) {
+                                            $FOOD_NAME = $row['FOOD_NAME'];
+                                            $FOOD_STOCK = $row['FOOD_STOCK'];
+                                    ?>
+                                            <div class="inline">
+                                                <p><?php echo $FOOD_NAME ?></p>
+                                                <span class="<?php echo ($FOOD_STOCK < 100) ? 'red-text' : ''; ?>">
+                                                    <p><?php echo $FOOD_STOCK ?></p>
+                                                </span>
+                                            </div>
+                                    <?php
+                                        }
                                     }
-                                }
-                                ?>
+                                    ?>
                                 <a href="<?php echo SITEURL; ?>employee-inventory.php" class="edit">Edit</a>
                             </div>
                         </div>
                         <div class="group">
                             <a href="<?php echo SITEURL; ?>employee-to-prepare-orders.php" class="view big-font">To Prepare</a>
+                            <a href="<?php echo SITEURL; ?>employee-preparing-orders.php" class="view big-font">Preparing</a>
                             <a href="<?php echo SITEURL; ?>employee-to-deliver-orders.php" class="view big-font">To Deliver</a>
                             <a href="<?php echo SITEURL; ?>employee-shipped.php" class="view big-font">Shipped</a>
                             <a href="<?php echo SITEURL; ?>employee-completed-orders.php" class="view big-font">Completed Orders</a>

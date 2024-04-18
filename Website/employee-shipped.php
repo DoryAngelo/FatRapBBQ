@@ -119,22 +119,19 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
     <main>
         <section class="section" id="orders-page">
             <div class="container">
-                <div class="section-heading">
-                    <h2>Shipped</h2>
-                    <div class="inline">
-                       <!-- <p>Date range:</p> -->
-                    <select name="order-type" id="order-type" class="dropdown">
-                        <option value="all" <?php echo ($order_type === 'all') ? 'selected' : ''; ?>>All</option>
-                        <option value="Today" <?php echo ($order_type === 'Today') ? 'selected' : ''; ?>>Today</option>
-                        <option value="Advanced" <?php echo ($order_type === 'Advanced') ? 'selected' : ''; ?>>Advanced</option>
-                    </select>
-                    <script>
-                        document.getElementById('order-type').addEventListener('change', function() {
-                            var selectedOrderType = this.value;
-                            window.location.href = "employee-shipped.php?type=" + selectedOrderType;
-                        });
-                    </script>
-                    </div>
+                <div class="section-heading row">
+                <h2>Shipped</h2>
+                <select name="order-type" id="order-type" class="dropdown">
+                    <option value="all" <?php echo ($order_type === 'all') ? 'selected' : ''; ?>>All</option>
+                    <option value="Today" <?php echo ($order_type === 'Today') ? 'selected' : ''; ?>>Today</option>
+                    <option value="Advanced" <?php echo ($order_type === 'Advanced') ? 'selected' : ''; ?>>Advanced</option>
+                </select>
+                <script>
+                    document.getElementById('order-type').addEventListener('change', function() {
+                        var selectedOrderType = this.value;
+                        window.location.href = "employee-shipped.php?type=" + selectedOrderType;
+                    });
+                </script>
                 </div>
                 <section class="with-side-menu">
                     <section class="main-section table-wrapper">
@@ -230,6 +227,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                         </div>
                         <div class="group">
                             <a href="<?php echo SITEURL; ?>employee-to-prepare-orders.php" class="view big-font">To Prepare</a>
+                            <a href="<?php echo SITEURL; ?>employee-preparing-orders.php" class="view big-font">Preparing</a>
                             <a href="<?php echo SITEURL; ?>employee-to-deliver-orders.php" class="view big-font">To Deliver</a>
                             <a href="<?php echo SITEURL; ?>employee-shipped.php" class="view big-font">Shipped</a>
                             <a href="<?php echo SITEURL; ?>employee-completed-orders.php" class="view big-font">Completed Orders</a>
