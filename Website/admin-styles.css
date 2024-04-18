@@ -752,7 +752,7 @@ a.back {
     gap: 2.5rem;
 }
 
-.calendar-block .header button, .calendar2 .header button {
+.calendar-block .header button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -767,7 +767,7 @@ a.back {
     color: var(--text);
 }
 
-.calendar-block .header button:hover, .calendar2 .header button:hover{
+.calendar-block .header button:hover {
     background-color: var(--db-highlight-blue);
 }
 
@@ -971,29 +971,6 @@ span.warning i {
 /*previous button in admin calendar*/
 .disabled:hover {
     background-color: red;
-}
-
-/*styles for alternative calendar */
-.calendar2 .header {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-}
-
-.calendar2 .block-body {
-    margin-top: 1rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(10rem,1fr)); /* Creates 3 columns with equal width */
-    gap: 1rem 2rem;
-}
-
-.calendar2 .wrapper h3 {
-    margin-bottom: 0.6rem;
-}
-
-.calendar2 .big-btn {
-    width: max-content;
-    min-width: 20%;
 }
 
 .red-text {

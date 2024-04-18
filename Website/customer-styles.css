@@ -414,7 +414,7 @@ table td:not(.first-col), table th:not(.first-col) {
 }
 
 .red-theme ::placeholder {
-    color: #a7321d;
+    color: #e6b0a7;
 }
 
 .note {
