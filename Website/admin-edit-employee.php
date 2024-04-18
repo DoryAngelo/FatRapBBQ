@@ -409,9 +409,9 @@ $EMP_ID = $_GET['EMP_ID'];
                                 }
 
                                 // Generate a unique filename for the image
-                                $image_info = pathinfo($FOOD_IMG);
+                                $image_info = pathinfo($EMP_IMG);
                                 $ext = strtolower($image_info['extension']);
-                                $FOOD_IMG = "EMP_IMAGE_" . $PRSN_NAME . "_" . uniqid() . "." . $ext;
+                                $EMP_IMG = "EMP_IMAGE_" . $PRSN_UNAME . "_" . uniqid() . "." . $ext;
 
                                 // Set the destination path for the uploaded image
                                 $dst = "images/" . $EMP_IMG;
@@ -462,7 +462,8 @@ $EMP_ID = $_GET['EMP_ID'];
                     SET PRSN_NAME = '$PRSN_NAME',
                         PRSN_EMAIL = '$PRSN_UNAME',
                         $updatePassword
-                        PRSN_PHONE = '$PRSN_PHONE'
+                        PRSN_PHONE = '$PRSN_PHONE',
+                        PRSN_ROLE = '$PRSN_ROLE'
                     WHERE PRSN_ID = $PRSN_ID";
 
                                 if (mysqli_query($conn, $updatePerson)) {

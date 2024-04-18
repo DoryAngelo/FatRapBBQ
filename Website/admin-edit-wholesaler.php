@@ -353,8 +353,8 @@ if ($count > 0) {
                             $current_image = $WHL_IMAGE;
                             $WHL_STATUS = $_POST['status'];
 
-                            // Check if a new image is uploaded
-                            if (isset($_FILES['image']['name']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                             // Check if a new image is uploaded
+                             if (isset($_FILES['image']['name']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
                                 // Get the image details
                                 $WHL_IMG = $_FILES['image']['name'];
 
@@ -363,14 +363,14 @@ if ($count > 0) {
                                 if ($image_info === false) {
                                     // Handle non-image files here
                                     $_SESSION['upload'] = "<div class='error'>Please upload a valid image file</div>";
-                                    header('location:' . $_SERVER['PHP_SELF'] . '?PRSN_ID=' . $PRSN_ID);
+                                    header('location:' . $_SERVER['PHP_SELF'] . '?WHL_ID=' . $WHL_ID);
                                     exit();
                                 }
 
                                 // Generate a unique filename for the image
                                 $image_info = pathinfo($WHL_IMG);
                                 $ext = strtolower($image_info['extension']);
-                                $WHL_IMG = "WHL_IMAGE_" . $PRSN_UNAME . "." . $ext;
+                                $WHL_IMG = "WHL_IMAGE_" . $PRSN_UNAME . "_" . uniqid() . "." . $ext;
 
                                 // Set the destination path for the uploaded image
                                 $dst = "images/" . $WHL_IMG;
@@ -379,7 +379,7 @@ if ($count > 0) {
                                 if (!move_uploaded_file($_FILES['image']['tmp_name'], $dst)) {
                                     // Handle upload failure
                                     $_SESSION['upload'] = "<div class='error'>Failed To Upload Image</div>";
-                                    header('location:' . $_SERVER['PHP_SELF'] . '?RPSN_ID=' . $PRSN_ID);
+                                    header('location:' . $_SERVER['PHP_SELF'] . '?WHL_ID=' . $WHL_ID);
                                     exit();
                                 }
 
@@ -397,7 +397,6 @@ if ($count > 0) {
                                 // No new image uploaded, retain the current image
                                 $WHL_IMG = $current_image;
                             }
-
                             // Check if password is provided
                             if (!empty($_POST['password'])) {
                                 $PRSN_PASSWORD = md5($_POST['password']);
