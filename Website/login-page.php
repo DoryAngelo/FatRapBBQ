@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
             $sql = "SELECT * from employee WHERE PRSN_ID = '$PRSN_ID'";
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_array($result);
-            $EMP_STATUS = $row['EMP_STATUS'];
+            $EMP_STATUS = $row['EMP_STATUS']; 
             if ($EMP_STATUS != "Active") {
                 $_SESSION['error_message'] = "Your account is inactive. Please contact support.";
                 header('Location: login-page.php');

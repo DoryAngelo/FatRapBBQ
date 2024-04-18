@@ -235,7 +235,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                             LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
                             WHERE f.FOOD_ID = '$FOOD_ID' 
                             AND io.GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
-                        } 
+                        }
 
                         $res = mysqli_query($conn, $sql);
                         $count = mysqli_num_rows($res);
@@ -308,12 +308,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                             <?php
                             if (isset($_POST['submit'])) {
                                 $PLACED_ORDER_TRACKER = mysqli_real_escape_string($conn, $_POST['track-order']);
-                                $_SESSION['tracker'] = $_POST['track-order'];
-                                $select = "SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'";
+                                if (isset($_SESSION['prsn_id'])) {
+                                    $select = "SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER' AND PRSN_ID = '$PRSN_ID'";
+                                } else if (isset($_SESSION['guest_id'])) {
+                                    $select = "SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER' AND PRSN_ID IS NULL";
+                                } 
                                 $res = mysqli_query($conn, $select);
                                 $count = mysqli_num_rows($res);
                                 if ($count > 0) {
                                     // If order is found, perform JavaScript redirection
+                                    $_SESSION['tracker'] = $_POST['track-order'];
                                     echo '<script>window.location.href = "track-order.php";</script>';
                                     exit(); // Ensure no further PHP execution after redirection
                                 } else {

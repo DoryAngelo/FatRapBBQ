@@ -120,6 +120,8 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                         $DELIVERY_ADDRESS = $row2['DELIVERY_ADDRESS'];
                                         $DELIVERY_DATE = $row2['DELIVERY_DATE'];
                                         $PLACED_ORDER_STATUS = $row2['PLACED_ORDER_STATUS'];
+                                        $GUEST_ORDER_IDENTIFIER = $row2['GUEST_ORDER_IDENTIFIER'];
+                                        
 
                                         switch ($PLACED_ORDER_STATUS) {
                                             case "Placed": //PLACED
@@ -354,7 +356,7 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                                     FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND PRSN_ID = $PRSN_ID AND PLACED_ORDER_ID = '$PLACED_ORDER_ID'";
                                             } else {
                                                 $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
-                                                    FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND GUEST_ORDER_IDENTIFIER = '$GUEST_ID' AND PLACED_ORDER_ID = '$PLACED_ORDER_ID'";
+                                                    FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND GUEST_ORDER_IDENTIFIER = '$GUEST_ORDER_IDENTIFIER' AND PLACED_ORDER_ID = '$PLACED_ORDER_ID'";
                                             }
                                             $res = mysqli_query($conn, $sql);
                                             $count = mysqli_num_rows($res);
