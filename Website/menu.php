@@ -99,13 +99,18 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
         <section class="section menu">
             <div class="container">
                 <div class="section-heading">
-                    
+
                     <h2>Menu</h2>
                 </div>
                 <section class="section-body">
                     <?php
 
-                    $sql = "SELECT * FROM food WHERE FOOD_ACTIVE = 'Yes' AND FOOD_TYPE = '$PRSN_ROLE'";
+                    if ($PRSN_ROLE === 'Admin') {
+                        $sql = "SELECT * FROM food WHERE FOOD_ACTIVE = 'Yes'";
+                    } else {
+                        $sql = "SELECT * FROM food WHERE FOOD_ACTIVE = 'Yes' AND FOOD_TYPE = '$PRSN_ROLE'";
+                    }
+
                     $res = mysqli_query($conn, $sql);
                     $count = mysqli_num_rows($res);
                     if ($count > 0) {
