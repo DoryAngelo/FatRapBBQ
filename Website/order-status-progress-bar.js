@@ -45,7 +45,7 @@ const updateSteps = (e) => {
 
       // Display a message indicating that the order has been cancelled
       const cancelMessage = document.createElement("p");
-      cancelMessage.textContent = "Your order has been cancelled. For more information please contact this number +63_______.";
+      cancelMessage.textContent = "Your order has been cancelled. For more information, kindly contact 09____ or 09____";
       cancelMessage.classList.add("cancel-message");
 
       // Replace the "Your order has been approved" text with the cancel message

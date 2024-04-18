@@ -74,6 +74,8 @@ if (isset($_POST['not-confirmed'])) {
     header('location:admin-new-orders.php');
 }
 
+$order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
+
 ?>
 
 <!DOCTYPE html>
@@ -134,8 +136,18 @@ if (isset($_POST['not-confirmed'])) {
                 <div class="section-heading">
                     <h2>New Orders</h2>
                     <div class="inline">
-                        <p>Date range:</p>
-                        <input type="date">
+                        <!-- <p>Date range:</p> -->
+                        <select name="order-type" id="order-type" class="dropdown">
+                            <option value="all" <?php echo ($order_type === 'all') ? 'selected' : ''; ?>>All</option>
+                            <option value="Today" <?php echo ($order_type === 'Today') ? 'selected' : ''; ?>>Today</option>
+                            <option value="Advanced" <?php echo ($order_type === 'Advanced') ? 'selected' : ''; ?>>Advanced</option>
+                        </select>
+                        <script>
+                            document.getElementById('order-type').addEventListener('change', function() {
+                                var selectedOrderType = this.value;
+                                window.location.href = "admin-new-orders.php?type=" + selectedOrderType;
+                            });
+                        </script>
                     </div>
                 </div>
                 <section class="with-side-menu">
@@ -154,6 +166,17 @@ if (isset($_POST['not-confirmed'])) {
                                 <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
                                 <?php
                                 $sql = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'Placed'";
+
+                                $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
+
+                                if ($order_type === 'Today') {
+                                    // Add condition for orders scheduled for delivery today
+                                    $sql .= " AND DATE_FORMAT(STR_TO_DATE(delivery_date, '%Y-%m-%d %H:%i'), '%Y-%m-%d') = CURDATE()";
+                                } elseif ($order_type === 'Advanced') {
+                                    // Add condition for orders scheduled for delivery after today
+                                    $sql .= " AND DATE_FORMAT(STR_TO_DATE(delivery_date, '%Y-%m-%d %H:%i'), '%Y-%m-%d') > CURDATE()";
+                                }
+
                                 $res = mysqli_query($conn, $sql);
                                 $count = mysqli_num_rows($res);
                                 if ($count > 0) {
@@ -180,78 +203,78 @@ if (isset($_POST['not-confirmed'])) {
                                                         <input type="hidden" name="PLACED_ORDER_STATUS" value="<?php echo $PLACED_ORDER_STATUS; ?>">
                                                         <button class="btn-check" name="confirmed"><i class='bx bxs-check-circle'></i></button>
                                                         <button class="btn-cross" name="not-confirmed"><i class='bx bxs-x-circle'></i></button>
-                                                        <td><a href="#" onclick="confirmDelete(<?php echo $PLACED_ORDER_ID; ?>)" class="bx bxs-trash-alt trash"></a></td>
-                                                    <script>
-                                                        function confirmDelete(PLACED_ORDER_ID) {
-                                                        if (confirm("Are you sure you want to delete this item?")) {
+                                            <td><a href="#" onclick="confirmDelete(<?php echo $PLACED_ORDER_ID; ?>)" class="bx bxs-trash-alt trash"></a></td>
+                                            <script>
+                                                function confirmDelete(PLACED_ORDER_ID) {
+                                                    if (confirm("Are you sure you want to delete this item?")) {
                                                         window.location.href = "delete_placed_order.php?PLACED_ORDER_ID=" + PLACED_ORDER_ID;
-                                                        } else {
+                                                    } else {
                                                         // Do nothing
-                                                        }
-                                                        }
-                                                        </script>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php
+                                                    }
+                                                }
+                                            </script>
+                                            </form>
+                        </div>
+                        </td>
+                        </tr>
+                    <?php
                                     }
                                 } else {
-                                    ?>
-                                    <!-- <div class="error">No new orders</div> -->
-                                    <tr>
-                                        <td colspan="5" class="error">No new orders</td>
-                                    </tr>
-                                <?php
+                    ?>
+                    <!-- <div class="error">No new orders</div> -->
+                    <tr>
+                        <td colspan="5" class="error">No new orders</td>
+                    </tr>
+                <?php
                                 }
-                                ?>
-                            </table>
-                        </div>
-                        <div class="buttons">
-                            <a href=""><i class='bx bx-chevron-left js-minus'></i></a>
-                            <p class="js-num">1 / 999</p>
-                            <a href=""><i class='bx bx-chevron-right js-plus'></i></a>
-                        </div>
-                    </section>
-                    <section class="side-menu">
-                        <div class="group inventory">
-                            <h3>Inventory</h3>
-                            <div class="inventory-box">
-                                <?php
-                                $sql = "SELECT * FROM food WHERE FOOD_STOCK < 100";
-                                $res = mysqli_query($conn, $sql);
-                                $count = mysqli_num_rows($res);
-                                $stockValues = array();
-                                if ($count > 0) {
-                                    while ($row = mysqli_fetch_assoc($res)) {
-                                        $FOOD_NAME = $row['FOOD_NAME'];
-                                        $FOOD_STOCK = $row['FOOD_STOCK'];
-                                ?>
-                                        <div class="inline">
-                                            <p><?php echo $FOOD_NAME ?></p>
-                                            <span class="<?php echo ($FOOD_STOCK < 100) ? 'red-text' : ''; ?>">
-                                                <p><?php echo $FOOD_STOCK ?></p>
-                                            </span>
-                                        </div>
-                                <?php
-                                    }
-                                }
-                                ?>
-                                <a href="<?php echo SITEURL; ?>admin-inventory.php" class="edit">Edit</a>
-                            </div>
-                        </div>
-                        <div class="group">
-                            <a href="admin-new-orders.php" class="view big-font">New Orders</a>
-                            <a href="admin-awaiting-payment.php" class="view big-font">Awaiting Payment</a>
-                            <a href="admin-preparing-orders.php" class="view big-font">Preparing Orders</a>
-                            <a href="admin-delivery-orders.php" class="view big-font">For Delivery Orders</a>
-                            <a href="admin-shipped-orders.php" class="view big-font">Shipped Orders</a>
-                            <a href="admin-completed-orders.php" class="view big-font">Completed Orders</a>
-                            <a href="admin-canceled-orders.php" class="view big-font">Canceled Orders</a>
-                        </div>
-                    </section>
-                </section>
+                ?>
+                </table>
             </div>
+            <div class="buttons">
+                <a href=""><i class='bx bx-chevron-left js-minus'></i></a>
+                <p class="js-num">1 / 999</p>
+                <a href=""><i class='bx bx-chevron-right js-plus'></i></a>
+            </div>
+        </section>
+        <section class="side-menu">
+            <div class="group inventory">
+                <h3>Inventory</h3>
+                <div class="inventory-box">
+                    <?php
+                    $sql = "SELECT * FROM food WHERE FOOD_STOCK < 100";
+                    $res = mysqli_query($conn, $sql);
+                    $count = mysqli_num_rows($res);
+                    $stockValues = array();
+                    if ($count > 0) {
+                        while ($row = mysqli_fetch_assoc($res)) {
+                            $FOOD_NAME = $row['FOOD_NAME'];
+                            $FOOD_STOCK = $row['FOOD_STOCK'];
+                    ?>
+                            <div class="inline">
+                                <p><?php echo $FOOD_NAME ?></p>
+                                <span class="<?php echo ($FOOD_STOCK < 100) ? 'red-text' : ''; ?>">
+                                    <p><?php echo $FOOD_STOCK ?></p>
+                                </span>
+                            </div>
+                    <?php
+                        }
+                    }
+                    ?>
+                    <a href="<?php echo SITEURL; ?>admin-inventory.php" class="edit">Edit</a>
+                </div>
+            </div>
+            <div class="group">
+                <a href="admin-new-orders.php" class="view big-font">New Orders</a>
+                <a href="admin-awaiting-payment.php" class="view big-font">Awaiting Payment</a>
+                <a href="admin-preparing-orders.php" class="view big-font">Preparing Orders</a>
+                <a href="admin-delivery-orders.php" class="view big-font">For Delivery Orders</a>
+                <a href="admin-shipped-orders.php" class="view big-font">Shipped Orders</a>
+                <a href="admin-completed-orders.php" class="view big-font">Completed Orders</a>
+                <a href="admin-canceled-orders.php" class="view big-font">Canceled Orders</a>
+            </div>
+        </section>
+        </section>
+        </div>
         </section>
     </main>
     <script>

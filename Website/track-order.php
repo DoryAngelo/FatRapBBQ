@@ -324,7 +324,7 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                     <section class="block" id="cancelled-section" style="display: none;">
                         <h3 class="block-heading">Order Cancelled</h3>
                         <div class="block-body">
-                            <p class="cancelled-message">Your order has been cancelled. For more information please contact this number +63_______.</p>
+                            <p class="cancelled-message">Your order has been cancelled. For more information, kindly contact 09____ or 09____</p>
                         </div>
                     </section>
 
