@@ -120,22 +120,8 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                                 <div class="text">
                                     <p class="name"><?php echo $FOOD_NAME ?></p>
                                     <div class="inline">
-<<<<<<< HEAD
-                                        <h2>₱<?php echo $FOOD_PRICE ?></h3>
-                                            <?php if ($PRSN_ROLE === "Wholesaler") {
-                                            } else {
-                                            ?>
-                                                <p>1 stick</p>
-
-                                            <?php
-
-                                            }
-                                            ?>
-
-=======
-                                        <h2>₱<?php echo $FOOD_PRICE ?></h3><!-- price sa wholesale customer-->
+                                        <h2>₱<?php echo $FOOD_PRICE ?></h2>
                                         <p id="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'stick-hidden' : ''; ?>">1 stick</p>
->>>>>>> ded4bcbe0b0b18d2699df4a73bf180d8a3bbdf13
                                     </div>
                                 </div>
                             </a>
