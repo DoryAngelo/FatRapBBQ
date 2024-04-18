@@ -261,7 +261,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             <div class="container responsive">
                 <div class="text">
                     <h1>Want to track your order?</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictumsum dolor sit amet</p>
+                    <p>Enter your order tracking number to see the status of your order</p>
                 </div>
                 <style>
                     .error {
@@ -323,7 +323,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                 <div class="text">
                     <h1>Looking for wholesale deals?</h1>
                     <!-- <a href=">wc-register.php" class="button">Sign up as a Wholesale Customer</a> -->
-                    <p>For wholesale inquiries, contact +639_______</p>
+                    <p>For wholesale inquiries, contact 09178073760 or 09190873861</p>
                 </div>
             </div>
         </section>
