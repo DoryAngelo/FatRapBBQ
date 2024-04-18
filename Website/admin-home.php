@@ -204,12 +204,11 @@ $countW = mysqli_num_rows($resW);
                         <div class="group">
                             <h3>Calendar</h3>
                             <a href="<?php echo SITEURL; ?>admin-edit-calendar.php" class="view">View</a>
-                            <a href="<?php echo SITEURL; ?>admin-calendar-slots.php">View alternative</a>
                         </div>
                         <div class="group">
                             <h3>Wholesale Users</h3>
                             <div class="position-notif">
-                                <a href="<?php echo SITEURL; ?>admin-wholesaler-accounts.php" class="view">New</a>
+                                <a href="<?php echo SITEURL; ?>admin-wholesaler-accounts.php" class="view">View</a>
                                 <!-- <p class="notif"><?php echo $countW ?></p> -->
                             </div>
                         </div>
