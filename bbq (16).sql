@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 17, 2024 at 06:01 PM
+-- Generation Time: Apr 18, 2024 at 06:50 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,10 +38,11 @@ CREATE TABLE `calendar` (
 --
 
 INSERT INTO `calendar` (`CALENDAR_ID`, `CALENDAR_DATE`, `DATE_STATUS`) VALUES
-(53, 'April 24 2024', 'available'),
 (56, 'April 30 2024', 'available'),
 (58, 'April 22 2024', 'fullybooked'),
-(71, 'April 18 2024', 'available');
+(77, 'April 27 2024', 'available'),
+(78, 'April 23 2024', 'fullybooked'),
+(79, 'April 21 2024', 'closed');
 
 -- --------------------------------------------------------
 
@@ -100,10 +101,8 @@ CREATE TABLE `employee` (
 INSERT INTO `employee` (`EMP_ID`, `PRSN_ID`, `EMP_FNAME`, `EMP_LNAME`, `EMP_IMAGE`, `EMP_BRANCH`, `EMP_STATUS`) VALUES
 (11, 38, '', '', 'EMP_IMAGE_.jpg', '', ''),
 (18, 52, 'NewUpdate', 'NewUpdate', 'EMP_IMAGE_NewUpdate.png', 'NewUpdate', ''),
-(21, 78, 'NewEmployeee', 'NewEmployeee', 'EMP_IMAGE_NewEmployee3jpg', 'NewEmployee2', ''),
-(22, 81, 'TestEmployee', 'TestEmployee', '', 'TestEmployee', ''),
-(24, 83, 'Admin', 'Two', 'EMP_IMAGE_Admin2.jpg', 'AdminTwo', 'Active'),
-(25, 84, 'Hi', 'Hello', 'EMP_IMAGE_Hello.jpg', 'HiHello', 'Active');
+(24, 83, 'Admin', 'Two', 'EMP_IMAGE_Admin Two_6620a0b1034dd.jpg', 'AdminTwo', 'Active'),
+(25, 84, 'Hi', 'Hello', 'EMP_IMAGE_Hi Hello_6620a0d64df55.jpg', 'HiHello', 'Active');
 
 -- --------------------------------------------------------
 
@@ -128,8 +127,9 @@ CREATE TABLE `food` (
 --
 
 INSERT INTO `food` (`FOOD_ID`, `CTGY_ID`, `FOOD_NAME`, `FOOD_PRICE`, `FOOD_DESC`, `FOOD_IMG`, `FOOD_STOCK`, `FOOD_ACTIVE`, `FOOD_TYPE`) VALUES
-(49, 0, 'Barbeque', 1000.00, 'NewProduct', 'FOOD_IMAGE_Barbeque.jpg', -50, 'Yes', 'Customer'),
-(50, 0, 'Test', 25.50, 'testttttttttt', 'FOOD_IMAGE_Test.jpg', 100, 'Yes', 'Customer');
+(49, 0, 'Barbeque', 1000.00, 'NewProduct', 'FOOD_IMAGE_Barbeque.jpg', 49, 'Yes', 'Customer'),
+(50, 0, 'Test', 25.50, 'testttttttttt', 'FOOD_IMAGE_Test.jpg', 100, 'Yes', 'Customer'),
+(51, 0, 'Wholesaler Package 2', 1000.00, '100 bbq sticks', 'FOOD_IMAGE_Wholesaler Package 1_66209eae4d4c7.png', 1, 'No', 'Customer');
 
 -- --------------------------------------------------------
 
@@ -153,8 +153,10 @@ CREATE TABLE `in_order` (
 --
 
 INSERT INTO `in_order` (`IN_ORDER_ID`, `FOOD_ID`, `PRSN_ID`, `IN_ORDER_QUANTITY`, `IN_ORDER_TOTAL`, `IN_ORDER_STATUS`, `PLACED_ORDER_ID`, `GUEST_ORDER_IDENTIFIER`) VALUES
-(150, 49, 15, 10, 10000.00, 'Ordered', 73, ''),
-(151, 50, 15, 5, 127.50, 'Ordered', NULL, '');
+(151, 50, 15, 5, 127.50, 'Ordered', 74, ''),
+(152, 49, 15, 1, 1000.00, 'Ordered', 75, ''),
+(153, 50, 15, 7, 178.50, 'Ordered', NULL, ''),
+(154, 49, 15, 4, 4000.00, 'Ordered', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -181,13 +183,10 @@ INSERT INTO `person` (`PRSN_ID`, `PRSN_NAME`, `PRSN_EMAIL`, `PRSN_PASSWORD`, `PR
 (25, 'Employee', 'employee@gmail.com', 'd3d73db423372e0bea89ca659ea9d115', '09123456789', 'Employee'),
 (48, 'New', 'new@gmail.com', '70efb8810172bcaceb5b475652600ed0', '09123456789', 'Customer'),
 (54, 'Number', 'number@gmail.com', 'a7f9f337591ea4d7acbd0073e1ca35d8', '09123456789', 'Customer'),
-(78, 'NewEmployeee NewEmpl', 'NewEmployee4', 'c99fa75e153df5703c89509b6adc1031', '09123456789', 'Employee'),
-(79, 'WholesalerNew Wholes', 'TestUsernamee', 'cf25540a1a154f6186fa94ee08a28744', '09123456789', 'Wholesaler'),
-(80, 'FnameW LaNameW', 'UnameWn', 'bb651e59451b9b47e28f98cbf4f5854e', '09123456789', 'Wholesaler'),
-(81, 'TestEmployee TestEmp', 'dsadsads', '673141b80f19724c65ec23e80d81a5ba', '09123456789', 'Employee'),
-(83, 'Admin Two', 'Admin2', 'd41d8cd98f00b204e9800998ecf8427e', '09123456789', 'Employee'),
+(83, 'Admin Two', 'Admin2', 'd41d8cd98f00b204e9800998ecf8427e', '09123456789', 'Admin'),
 (84, 'Hi Hello', 'HiHello', 'ef9ec02399a356803e21b09f0e786c64', '09123456789', 'Employee'),
-(85, 'WhNew WhNew', 'WhNew', '7503d4ae5f2684f8d09e30657bfc5809', '09123456789', 'Wholesaler');
+(85, 'WhNew WhNew', 'WhNew', '7503d4ae5f2684f8d09e30657bfc5809', '09123456789', 'Wholesaler'),
+(86, 'Wholesaler Wholesale', 'Wholesaler', '4ff918a8bde60d5bda668f617164af08', '09123456789', 'Wholesaler');
 
 -- --------------------------------------------------------
 
@@ -218,7 +217,8 @@ CREATE TABLE `placed_order` (
 --
 
 INSERT INTO `placed_order` (`PLACED_ORDER_ID`, `PRSN_ID`, `CUS_NAME`, `CUS_NUMBER`, `CUS_EMAIL`, `PLACED_ORDER_DATE`, `PLACED_ORDER_TOTAL`, `DELIVERY_ADDRESS`, `DELIVERY_DATE`, `PLACED_ORDER_STATUS`, `PLACED_ORDER_CONFIRMATION`, `PLACED_ORDER_TRACKER`, `PLACED_ORDER_NOTE`, `REFERENCE_NUMBER`, `GUEST_ORDER_IDENTIFIER`) VALUES
-(73, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-04-14 10:12:34pm', 10000.00, 'RegionTest, ProvinceTest, CityTest, BarangayTest, StreetTest', '2024-04-15 10:16', 'Cancelled', 'Confirmed', '78d000624a38e703', 'sdsdsads', '1321', '');
+(74, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-04-18 12:50:43am', 127.50, 'RegionTest, ProvinceTest, CityTest, BarangayTest, StreetTest', '2024-04-25 16:54', 'Cancelled', 'Confirmed', '986041e358b84400', '', '412', ''),
+(75, 15, 'New New', '09123456789', 'user@gmail.com', '2024-04-18 01:42:12am', 1000.00, 'New, New, New, New, New', '2024-04-30 16:42', 'For Delivery', 'Confirmed', 'aaf6cfdfa404f098', '', '41412', '');
 
 -- --------------------------------------------------------
 
@@ -240,9 +240,8 @@ CREATE TABLE `wholesaler` (
 --
 
 INSERT INTO `wholesaler` (`WHL_ID`, `PRSN_ID`, `WHL_FNAME`, `WHL_LNAME`, `WHL_IMAGE`, `WHL_STATUS`) VALUES
-(15, 79, 'WholesalerNew', 'WholesalerNew', 'WHL_IMAGE_WholesalerNew Wholesjpg', ''),
-(16, 80, 'FnameW', 'LaNameW', 'WHL_IMAGE_UnameWn.jpg', ''),
-(17, 85, 'WhNew', 'WhNew', 'WHL_IMAGE_WhNew.jpg', 'Inactive');
+(17, 85, 'WhNew', 'WhNew', 'WHL_IMAGE_WhNew.jpg', 'Inactive'),
+(18, 86, 'Wholesaler', 'Wholesaler', 'WHL_IMAGE_Wholesaler.jpg', 'Active');
 
 --
 -- Indexes for dumped tables
@@ -310,7 +309,7 @@ ALTER TABLE `wholesaler`
 -- AUTO_INCREMENT for table `calendar`
 --
 ALTER TABLE `calendar`
-  MODIFY `CALENDAR_ID` int(16) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `CALENDAR_ID` int(16) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -328,37 +327,37 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `EMP_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `EMP_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `food`
 --
 ALTER TABLE `food`
-  MODIFY `FOOD_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `FOOD_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `in_order`
 --
 ALTER TABLE `in_order`
-  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
+  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
 
 --
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `PRSN_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `PRSN_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT for table `placed_order`
 --
 ALTER TABLE `placed_order`
-  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT for table `wholesaler`
 --
 ALTER TABLE `wholesaler`
-  MODIFY `WHL_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `WHL_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

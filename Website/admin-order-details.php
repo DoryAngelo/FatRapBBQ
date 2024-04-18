@@ -67,7 +67,7 @@ if ($PRSN_ROLE !== 'Admin') {
         <section class="section" id="order-details">
             <div class="container">
                 <div class="section-wrapper column">
-                    <a href="" class="back">Back</a>
+                <a href="#" onclick="window.history.back();" class="back">Back</a>
                     <section class="block order-details">
                         <div class="scroll">
                             <h2>Order Details</h2>

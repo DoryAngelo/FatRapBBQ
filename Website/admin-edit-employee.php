@@ -404,14 +404,14 @@ $EMP_ID = $_GET['EMP_ID'];
                                 if ($image_info === false) {
                                     // Handle non-image files here
                                     $_SESSION['upload'] = "<div class='error'>Please upload a valid image file</div>";
-                                    header('location:' . $_SERVER['PHP_SELF'] . '?PRSN_ID=' . $PRSN_ID);
+                                    header('location:' . $_SERVER['PHP_SELF'] . '?EMP_ID=' . $EMP_ID);
                                     exit();
                                 }
 
                                 // Generate a unique filename for the image
                                 $image_info = pathinfo($EMP_IMG);
                                 $ext = strtolower($image_info['extension']);
-                                $EMP_IMG = "EMP_IMAGE_" . $PRSN_UNAME . "." . $ext;
+                                $EMP_IMG = "EMP_IMAGE_" . $PRSN_UNAME . "_" . uniqid() . "." . $ext;
 
                                 // Set the destination path for the uploaded image
                                 $dst = "images/" . $EMP_IMG;
@@ -420,7 +420,7 @@ $EMP_ID = $_GET['EMP_ID'];
                                 if (!move_uploaded_file($_FILES['image']['tmp_name'], $dst)) {
                                     // Handle upload failure
                                     $_SESSION['upload'] = "<div class='error'>Failed To Upload Image</div>";
-                                    header('location:' . $_SERVER['PHP_SELF'] . '?RPSN_ID=' . $PRSN_ID);
+                                    header('location:' . $_SERVER['PHP_SELF'] . '?EMP_ID=' . $EMP_ID);
                                     exit();
                                 }
 
@@ -462,7 +462,8 @@ $EMP_ID = $_GET['EMP_ID'];
                     SET PRSN_NAME = '$PRSN_NAME',
                         PRSN_EMAIL = '$PRSN_UNAME',
                         $updatePassword
-                        PRSN_PHONE = '$PRSN_PHONE'
+                        PRSN_PHONE = '$PRSN_PHONE',
+                        PRSN_ROLE = '$PRSN_ROLE'
                     WHERE PRSN_ID = $PRSN_ID";
 
                                 if (mysqli_query($conn, $updatePerson)) {

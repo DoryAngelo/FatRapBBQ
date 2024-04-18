@@ -200,7 +200,7 @@ if (isset($_POST['submit'])) {
             const stockValue = stockInput.value.trim();
             const imageValue = imageInput.value.trim();
 
-            const nameRegex = /^[a-zA-Z\s]+$/;
+            const nameRegex = /^[a-zA-Z0-9\s]+$/;
 
             if (productNameValue === '') {
                 setError(productNameInput, 'Please enter the product name');
