@@ -130,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             <div class="container responsive">
                 <div class="text">
                     <h1>Order our best-selling BBQ</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictumsum dolor sit amet</p>
+                    <p>Indulge in the ultimate barbeque experience and place your order today!</p>
                     <a href="#product-section" class="button">Order Now</a>
                 </div>
                 <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="picture of a pork bbq">
@@ -275,7 +275,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             <div class="container responsive">
                 <div class="text">
                     <h1>Want to track your order?</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictumsum dolor sit amet</p>
+                    <p>Enter your order tracking number to see the status of your order</p>
                 </div>
                 <style>
                     .error {
@@ -337,7 +337,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                 <div class="text">
                     <h1>Looking for wholesale deals?</h1>
                     <!-- <a href=">wc-register.php" class="button">Sign up as a Wholesale Customer</a> -->
-                    <p>For wholesale inquiries, contact +639_______</p>
+                    <p>For wholesale inquiries, contact 09178073760 or 09190873861</p>
                 </div>
             </div>
         </section>
@@ -348,31 +348,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                 <h2>Fat Rap's Barbeque</h2>
                 <div class="list">
                     <ul>
-                        <li><a href="#">Home</a></li>
+                        <li><a href="<?php echo SITEURL; ?>cus-home-page.php">Home</a></li>
                         <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
                         <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
-                        <li><a href="#track-order-section">Track order</a></li>
+                        <li><a href="cus-home-page.php#track-order-section">Track order</a></li>
                     </ul>
                 </div>
             </div>
             <div class="right-container">
                 <div class="icons-block">
-                    <a href="https://www.youtube.com/">
+                    <a href="https://www.facebook.com/profile.php?id=100077565231475">
                         <i class='bx bxl-facebook-circle'></i>
                     </a>
                 </div>
                 <div class="list">
-                    <div class="list-items">
+                    <!-- <div class="list-items">
                         <i class='bx bxs-envelope'></i>
                         <p>email@gmail.com</p>
-                    </div>
+                    </div> -->
                     <div class="list-items">
                         <i class='bx bxs-phone'></i>
-                        <p>0912 345 6789 | 912 1199</p>
+                        <p>09178073760 | 09190873861</p>
                     </div>
                     <div class="list-items">
                         <i class='bx bxs-map'></i>
-                        <p>123 Magaling St., Brgy. Something, Somewhere City</p>
+                        <p>Sta. Ignaciana, Brgy. Kalusugan, Quezon City, Metro Manila, Philippines</p>
                     </div>
                 </div>
             </div>

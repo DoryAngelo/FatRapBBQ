@@ -51,7 +51,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 .container {
@@ -59,7 +59,7 @@ main {
     height: 100%;
     max-width: 1200px;
     margin: clamp(1rem, 6vw, 4.5rem) auto;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 img {
@@ -191,7 +191,7 @@ table.order {
     border-collapse: collapse;
     width: 100%;
     /* min-width: 450px; */
-    border: 1px solid yellow;
+    /* border: 1px solid yellow; */
 }
 
 table.order .header {
@@ -230,7 +230,7 @@ table.order .quantity-col {
     display: flex;
     flex-direction: column;
     align-items: flex-start; */
-    border: 1px solid green;
+    /* border: 1px solid green; */
 }
 
 /* table.order .narrow-col {
@@ -257,7 +257,7 @@ table th {
 }
 
 table td:not(.first-col), table th:not(.first-col) {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     padding-inline: 5px;
 }
 
@@ -286,7 +286,7 @@ table td:not(.first-col), table th:not(.first-col) {
 .payment {
     width: 100%;
     margin-top: 1.1rem;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     display: flex;
     justify-content: flex-end;
 }
@@ -316,7 +316,7 @@ table td:not(.first-col), table th:not(.first-col) {
     display: flex;
     justify-content: space-between;
     gap: 2.5rem;
-    border: 1px solid yellow;
+    /* border: 1px solid yellow; */
 }
 
 .contact-info-blk .left, .contact-info-blk .right {
@@ -378,7 +378,7 @@ table td:not(.first-col), table th:not(.first-col) {
 
 #delivery-block .left-side{
     width: 100%;
-    border: 1px solid yellow;
+    /* border: 1px solid yellow; */
     background-color: transparent;
     margin: 1.3rem;
 }
@@ -420,7 +420,7 @@ table td:not(.first-col), table th:not(.first-col) {
     padding: 0.8rem 1.5rem;
     font-size: 0.85rem;
     background-color: #FBE4A8;
-    border: 1px solid #F5D636;
+    /* border: 1px solid #F5D636; */
 }
 
 .center {
@@ -520,7 +520,7 @@ a.back {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid yellow;
+    /* border: 1px solid yellow; */
     margin: 0 auto;
     max-width: 1200px;
 }
@@ -551,7 +551,7 @@ a.back {
     flex-direction: column;
     justify-content: space-between;
     gap: 2rem;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 .product-info-page .right-grp h1 {
@@ -563,7 +563,7 @@ a.back {
 }
 
 .product-info-page .bottom {
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
 }
 
 .product-info-page .bottom button {
@@ -582,7 +582,7 @@ a.back {
     max-width: 400px;
     margin-bottom: 0.8rem;
     justify-content: start;
-    border: 1px solid pink;
+    /* border: 1px solid pink; */
 }
 
 .quantity-grp {
@@ -826,7 +826,7 @@ a.back {
 
     .menu .section-body {
         grid-template-columns: repeat(2,1fr); 
-        gap: 2rem;
+        gap: 4vw;
     }
 
     .contact-info-blk, #delivery-block .radio {
@@ -996,7 +996,7 @@ a.back {
     }
 }
 
-@media only screen and (width <= 361px) {
+@media only screen and (width <= 409px) {
     .menu .section-body {
         grid-template-columns: 1fr;
     }
@@ -1013,5 +1013,4 @@ a.back {
     .menu .menu-item .inline h2 {
         font-size: 1.33rem;
     }
-
 }

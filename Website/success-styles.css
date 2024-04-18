@@ -46,7 +46,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 .container {
@@ -54,7 +54,7 @@ main {
     height: 100%;
     max-width: 1200px;
     margin: 4.5rem;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 /* success block */
@@ -87,7 +87,7 @@ main {
     margin: 2.5rem;
     text-align: center;
     height: 100%;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     display: flex;
     flex-direction: column;
     /* gap: 2vw; */

@@ -199,7 +199,7 @@ if (isset($_SESSION['prsn_id'])) {
     <footer>
         <div class="footer-container">
             <div class="left-container">
-                <h1>Fat Rap's Barbeque</h1>
+                <h2>Fat Rap's Barbeque</h2>
                 <div class="list">
                     <ul>
                         <li><a href="<?php echo SITEURL; ?>cus-home-page.php">Home</a></li>
@@ -211,28 +211,22 @@ if (isset($_SESSION['prsn_id'])) {
             </div>
             <div class="right-container">
                 <div class="icons-block">
-                    <a href="https://www.youtube.com/">
+                    <a href="https://www.facebook.com/profile.php?id=100077565231475">
                         <i class='bx bxl-facebook-circle'></i>
-                    </a>
-                    <a href="https://www.youtube.com/">
-                        <i class='bx bxl-tiktok'></i>
-                    </a>
-                    <a href="https://www.youtube.com/">
-                        <i class='bx bxl-instagram'></i>
                     </a>
                 </div>
                 <div class="list">
-                    <div class="list-items">
+                    <!-- <div class="list-items">
                         <i class='bx bxs-envelope'></i>
                         <p>email@gmail.com</p>
-                    </div>
+                    </div> -->
                     <div class="list-items">
                         <i class='bx bxs-phone'></i>
-                        <p>0912 345 6789 | 912 1199</p>
+                        <p>09178073760 | 09190873861</p>
                     </div>
                     <div class="list-items">
                         <i class='bx bxs-map'></i>
-                        <p>123 Magaling St., Brgy. Something, Somewhere City</p>
+                        <p>Sta. Ignaciana, Brgy. Kalusugan, Quezon City, Metro Manila, Philippines</p>
                     </div>
                 </div>
             </div>
