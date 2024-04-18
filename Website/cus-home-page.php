@@ -20,10 +20,10 @@ $FOOD_NAME = 'Barbeque';
 
 $sql = "SELECT * FROM food WHERE FOOD_ACTIVE='Yes' AND FOOD_NAME = '$FOOD_NAME'";
 $res = mysqli_query($conn, $sql);
-$count = mysqli_num_rows($res);
+$count8 = mysqli_num_rows($res);
 
 //check whether there are food available
-if ($count > 0) {
+if ($count8 > 0) {
     while ($row = mysqli_fetch_assoc($res)) {
         //get the values
         $FOOD_ID = $row['FOOD_ID'];
@@ -35,10 +35,12 @@ if ($count > 0) {
     }
 }
 
-$IN_ORDER_QUANTITY = isset($IN_ORDER_QUANTITY) ? $IN_ORDER_QUANTITY : 1;
+// $IN_ORDER_QUANTITY = isset($IN_ORDER_QUANTITY) ? $IN_ORDER_QUANTITY : 1;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     $quantity = $_POST['quantity'];
+    $FOOD_PRICE = $_POST['price'];
+
     if (isset($_SESSION['prsn_id'])) {
         $sql = "SELECT * FROM in_order WHERE FOOD_ID = $FOOD_ID AND PRSN_ID = $PRSN_ID AND PLACED_ORDER_ID IS NULL";
         $res = mysqli_query($conn, $sql);
@@ -52,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         while ($row = mysqli_fetch_assoc($res)) {
             $IN_ORDER_ID = $row['IN_ORDER_ID'];
             $IN_ORDER_QUANTITY = $quantity;
-            $IN_ORDER_TOTAL = ($quantity * $FOOD_PRICE);
+            $IN_ORDER_TOTAL = $quantity * $FOOD_PRICE;
             $sql = "UPDATE in_order SET 
                             IN_ORDER_QUANTITY = $IN_ORDER_QUANTITY,
                             IN_ORDER_TOTAL = $IN_ORDER_TOTAL
@@ -196,68 +198,79 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             </div>
         </section>
         <!-- section 3 -->
-        <?php $sql = "SELECT f.*, io.in_order_quantity 
-        FROM food f 
-        LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
-        WHERE f.FOOD_ID = '$FOOD_ID'";
+        <?php
+        if ($count8 > 0) {
+            $sql = "SELECT f.*, io.in_order_quantity 
+            FROM food f 
+            LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
+            WHERE f.FOOD_ID = '$FOOD_ID'";
+
+            $res = mysqli_query($conn, $sql);
+            $count = mysqli_num_rows($res);
+        }
 
 
-        $res = mysqli_query($conn, $sql);
-        $count = mysqli_num_rows($res);
+
         if ($count > 0) {
             while ($row = mysqli_fetch_assoc($res)) {
                 $IN_ORDER_QUANTITY = $row['in_order_quantity'];
-            }
-        } ?>
-        <section class="section" id="product-section">
-            <div class="container responsive">
-                <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="picture of a pork bbq">
-                <!-- <img src="images/pork-bbq.jpg" alt="picture of 3 pork bbq sticks"> -->
-                <div class="text">
-                    <h1><?php echo $FOOD_NAME; ?></h1>
-                    <p>₱<?php echo $FOOD_PRICE; ?></p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictumsum dolor sit amet</p>
-                    <div class="action-grp responsive">
-                        <form method="post" class="form">
-                            <input type="hidden" id="quantity" name="quantity" value="<?php echo $IN_ORDER_QUANTITY; ?>">
-                            <button name="order" type="submit" class="button" <?php echo ($FOOD_STOCK <= 0) ? 'disabled' : ''; ?>>Order Now</button>
-                        </form>
-                        <?php
-                        if (isset($_SESSION['prsn_id'])) {
-                            $sql = "SELECT f.*, io.in_order_quantity 
+        ?>
+                <section class="section" id="product-section">
+                    <div class="container responsive">
+                        <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="picture of a pork bbq">
+                        <!-- <img src="images/pork-bbq.jpg" alt="picture of 3 pork bbq sticks"> -->
+                        <div class="text">
+                            <h1><?php echo $FOOD_NAME; ?></h1>
+                            <p>₱<?php echo $FOOD_PRICE; ?></p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictumsum dolor sit amet</p>
+                            <div class="action-grp responsive">
+                                <form method="post" class="form">
+                                    <input type="hidden" id="quantity" name="quantity" value="<?php echo ($IN_ORDER_QUANTITY == NULL) ? 1 : $IN_ORDER_QUANTITY; ?>">
+                                    <input type="hidden" name="price" value="<?php echo $FOOD_PRICE ?>">
+                                    <button name="order" type="submit" class="button" <?php echo ($FOOD_STOCK <= 0) ? 'disabled' : ''; ?>>Order Now</button>
+                                </form>
+                                <?php
+                                if (isset($_SESSION['prsn_id'])) {
+                                    $sql = "SELECT f.*, io.in_order_quantity 
                             FROM food f 
                             LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
                             WHERE f.FOOD_ID = '$FOOD_ID' 
                             AND io.PRSN_ID = '$PRSN_ID'";
-                        } else if (isset($_SESSION['guest_id'])) {
-                            $sql = "SELECT f.*, io.in_order_quantity 
+                                } else if (isset($_SESSION['guest_id'])) {
+                                    $sql = "SELECT f.*, io.in_order_quantity 
                             FROM food f 
                             LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
                             WHERE f.FOOD_ID = '$FOOD_ID' 
                             AND io.GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
-                        }
+                                }
 
-                        $res = mysqli_query($conn, $sql);
-                        $count = mysqli_num_rows($res);
-                        if ($count > 0) {
-                            while ($row = mysqli_fetch_assoc($res)) {
-                                $IN_ORDER_QUANTITY = $row['in_order_quantity'];
-                            }
-                        }
-                        ?>
-                        <div class="with-remaining">
-                            <div class="quantity-group">
-                                <i class='bx bxs-minus-circle js-minus circle' data-stock="<?php echo $FOOD_STOCK; ?>"></i>
-                                <p class="amount js-num"><?php echo ($IN_ORDER_QUANTITY == NULL) ? 1 : $IN_ORDER_QUANTITY; ?></p>
-                                <i class='bx bxs-plus-circle js-plus circle' data-stock="<?php echo $FOOD_STOCK; ?>"></i>
+                                $res = mysqli_query($conn, $sql);
+                                $count = mysqli_num_rows($res);
+                                if ($count > 0) {
+                                    while ($row = mysqli_fetch_assoc($res)) {
+                                        $IN_ORDER_QUANTITY = $row['in_order_quantity'];
+                                    }
+                                }
+                                ?>
+                                <div class="with-remaining">
+                                    <div class="quantity-group">
+                                        <i class='bx bxs-minus-circle js-minus circle' data-stock="<?php echo $FOOD_STOCK; ?>"></i>
+                                        <p class="amount js-num"><?php echo ($IN_ORDER_QUANTITY == NULL) ? 1 : $IN_ORDER_QUANTITY; ?></p>
+                                        <i class='bx bxs-plus-circle js-plus circle' data-stock="<?php echo $FOOD_STOCK; ?>"></i>
+                                    </div>
+                                    <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> sticks remaining</p>
+                                </div>
                             </div>
-                            <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> sticks remaining</p>
                         </div>
-                    </div>
-                </div>
 
-            </div>
-        </section>
+                    </div>
+                </section>
+
+        <?php
+
+            }
+        } ?>
+
         <script>
             const plus = document.querySelector(".js-plus");
             const minus = document.querySelector(".js-minus");
@@ -312,7 +325,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                     $select = "SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER' AND PRSN_ID = '$PRSN_ID'";
                                 } else if (isset($_SESSION['guest_id'])) {
                                     $select = "SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER' AND PRSN_ID = '0'";
-                                } 
+                                }
                                 $res = mysqli_query($conn, $select);
                                 $count = mysqli_num_rows($res);
                                 if ($count > 0) {
