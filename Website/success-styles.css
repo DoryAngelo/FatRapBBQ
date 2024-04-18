@@ -25,6 +25,7 @@ body{
     font-weight: 500;
     min-height: 100vh;
     min-width: 320px;
+    background-color: var(--bg);
 }
 
 .customer {
