@@ -286,8 +286,8 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                     setError(referenceNumberInput, "Reference number must not contain alphabets.");
                                     return false;
                                 }
-                                if (referenceNumber.length === 0 || referenceNumber.length > 13) {
-                                    setError(referenceNumberInput, "Reference number must be between 1 and 13 digits.");
+                                if (referenceNumber.length !== 13 ) {
+                                    setError(referenceNumberInput, "Reference number must be 13 digits.");
                                     return false;
                                 }
 
