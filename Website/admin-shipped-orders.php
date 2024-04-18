@@ -92,7 +92,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
             <div class="website-title">
                 <img id="logo" src="images/client-logo.png">
                 <div class="text">
-                    <h1>Fat Rap's Barbeque's Online Store</h1>
+                    <h1>Fat Rap's Barbeque</h1>
                     <p>ADMIN</p>
                 </div>
             </div>
@@ -122,22 +122,19 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
     <main>
         <section class="section" id="orders-page">
             <div class="container">
-                <div class="section-heading">
+                <div class="section-heading row">
                     <h2>Shipped Orders</h2>
-                    <div class="inline">
-                        <!-- <p>Date range:</p> -->
-                        <select name="order-type" id="order-type" class="dropdown">
-                            <option value="all" <?php echo ($order_type === 'all') ? 'selected' : ''; ?>>All</option>
-                            <option value="Today" <?php echo ($order_type === 'Today') ? 'selected' : ''; ?>>Today</option>
-                            <option value="Advanced" <?php echo ($order_type === 'Advanced') ? 'selected' : ''; ?>>Advanced</option>
-                        </select>
-                        <script>
-                            document.getElementById('order-type').addEventListener('change', function() {
-                                var selectedOrderType = this.value;
-                                window.location.href = "admin-shipped-orders.php?type=" + selectedOrderType;
-                            });
-                        </script>
-                    </div>
+                    <select name="order-type" id="order-type" class="dropdown">
+                        <option value="all" <?php echo ($order_type === 'all') ? 'selected' : ''; ?>>All</option>
+                        <option value="Today" <?php echo ($order_type === 'Today') ? 'selected' : ''; ?>>Today</option>
+                        <option value="Advanced" <?php echo ($order_type === 'Advanced') ? 'selected' : ''; ?>>Advanced</option>
+                    </select>
+                    <script>
+                        document.getElementById('order-type').addEventListener('change', function() {
+                            var selectedOrderType = this.value;
+                            window.location.href = "admin-shipped-orders.php?type=" + selectedOrderType;
+                        });
+                    </script>
                 </div>
                 <section class="with-side-menu">
                     <section class="main-section table-wrapper">
@@ -147,6 +144,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                 <th class="header">Customer</th>
                                 <th class="header">Order #</th>
                                 <th class="header">Payment</th>
+                                <th class="header">Status</th>
                                 <th class="header">Confirmed</th>
                                 <th class="header"></th>
                             </tr>
@@ -183,6 +181,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                         <td data-cell="customer"><?php echo $CUS_NAME ?></td>
                                         <td data-cell="Order #"><a href="<?php echo SITEURL ?>admin-order-details.php?PLACED_ORDER_ID=<?php echo $PLACED_ORDER_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
                                         <td data-cell="Payment">₱<?php echo $PLACED_ORDER_TOTAL ?></td>
+                                        <td data-cell="Status"><?php echo $PLACED_ORDER_STATUS ?></td>
                                         <td data-cell="Confimed">
                                             <div class="btn-wrapper">
                                                 <form method="POST">
@@ -210,7 +209,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
         ?>
         <!-- <div class="error">No new orders</div> -->
         <tr>
-            <td colspan="5" class="error">No orders yet to deliver</td>
+            <td colspan="7" class="error">No new orders</td>
         </tr>
     <?php
 
