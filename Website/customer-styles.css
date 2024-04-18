@@ -159,11 +159,13 @@ div.circle {
 }
 
 .track-order #payment-section .block-body {
+    margin-top: 10px;
     display: flex;
     gap: 5rem;
 }
 
 .track-order #payment-section button {
+    margin-top: 10px;
     background-color: var(--primary);
     border: none;
     padding: 3px 6px;
@@ -869,6 +871,10 @@ a.back {
     .payment .text {
         margin-right: 8%;
     }
+
+    .track-order #payment-section .block-body {
+        gap: 5vw;
+    }
 }
 
 @media only screen and (width <= 680px) {
@@ -877,6 +883,10 @@ a.back {
     }
     .track-order .block-body .steps {
         width: 100%;
+    }
+    .track-order #payment-section img {
+        width: 40%;
+        height: 40%;
     }
 }
 

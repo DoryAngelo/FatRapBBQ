@@ -265,7 +265,8 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                         <form action="" method="post" onsubmit="return validateForm()">
                             <h3 class="block-heading">Payment</h3>
                             <div class="block-body">
-                                <div style="width: 10rem; height: 10rem; background-color: white;"></div>
+                                <!-- <div style="width: 10rem; height: 10rem; background-color: white;"></div> -->
+                                <img src="images/qr-code.png" alt=""><!--sample qr code apr 19 2024-->
                                 <div>
                                     <p class="ref-label">Reference number</p>
                                     <input name="reference-number" id="reference-number" type="text">
