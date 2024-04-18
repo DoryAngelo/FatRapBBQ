@@ -150,6 +150,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                             $FOOD_PRICE = $row['FOOD_PRICE'];
                             $FOOD_STOCK = $row['FOOD_STOCK'];
                             $IN_ORDER_QUANTITY = $row['in_order_quantity'];
+                        }
+                    }
                     ?>
                             <section class="block">
                                 <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
@@ -191,8 +193,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                 </div>
                             </section>
                     <?php
-                        }
-                    }
+
                     ?>
                 </div>
             </div>
