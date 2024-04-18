@@ -71,12 +71,14 @@ $wholesaler_status = isset($_GET['type']) ? $_GET['type'] : 'all';
             <div class="container">
                 <div class="section-heading">
                     <h2>Wholesale Customers</h2>
-                    <p>Filter:</p>
-                    <select name="wholesaler-status" id="wholesaler-status" class="dropdown">
-                        <option value="all" <?php echo ($wholesaler_status === 'all') ? 'selected' : ''; ?>>All</option>
-                        <option value="Active" <?php echo ($wholesaler_status === 'Active') ? 'selected' : ''; ?>>Active</option>
-                        <option value="Inactive" <?php echo ($wholesaler_status === 'Inactive') ? 'selected' : ''; ?>>Inactive</option>
-                    </select>
+                    <div class="inline">
+                        <p>Filter:</p>
+                        <select name="wholesaler-status" id="wholesaler-status" class="dropdown">
+                            <option value="all" <?php echo ($wholesaler_status === 'all') ? 'selected' : ''; ?>>All</option>
+                            <option value="Active" <?php echo ($wholesaler_status === 'Active') ? 'selected' : ''; ?>>Active</option>
+                            <option value="Inactive" <?php echo ($wholesaler_status === 'Inactive') ? 'selected' : ''; ?>>Inactive</option>
+                        </select>
+                    </div>
                 </div>
                 <script>
                     document.getElementById('wholesaler-status').addEventListener('change', function() {
