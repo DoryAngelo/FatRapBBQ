@@ -121,6 +121,7 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                         $DELIVERY_DATE = $row2['DELIVERY_DATE'];
                                         $PLACED_ORDER_STATUS = $row2['PLACED_ORDER_STATUS'];
                                         $GUEST_ORDER_IDENTIFIER = $row2['GUEST_ORDER_IDENTIFIER'];
+                                        $REFERENCE_NUMBER = $row2['REFERENCE_NUMBER'];
                                         
 
                                         switch ($PLACED_ORDER_STATUS) {
@@ -259,14 +260,6 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                         </div>
                     </section>
 
-                    <?php
-                    $sql3 = "SELECT * FROM placed_order WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER' AND PLACED_ORDER_ID = '$PLACED_ORDER_ID' AND REFERENCE_NUMBER IS NULL";
-
-                    $res3 = mysqli_query($conn, $sql3);
-
-                    $count3 = mysqli_num_rows($res3);
-                    ?>
-
                     <!-- section directly below this will only appear if order status is approved -->
                     <section class="block" id="payment-section">
                         <form action="" method="post" onsubmit="return validateForm()">
@@ -277,7 +270,7 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                     <p class="ref-label">Reference number</p>
                                     <input name="reference-number" id="reference-number" type="text">
                                     <div class="error"></div>
-                                    <button id="submit-button" name="submit" <?php if ($count3 === 0) echo 'disabled'; ?>>Submit</button>
+                                    <button id="submit-button" name="submit" <?php if ($REFERENCE_NUMBER !== '') echo 'disabled'; ?>>Submit</button>
                                     <p class="prompt" id="submission-prompt" style="display: none;">Thanks for submitting!</p>
                                 </div>
                             </div>
@@ -465,7 +458,8 @@ if (isset($_POST['submit'])) {
     WHERE PLACED_ORDER_ID = '$PLACED_ORDER_ID'";
 
     mysqli_query($conn, $update);
-    // header('location:track-order.php');
+    //header('location:track-order.php');
+    echo "<script>window.location.href = 'track-order.php';</script>";
 }
 
 
