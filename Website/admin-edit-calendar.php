@@ -2,21 +2,21 @@
 
 @include 'constants.php';
 
-$PRSN_ID = $_SESSION['prsn_id'];
-$sql = "SELECT 
-            SUM(CASE WHEN DATE_STATUS = 'available' THEN 1 ELSE 0 END) AS available_count,
-            SUM(CASE WHEN DATE_STATUS = 'fullybooked' THEN 1 ELSE 0 END) AS fullybooked_count,
-            SUM(CASE WHEN DATE_STATUS = 'closed' THEN 1 ELSE 0 END) AS closed_count
-        FROM calendar";
+// $PRSN_ID = $_SESSION['prsn_id'];
+// $sql = "SELECT 
+//             SUM(CASE WHEN DATE_STATUS = 'available' THEN 1 ELSE 0 END) AS available_count,
+//             SUM(CASE WHEN DATE_STATUS = 'fullybooked' THEN 1 ELSE 0 END) AS fullybooked_count,
+//             SUM(CASE WHEN DATE_STATUS = 'closed' THEN 1 ELSE 0 END) AS closed_count
+//         FROM calendar";
 
-$res = mysqli_query($conn, $sql);
+// $res = mysqli_query($conn, $sql);
 
-if ($res) {
-    $row = mysqli_fetch_assoc($res);
-    $available_count = $row['available_count'];
-    $fullybooked_count = $row['fullybooked_count'];
-    $closed_count = $row['closed_count'];
-}
+// if ($res) {
+//     $row = mysqli_fetch_assoc($res);
+//     $available_count = $row['available_count'];
+//     $fullybooked_count = $row['fullybooked_count'];
+//     $closed_count = $row['closed_count'];
+// }
 
 ?>
 
@@ -107,17 +107,26 @@ if ($res) {
                             <div class="grid-container">
                                 <div class="box green">
                                     <p>Available</p>
-                                    <h1><?php echo $available_count ?></h1>
+                                    <!-- //<h1><?php echo $available_count ?></h1> -->
+                                    <h1>
+                                        <div id="available_count"></div>
+                                    </h1>
                                     <p class="bottom">days</p>
                                 </div>
                                 <div class="box red">
                                     <p>Fully Booked</p>
-                                    <h1><?php echo $fullybooked_count ?></h1>
+                                    <!-- <h1><?php echo $fullybooked_count ?></h1> -->
+                                    <h1>
+                                        <div id="fullybooked_count"></div>
+                                    </h1>
                                     <p class="bottom">days</p>
                                 </div>
                                 <div class="box">
                                     <p>Closed</p>
-                                    <h1><?php echo $closed_count ?></h1>
+                                    <!-- <h1><?php echo $closed_count ?></h1> -->
+                                    <h1>
+                                        <div id="closed_count"></div>
+                                    </h1>
                                     <p class="bottom">days</p>
                                 </div>
                             </div>
@@ -140,7 +149,87 @@ if ($res) {
                     </section>
                 </section>
             </div>
+            <script>
+                // Function to check for new orders via AJAX
+                function checkForNewOrders() {
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            if (this.responseText.trim() === "NewOrder") {
+                                notifyNewOrder(); // Play notification sound
+                            }
+                        }
+                    };
+                    xhttp.open("GET", "order-notification.php", true);
+                    xhttp.send();
+                }
 
+                // Function to play notification sound
+                function notifyNewOrder() {
+                    var audio = new Audio('sound/notification.mp3'); // Replace with correct path
+                    audio.play();
+                }
+
+                // Check for new orders every 5 seconds 
+                setInterval(checkForNewOrders, 2000);
+
+                window.onload = function() {
+                    checkCount(); // Call the function when the page loads
+                };
+
+                function checkCount() {
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            var counts = JSON.parse(this.responseText); // Parse JSON response
+                            // Update counts as needed
+                            var available_count = counts.available_count;
+                            var fullybooked_count = counts.fullybooked_count;
+                            var closed_count = counts.closed_count;
+                            // Update the content of the corresponding elements with the counts
+                            document.getElementById("available_count").innerHTML = available_count;
+                            document.getElementById("fullybooked_count").innerHTML = fullybooked_count;
+                            document.getElementById("closed_count").innerHTML = closed_count;
+                        }
+                    };
+                    xhttp.open("GET", "admin-get-count.php", true);
+                    xhttp.send();
+                }
+
+                function checkCount() {
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4) {
+                            console.log("Response received:", this.responseText);
+                            if (this.status == 200) {
+                                var counts = JSON.parse(this.responseText);
+                                var available_count = counts.available_count;
+                                var fullybooked_count = counts.fullybooked_count;
+                                var closed_count = counts.closed_count;
+                                document.getElementById("available_count").innerHTML = available_count;
+                                document.getElementById("fullybooked_count").innerHTML = fullybooked_count;
+                                document.getElementById("closed_count").innerHTML = closed_count;
+                            } else {
+                                console.error("Error fetching count:", this.statusText);
+                            }
+                        }
+                    };
+                    xhttp.open("GET", "admin-get-count.php", true);
+                    xhttp.send();
+                }
+
+                // Add event listener to the "Save" button
+                document.getElementById("saveBtn").addEventListener("click", function() {
+                    // Call the function to update counts when the "Save" button is clicked
+                    checkCount();
+                });
+
+                // Add event listener to the "Save" button
+                document.getElementById("clearBtn").addEventListener("click", function() {
+                    // Call the function to update counts when the "Save" button is clicked
+                    checkCount();
+                });
+            </script>
         </section>
     </main>
     <?php

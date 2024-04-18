@@ -82,6 +82,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                 if ($count > 0) {
                                     while ($row = mysqli_fetch_assoc($res)) {
                                         $PRSN_NAME = $row['PRSN_NAME'];
+                                        $EMP_ID = $row['EMP_ID'];
                                         $EMP_IMG = $row['EMP_IMAGE'];
                                         $EMP_BRANCH = $row['EMP_BRANCH'];
                                         $PRSN_ROLE = $row['PRSN_ROLE'];
@@ -94,15 +95,15 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                             <table>
                                                 <tr>
                                                     <th>Username</th>
-                                                    <td><?php echo $PRSN_NAME?></td>
+                                                    <td><?php echo $PRSN_NAME ?></td>
                                                 </tr>
                                                 <tr>
                                                     <th>Branch</th>
-                                                    <td><?php echo $EMP_BRANCH?></td>
+                                                    <td><?php echo $EMP_BRANCH ?></td>
                                                 </tr>
                                                 <tr>
                                                     <th>Role</th>
-                                                    <td><?php echo $PRSN_ROLE?></td>
+                                                    <td><?php echo $PRSN_ROLE ?></td>
                                                 </tr>
                                             </table>
                                     <?php
@@ -111,13 +112,38 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                     ?>
 
                                         </div>
-                                        <a href="<?php echo SITEURL; ?>admin-edit-profile.php?PRSN_ID=<?php echo $PRSN_ID?>&EMP_IMAGE=<?php echo $EMP_IMG?>" class="big-btn">Edit</a>
+                                        <a href="<?php echo SITEURL; ?>admin-edit-profile.php?PRSN_ID=<?php echo $PRSN_ID ?>&EMP_ID=<?php echo $EMP_ID ?>" class="big-btn">Edit</a>
+
                             </form>
                         </section>
                     </section>
                 </div>
             </div>
         </section>
+        <script>
+            // Function to check for new orders via AJAX
+            function checkForNewOrders() {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        if (this.responseText.trim() === "NewOrder") {
+                            notifyNewOrder(); // Play notification sound
+                        }
+                    }
+                };
+                xhttp.open("GET", "order-notification.php", true);
+                xhttp.send();
+            }
+
+            // Function to play notification sound
+            function notifyNewOrder() {
+                var audio = new Audio('sound/notification.mp3'); // Replace with correct path
+                audio.play();
+            }
+
+            // Check for new orders every 5 seconds 
+            setInterval(checkForNewOrders, 2000);
+        </script>
     </main>
 </body>
 

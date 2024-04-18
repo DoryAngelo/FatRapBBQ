@@ -4,6 +4,9 @@
 
 $PRSN_ID = $_SESSION['prsn_id'];
 
+$employee_status = isset($_GET['type']) ? $_GET['type'] : 'all';
+
+
 ?>
 
 <!DOCTYPE html>
@@ -64,15 +67,22 @@ $PRSN_ID = $_SESSION['prsn_id'];
             <div class="container">
                 <div class="section-heading">
                     <h2>Employees</h2>
-                    <!-- for filtering hidden accounts-->
-                    <!-- <div class="inline">
+                    <div class="inline">
                         <p>Filter:</p>
-                        <select name="customer-type" id="customer-type" class="dropdown">
-                            <option value="regular">REGULAR</option>
-                            <option value="wholesale">WHOLESALE</option>
+                        <select name="employee-status" id="employee-status" class="dropdown">
+                            <option value="all" <?php echo ($employee_status === 'all') ? 'selected' : ''; ?>>All</option>
+                            <option value="Active" <?php echo ($employee_status === 'Active') ? 'selected' : ''; ?>>Active</option>
+                            <option value="Inactive" <?php echo ($employee_status === 'Inactive') ? 'selected' : ''; ?>>Inactive</option>
                         </select>
-                    </div> -->
+                    </div>
                 </div>
+                <script>
+                    document.getElementById('employee-status').addEventListener('change', function() {
+                        var selectedEmployeeStatus = this.value;
+                        window.location.href = "admin-employee-accounts.php?type=" + selectedEmployeeStatus;
+                    });
+                </script>
+
                 <section class="section-body">
                     <section class="main-section column">
                         <div class="table-wrapper">
@@ -83,15 +93,24 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                     <th class="header">Last Name</th>
                                     <th class="header">Contact #</th>
                                     <th class="header">Username</th>
+                                    <th class="header">Status</th>
                                     <th class="header">Action</th>
                                 </tr>
                                 <?php
+
+                                $employee_status = isset($_GET['type']) ? $_GET['type'] : 'all';
+
                                 $sql = "SELECT *
                                 FROM person
-                                INNER JOIN employee ON person.PRSN_ID = employee.PRSN_ID
-                                WHERE person.PRSN_ROLE= 'Employee' 
-                                OR person.PRSN_ROLE= 'Admin';
-                                ";
+                                INNER JOIN employee ON person.PRSN_ID = employee.PRSN_ID";
+
+                                if ($employee_status === 'all') {
+                                    $sql .= " WHERE person.PRSN_ROLE = 'Employee' OR person.PRSN_ROLE = 'Admin'";
+                                } else {
+                                    $sql .= " WHERE (person.PRSN_ROLE = 'Employee' OR person.PRSN_ROLE = 'Admin') AND employee.EMP_STATUS = '$employee_status'";
+                                }
+
+
                                 $res = mysqli_query($conn, $sql);
                                 $count = mysqli_num_rows($res);
                                 if ($count > 0) {
@@ -104,6 +123,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                         $PRSN_NUMBER = $row['PRSN_PHONE'];
                                         $PRSN_NAME = $row['PRSN_NAME'];
                                         $PRSN_EMAIL = $row['PRSN_EMAIL'];
+                                        $EMP_STATUS = $row['EMP_STATUS'];
                                 ?>
                                         <tr>
                                             <td data-cell="Image">
@@ -113,6 +133,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                             <td data-cell="Name"><?php echo $EMP_LNAME ?></td>
                                             <td data-cell="Contact #"><?php echo $PRSN_NUMBER ?></td>
                                             <td data-cell="Username"><?php echo $PRSN_EMAIL ?></td>
+                                            <td data-cell="Status"><?php echo $EMP_STATUS ?></td>
                                             <td data-cell="Action"><a href="<?php echo SITEURL; ?>admin-edit-employee.php?PRSN_ID=<?php echo $PRSN_ID ?>&EMP_ID=<?php echo $EMP_ID ?>" class="edit">Edit</a></td>
                                         </tr>
                                     <?php

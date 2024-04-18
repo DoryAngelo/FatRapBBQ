@@ -132,12 +132,16 @@ if (isset($_SESSION['prsn_id'])) {
                                                                 <p class="amount js-num"><?php echo $IN_ORDER_QUANTITY ?></p>
                                                                 <i class='bx bxs-plus-circle js-plus' data-in-order-id="<?php echo $IN_ORDER_ID; ?>" data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
                                                             </div>
-                                                            <p class="remaining"><?php echo $FOOD_STOCK ?> sticks remaining</p>
+                                                            <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?>
+                                                                sticks remaining</p>
                                                         </div>
                                                     </td> <!--Quantity-->
-                                                    <td class="narrow-col price-col"><p>₱<?php echo $IN_ORDER_TOTAL ?></p></td><!--Price-->
+                                                    <td class="narrow-col price-col">
+                                                        <p>₱<?php echo $IN_ORDER_TOTAL ?></p>
+                                                    </td><!--Price-->
                                                     <td class="narrow-col">
-                                                        <p><a href="delete_in_order.php?IN_ORDER_ID=<?php echo $IN_ORDER_ID; ?>" class="bx bxs-trash-alt trash"></a><p><!-- pa remove na lang ng underline sa link -->
+                                                        <p><a href="delete_in_order.php?IN_ORDER_ID=<?php echo $IN_ORDER_ID; ?>" class="bx bxs-trash-alt trash"></a>
+                                                        <p><!-- pa remove na lang ng underline sa link -->
                                                     </td><!--Action-->
                                                 </tr>
                                             <?php
@@ -189,7 +193,7 @@ if (isset($_SESSION['prsn_id'])) {
                     ?>
                 </form>
             </div>
-            
+
         </section>
     </main>
     <footer>

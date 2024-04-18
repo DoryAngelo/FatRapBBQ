@@ -4,6 +4,8 @@
 
 $PRSN_ID = $_SESSION['prsn_id'];
 
+$food_type = isset($_GET['type']) ? $_GET['type'] : 'all'; 
+
 ?>
 
 <!DOCTYPE html>
@@ -63,11 +65,18 @@ $PRSN_ID = $_SESSION['prsn_id'];
             <div class="container">
                 <div class="section-heading row">
                     <h2>Edit Menu</h2>
-                    <select name="customer-type" id="customer-type" class="dropdown">
-                        <option value="regular">REGULAR</option>
-                        <option value="wholesale">WHOLESALE</option>
+                    <select name="food-type" id="food-type" class="dropdown">
+                        <option value="all" <?php echo ($food_type === 'all') ? 'selected' : ''; ?>>All</option>
+                        <option value="Customer" <?php echo ($food_type === 'Customer') ? 'selected' : ''; ?>>Customer</option>
+                        <option value="Wholesaler" <?php echo ($food_type === 'Wholesaler') ? 'selected' : ''; ?>>Wholesaler</option>
                     </select>
                 </div>
+                <script>
+                    document.getElementById('food-type').addEventListener('change', function() {
+                        var selectedFoodType = this.value;
+                        window.location.href = "admin-edit-menu.php?type=" + selectedFoodType;
+                    });
+                </script>
                 <section class="section-body">
                     <section class="main-section column">
                         <div class="table-wrapper">
@@ -85,10 +94,14 @@ $PRSN_ID = $_SESSION['prsn_id'];
                                 <?php
 
                                 $CUS_ID = $_SESSION['prsn_id'];
+                                
+                                $food_type = isset($_GET['type']) ? $_GET['type'] : 'all';
 
-                                $sql = "SELECT *    
-                                        FROM food
-                                        ";
+                                if ($food_type === 'all') {
+                                    $sql = "SELECT * FROM food";
+                                } else {
+                                    $sql = "SELECT * FROM food WHERE FOOD_TYPE = '$food_type'";
+                                }
 
                                 $res = mysqli_query($conn, $sql);
 
@@ -152,5 +165,29 @@ $PRSN_ID = $_SESSION['prsn_id'];
         </section>
     </main>
 </body>
+<script>
+    // Function to check for new orders via AJAX
+    function checkForNewOrders() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                if (this.responseText.trim() === "NewOrder") {
+                    notifyNewOrder(); // Play notification sound
+                }
+            }
+        };
+        xhttp.open("GET", "order-notification.php", true);
+        xhttp.send();
+    }
+
+    // Function to play notification sound
+    function notifyNewOrder() {
+        var audio = new Audio('sound/notification.mp3'); // Replace with correct path
+        audio.play();
+    }
+
+    // Check for new orders every 5 seconds 
+    setInterval(checkForNewOrders, 2000);
+</script>
 
 </html>
