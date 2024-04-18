@@ -98,7 +98,16 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                                     <p class="name"><?php echo $FOOD_NAME ?></p>
                                     <div class="inline">
                                         <h2>₱<?php echo $FOOD_PRICE ?></h3>
-                                            <p>1 stick</p>
+                                            <?php if ($PRSN_ROLE === "Wholesaler") {
+                                            } else {
+                                            ?>
+                                                <p>1 stick</p>
+
+                                            <?php
+
+                                            }
+                                            ?>
+
                                     </div>
                                 </div>
                             </a>
@@ -108,7 +117,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                     ?>
                 </section>
             </div>
-            
+
         </section>
         <!-- <section class="section menu">
             <div class="container">

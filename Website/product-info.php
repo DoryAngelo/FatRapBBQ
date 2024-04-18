@@ -151,8 +151,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                                 <p class="amount js-num"><?php echo ($IN_ORDER_QUANTITY == NULL) ? 1 : $IN_ORDER_QUANTITY; ?></p>
                                                 <i class='bx bxs-plus-circle js-plus' data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
                                             </div>
-                                            <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?>
-                                                sticks available</p>
+                                            <?php if ($PRSN_ROLE === "Wholesaler") {
+                                            ?>
+                                                <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?>
+                                                     available</p>
+                                            <?php
+                                            } else {
+
+                                            ?>
+                                                <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?>
+                                                    sticks available</p>
+                                            <?php
+                                            }
+                                            ?>
+
+
+
                                         </div>
                                         <input type="hidden" id="quantity" name="quantity" value="<?php echo ($IN_ORDER_QUANTITY == NULL) ? 1 : $IN_ORDER_QUANTITY; ?>">
                                         <input type="hidden" name="price" value="<?php echo $FOOD_PRICE ?>">
