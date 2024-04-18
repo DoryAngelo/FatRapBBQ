@@ -61,7 +61,7 @@ if (isset($_POST['not-confirmed'])) {
 
     header('location:employee-completed-orders.php');
 }
-
+$order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
 ?>
 
 <!DOCTYPE html>
@@ -121,8 +121,18 @@ if (isset($_POST['not-confirmed'])) {
                 <div class="section-heading">
                     <h2>Completed Orders</h2>
                     <div class="inline">
-                        <p>Date range:</p>
-                        <input type="date">
+                        <!-- <p>Date range:</p> -->
+                        <select name="order-type" id="order-type" class="dropdown">
+                            <option value="all" <?php echo ($order_type === 'all') ? 'selected' : ''; ?>>All</option>
+                            <option value="Today" <?php echo ($order_type === 'Today') ? 'selected' : ''; ?>>Today</option>
+                            <option value="Advanced" <?php echo ($order_type === 'Advanced') ? 'selected' : ''; ?>>Advanced</option>
+                        </select>
+                        <script>
+                            document.getElementById('order-type').addEventListener('change', function() {
+                                var selectedOrderType = this.value;
+                                window.location.href = "employee-completed-orders.php?type=" + selectedOrderType;
+                            });
+                        </script>
                     </div>
                 </div>
                 <section class="with-side-menu">
@@ -138,6 +148,15 @@ if (isset($_POST['not-confirmed'])) {
                             <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
                             <?php
                             $sql = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'Completed'";
+                            $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
+
+                            if ($order_type === 'Today') {
+                                // Add condition for orders scheduled for delivery today
+                                $sql .= " AND DATE_FORMAT(STR_TO_DATE(delivery_date, '%Y-%m-%d %H:%i'), '%Y-%m-%d') = CURDATE()";
+                            } elseif ($order_type === 'Advanced') {
+                                // Add condition for orders scheduled for delivery after today
+                                $sql .= " AND DATE_FORMAT(STR_TO_DATE(delivery_date, '%Y-%m-%d %H:%i'), '%Y-%m-%d') > CURDATE()";
+                            }
                             $res = mysqli_query($conn, $sql);
                             $count = mysqli_num_rows($res);
                             if ($count > 0) {
@@ -185,7 +204,7 @@ if (isset($_POST['not-confirmed'])) {
                         <div class="group inventory">
                             <h3>Inventory</h3>
                             <div class="inventory-box">
-                            <?php
+                                <?php
                                 $sql = "SELECT * FROM food WHERE FOOD_STOCK < 100";
                                 $res = mysqli_query($conn, $sql);
                                 $count = mysqli_num_rows($res);
@@ -217,7 +236,7 @@ if (isset($_POST['not-confirmed'])) {
                     </section>
                 </section>
             </div>
-            
+
         </section>
     </main>
 </body>

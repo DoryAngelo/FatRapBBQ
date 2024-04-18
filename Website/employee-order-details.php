@@ -41,31 +41,31 @@ $PLACED_ORDER_ID = $_GET['PLACED_ORDER_ID'];
                 </div>
             </div>
             <input type="checkbox" id="menu-toggle">
-                    <label class='menu-button-container' for="menu-toggle">
-                        <div class='menu-button'></div>
-                    </label>
-                <ul class = 'menubar'>
-                    <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
-                    <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
-                    <?php
-                    if (isset($_SESSION['prsn_id'])) {
-                    ?>
-                        <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
+            <label class='menu-button-container' for="menu-toggle">
+                <div class='menu-button'></div>
+            </label>
+            <ul class='menubar'>
+                <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
+                <?php
+                if (isset($_SESSION['prsn_id'])) {
+                ?>
+                    <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
                     </li>
-                        <?php
-                    } else {
-                        ?>
-                        <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                    <?php
-                    }
-                    ?>
-                </ul>
+                <?php
+                } else {
+                ?>
+                    <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
+                <?php
+                }
+                ?>
+            </ul>
         </div>
     </header>
     <main>
         <section class="section">
-            <a href="" class="back">Back</a>
+            <a href="#" onclick="window.history.back();" class="back">Back</a>
             <section class="block order-details">
                 <div class="scroll">
                     <h2>Order Details</h2>
@@ -86,7 +86,7 @@ $PLACED_ORDER_ID = $_GET['PLACED_ORDER_ID'];
                             $DELIVERY_DATE = $row['DELIVERY_DATE'];
                             $PLACED_ORDER_STATUS = $row['PLACED_ORDER_STATUS'];
                             $REFERENCE_NUMBER = $row['REFERENCE_NUMBER'];
-                            $PLACED_ORDER_TRACKER= $row['PLACED_ORDER_TRACKER'];
+                            $PLACED_ORDER_TRACKER = $row['PLACED_ORDER_TRACKER'];
                     ?>
                             <div>
                                 <table class="contact-info">
@@ -181,7 +181,7 @@ FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS !=
                                 </table>
                             </div>
                             <div class="payment">
-                                <h3>Total Payment:</h3> 
+                                <h3>Total Payment:</h3>
                                 <h3>₱<?php echo $total ?></h3>
                             </div>
                 </div>
