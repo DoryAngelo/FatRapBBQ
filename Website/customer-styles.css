@@ -770,6 +770,7 @@ a.back {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 10px;
     padding-top: 1.25rem;
     }
 

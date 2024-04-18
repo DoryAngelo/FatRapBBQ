@@ -7,6 +7,8 @@ const circles = document.querySelectorAll(".circle"),
   progressBar = document.querySelector(".indicator"),
   buttons = document.querySelectorAll("button"),
   pstatus = document.getElementById("status").innerHTML,
+  statusTitle = document.getElementById("order-status-title"),
+  statusDesc = document.getElementById("order-status-desc"),
   sectionToShowHide = document.getElementById("payment-section"),
   receiptButton = document.getElementById("generate-receipt-btn"),
   submitButton = document.getElementById("submit"),
@@ -20,38 +22,49 @@ const updateSteps = (e) => {
   switch (pstatus) {
     case "Placed":
       currentStep = 1;
+      statusTitle.textContent = "Your order has been placed";
+      statusDesc.textContent = "Please allot 5 to 10 minutes of waiting time for the confirmation of your order.";
       break;
     case "Awaiting Payment":
       currentStep = 2;
-      break;
-    case "Paid":
-      currentStep = 3;
+      statusTitle.textContent = "Awaiting payment for your order";
+      statusDesc.textContent = "Kindly settle your payment below and enter your GCash reference number for this transaction.";
       break;
     case "Preparing":
       currentStep = 3;
+      statusTitle.textContent = "Your order is being prepared";
+      statusDesc.textContent = "Estimated time to prepare your order is at least 30 minutes. Note that preparation time depends on the quantity you have purchased.";
       break;
     case "Packed":
       currentStep = 4;
+      statusTitle.textContent = "Your order is packed and is ready to be shipped";
+      statusDesc.textContent = "We will book your order for delivery. Please note that the waiting time for delivery depends on your location.";
       break;
     case "Shipped":
       currentStep = 5;
+      statusTitle.textContent = "Your order is shipped";
+      statusDesc.textContent = "Your delivery is on the way. Please make sure to receive your order when it arrives.";
       break;
     case "Completed":
       currentStep = 6;
+      statusTitle.textContent = "Your order is delivered successfully";
+      statusDesc.textContent = "Thank you for ordering at Fat Rap's Barbeque! You may now close this tab.";
       break;
     case "Cancelled":
       stepsContainer.style.display = "none";
-      sectionToShowHide.style.display = "none";
+      statusTitle.textContent = "Your order has been cancelled.";
+      statusDesc.textContent = "For more information, kindly contact 09178073760 or 09190873861.";
+      // sectionToShowHide.style.display = "none";
 
-      // Display a message indicating that the order has been cancelled
-      const cancelMessage = document.createElement("p");
-      cancelMessage.textContent = "Your order has been cancelled. For more information please contact this number +63_______.";
-      cancelMessage.classList.add("cancel-message");
+      // // Display a message indicating that the order has been cancelled
+      // const cancelMessage = document.createElement("p");
+      // cancelMessage.textContent = "Your order has been cancelled. For more information, kindly contact 09178073760 or 09190873861.";
+      // cancelMessage.classList.add("cancel-message");
 
-      // Replace the "Your order has been approved" text with the cancel message
-      const orderStatusDesc = document.querySelector(".order-status-desc");
-      orderStatusDesc.innerHTML = ''; // Clear existing content
-      orderStatusDesc.appendChild(cancelMessage);
+      // // Replace the "Your order has been approved" text with the cancel message
+      // const orderStatusDesc = document.querySelector(".order-status-desc");
+      // orderStatusDesc.innerHTML = ''; // Clear existing content
+      // orderStatusDesc.appendChild(cancelMessage);
       break;
   }
   // // update current step based on the button clicked

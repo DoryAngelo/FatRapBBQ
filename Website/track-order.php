@@ -103,8 +103,9 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                 </div>
                 <section class="section-body">
                     <section class="block">
-                        <h3 class="block-heading">Order code: <?php echo $PLACED_ORDER_ID ?></h3>
+                        <h3 class="block-heading">Order number: <?php echo $PLACED_ORDER_ID ?></h3>
                         <div class="block-body">
+                            <p>Order Tracker: <?php echo $PLACED_ORDER_TRACKER ?></p>
                             <div class="container" id="stepsContainer"> <!-- hidden when order status is canceled-->
                                 <div class="steps">
                                     <?php
@@ -154,7 +155,6 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                             case "Cancelled":
                                             ?>
                                                 <p id="status">Cancelled</p>
-                                                <p class="error-text">Your order has been cancelled. Please contact customer support for more information.</p>
                                     <?php
                                                 break;
                                         }
@@ -172,7 +172,7 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                         <span class="circle">
                                             <i class='bx bx-check'></i>
                                         </span>
-                                        <span class="label">Approved</span>
+                                        <span class="label">Payment</span>
                                     </div>
                                     <!-- if status = paid -->
                                     <div class="step">
@@ -220,8 +220,8 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                             </style>
                             <div class="order-status-desc">
                                 <div>
-                                    <h3 class="block-heading order-status">Your order has been approved</h2>
-                                        <p class="order-status-desc">Lorem ipsum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit amet</p>
+                                    <h3 class="block-heading order-status" id="order-status-title">Your order has been approved</h2>
+                                        <p class="order-status-desc" id="order-status-desc">Lorem ipsum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit amet</p>
                                 </div>
                                 <form action="generate_receipt.php" method="GET" id="generate-receipt-form">
                                     <input type="hidden" name="id" value="<?php echo $PLACED_ORDER_ID ?>">
@@ -321,12 +321,12 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                     </section>
 
                     <!-- Cancelled message section -->
-                    <section class="block" id="cancelled-section" style="display: none;">
+                    <!-- <section class="block" id="cancelled-section" style="display: none;">
                         <h3 class="block-heading">Order Cancelled</h3>
                         <div class="block-body">
-                            <p class="cancelled-message">Your order has been cancelled. For more information please contact this number +63_______.</p>
+                            <p class="cancelled-message">Your order has been cancelled. For more information, kindly contact 09178073760 or 09190873861.</p>
                         </div>
-                    </section>
+                    </section> -->
 
                     <section class="block">
                         <h3 class="block-heading">Order Summary</h2>

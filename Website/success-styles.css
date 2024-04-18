@@ -7,7 +7,7 @@
 }
 
 :root{
-    --bg:#F2FFE1;
+    --bg:#F2FFE1; /*wholesale and login bg color*/
     --primary:#F5D636;
     --active-primary:#EDCB1C;
     --text:#3A001E;
@@ -27,6 +27,10 @@ body{
     min-width: 320px;
 }
 
+.customer {
+    background-color: #EDE9D0;
+}
+
 /* main {
     padding-top: 210px;
     padding-bottom: 120px;
@@ -38,7 +42,6 @@ body{
 main {
     padding-top: 8rem; /*height of header */
     height: max-content;
-    background-color: var(--bg);
     color: var(--text);
 }
 
