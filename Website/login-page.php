@@ -72,7 +72,7 @@ if (isset($_POST['submit'])) {
                 header('Location: login-page.php');
                 exit();
             } else {
-                header('location:admin-home.php');
+                header('location:employee-home.php');
             }
         }
     } else {

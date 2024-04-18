@@ -223,10 +223,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                             <button name="order" type="submit" class="button" <?php echo ($FOOD_STOCK <= 0) ? 'disabled' : ''; ?>>Order Now</button>
                         </form>
                         <?php
-                        $sql = "SELECT f.*, io.in_order_quantity 
-                FROM food f 
-                LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
-                WHERE f.FOOD_ID = '$FOOD_ID'";
+                        if (isset($_SESSION['prsn_id'])) {
+                            $sql = "SELECT f.*, io.in_order_quantity 
+                            FROM food f 
+                            LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
+                            WHERE f.FOOD_ID = '$FOOD_ID' 
+                            AND io.PRSN_ID = '$PRSN_ID'";
+                        } else if (isset($_SESSION['guest_id'])) {
+                            $sql = "SELECT f.*, io.in_order_quantity 
+                            FROM food f 
+                            LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
+                            WHERE f.FOOD_ID = '$FOOD_ID' 
+                            AND io.GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
+                        } 
+
                         $res = mysqli_query($conn, $sql);
                         $count = mysqli_num_rows($res);
                         if ($count > 0) {
