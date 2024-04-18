@@ -131,9 +131,9 @@ $FOOD_ID = $_GET['FOOD_ID'];
                                                 </div>
                                                 <div class="form-field-input">
                                                     <label for="active">Active</label>
-                                                    <select class="dropdown" name="active" id="active" value="<?php echo $FOOD_ACTIVE; ?>">
-                                                        <option value="No">No</option>
-                                                        <option value="Yes">Yes</option>
+                                                    <select class="dropdown" name="active" id="active">
+                                                        <option value="No" <?php if ($FOOD_ACTIVE == 'No') echo ' selected'; ?>>No</option>
+                                                        <option value="Yes" <?php if ($FOOD_ACTIVE == 'Yes') echo ' selected'; ?>>Yes</option>
                                                     </select>
                                                     <div class="error"></div>
                                                 </div>
