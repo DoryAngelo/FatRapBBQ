@@ -11,7 +11,7 @@ if (isset($_SESSION['prsn_id'])) {
     $random = random_bytes(16);
     $GUEST_ID = bin2hex($random);
     $_SESSION['prsn_role'] = "Customer";
-    $_SESSION['guest_id'] =   $GUEST_ID;
+    $_SESSION['guest_id'] = $GUEST_ID;
 }
 
 $PRSN_ROLE = $_SESSION['prsn_role'];
@@ -89,7 +89,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     <link rel="stylesheet" href="home-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="home.js" defer></script>
 </head>
@@ -103,9 +104,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                     <h1>Fat Rap's Barbeque</h1>
                     <?php
                     if ($PRSN_ROLE == "Wholesaler") {
-                    ?>
+                        ?>
                         <p>WHOLESALE</p>
-                    <?php
+                        <?php
                     }
                     ?>
                 </div>
@@ -120,14 +121,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                 <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
                 <?php
                 if (isset($_SESSION['prsn_id'])) {
-                ?>
+                    ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
                     </li>
-                <?php
+                    <?php
                 } else {
-                ?>
+                    ?>
                     <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                <?php
+                    <?php
                 }
                 ?>
             </ul>
@@ -142,7 +143,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                     <p>Indulge in the ultimate barbeque experience and place your order today!</p>
                     <a href="#product-section" class="button">Order Now</a>
                 </div>
-                <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="picture of a pork bbq">
+                <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg"
+                    alt="picture of a pork bbq">
                 <!-- <img src="images/pork-bbq.jpg" alt="picture of 3 pork bbq sticks"> -->
             </div>
         </section>
@@ -199,14 +201,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         </section>
         <!-- section 3 -->
         <?php
-        if ($count8 > 0) {
-            $sql = "SELECT f.*, io.in_order_quantity 
-            FROM food f 
-            LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
-            WHERE f.FOOD_ID = '$FOOD_ID'";
+        if ($PRSN_ROLE !== 'Wholesaler') {
+            if ($count8 > 0) {
+                $sql = "SELECT f.*, io.in_order_quantity 
+                FROM food f 
+                LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
+                WHERE f.FOOD_ID = '$FOOD_ID'";
 
-            $res = mysqli_query($conn, $sql);
-            $count = mysqli_num_rows($res);
+                $res = mysqli_query($conn, $sql);
+                $count = mysqli_num_rows($res);
+            }
+
+
         }
 
 
@@ -214,10 +220,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         if ($count > 0) {
             while ($row = mysqli_fetch_assoc($res)) {
                 $IN_ORDER_QUANTITY = $row['in_order_quantity'];
-        ?>
+                ?>
                 <section class="section" id="product-section">
                     <div class="container responsive">
-                        <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="picture of a pork bbq">
+                        <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg"
+                            alt="picture of a pork bbq">
                         <!-- <img src="images/pork-bbq.jpg" alt="picture of 3 pork bbq sticks"> -->
                         <div class="text">
                             <h1><?php echo $FOOD_NAME; ?></h1>
@@ -225,7 +232,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictumsum dolor sit amet</p>
                             <div class="action-grp responsive">
                                 <form method="post" class="form">
-                                    <input type="hidden" id="quantity" name="quantity" value="<?php echo ($IN_ORDER_QUANTITY == NULL) ? 1 : $IN_ORDER_QUANTITY; ?>">
+                                    <input type="hidden" id="quantity" name="quantity"
+                                        value="<?php echo ($IN_ORDER_QUANTITY == NULL) ? 1 : $IN_ORDER_QUANTITY; ?>">
                                     <input type="hidden" name="price" value="<?php echo $FOOD_PRICE ?>">
                                     <button name="order" type="submit" class="button" <?php echo ($FOOD_STOCK <= 0) ? 'disabled' : ''; ?>>Order Now</button>
                                 </form>
@@ -254,9 +262,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                 ?>
                                 <div class="with-remaining">
                                     <div class="quantity-group">
-                                        <i class='bx bxs-minus-circle js-minus circle' data-stock="<?php echo $FOOD_STOCK; ?>"></i>
-                                        <p class="amount js-num"><?php echo ($IN_ORDER_QUANTITY == NULL) ? 1 : $IN_ORDER_QUANTITY; ?></p>
-                                        <i class='bx bxs-plus-circle js-plus circle' data-stock="<?php echo $FOOD_STOCK; ?>"></i>
+                                        <i class='bx bxs-minus-circle js-minus circle'
+                                            data-stock="<?php echo $FOOD_STOCK; ?>"></i>
+                                        <p class="amount js-num">
+                                            <?php echo ($IN_ORDER_QUANTITY == NULL) ? 1 : $IN_ORDER_QUANTITY; ?></p>
+                                        <i class='bx bxs-plus-circle js-plus circle'
+                                            data-stock="<?php echo $FOOD_STOCK; ?>"></i>
                                     </div>
                                     <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> sticks remaining</p>
                                 </div>
@@ -266,7 +277,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                     </div>
                 </section>
 
-        <?php
+                <?php
 
             }
         } ?>
@@ -366,7 +377,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             </div>
         </section>
         <!-- section 5 -->
-        <section class="section" id="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'wholesale-section-hidden' : 'wholesale-section'; ?>">
+        <section class="section"
+            id="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'wholesale-section-hidden' : 'wholesale-section'; ?>">
             <div class="container responsive">
                 <div class="text">
                     <h1>Looking for wholesale deals?</h1>
