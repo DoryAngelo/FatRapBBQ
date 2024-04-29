@@ -262,6 +262,15 @@ if (isset($_POST['submit'])) {
         const cpasswordInput = document.getElementById('cpassword');
         const imageInput = document.getElementById('image');
 
+        firstNameInput.addEventListener('input', validateFirstName);
+        lastNameInput.addEventListener('input', validateLastName);
+        numberInput.addEventListener('input', validateNumber);
+        branchInput.addEventListener('input', validateBranch);
+        usernameInput.addEventListener('input', validateUsername);
+        passwordInput.addEventListener('input', validatePassword);
+        cpasswordInput.addEventListener('input', validateConfirmPassword);
+        imageInput.addEventListener('change', validateImage);
+
         function setError(input, message) {
             const errorDiv = input.nextElementSibling;
             errorDiv.innerHTML = `<span class="error-text">${message}</span>`;
@@ -272,108 +281,129 @@ if (isset($_POST['submit'])) {
             errorDiv.innerHTML = ''; // Clear the error message
         }
 
-        function validateInputs() {
-            let isValid = true;
-
+        function validateFirstName() {
             const firstNameValue = firstNameInput.value.trim();
-            const lastNameValue = lastNameInput.value.trim();
-            const numberValue = numberInput.value.trim();
-            const branchValue = branchInput.value.trim();
-            const usernameValue = usernameInput.value.trim();
-            const passwordValue = passwordInput.value.trim();
-            const cpasswordValue = cpasswordInput.value.trim();
-            const imageValue = imageInput.value.trim();
-
             const nameRegex = /^[a-zA-Z\s]+$/;
-            const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
-            const usernameRegex = /^[a-zA-Z0-9]+$/;
-            const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/; // Password should include at least 1 digit, 1 lowercase, 1 uppercase, exclude special characters.
-
-            // Email and username regex are omitted assuming they can be validated on the backend
 
             if (firstNameValue === '') {
                 setError(firstNameInput, 'Please enter your first name');
-                isValid = false;
             } else if (!nameRegex.test(firstNameValue)) {
                 setError(firstNameInput, 'First name must contain only letters');
-                isValid = false;
             } else {
                 clearError(firstNameInput);
             }
+        }
+
+        function validateLastName() {
+            const lastNameValue = lastNameInput.value.trim();
+            const nameRegex = /^[a-zA-Z\s]+$/;
 
             if (lastNameValue === '') {
                 setError(lastNameInput, 'Please enter your last name');
-                isValid = false;
             } else if (!nameRegex.test(lastNameValue)) {
                 setError(lastNameInput, 'Last name must contain only letters');
-                isValid = false;
             } else {
                 clearError(lastNameInput);
             }
+        }
+
+        function validateNumber() {
+            const numberValue = numberInput.value.trim();
+            const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
 
             if (numberValue === '') {
                 setError(numberInput, 'Please enter your number');
-                isValid = false;
             } else if (!numberRegex.test(numberValue)) {
                 setError(numberInput, 'Invalid number');
-                isValid = false;
             } else {
                 clearError(numberInput);
             }
+        }
+
+        function validateBranch() {
+            const branchValue = branchInput.value.trim();
 
             if (branchValue === '') {
                 setError(branchInput, 'Please enter your branch');
-                isValid = false;
             } else {
                 clearError(branchInput);
             }
+        }
+
+        function validateUsername() {
+            const usernameValue = usernameInput.value.trim();
+            const usernameRegex = /^[a-zA-Z0-9]+$/;
 
             if (usernameValue === '') {
                 setError(usernameInput, 'Please enter your username');
-                isValid = false;
             } else if (!usernameRegex.test(usernameValue)) {
                 setError(usernameInput, 'Invalid username format');
-                isValid = false;
             } else {
                 clearError(usernameInput);
             }
+        }
+
+        function validatePassword() {
+            const passwordValue = passwordInput.value.trim();
+            const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/;
 
             if (passwordValue === '') {
                 setError(passwordInput, 'Please enter your password');
-                isValid = false;
             } else if (!passwordRegex.test(passwordValue)) {
                 setError(passwordInput, 'Invalid password format');
-                isValid = false;
             } else {
                 clearError(passwordInput);
             }
+        }
+
+        function validateConfirmPassword() {
+            const cpasswordValue = cpasswordInput.value.trim();
+            const passwordValue = passwordInput.value.trim();
 
             if (cpasswordValue === '') {
                 setError(cpasswordInput, 'Please confirm your password');
-                isValid = false;
             } else if (cpasswordValue !== passwordValue) {
                 setError(cpasswordInput, 'Passwords do not match');
-                isValid = false;
             } else {
                 clearError(cpasswordInput);
             }
+        }
+
+        function validateImage() {
+            const imageValue = imageInput.value.trim();
 
             // Check if file extension is valid
             const validExtensions = ['png', 'jpg', 'jpeg'];
             const fileExtension = imageValue.split('.').pop().toLowerCase();
+
             if (imageValue === '') {
                 setError(imageInput, 'Please select an image file');
-                isValid = false;
             } else if (!validExtensions.includes(fileExtension)) {
                 setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
-                isValid = false;
             } else {
                 clearError(imageInput);
             }
+        }
 
-            return isValid;
+        function validateInputs() {
+            validateFirstName();
+            validateLastName();
+            validateNumber();
+            validateBranch();
+            validateUsername();
+            validatePassword();
+            validateConfirmPassword();
+            validateImage();
+
+            // Check if any error exists
+            const errors = document.querySelectorAll('.error-text');
+            if (errors.length > 0) {
+                return false; // Prevent form submission
+            }
+            return true; // Allow form submission
         }
     </script>
+
 </body>
 <script>
     // Function to check for new orders via AJAX

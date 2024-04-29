@@ -168,6 +168,12 @@ $FOOD_ID = $_GET['FOOD_ID'];
         const stockInput = document.getElementById('stock');
         const imageInput = document.getElementById('image');
 
+        productNameInput.addEventListener('input', validateProductName);
+        productDescInput.addEventListener('input', validateProductDesc);
+        priceInput.addEventListener('input', validatePrice);
+        stockInput.addEventListener('input', validateStock);
+        imageInput.addEventListener('change', validateImage);
+
         function setError(input, message) {
             const errorDiv = input.nextElementSibling;
             errorDiv.innerHTML = `<span class="error-text">${message}</span>`;
@@ -178,78 +184,88 @@ $FOOD_ID = $_GET['FOOD_ID'];
             errorDiv.innerHTML = ''; // Clear the error message
         }
 
-        function validateInputs() {
-            let isValid = true;
-
+        function validateProductName() {
             const productNameValue = productNameInput.value.trim();
-            const productDescValue = productDescInput.value.trim();
-            const priceValue = priceInput.value.trim();
-            const stockValue = stockInput.value.trim();
-            const imageValue = imageInput.value.trim();
-
-            const nameRegex = /^[a-zA-Z\s]+$/;
+            const nameRegex = /^[a-zA-Z0-9\s]+$/;
 
             if (productNameValue === '') {
                 setError(productNameInput, 'Please enter the product name');
-                isValid = false;
             } else if (!nameRegex.test(productNameValue)) {
                 setError(productNameInput, 'Invalid product name');
-                isValid = false;
             } else {
                 clearError(productNameInput);
             }
+        }
+
+        function validateProductDesc() {
+            const productDescValue = productDescInput.value.trim();
 
             if (productDescValue === '') {
                 setError(productDescInput, 'Please enter the product description');
-                isValid = false;
             } else if (productDescValue.length > 50) {
                 setError(productDescInput, 'Product description must not exceed 50 characters');
-                isValid = false;
             } else {
                 clearError(productDescInput);
             }
+        }
 
+        function validatePrice() {
+            const priceValue = priceInput.value.trim();
 
             if (priceValue === '') {
                 setError(priceInput, 'Please enter the price');
-                isValid = false;
             } else if (isNaN(parseFloat(priceValue))) {
                 setError(priceInput, 'Price must be a number');
-                isValid = false;
             } else if (parseInt(priceValue) < 0) {
                 setError(priceInput, 'Price cannot be negative');
-                isValid = false;
             } else {
                 clearError(priceInput);
             }
+        }
+
+        function validateStock() {
+            const stockValue = stockInput.value.trim();
 
             if (stockValue === '') {
                 setError(stockInput, 'Please enter the stock');
-                isValid = false;
             } else if (isNaN(parseInt(stockValue))) {
                 setError(stockInput, 'Stock must be a number');
-                isValid = false;
             } else if (parseInt(stockValue) < 0) {
                 setError(stockInput, 'Stock cannot be negative');
-                isValid = false;
             } else {
                 clearError(stockInput);
             }
+        }
 
-            // Check if file extension is valid only if an image is selected
-            if (imageValue !== '') {
-                const validExtensions = ['png', 'jpg', 'jpeg'];
-                const fileExtension = imageValue.split('.').pop().toLowerCase();
+        function validateImage() {
+            const imageValue = imageInput.value.trim();
 
-                if (!validExtensions.includes(fileExtension)) {
-                    setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
-                    isValid = false;
-                } else {
-                    clearError(imageInput);
-                }
+            // Check if file extension is valid
+            const validExtensions = ['png', 'jpg', 'jpeg'];
+            const fileExtension = imageValue.split('.').pop().toLowerCase();
+
+            if (imageValue === '') {
+                setError(imageInput, 'Please select an image file');
+            } else if (!validExtensions.includes(fileExtension)) {
+                setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
+            } else {
+                clearError(imageInput);
             }
+        }
 
-            return isValid;
+        function validateInputs() {
+            validateProductName();
+            validateProductDesc();
+            validatePrice();
+            validateStock();
+            validateImage();
+
+            // Check if any error exists
+            const errors = document.querySelectorAll('.error-text');
+            if (errors.length > 0) {
+                return false; // Prevent form submission
+            }
+            return true; // Allow form submission
         }
     </script>
 </body>
