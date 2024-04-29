@@ -94,6 +94,7 @@ $EMP_ID = $_GET['EMP_ID'];
                                         $PRSN_NUMBER = $row['PRSN_PHONE'];
                                         $PRSN_NAME = $row['PRSN_NAME'];
                                         $PRSN_EMAIL = $row['PRSN_EMAIL'];
+                                        $PRSN_ROLE = $row['PRSN_ROLE'];
                                         $EMP_BRANCH = $row['EMP_BRANCH'];
                                 ?>
                                         <section>
@@ -138,8 +139,8 @@ $EMP_ID = $_GET['EMP_ID'];
                                                 <div class="form-field-input">
                                                     <label for="role">Role</label>
                                                     <select class="dropdown" name="role" id="role" required>
-                                                        <option value="Employee">Employee</option>
-                                                        <option value="Admin">Admin</option>
+                                                        <option value="Employee" <?php if ($PRSN_ROLE== 'Employee') echo ' selected'; ?>>Employee</option>
+                                                        <option value="Admin" <?php if ($PRSN_ROLE == 'Admin') echo ' selected'; ?>>Admin</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-field-input">
