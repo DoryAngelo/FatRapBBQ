@@ -151,6 +151,8 @@ if (isset($_POST['submit'])) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="app.js" defer></script>
+    <script src="ph-address-selector.js" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- add the code below to load the icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
@@ -335,33 +337,35 @@ if (isset($_POST['submit'])) {
                                     <div class="form-field">
                                         <div class="input-grp">
                                             <p>Region</p>
-                                            <input type="text" name="region">
+                                            <select name="region" class="form-control form-control-md" id="region"></select>
+                                            <input type="hidden" class="form-control form-control-md" name="region" id="region-text" required>
                                             <div class="error"></div>
                                         </div>
                                         <div class="input-grp">
                                             <p>Province</p>
-                                            <input type="text" name="province">
+                                            <select name="province" class="form-control form-control-md" id="province"></select>
+                                            <input type="hidden" class="form-control form-control-md" name="province" id="province-text" required>
                                             <div class="error"></div>
                                         </div>
                                         <div class="input-grp">
-                                            <p>City</p>
-                                            <input type="text" name="city">
+                                            <p>City/Municipality</p>
+                                            <select name="city" class="form-control form-control-md" id="city"></select>
+                                            <input type="hidden" class="form-control form-control-md" name="city" id="city-text" required>
                                             <div class="error"></div>
                                         </div>
                                         <div class="input-grp">
                                             <p>Barangay</p>
-                                            <input type="text" name="barangay">
+                                            <select name="barangay" class="form-control form-control-md" id="barangay"></select>
+                                            <input type="hidden" class="form-control form-control-md" name="barangay" id="barangay-text" required>
                                             <div class="error"></div>
                                         </div>
                                         <div class="input-grp">
                                             <p>House no./Bldg./Street</p>
-                                            <input type="text" name="street">
+                                            <input type="text" class="form-control form-control-md" name="street" id="street-text">
                                             <div class="error"></div>
                                         </div>
                                     </div>
-
                                 </div>
-                            </div>
                         </section>
                         <!-- delivery info block-->
                         <section class="red-theme" id="delivery-block">
