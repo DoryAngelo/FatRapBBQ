@@ -181,96 +181,112 @@ $FOOD_ID = $_GET['FOOD_ID'];
                 </script>
             </div>
             <script>
-                const productNameInput = document.getElementById('product-name');
-                const productDescInput = document.getElementById('product-desc');
-                const priceInput = document.getElementById('price');
-                const stockInput = document.getElementById('stock');
-                const imageInput = document.getElementById('image');
+        const productNameInput = document.getElementById('product-name');
+        const productDescInput = document.getElementById('product-desc');
+        const priceInput = document.getElementById('price');
+        const stockInput = document.getElementById('stock');
+        const imageInput = document.getElementById('image');
 
-                function setError(input, message) {
-                    const errorDiv = input.nextElementSibling;
-                    errorDiv.innerHTML = `<span class="error-text">${message}</span>`;
-                }
+        productNameInput.addEventListener('input', validateProductName);
+        productDescInput.addEventListener('input', validateProductDesc);
+        priceInput.addEventListener('input', validatePrice);
+        stockInput.addEventListener('input', validateStock);
+        imageInput.addEventListener('change', validateImage);
 
-                function clearError(input) {
-                    const errorDiv = input.nextElementSibling;
-                    errorDiv.innerHTML = ''; // Clear the error message
-                }
+        function setError(input, message) {
+            const errorDiv = input.nextElementSibling;
+            errorDiv.innerHTML = `<span class="error-text">${message}</span>`;
+        }
 
-                function validateInputs() {
-                    let isValid = true;
+        function clearError(input) {
+            const errorDiv = input.nextElementSibling;
+            errorDiv.innerHTML = ''; // Clear the error message
+        }
 
-                    const productNameValue = productNameInput.value.trim();
-                    const productDescValue = productDescInput.value.trim();
-                    const priceValue = priceInput.value.trim();
-                    const stockValue = stockInput.value.trim();
-                    const imageValue = imageInput.value.trim();
+        function validateProductName() {
+            const productNameValue = productNameInput.value.trim();
+            const nameRegex = /^[a-zA-Z0-9\s]+$/;
 
-                    const nameRegex = /^[a-zA-Z0-9\s]+$/;
+            if (productNameValue === '') {
+                setError(productNameInput, 'Please enter the product name');
+            } else if (!nameRegex.test(productNameValue)) {
+                setError(productNameInput, 'Invalid product name');
+            } else {
+                clearError(productNameInput);
+            }
+        }
 
-                    if (productNameValue === '') {
-                        setError(productNameInput, 'Please enter the product name');
-                        isValid = false;
-                    } else if (!nameRegex.test(productNameValue)) {
-                        setError(productNameInput, 'Invalid product name');
-                        isValid = false;
-                    } else {
-                        clearError(productNameInput);
-                    }
+        function validateProductDesc() {
+            const productDescValue = productDescInput.value.trim();
 
-                    if (productDescValue === '') {
-                        setError(productDescInput, 'Please enter the product description');
-                        isValid = false;
-                    } else if (productDescValue.length > 50) {
-                        setError(productDescInput, 'Product description must not exceed 50 characters');
-                        isValid = false;
-                    } else {
-                        clearError(productDescInput);
-                    }
+            if (productDescValue === '') {
+                setError(productDescInput, 'Please enter the product description');
+            } else if (productDescValue.length > 50) {
+                setError(productDescInput, 'Product description must not exceed 50 characters');
+            } else {
+                clearError(productDescInput);
+            }
+        }
 
+        function validatePrice() {
+            const priceValue = priceInput.value.trim();
 
-                    if (priceValue === '') {
-                        setError(priceInput, 'Please enter the price');
-                        isValid = false;
-                    } else if (isNaN(parseFloat(priceValue))) {
-                        setError(priceInput, 'Price must be a number');
-                        isValid = false;
-                    } else if (parseInt(priceValue) < 0) {
-                        setError(priceInput, 'Price cannot be negative');
-                        isValid = false;
-                    } else {
-                        clearError(priceInput);
-                    }
+            if (priceValue === '') {
+                setError(priceInput, 'Please enter the price');
+            } else if (isNaN(parseFloat(priceValue))) {
+                setError(priceInput, 'Price must be a number');
+            } else if (parseInt(priceValue) < 0) {
+                setError(priceInput, 'Price cannot be negative');
+            } else {
+                clearError(priceInput);
+            }
+        }
 
-                    if (stockValue === '') {
-                        setError(stockInput, 'Please enter the stock');
-                        isValid = false;
-                    } else if (isNaN(parseInt(stockValue))) {
-                        setError(stockInput, 'Stock must be a number');
-                        isValid = false;
-                    } else if (parseInt(stockValue) < 0) {
-                        setError(stockInput, 'Stock cannot be negative');
-                        isValid = false;
-                    } else {
-                        clearError(stockInput);
-                    }
+        function validateStock() {
+            const stockValue = stockInput.value.trim();
 
-                    // Check if file extension is valid only if an image is selected
-                    if (imageValue !== '') {
-                        const validExtensions = ['png', 'jpg', 'jpeg'];
-                        const fileExtension = imageValue.split('.').pop().toLowerCase();
+            if (stockValue === '') {
+                setError(stockInput, 'Please enter the stock');
+            } else if (isNaN(parseInt(stockValue))) {
+                setError(stockInput, 'Stock must be a number');
+            } else if (parseInt(stockValue) < 0) {
+                setError(stockInput, 'Stock cannot be negative');
+            } else {
+                clearError(stockInput);
+            }
+        }
 
-                        if (!validExtensions.includes(fileExtension)) {
-                            setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
-                            isValid = false;
-                        } else {
-                            clearError(imageInput);
-                        }
-                    }
+        function validateImage() {
+            const imageValue = imageInput.value.trim();
 
-                    return isValid;
-                }
-            </script>
+            // Check if file extension is valid
+            const validExtensions = ['png', 'jpg', 'jpeg'];
+            const fileExtension = imageValue.split('.').pop().toLowerCase();
+
+            if (imageValue === '') {
+                setError(imageInput, 'Please select an image file');
+            } else if (!validExtensions.includes(fileExtension)) {
+                setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
+            } else {
+                clearError(imageInput);
+            }
+        }
+
+        function validateInputs() {
+            validateProductName();
+            validateProductDesc();
+            validatePrice();
+            validateStock();
+            validateImage();
+
+            // Check if any error exists
+            const errors = document.querySelectorAll('.error-text');
+            if (errors.length > 0) {
+                return false; // Prevent form submission
+            }
+            return true; // Allow form submission
+        }
+    </script>
 
         </section>
     </main>

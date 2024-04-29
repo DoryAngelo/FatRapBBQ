@@ -241,138 +241,162 @@ if (isset($_POST['submit'])) {
             </div>
         </section>
     </main>
-    <script>
-        //for eye icon password
-        function togglePassword(passwordFieldId) {
-            const passwordField = document.getElementById(passwordFieldId);
-            const eyeIconOpen = document.getElementById(`eyeIconOpen${passwordFieldId.toUpperCase()}`);
-            const eyeIconClosed = document.getElementById(`eyeIconClosed${passwordFieldId.toUpperCase()}`);
+    <<script>
+    //for eye icon password
+    function togglePassword(passwordFieldId) {
+        const passwordField = document.getElementById(passwordFieldId);
+        const eyeIconOpen = document.getElementById(`eyeIconOpen${passwordFieldId.toUpperCase()}`);
+        const eyeIconClosed = document.getElementById(`eyeIconClosed${passwordFieldId.toUpperCase()}`);
 
-            if (passwordField.type === 'password') {
-                passwordField.type = 'text';
-                eyeIconOpen.style.display = 'none';
-                eyeIconClosed.style.display = 'block';
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            eyeIconOpen.style.display = 'none';
+            eyeIconClosed.style.display = 'block';
+        } else {
+            passwordField.type = 'password';
+            eyeIconOpen.style.display = 'block';
+            eyeIconClosed.style.display = 'none';
+        }
+    }
+
+    const firstNameInput = document.getElementById('first-name');
+    const lastNameInput = document.getElementById('last-name');
+    const numberInput = document.getElementById('number');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const cpasswordInput = document.getElementById('cpassword');
+    const imageInput = document.getElementById('image');
+
+    firstNameInput.addEventListener('input', validateFirstName);
+    lastNameInput.addEventListener('input', validateLastName);
+    numberInput.addEventListener('input', validateNumber);
+    usernameInput.addEventListener('input', validateUsername);
+    passwordInput.addEventListener('input', validatePassword);
+    cpasswordInput.addEventListener('input', validateConfirmPassword);
+    imageInput.addEventListener('change', validateImage);
+
+    function setError(input, message) {
+        const errorDiv = input.nextElementSibling;
+        errorDiv.innerHTML = `<span class="error-text">${message}</span>`;
+    }
+
+    function clearError(input) {
+        const errorDiv = input.nextElementSibling;
+        errorDiv.innerHTML = ''; // Clear the error message
+    }
+
+    function validateFirstName() {
+        const firstNameValue = firstNameInput.value.trim();
+        const nameRegex = /^[a-zA-Z\s]+$/;
+
+        if (firstNameValue === '') {
+            setError(firstNameInput, 'Please enter your first name');
+        } else if (!nameRegex.test(firstNameValue)) {
+            setError(firstNameInput, 'First name must contain only letters');
+        } else {
+            clearError(firstNameInput);
+        }
+    }
+
+    function validateLastName() {
+        const lastNameValue = lastNameInput.value.trim();
+        const nameRegex = /^[a-zA-Z\s]+$/;
+
+        if (lastNameValue === '') {
+            setError(lastNameInput, 'Please enter your last name');
+        } else if (!nameRegex.test(lastNameValue)) {
+            setError(lastNameInput, 'Last name must contain only letters');
+        } else {
+            clearError(lastNameInput);
+        }
+    }
+
+    function validateNumber() {
+        const numberValue = numberInput.value.trim();
+        const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
+
+        if (numberValue === '') {
+            setError(numberInput, 'Please enter your number');
+        } else if (!numberRegex.test(numberValue)) {
+            setError(numberInput, 'Invalid number');
+        } else {
+            clearError(numberInput);
+        }
+    }
+
+    function validateUsername() {
+        const usernameValue = usernameInput.value.trim();
+        const usernameRegex = /^[a-zA-Z0-9]+$/;
+
+        if (usernameValue === '') {
+            setError(usernameInput, 'Please enter your username');
+        } else if (!usernameRegex.test(usernameValue)) {
+            setError(usernameInput, 'Invalid username format');
+        } else {
+            clearError(usernameInput);
+        }
+    }
+
+    function validatePassword() {
+        const passwordValue = passwordInput.value.trim();
+        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/;
+
+        if (passwordValue === '') {
+            setError(passwordInput, 'Please enter your password');
+        } else if (!passwordRegex.test(passwordValue)) {
+            setError(passwordInput, 'Invalid password format');
+        } else {
+            clearError(passwordInput);
+        }
+    }
+
+    function validateConfirmPassword() {
+        const cpasswordValue = cpasswordInput.value.trim();
+        const passwordValue = passwordInput.value.trim();
+
+        if (cpasswordValue === '') {
+            setError(cpasswordInput, 'Please confirm your password');
+        } else if (cpasswordValue !== passwordValue) {
+            setError(cpasswordInput, 'Passwords do not match');
+        } else {
+            clearError(cpasswordInput);
+        }
+    }
+
+    function validateImage() {
+        const imageValue = imageInput.value.trim();
+
+        // Check if file extension is valid only if an image is selected
+        if (imageValue !== '') {
+            const validExtensions = ['png', 'jpg', 'jpeg'];
+            const fileExtension = imageValue.split('.').pop().toLowerCase();
+
+            if (!validExtensions.includes(fileExtension)) {
+                setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
             } else {
-                passwordField.type = 'password';
-                eyeIconOpen.style.display = 'block';
-                eyeIconClosed.style.display = 'none';
+                clearError(imageInput);
             }
         }
+    }
 
+    function validateInputs() {
+        validateFirstName();
+        validateLastName();
+        validateNumber();
+        validateUsername();
+        validatePassword();
+        validateConfirmPassword();
+        validateImage();
 
-        const firstNameInput = document.getElementById('first-name');
-        const lastNameInput = document.getElementById('last-name');
-        const numberInput = document.getElementById('number');
-        const usernameInput = document.getElementById('username');
-        const passwordInput = document.getElementById('password');
-        const cpasswordInput = document.getElementById('cpassword');
-        const imageInput = document.getElementById('image');
-
-        function setError(input, message) {
-            const errorDiv = input.nextElementSibling;
-            errorDiv.innerHTML = `<span class="error-text">${message}</span>`;
+        // Check if any error exists
+        const errors = document.querySelectorAll('.error-text');
+        if (errors.length > 0) {
+            return false; // Prevent form submission
         }
+        return true; // Allow form submission
+    }
+</script>
 
-        function clearError(input) {
-            const errorDiv = input.nextElementSibling;
-            errorDiv.innerHTML = ''; // Clear the error message
-        }
-
-        function validateInputs() {
-            let isValid = true;
-
-            const firstNameValue = firstNameInput.value.trim();
-            const lastNameValue = lastNameInput.value.trim();
-            const numberValue = numberInput.value.trim();
-            const usernameValue = usernameInput.value.trim();
-            const passwordValue = passwordInput.value.trim();
-            const cpasswordValue = cpasswordInput.value.trim();
-            const imageValue = imageInput.value.trim();
-
-
-            const nameRegex = /^[a-zA-Z\s]+$/;
-            const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
-            const usernameRegex = /^[a-zA-Z0-9]+$/;
-            const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/; // Password should include at least 1 digit, 1 lowercase, 1 uppercase
-            // Email and username regex are omitted assuming they can be validated on the backend
-
-            if (firstNameValue === '') {
-                setError(firstNameInput, 'Please enter your first name');
-                isValid = false;
-            } else if (!nameRegex.test(firstNameValue)) {
-                setError(firstNameInput, 'First name must contain only letters');
-                isValid = false;
-            } else {
-                clearError(firstNameInput);
-            }
-
-            if (lastNameValue === '') {
-                setError(lastNameInput, 'Please enter your last name');
-                isValid = false;
-            } else if (!nameRegex.test(lastNameValue)) {
-                setError(lastNameInput, 'Last name must contain only letters');
-                isValid = false;
-            } else {
-                clearError(lastNameInput);
-            }
-
-            if (numberValue === '') {
-                setError(numberInput, 'Please enter your number');
-                isValid = false;
-            } else if (!numberRegex.test(numberValue)) {
-                setError(numberInput, 'Invalid number');
-                isValid = false;
-            } else {
-                clearError(numberInput);
-            }
-
-
-            if (usernameValue === '') {
-                setError(usernameInput, 'Please enter your username');
-                isValid = false;
-            } else if (!usernameRegex.test(usernameValue)) {
-                setError(usernameInput, 'Invalid username format');
-                isValid = false;
-            } else {
-                clearError(usernameInput);
-            }
-
-            if (passwordValue === '') {
-                setError(passwordInput, 'Please enter your password');
-                isValid = false;
-            } else if (!passwordRegex.test(passwordValue)) {
-                setError(passwordInput, 'Invalid password format');
-                isValid = false;
-            } else {
-                clearError(passwordInput);
-            }
-
-            if (cpasswordValue === '') {
-                setError(cpasswordInput, 'Please confirm your password');
-                isValid = false;
-            } else if (cpasswordValue !== passwordValue) {
-                setError(cpasswordInput, 'Passwords do not match');
-                isValid = false;
-            } else {
-                clearError(cpasswordInput);
-            }
-
-            // Check if file extension is valid only if an image is selected
-            if (imageValue !== '') {
-                const validExtensions = ['png', 'jpg', 'jpeg'];
-                const fileExtension = imageValue.split('.').pop().toLowerCase();
-
-                if (!validExtensions.includes(fileExtension)) {
-                    setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
-                    isValid = false;
-                } else {
-                    clearError(imageInput);
-                }
-            }
-
-            return isValid;
-        }
-    </script>
 </body>
 <script>
     // Function to check for new orders via AJAX

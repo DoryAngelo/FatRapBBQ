@@ -35,9 +35,9 @@ if (isset($_POST['submit'])) {
         $_SESSION['prsn_id'] = $row['PRSN_ID'];
         $_SESSION['prsn_role'] = $row['PRSN_ROLE'];
 
-        if ($PRSN_ROLE == "Customer" ) {
+        if ($PRSN_ROLE == "Customer") {
             header('location:cus-home-page.php');
-        }else if ($PRSN_ROLE == "Wholesaler"){
+        } else if ($PRSN_ROLE == "Wholesaler") {
             $sql = "SELECT * from wholesaler WHERE PRSN_ID = '$PRSN_ID'";
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_array($result);
@@ -49,8 +49,7 @@ if (isset($_POST['submit'])) {
             } else {
                 header('location:cus-home-page.php');
             }
-        }
-         else if ($PRSN_ROLE == "Admin") {
+        } else if ($PRSN_ROLE == "Admin") {
             $sql = "SELECT * from employee WHERE PRSN_ID = '$PRSN_ID'";
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_array($result);
@@ -66,7 +65,7 @@ if (isset($_POST['submit'])) {
             $sql = "SELECT * from employee WHERE PRSN_ID = '$PRSN_ID'";
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_array($result);
-            $EMP_STATUS = $row['EMP_STATUS']; 
+            $EMP_STATUS = $row['EMP_STATUS'];
             if ($EMP_STATUS != "Active") {
                 $_SESSION['error_message'] = "Your account is inactive. Please contact support.";
                 header('Location: login-page.php');
@@ -175,7 +174,10 @@ if (isset($_POST['submit'])) {
                 </form>
                 <script>
                     const loginInput = document.getElementById('login_value');
-                    const passwordInput = document.getElementById('password'); // Add password input
+                    const passwordInput = document.getElementById('password');
+
+                    loginInput.addEventListener('input', validateLogin);
+                    passwordInput.addEventListener('input', validatePassword);
 
                     function setError(input, message) {
                         const errorDiv = input.nextElementSibling;
@@ -187,49 +189,48 @@ if (isset($_POST['submit'])) {
                         errorDiv.innerHTML = ''; // Clear the error message
                     }
 
-                    function clearErrorMessage() {
-                        const errorDivs = document.querySelectorAll('.error');
-                        errorDivs.forEach(div => div.innerHTML = '');
-                    }
-
-
                     function validateLogin() {
-                        let isValid = true;
-
                         const loginValue = loginInput.value.trim();
-                        const passwordValue = passwordInput.value.trim();
-
                         const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]+$/;
-                        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/; // Password should not contain special characters
 
-                        if (loginValue === '') { // Check if login value is empty
+                        if (loginValue === '') { 
                             setError(loginInput, 'Please enter your email or username');
-                            isValid = false;
                         } else if (loginValue.includes('@')) { // Check if login value contains '@' symbol
                             if (!emailRegex.test(loginValue)) {
                                 setError(loginInput, 'Invalid email format');
-                                isValid = false;
                             } else {
                                 clearError(loginInput);
                             }
-                        } else { // Assume it's a username
+                        } else { 
                             clearError(loginInput);
                         }
+                    }
+
+                    function validatePassword() {
+                        const passwordValue = passwordInput.value.trim();
+                        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/;
+
                         if (passwordValue === '') {
                             setError(passwordInput, 'Please enter your password');
-                            isValid = false;
                         } else if (!passwordRegex.test(passwordValue)) {
-                            setError(passwordInput, 'Password should be at least 8 characters long and contain only alphanumeric characters');
-                            isValid = false;
+                            setError(passwordInput, 'Invalid password format');
                         } else {
                             clearError(passwordInput);
                         }
+                    }
 
-                        if (!isValid) {
-                            return false;
+                    function validateForm() {
+                        validateLogin();
+                        validatePassword();
+
+                        const errors = document.querySelectorAll('.error-text');
+                        if (errors.length > 0) {
+                            return false; 
                         }
+                        return true; 
                     }
                 </script>
+
             </div>
         </section>
 

@@ -9,7 +9,7 @@ if ($PRSN_ROLE !== 'Admin') {
 
 $PRSN_ID = $_SESSION['prsn_id'];
 
-$food_type = isset($_GET['type']) ? $_GET['type'] : 'all'; 
+$food_type = isset($_GET['type']) ? $_GET['type'] : 'all';
 
 ?>
 
@@ -89,23 +89,27 @@ $food_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                 <tr>
                                     <th class="header">Image</th>
                                     <th class="header">Product Name</th>
-                                    <th class="header">Price</th>
                                     <th class="header">Stock</th>
-                                    <th class="header">Active</th>
-                                    <th class="header">Type</th>
+                                    <th class="header">Start</th>
+                                    <th class="header">End</th>
                                     <th class="header">Action</th><!--for edit button column-->
                                     <th class="header"></th><!--for delete button column-->
                                 </tr>
                                 <?php
 
                                 $CUS_ID = $_SESSION['prsn_id'];
-                                
+
                                 $food_type = isset($_GET['type']) ? $_GET['type'] : 'all';
 
                                 if ($food_type === 'all') {
-                                    $sql = "SELECT * FROM food";
+                                    $sql = "SELECT m.*, f.*
+                                    FROM menu m
+                                    JOIN food f ON m.food_id = f.food_id";
                                 } else {
-                                    $sql = "SELECT * FROM food WHERE FOOD_TYPE = '$food_type'";
+                                    $sql = "SELECT m.*, f.*
+                                    FROM menu m
+                                    JOIN food f ON m.food_id = f.food_id
+                                    WHERE f.food_type = '$food_type'";
                                 }
 
                                 $res = mysqli_query($conn, $sql);
@@ -114,14 +118,13 @@ $food_type = isset($_GET['type']) ? $_GET['type'] : 'all';
 
                                 if ($count > 0) {
                                     while ($row = mysqli_fetch_assoc($res)) {
-
                                         $FOOD_ID = $row['FOOD_ID'];
-                                        $FOOD_NAME = $row['FOOD_NAME'];
-                                        $FOOD_PRICE = $row['FOOD_PRICE'];
                                         $FOOD_IMG = $row['FOOD_IMG'];
-                                        $FOOD_ACTIVE = $row['FOOD_ACTIVE'];
-                                        $FOOD_STOCK = $row['FOOD_STOCK'];
-                                        $FOOD_TYPE = $row['FOOD_TYPE'];
+                                        $FOOD_NAME = $row['FOOD_NAME'];
+                                        $MENU_STOCK = $row['MENU_STOCK'];
+                                        $MENU_START = $row['MENU_START'];
+                                        $MENU_END = $row['MENU_END'];
+
                                 ?>
 
                                         <tr>
@@ -129,15 +132,17 @@ $food_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                                 <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
                                             </td>
                                             <td data-cell="Product Name"><?php echo $FOOD_NAME ?></td>
-                                            <td data-cell="Price">₱<?php echo $FOOD_PRICE ?></td>
                                             <td data-cell="Stock">
-                                                <span class="<?php echo ($FOOD_STOCK < 100) ? 'red-text' : ''; ?>">
-                                                    <p><?php echo $FOOD_STOCK ?></p>
+                                                <span class="<?php echo ($MENU_STOCK < 100) ? 'red-text' : ''; ?>">
+                                                    <p><?php echo $MENU_STOCK ?></p>
                                                 </span>
                                             </td>
-                                            <td data-cell="Display"><?php echo $FOOD_ACTIVE ?></td>
-                                            <td data-cell="Display"><?php echo $FOOD_TYPE ?></td>
-                                            <td data-cell="Action"><a href="<?php echo SITEURL; ?>admin-edit-product.php?FOOD_ID=<?php echo $FOOD_ID ?>" class="edit">Edit</a></td>
+                                            <td data-cell="Start"><?php echo $MENU_START?></td>
+                                            <td data-cell="End"><?php echo $MENU_END ?></td>
+                                            <td data-cell="Action">
+                                                <a href="<?php echo SITEURL; ?>admin-edit-product.php?FOOD_ID=<?php echo $FOOD_ID ?>" class="edit">Edit</a>
+                                                <a href="<?php echo SITEURL; ?>admin-add-menu.php?FOOD_ID=<?php echo $FOOD_ID ?>" class="edit">Display</a>
+                                            </td>
                                             <td data-cell="Action"><a href="#" onclick="confirmDelete(<?php echo $FOOD_ID; ?>)" class="bx bxs-trash-alt trash"></a></td>
                                             <script>
                                                 function confirmDelete(foodId) {

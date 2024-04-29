@@ -206,9 +206,8 @@ if ($count > 0) {
                             </div>
                             <button name="submit" type="submit" class="big-btn">Save</button>
                         </form>
-
                         <script>
-                            //for eye icon password
+                            // for eye icon password
                             function togglePassword(passwordFieldId) {
                                 const passwordField = document.getElementById(passwordFieldId);
                                 const eyeIconOpen = document.getElementById(`eyeIconOpen${passwordFieldId.toUpperCase()}`);
@@ -233,6 +232,13 @@ if ($count > 0) {
                             const cpasswordInput = document.getElementById('cpassword');
                             const imageInput = document.getElementById('image');
 
+                            firstNameInput.addEventListener('input', validateFirstName);
+                            lastNameInput.addEventListener('input', validateLastName);
+                            numberInput.addEventListener('input', validateNumber);
+                            usernameInput.addEventListener('input', validateUsername);
+                            passwordInput.addEventListener('input', validatePassword);
+                            cpasswordInput.addEventListener('input', validateConfirmPassword);
+                            imageInput.addEventListener('change', validateImage);
 
                             function setError(input, message) {
                                 const errorDiv = input.nextElementSibling;
@@ -244,104 +250,116 @@ if ($count > 0) {
                                 errorDiv.innerHTML = ''; // Clear the error message
                             }
 
-                            function validateInputs() {
-
-                                document.querySelector('.error').innerHTML = '';
-
-                                let isValid = true;
-
+                            function validateFirstName() {
                                 const firstNameValue = firstNameInput.value.trim();
-                                const lastNameValue = lastNameInput.value.trim();
-                                const numberValue = numberInput.value.trim();
-                                const usernameValue = usernameInput.value.trim();
-                                const passwordValue = passwordInput.value.trim();
-                                const cpasswordValue = cpasswordInput.value.trim();
-                                const imageValue = imageInput.value.trim();
-
                                 const nameRegex = /^[a-zA-Z\s]+$/;
-                                const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
-                                const usernameRegex = /^[a-zA-Z0-9]+$/;
-                                const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/; // Password should include at least 1 digit, 1 lowercase, 1 uppercase
-                                // Email and username regex are omitted assuming they can be validated on the backend
 
                                 if (firstNameValue === '') {
                                     setError(firstNameInput, 'Please enter your first name');
-                                    isValid = false;
                                 } else if (!nameRegex.test(firstNameValue)) {
                                     setError(firstNameInput, 'First name must contain only letters');
-                                    isValid = false;
                                 } else {
                                     clearError(firstNameInput);
                                 }
+                            }
+
+                            function validateLastName() {
+                                const lastNameValue = lastNameInput.value.trim();
+                                const nameRegex = /^[a-zA-Z\s]+$/;
 
                                 if (lastNameValue === '') {
                                     setError(lastNameInput, 'Please enter your last name');
-                                    isValid = false;
                                 } else if (!nameRegex.test(lastNameValue)) {
                                     setError(lastNameInput, 'Last name must contain only letters');
-                                    isValid = false;
                                 } else {
                                     clearError(lastNameInput);
                                 }
+                            }
+
+                            function validateNumber() {
+                                const numberValue = numberInput.value.trim();
+                                const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
 
                                 if (numberValue === '') {
                                     setError(numberInput, 'Please enter your number');
-                                    isValid = false;
                                 } else if (!numberRegex.test(numberValue)) {
                                     setError(numberInput, 'Invalid number');
-                                    isValid = false;
                                 } else {
                                     clearError(numberInput);
                                 }
+                            }
+
+                            function validateUsername() {
+                                const usernameValue = usernameInput.value.trim();
+                                const usernameRegex = /^[a-zA-Z0-9]+$/;
 
                                 if (usernameValue === '') {
                                     setError(usernameInput, 'Please enter your username');
-                                    isValid = false;
                                 } else if (!usernameRegex.test(usernameValue)) {
                                     setError(usernameInput, 'Invalid username format');
-                                    isValid = false;
                                 } else {
                                     clearError(usernameInput);
                                 }
+                            }
 
-                                if (passwordValue !== '') {
-                                    if (passwordValue === '') {
-                                        setError(passwordInput, 'Please enter your password');
-                                        isValid = false;
-                                    } else if (!passwordRegex.test(passwordValue)) {
-                                        setError(passwordInput, 'Invalid password format');
-                                        isValid = false;
-                                    } else {
-                                        clearError(passwordInput);
-                                    }
+                            function validatePassword() {
+                                const passwordValue = passwordInput.value.trim();
+                                const cpasswordValue = cpasswordInput.value.trim();
+                                const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/;
 
-                                    if (cpasswordValue === '') {
-                                        setError(cpasswordInput, 'Please confirm your password');
-                                        isValid = false;
-                                    } else if (cpasswordValue !== passwordValue) {
-                                        setError(cpasswordInput, 'Passwords do not match');
-                                        isValid = false;
-                                    } else {
-                                        clearError(cpasswordInput);
-                                    }
+                                if (passwordValue === '') {
+                                    setError(passwordInput, 'Please enter your password');
+                                } else if (!passwordRegex.test(passwordValue)) {
+                                    setError(passwordInput, 'Invalid password format');
+                                } else if (cpasswordValue !== '' && cpasswordValue !== passwordValue) {
+                                    setError(cpasswordInput, 'Passwords do not match');
+                                } else {
+                                    clearError(passwordInput);
+                                    clearError(cpasswordInput);
                                 }
+                            }
 
-                                // Check if file extension is valid only if an image is selected
-                                if (imageValue !== '') {
-                                    const validExtensions = ['png', 'jpg', 'jpeg'];
-                                    const fileExtension = imageValue.split('.').pop().toLowerCase();
+                            function validateConfirmPassword() {
+                                const passwordValue = passwordInput.value.trim();
+                                const cpasswordValue = cpasswordInput.value.trim();
 
-                                    if (!validExtensions.includes(fileExtension)) {
-                                        setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
-                                        isValid = false;
-                                    } else {
-                                        clearError(imageInput);
-                                    }
+                                if (cpasswordValue === '') {
+                                    setError(cpasswordInput, 'Please confirm your password');
+                                } else if (cpasswordValue !== passwordValue) {
+                                    setError(cpasswordInput, 'Passwords do not match');
+                                } else {
+                                    clearError(cpasswordInput);
                                 }
+                            }
 
-                                return isValid;
+                            function validateImage() {
+                                const imageValue = imageInput.value.trim();
+
+                                if (imageValue === '') {
+                                    setError(imageInput, 'Please select an image file');
+                                } else {
+                                    clearError(imageInput);
+                                }
+                            }
+
+                            function validateInputs() {
+                                validateFirstName();
+                                validateLastName();
+                                validateNumber();
+                                validateUsername();
+                                validatePassword();
+                                validateConfirmPassword();
+                                validateImage();
+
+                                // Check if any error exists
+                                const errors = document.querySelectorAll('.error-text');
+                                if (errors.length > 0) {
+                                    return false; // Prevent form submission
+                                }
+                                return true; // Allow form submission
                             }
                         </script>
+
                         <?php
                         if (isset($_POST['submit'])) {
                             $WHL_FNAME = mysqli_real_escape_string($conn, trim($_POST['first-name']));
@@ -353,8 +371,8 @@ if ($count > 0) {
                             $current_image = $WHL_IMAGE;
                             $WHL_STATUS = $_POST['status'];
 
-                             // Check if a new image is uploaded
-                             if (isset($_FILES['image']['name']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                            // Check if a new image is uploaded
+                            if (isset($_FILES['image']['name']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
                                 // Get the image details
                                 $WHL_IMG = $_FILES['image']['name'];
 

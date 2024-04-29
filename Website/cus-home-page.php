@@ -11,7 +11,7 @@ if (isset($_SESSION['prsn_id'])) {
     $random = random_bytes(16);
     $GUEST_ID = bin2hex($random);
     $_SESSION['prsn_role'] = "Customer";
-    $_SESSION['guest_id'] =   $GUEST_ID;
+    $_SESSION['guest_id'] = $GUEST_ID;
 }
 
 $PRSN_ROLE = $_SESSION['prsn_role'];
@@ -35,7 +35,27 @@ if ($count8 > 0) {
     }
 }
 
-// $IN_ORDER_QUANTITY = isset($IN_ORDER_QUANTITY) ? $IN_ORDER_QUANTITY : 1;
+if (isset($_SESSION['prsn_id'])) {
+    $sql = "SELECT f.*, io.in_order_quantity 
+                            FROM food f 
+                            LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
+                            WHERE f.FOOD_ID = '$FOOD_ID' 
+                            AND io.PRSN_ID = '$PRSN_ID'";
+} else if (isset($_SESSION['guest_id'])) {
+    $sql = "SELECT f.*, io.in_order_quantity 
+                            FROM food f 
+                            LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
+                            WHERE f.FOOD_ID = '$FOOD_ID' 
+                            AND io.GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
+}
+
+$res = mysqli_query($conn, $sql);
+$count = mysqli_num_rows($res);
+if ($count > 0) {
+    while ($row = mysqli_fetch_assoc($res)) {
+        $IN_ORDER_QUANTITY = $row['in_order_quantity'];
+    }
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     $quantity = $_POST['quantity'];
@@ -53,8 +73,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     if ($count > 0) {
         while ($row = mysqli_fetch_assoc($res)) {
             $IN_ORDER_ID = $row['IN_ORDER_ID'];
-            $IN_ORDER_QUANTITY = $quantity;
-            $IN_ORDER_TOTAL = $quantity * $FOOD_PRICE;
+            $IN_ORDER_QUANTITY += $quantity;
+            $IN_ORDER_TOTAL += $IN_ORDER_QUANTITY * $FOOD_PRICE;
             $sql = "UPDATE in_order SET 
                             IN_ORDER_QUANTITY = $IN_ORDER_QUANTITY,
                             IN_ORDER_TOTAL = $IN_ORDER_TOTAL
@@ -199,104 +219,97 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         </section>
         <!-- section 3 -->
         <?php
-        if ($count8 > 0) {
-            $sql = "SELECT f.*, io.in_order_quantity 
-            FROM food f 
-            LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
-            WHERE f.FOOD_ID = '$FOOD_ID'";
+        if ($PRSN_ROLE !== 'Wholesaler') {
+            if ($count8 > 0) {
+                $sql = "SELECT f.*, io.in_order_quantity 
+                FROM food f 
+                LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
+                WHERE f.FOOD_ID = '$FOOD_ID'";
 
-            $res = mysqli_query($conn, $sql);
-            $count = mysqli_num_rows($res);
+                $res = mysqli_query($conn, $sql);
+                $count = mysqli_num_rows($res);
+            }
         }
-
-
-
         if ($count > 0) {
             while ($row = mysqli_fetch_assoc($res)) {
                 $IN_ORDER_QUANTITY = $row['in_order_quantity'];
+            }
         ?>
-                <section class="section" id="product-section">
-                    <div class="container responsive">
-                        <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="picture of a pork bbq">
-                        <!-- <img src="images/pork-bbq.jpg" alt="picture of 3 pork bbq sticks"> -->
-                        <div class="text">
-                            <h1><?php echo $FOOD_NAME; ?></h1>
-                            <p>₱<?php echo $FOOD_PRICE; ?></p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictumsum dolor sit amet</p>
-                            <div class="action-grp responsive">
-                                <form method="post" class="form">
-                                    <input type="hidden" id="quantity" name="quantity" value="<?php echo ($IN_ORDER_QUANTITY == NULL) ? 1 : $IN_ORDER_QUANTITY; ?>">
-                                    <input type="hidden" name="price" value="<?php echo $FOOD_PRICE ?>">
-                                    <button name="order" type="submit" class="button" <?php echo ($FOOD_STOCK <= 0) ? 'disabled' : ''; ?>>Order Now</button>
-                                </form>
-                                <?php
-                                if (isset($_SESSION['prsn_id'])) {
-                                    $sql = "SELECT f.*, io.in_order_quantity 
-                            FROM food f 
-                            LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
-                            WHERE f.FOOD_ID = '$FOOD_ID' 
-                            AND io.PRSN_ID = '$PRSN_ID'";
-                                } else if (isset($_SESSION['guest_id'])) {
-                                    $sql = "SELECT f.*, io.in_order_quantity 
-                            FROM food f 
-                            LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
-                            WHERE f.FOOD_ID = '$FOOD_ID' 
-                            AND io.GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
-                                }
+            <section class="section" id="product-section">
+                <div class="container responsive">
+                    <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="picture of a pork bbq">
+                    <!-- <img src="images/pork-bbq.jpg" alt="picture of 3 pork bbq sticks"> -->
+                    <div class="text">
+                        <h1><?php echo $FOOD_NAME; ?></h1>
+                        <p>₱<?php echo $FOOD_PRICE; ?></p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictumsum dolor sit amet</p>
+                        <div class="action-grp responsive">
+                            <form method="post" class="form">
+                                <input type="hidden" id="quantity" name="quantity" value="<?php echo ($IN_ORDER_QUANTITY == NULL) ? 1 : $IN_ORDER_QUANTITY; ?>">
+                                <input type="hidden" name="price" value="<?php echo $FOOD_PRICE ?>">
+                                <!-- <button name="order" type="submit" class="button" <?php echo ($FOOD_STOCK <= 0) ? 'disabled' : ''; ?>>Order Now</button> -->
+                                <button class="button" name="order" type="submit" <?php echo ($FOOD_STOCK <= 0 || (isset($_POST['quantity']) && ($IN_ORDER_QUANTITY + intval($_POST['quantity']) > $FOOD_STOCK))) ? 'disabled' : ''; ?>>Order Now</button>
 
-                                $res = mysqli_query($conn, $sql);
-                                $count = mysqli_num_rows($res);
-                                if ($count > 0) {
-                                    while ($row = mysqli_fetch_assoc($res)) {
-                                        $IN_ORDER_QUANTITY = $row['in_order_quantity'];
-                                    }
-                                }
-                                ?>
-                                <div class="with-remaining">
-                                    <div class="quantity-group">
-                                        <i class='bx bxs-minus-circle js-minus circle' data-stock="<?php echo $FOOD_STOCK; ?>"></i>
-                                        <p class="amount js-num"><?php echo ($IN_ORDER_QUANTITY == NULL) ? 1 : $IN_ORDER_QUANTITY; ?></p>
-                                        <i class='bx bxs-plus-circle js-plus circle' data-stock="<?php echo $FOOD_STOCK; ?>"></i>
-                                    </div>
-                                    <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> sticks remaining</p>
+                            </form>
+                            <div class="with-remaining">
+                                <div class="quantity-group">
+                                    <i class='bx bxs-minus-circle js-minus circle' data-stock="<?php echo $FOOD_STOCK; ?>"></i>
+                                    <p class="amount js-num">1</p>
+                                    <i class='bx bxs-plus-circle js-plus circle' data-stock="<?php echo $FOOD_STOCK; ?>"></i>
                                 </div>
+                                <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> sticks remaining</p>
                             </div>
                         </div>
-
                     </div>
-                </section>
+
+                </div>
+            </section>
 
         <?php
 
-            }
+
         } ?>
 
         <script>
-            const plus = document.querySelector(".js-plus");
-            const minus = document.querySelector(".js-minus");
-            const num = document.querySelector(".js-num");
-            const quantityInput = document.getElementById("quantity");
+            var quantityData = <?php echo $IN_ORDER_QUANTITY; ?>;
+            document.addEventListener("DOMContentLoaded", function() {
+                const plus = document.querySelector(".js-plus");
+                const minus = document.querySelector(".js-minus");
+                const num = document.querySelector(".js-num");
+                const quantityInput = document.getElementById("quantity");
+                const addButton = document.querySelector('[name="order"]');
+                const stock = parseInt(plus.dataset.stock);
 
-            let a = parseInt(num.innerText);
-            const stock = parseInt(plus.dataset.stock); // Accessing data-stock attribute from plus element
+                updateButtonState(); // Call the function initially to set the button state
 
-            plus.addEventListener("click", () => {
-                if (a < stock) {
-                    a++;
-                    console.log(a);
-                    num.innerText = a;
-                    quantityInput.value = a; // Update hidden input value
-                } else {
-                    alert("Cannot exceed food stock!");
+                plus.addEventListener("click", () => {
+                    updateQuantity(1);
+                });
+
+                minus.addEventListener("click", () => {
+                    updateQuantity(-1);
+                });
+
+                function updateQuantity(change) {
+                    let newQuantity = parseInt(num.innerText) + change;
+
+                    if (newQuantity < 1) {
+                        return; // Prevent negative quantity
+                    }
+
+                    if (newQuantity + quantityData > stock) {
+                        alert("Quantity selected exceeds available stock!");
+                        return; // Prevent updating the quantity if it exceeds stock
+                    }
+
+                    num.innerText = newQuantity;
+                    quantityInput.value = newQuantity;
+
+                    updateButtonState();
                 }
-            });
 
-            minus.addEventListener("click", () => {
-                if (a > 1) {
-                    a--;
-                    console.log(a);
-                    num.innerText = a;
-                    quantityInput.value = a; // Update hidden input value
+                function updateButtonState() {
+                    addButton.disabled = (stock <= 0 || parseInt(num.innerText) + parseInt('<?php echo $IN_ORDER_QUANTITY; ?>') > stock);
                 }
             });
         </script>

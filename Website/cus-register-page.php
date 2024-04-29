@@ -149,6 +149,12 @@ if (isset($_POST['submit'])) {
         const passwordInput = document.getElementById('password');
         const cpasswordInput = document.getElementById('cpassword');
 
+        nameInput.addEventListener('input', validateName);
+        emailInput.addEventListener('input', validateEmail);
+        numberInput.addEventListener('input', validateNumber);
+        passwordInput.addEventListener('input', validatePassword);
+        cpasswordInput.addEventListener('input', validateConfirmPassword);
+
         function setError(input, message) {
             const errorDiv = input.nextElementSibling;
             errorDiv.innerHTML = `<span class="error-text">${message}</span>`;
@@ -160,73 +166,87 @@ if (isset($_POST['submit'])) {
         }
 
         function validateInputs() {
-            let isValid = true;
+            validateName();
+            validateEmail();
+            validateNumber();
+            validatePassword();
+            validateConfirmPassword();
 
+            // Check if any error exists
+            const errors = document.querySelectorAll('.error-text');
+            if (errors.length > 0) {
+                return false; // Prevent form submission
+            }
+            return true; // Allow form submission
+        }
+
+        function validateName() {
             const nameValue = nameInput.value.trim();
-            const emailValue = emailInput.value.trim();
-            const numberValue = numberInput.value.trim();
-            const passwordValue = passwordInput.value.trim();
-            const cpasswordValue = cpasswordInput.value.trim();
-
             const nameRegex = /^[a-zA-Z\s]+$/;
-            const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
-            const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/; // Password should not contain special characters
-            const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]+$/; // Email must contain an '@'
 
             if (nameValue === '') {
                 setError(nameInput, 'Please enter your name');
-                isValid = false;
             } else if (!nameRegex.test(nameValue)) {
                 setError(nameInput, 'Name must contain only letters');
-                isValid = false;
             } else {
                 clearError(nameInput);
             }
+        }
+
+        function validateEmail() {
+            const emailValue = emailInput.value.trim();
+            const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]+$/;
 
             if (emailValue === '') {
                 setError(emailInput, 'Please enter your email');
-                isValid = false;
             } else if (!emailRegex.test(emailValue)) {
                 setError(emailInput, 'Invalid email format');
-                isValid = false;
             } else {
                 clearError(emailInput);
             }
+        }
+
+        function validateNumber() {
+            const numberValue = numberInput.value.trim();
+            const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
 
             if (numberValue === '') {
                 setError(numberInput, 'Please enter your number');
-                isValid = false;
             } else if (!numberRegex.test(numberValue)) {
                 setError(numberInput, 'Invalid number');
-                isValid = false;
             } else {
                 clearError(numberInput);
             }
+        }
+
+        function validatePassword() {
+            const passwordValue = passwordInput.value.trim();
+            const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/;
 
             if (passwordValue === '') {
                 setError(passwordInput, 'Please enter your password');
-                isValid = false;
             } else if (!passwordRegex.test(passwordValue)) {
                 setError(passwordInput, 'Invalid password format');
-                isValid = false;
             } else {
                 clearError(passwordInput);
             }
+        }
+
+        function validateConfirmPassword() {
+            const cpasswordValue = cpasswordInput.value.trim();
+            const passwordValue = passwordInput.value.trim();
 
             if (cpasswordValue === '') {
                 setError(cpasswordInput, 'Please confirm your password');
-                isValid = false;
             } else if (cpasswordValue !== passwordValue) {
                 setError(cpasswordInput, 'Passwords do not match');
-                isValid = false;
             } else {
                 clearError(cpasswordInput);
             }
-
-            return isValid;
         }
     </script>
-     <footer>
+
+    <footer>
         <div class="footer-container">
             <div class="left-container">
                 <h2>Fat Rap's Barbeque</h2>
