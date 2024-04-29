@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         while ($row = mysqli_fetch_assoc($res)) {
             $IN_ORDER_ID = $row['IN_ORDER_ID'];
             $IN_ORDER_QUANTITY += $quantity;
-            $IN_ORDER_TOTAL += $quantity * $FOOD_PRICE;
+            $IN_ORDER_TOTAL = $IN_ORDER_QUANTITY * $FOOD_PRICE;
             $sql = "UPDATE in_order SET 
                             IN_ORDER_QUANTITY = $IN_ORDER_QUANTITY,
                             IN_ORDER_TOTAL = $IN_ORDER_TOTAL
