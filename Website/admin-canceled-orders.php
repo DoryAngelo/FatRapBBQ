@@ -146,7 +146,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                 <th class="header">Order #</th>
                                 <th class="header">Payment</th>
                                 <th class="header">Status</th>
-                                <th class="header">Confirmed</th>
+                                <th class="header">Action</th>
                                 <th class="header"></th>
                             </tr>
                             <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->

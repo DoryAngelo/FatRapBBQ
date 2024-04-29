@@ -131,7 +131,7 @@ $countCa = mysqli_num_rows($resCa);
                                 <h1><?php echo $countPr ?></h1>
                             </a> -->
                             <a class="box" href="<?php echo SITEURL; ?>employee-to-deliver-orders.php">
-                                <p>To Deliver</p>
+                                <p>Ready for Pickup</p>
                                 <h1><?php echo $countFD ?></h1>
                             </a>
                             <a class="box" href="<?php echo SITEURL; ?>employee-shipped.php">

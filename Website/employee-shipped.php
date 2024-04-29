@@ -73,7 +73,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--change title-->
-    <title>To Deliver | Employee</title>
+    <title>Shipped | Employee</title>
     <link rel="stylesheet" href="header-styles.css">
     <link rel="stylesheet" href="admin-styles.css"><!--change css file-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -141,7 +141,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                 <th class="header">Customer</th>
                                 <th class="header">Order #</th>
                                 <th class="header">Payment</th>
-                                <th class="header">Confirmed</th>
+                                <th class="header">Action</th>
                             </tr>
                             <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
                             <?php
@@ -227,7 +227,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                         </div>
                         <div class="group">
                             <a href="<?php echo SITEURL; ?>employee-to-prepare-orders.php" class="view big-font">To Prepare</a>
-                            <a href="<?php echo SITEURL; ?>employee-to-deliver-orders.php" class="view big-font">To Deliver</a>
+                            <a href="<?php echo SITEURL; ?>employee-to-deliver-orders.php" class="view big-font">Ready for Pickup</a>
                             <a href="<?php echo SITEURL; ?>employee-shipped.php" class="view big-font">Shipped</a>
                             <a href="<?php echo SITEURL; ?>employee-completed-orders.php" class="view big-font">Completed Orders</a>
                             <a href="<?php echo SITEURL; ?>employee-canceled-orders.php" class="view big-font">Canceled Orders</a>

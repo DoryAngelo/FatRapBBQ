@@ -78,7 +78,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--change title-->
-    <title>For Delivery Orders | Admin</title>
+    <title>Ready for Pickup | Admin</title>
     <link rel="stylesheet" href="header-styles.css">
     <link rel="stylesheet" href="admin-styles.css"><!--change css file-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -128,7 +128,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
         <section class="section" id="orders-page">
             <div class="container">
                 <div class="section-heading row">
-                    <h2>For Delivery Orders</h2>
+                    <h2>Ready for Pickup</h2>
                     <select name="order-type" id="order-type" class="dropdown">
                         <option value="all" <?php echo ($order_type === 'all') ? 'selected' : ''; ?>>All</option>
                         <option value="Today" <?php echo ($order_type === 'Today') ? 'selected' : ''; ?>>Today</option>
@@ -150,7 +150,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                 <th class="header">Order #</th>
                                 <th class="header">Payment</th>
                                 <th class="header">Status</th>
-                                <th class="header">Confirmed</th>
+                                <th class="header">Action</th>
                                 <th class="header"></th>
                             </tr>
                             <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
@@ -250,7 +250,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                 <a href="admin-new-orders.php" class="view big-font">New Orders</a>
                 <a href="admin-awaiting-payment.php" class="view big-font">Awaiting Payment</a>
                 <a href="admin-preparing-orders.php" class="view big-font">Preparing Orders</a>
-                <a href="admin-delivery-orders.php" class="view big-font">For Delivery Orders</a>
+                <a href="admin-delivery-orders.php" class="view big-font">Ready for Pickup</a>
                 <a href="admin-shipped-orders.php" class="view big-font">Shipped Orders</a>
                 <a href="admin-completed-orders.php" class="view big-font">Completed Orders</a>
                 <a href="admin-canceled-orders.php" class="view big-font">Canceled Orders</a>

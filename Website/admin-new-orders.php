@@ -157,7 +157,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                     <th class="header">Order #</th>
                                     <th class="header">Payment</th>
                                     <th class="header">Status</th>
-                                    <th class="header">Confirmed</th>
+                                    <th class="header">Orders Accepted</th>
                                     <th class="header"></th>
                                 </tr>
                                 <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
@@ -190,7 +190,9 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                         <tr>
                                             <td data-cell="Date and Time"><?php echo $PLACED_ORDER_DATE ?></td>
                                             <td data-cell="customer"><?php echo $CUS_NAME ?></td>
-                                            <td data-cell="Order #"><a href="<?php echo SITEURL ?>admin-order-details.php?PLACED_ORDER_ID=<?php echo $PLACED_ORDER_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a></td>
+                                            <td data-cell="Order #">
+                                                <a href="<?php echo SITEURL ?>admin-order-details.php?PLACED_ORDER_ID=<?php echo $PLACED_ORDER_ID; ?>"><?php echo $PLACED_ORDER_ID ?></a>
+                                            </td>
                                             <td data-cell="Payment">₱<?php echo $PLACED_ORDER_TOTAL ?></td>
                                             <td data-cell="Status"><?php echo $PLACED_ORDER_STATUS ?></td>
                                             <td data-cell="Confimed">
@@ -210,10 +212,10 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                                     }
                                                 }
                                             </script>
-                                            </form>
-                        </div>
-                        </td>
-                        </tr>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
                     <?php
                                     }
                                 } else {
@@ -264,7 +266,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                 <a href="admin-new-orders.php" class="view big-font">New Orders</a>
                 <a href="admin-awaiting-payment.php" class="view big-font">Awaiting Payment</a>
                 <a href="admin-preparing-orders.php" class="view big-font">Preparing Orders</a>
-                <a href="admin-delivery-orders.php" class="view big-font">For Delivery Orders</a>
+                <a href="admin-delivery-orders.php" class="view big-font">Ready for Pickup</a>
                 <a href="admin-shipped-orders.php" class="view big-font">Shipped Orders</a>
                 <a href="admin-completed-orders.php" class="view big-font">Completed Orders</a>
                 <a href="admin-canceled-orders.php" class="view big-font">Canceled Orders</a>
