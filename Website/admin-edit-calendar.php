@@ -112,26 +112,20 @@ if ($PRSN_ROLE !== 'Admin') {
                             <div class="grid-container">
                                 <div class="box green">
                                     <p>Available</p>
-                                    <!-- //<h1><?php echo $available_count ?></h1> -->
-                                    <h1>
-                                        <div id="available_count"></div>
-                                    </h1>
+                                    <!-- //<h1><?//php echo $available_count ?></h1> -->
+                                    <h1><div id="available_count"></div></h1>
                                     <p class="bottom">days</p>
                                 </div>
                                 <div class="box red">
                                     <p>Fully Booked</p>
-                                    <!-- <h1><?php echo $fullybooked_count ?></h1> -->
-                                    <h1>
-                                        <div id="fullybooked_count"></div>
-                                    </h1>
+                                    <!-- <h1><?//php echo $fullybooked_count ?></h1> -->
+                                    <h1><div id="fullybooked_count"></div></h1>
                                     <p class="bottom">days</p>
                                 </div>
                                 <div class="box">
                                     <p>Closed</p>
-                                    <!-- <h1><?php echo $closed_count ?></h1> -->
-                                    <h1>
-                                        <div id="closed_count"></div>
-                                    </h1>
+                                    <!-- <h1><?//php echo $closed_count ?></h1> -->
+                                    <h1><div id="closed_count"></div></h1>
                                     <p class="bottom">days</p>
                                 </div>
                             </div>
