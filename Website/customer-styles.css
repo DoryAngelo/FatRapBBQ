@@ -369,7 +369,7 @@ table td:not(.first-col), table th:not(.first-col) {
     background-color: var(--block);
 }
 
-#delivery-block {
+#delivery-block, .row {
     display: flex;
     flex-direction: row;
     border-radius: 1rem;
@@ -379,7 +379,7 @@ table td:not(.first-col), table th:not(.first-col) {
     text-wrap: nowrap;
 }
 
-#delivery-block .left-side{
+.left-side{
     width: 100%;
     /* border: 1px solid yellow; */
     background-color: transparent;
@@ -400,15 +400,27 @@ table td:not(.first-col), table th:not(.first-col) {
     margin-left: -2rem;
 }
 
-#delivery-block .time-slot {
+.time-slot {
     background-color: #F8745E;
     width: 40%;
     min-height: 100%;
 }
 
+#available-date {
+    display: none;
+    flex-direction: column;
+    gap: 0.9rem;
+    background: #77c254;
+    color: var(--light-text);
+}
+
 .red-theme {
     color: var(--light-text);
     background-color: var(--red);
+}
+
+.light-block {
+    background-color: var(--block);
 }
 
 .customer-note {
@@ -909,6 +921,7 @@ a.back {
 
     div.order-status-desc {
         flex-direction: column;
+        padding-inline: 0;
     }
 
     #generate-receipt-btn {
@@ -996,7 +1009,7 @@ a.back {
     .steps .progress-bar {
         width: 90%;
         height: 10%;
-        margin-left: 2.5%;
+        /* margin-left: 2.5%; */
         bottom: 65%;
     }
     

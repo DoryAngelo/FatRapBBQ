@@ -9,6 +9,7 @@ const circles = document.querySelectorAll(".circle"),
   pstatus = document.getElementById("status").innerHTML,
   statusTitle = document.getElementById("order-status-title"),
   statusDesc = document.getElementById("order-status-desc"),
+  availableDate = document.getElementById("available-date"),
   sectionToShowHide = document.getElementById("payment-section"),
   receiptButton = document.getElementById("generate-receipt-btn"),
   submitButton = document.getElementById("submit"),
@@ -52,6 +53,7 @@ const updateSteps = (e) => {
       break;
     case "Cancelled":
       stepsContainer.style.display = "none";
+      availableDate.style.display = "flex";
       statusTitle.textContent = "Your order has been cancelled.";
       statusDesc.textContent = "For more information, kindly contact 09178073760 or 09190873861.";
       // sectionToShowHide.style.display = "none";

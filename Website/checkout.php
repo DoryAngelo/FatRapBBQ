@@ -449,13 +449,12 @@ if (isset($_POST['submit'])) {
                                     </div>
                             </div>
                             <div class="block time-slot">
-                                <h3 class="block-heading">Time Slot</h2>
+                                <h3 class="block-heading">Time Slot</h3>
                                     <div class="block-body">
                                         <input type="time" name="time" min="09:00:00" max="17:00:00">
                                         <div class="error"></div>
                                     </div>
                             </div>
-
                         </section>
                         <!-- customer note block-->
                         <section class="block red-theme">

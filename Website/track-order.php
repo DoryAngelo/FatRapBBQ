@@ -102,164 +102,171 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                     <h2>Track your Order</h2>
                 </div>
                 <section class="section-body">
-                    <section class="block">
-                        <h3 class="block-heading">Order number: <?php echo $PLACED_ORDER_ID ?></h3>
-                        <div class="block-body">
-                            <p>Order Tracker: <?php echo $PLACED_ORDER_TRACKER ?></p>
-                            <div class="container" id="stepsContainer"> <!-- hidden when order status is canceled-->
-                                <div class="steps">
-                                    <?php
-                                    if ($count2 > 0) {
-                                        $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
-                                        $PRSN_ID = $row2['PRSN_ID'];
-                                        $CUS_NAME = $row2['CUS_NAME'];
-                                        $CUS_NUMBER = $row2['CUS_NUMBER'];
-                                        $CUS_EMAIL = $row2['CUS_EMAIL'];
-                                        $PLACED_ORDER_DATE = $row2['PLACED_ORDER_DATE'];
-                                        $PLACED_ORDER_TOTAL = $row2['PLACED_ORDER_TOTAL'];
-                                        $DELIVERY_ADDRESS = $row2['DELIVERY_ADDRESS'];
-                                        $DELIVERY_DATE = $row2['DELIVERY_DATE'];
-                                        $PLACED_ORDER_STATUS = $row2['PLACED_ORDER_STATUS'];
-                                        $GUEST_ORDER_IDENTIFIER = $row2['GUEST_ORDER_IDENTIFIER'];
-                                        $REFERENCE_NUMBER = $row2['REFERENCE_NUMBER'];
-                                        
+                    <section class="light-block" id="delivery-block">
+                        <div class="left-side">
+                            <h3 class="block-heading">Order number: <?php echo $PLACED_ORDER_ID ?></h3>
+                            <div class="block-body">
+                                <p>Order Tracker: <?php echo $PLACED_ORDER_TRACKER ?></p>
+                                <div class="container" id="stepsContainer"> <!-- hidden when order status is canceled-->
+                                    <div class="steps">
+                                        <?php
+                                        if ($count2 > 0) {
+                                            $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
+                                            $PRSN_ID = $row2['PRSN_ID'];
+                                            $CUS_NAME = $row2['CUS_NAME'];
+                                            $CUS_NUMBER = $row2['CUS_NUMBER'];
+                                            $CUS_EMAIL = $row2['CUS_EMAIL'];
+                                            $PLACED_ORDER_DATE = $row2['PLACED_ORDER_DATE'];
+                                            $PLACED_ORDER_TOTAL = $row2['PLACED_ORDER_TOTAL'];
+                                            $DELIVERY_ADDRESS = $row2['DELIVERY_ADDRESS'];
+                                            $DELIVERY_DATE = $row2['DELIVERY_DATE'];
+                                            $PLACED_ORDER_STATUS = $row2['PLACED_ORDER_STATUS'];
+                                            $GUEST_ORDER_IDENTIFIER = $row2['GUEST_ORDER_IDENTIFIER'];
+                                            $REFERENCE_NUMBER = $row2['REFERENCE_NUMBER'];
+                                            
 
-                                        switch ($PLACED_ORDER_STATUS) {
-                                            case "Placed": //PLACED
-                                    ?>
-                                                <p id="status">Placed</p>
-                                            <?php
-                                                break;
-                                            case "Awaiting Payment": //APPROVED
-                                            ?>
-                                                <p id="status">Awaiting Payment</p>
-                                            <?php
-                                                break;
-                                            case "Preparing": //PAID
-                                            ?>
-                                                <p id="status">Preparing</p>
-                                            <?php
-                                                break;
-                                            case "For Delivery":
-                                            ?>
-                                                <p id="status">Packed</p>
-                                            <?php
-                                                break;
-                                            case "Shipped": //SHIPPED
-                                            ?>
-                                                <p id="status">Shipped</p>
-                                            <?php
-                                                break;
-                                            case "Completed": //DELIVERED
-                                            ?>
-                                                <p id="status">Completed</p>
-                                            <?php
-                                                break;
-                                            case "Cancelled":
-                                            ?>
-                                                <p id="status">Cancelled</p>
-                                    <?php
-                                                break;
-                                        }
-                                    }
-                                    ?>
-                                    <!-- if status = placed -->
-                                    <div class="step">
-                                        <span class="circle active">
-                                            <i class='bx bx-check'></i>
-                                        </span>
-                                        <span class="label">Placed</span>
-                                    </div>
-                                    <!-- if status = approved -->
-                                    <div class="step">
-                                        <span class="circle">
-                                            <i class='bx bx-check'></i>
-                                        </span>
-                                        <span class="label">Payment</span>
-                                    </div>
-                                    <!-- if status = paid -->
-                                    <!-- <div class="step">
-                                        <span class="circle">
-                                            <i class='bx bx-check'></i>
-                                        </span>
-                                        <span class="label">Preparing</span>
-                                    </div> -->
-                                    <!-- if status = packed -->
-                                    <div class="step">
-                                        <span class="circle">
-                                            <i class='bx bx-check'></i>
-                                        </span>
-                                        <span class="label">Packed</span>
-                                    </div>
-                                    <!-- if status = shipped -->
-                                    <!-- <div class="step">
-                                        <span class="circle">
-                                            <i class='bx bx-check'></i>
-                                        </span>
-                                        <span class="label">Shipped</span>
-                                    </div> -->
-                                    <!-- if status = delivered -->
-                                    <!-- <div class="step">
-                                        <span class="circle">
-                                            <i class='bx bx-check'></i>
-                                        </span>
-                                        <span class="label">Delivered</span>
-                                    </div> -->
-                                    <div class="progress-bar">
-                                        <span class="indicator"></span>
-                                    </div>
-                                </div>
-                                <!-- admin buttons controlling the progress bar -->
-                                <!-- <div class="buttons">
-                                        <button id="prev" disabled>Prev</button>
-                                        <button id="next">Next</button>
-                                    </div> -->
-                            </div>
-                            <style>
-                                .error-text {
-                                    color: red;
-                                    font-size: 12px;
-                                }
-                            </style>
-                            <div class="order-status-desc">
-                                <div>
-                                    <h3 class="block-heading order-status" id="order-status-title">Your order has been approved</h2>
-                                        <p class="order-status-desc" id="order-status-desc">Lorem ipsum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit amet</p>
-                                </div>
-                                <form action="generate_receipt.php" method="GET" id="generate-receipt-form">
-                                    <input type="hidden" name="id" value="<?php echo $PLACED_ORDER_ID ?>">
-                                    <button type="submit" class="button" id="generate-receipt-btn" name="receipt">Generate Receipt</button>
-                                </form>
-                                <script>
-                                    document.getElementById('generate-receipt-form').addEventListener('submit', function(event) {
-                                        event.preventDefault(); // Prevent the form from submitting normally
-
-                                        // Submit the form via AJAX
-                                        var xhr = new XMLHttpRequest();
-                                        xhr.open('GET', 'generate-receipt.php?id=<?php echo $PLACED_ORDER_ID ?>', true);
-                                        xhr.responseType = 'blob'; // Set the response type to Blob
-                                        xhr.onload = function() {
-                                            if (this.status === 200) {
-                                                var blob = new Blob([this.response], {
-                                                    type: 'application/pdf'
-                                                }); // Create a Blob from the response
-                                                var url = window.URL.createObjectURL(blob); // Create a URL for the Blob
-                                                var a = document.createElement('a'); // Create a temporary <a> element
-                                                a.href = url; // Set the href attribute to the URL
-                                                a.download = 'receipt.pdf'; // Set the download attribute to the desired file name
-                                                document.body.appendChild(a); // Append the <a> element to the document body
-                                                a.click(); // Simulate a click on the <a> element
-                                                window.URL.revokeObjectURL(url); // Revoke the URL to release the Blob
-                                                document.body.removeChild(a); // Remove the <a> element from the document body
+                                            switch ($PLACED_ORDER_STATUS) {
+                                                case "Placed": //PLACED
+                                        ?>
+                                                    <p id="status">Placed</p>
+                                                <?php
+                                                    break;
+                                                case "Awaiting Payment": //APPROVED
+                                                ?>
+                                                    <p id="status">Awaiting Payment</p>
+                                                <?php
+                                                    break;
+                                                case "Preparing": //PAID
+                                                ?>
+                                                    <p id="status">Preparing</p>
+                                                <?php
+                                                    break;
+                                                case "For Delivery":
+                                                ?>
+                                                    <p id="status">Packed</p>
+                                                <?php
+                                                    break;
+                                                case "Shipped": //SHIPPED
+                                                ?>
+                                                    <p id="status">Shipped</p>
+                                                <?php
+                                                    break;
+                                                case "Completed": //DELIVERED
+                                                ?>
+                                                    <p id="status">Completed</p>
+                                                <?php
+                                                    break;
+                                                case "Cancelled":
+                                                ?>
+                                                    <p id="status">Cancelled</p>
+                                        <?php
+                                                    break;
                                             }
-                                        };
-                                        xhr.send(); // Send the AJAX request
-                                    });
-                                </script>
+                                        }
+                                        ?>
+                                        <!-- if status = placed -->
+                                        <div class="step">
+                                            <span class="circle active">
+                                                <i class='bx bx-check'></i>
+                                            </span>
+                                            <span class="label">Placed</span>
+                                        </div>
+                                        <!-- if status = approved -->
+                                        <div class="step">
+                                            <span class="circle">
+                                                <i class='bx bx-check'></i>
+                                            </span>
+                                            <span class="label">Payment</span>
+                                        </div>
+                                        <!-- if status = paid -->
+                                        <!-- <div class="step">
+                                            <span class="circle">
+                                                <i class='bx bx-check'></i>
+                                            </span>
+                                            <span class="label">Preparing</span>
+                                        </div> -->
+                                        <!-- if status = packed -->
+                                        <div class="step">
+                                            <span class="circle">
+                                                <i class='bx bx-check'></i>
+                                            </span>
+                                            <span class="label">Packed</span>
+                                        </div>
+                                        <!-- if status = shipped -->
+                                        <!-- <div class="step">
+                                            <span class="circle">
+                                                <i class='bx bx-check'></i>
+                                            </span>
+                                            <span class="label">Shipped</span>
+                                        </div> -->
+                                        <!-- if status = delivered -->
+                                        <!-- <div class="step">
+                                            <span class="circle">
+                                                <i class='bx bx-check'></i>
+                                            </span>
+                                            <span class="label">Delivered</span>
+                                        </div> -->
+                                        <div class="progress-bar">
+                                            <span class="indicator"></span>
+                                        </div>
+                                    </div>
+                                    <!-- admin buttons controlling the progress bar -->
+                                    <!-- <div class="buttons">
+                                            <button id="prev" disabled>Prev</button>
+                                            <button id="next">Next</button>
+                                        </div> -->
+                                </div>
+                                <style>
+                                    .error-text {
+                                        color: red;
+                                        font-size: 12px;
+                                    }
+                                </style>
+                                <div class="order-status-desc">
+                                    <div>
+                                        <h3 class="block-heading order-status" id="order-status-title">Your order has been approved</h2>
+                                            <p class="order-status-desc" id="order-status-desc">Lorem ipsum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit amet</p>
+                                    </div>
+                                    <form action="generate_receipt.php" method="GET" id="generate-receipt-form">
+                                        <input type="hidden" name="id" value="<?php echo $PLACED_ORDER_ID ?>">
+                                        <button type="submit" class="button" id="generate-receipt-btn" name="receipt">Generate Receipt</button>
+                                    </form>
+                                    <script>
+                                        document.getElementById('generate-receipt-form').addEventListener('submit', function(event) {
+                                            event.preventDefault(); // Prevent the form from submitting normally
+
+                                            // Submit the form via AJAX
+                                            var xhr = new XMLHttpRequest();
+                                            xhr.open('GET', 'generate-receipt.php?id=<?php echo $PLACED_ORDER_ID ?>', true);
+                                            xhr.responseType = 'blob'; // Set the response type to Blob
+                                            xhr.onload = function() {
+                                                if (this.status === 200) {
+                                                    var blob = new Blob([this.response], {
+                                                        type: 'application/pdf'
+                                                    }); // Create a Blob from the response
+                                                    var url = window.URL.createObjectURL(blob); // Create a URL for the Blob
+                                                    var a = document.createElement('a'); // Create a temporary <a> element
+                                                    a.href = url; // Set the href attribute to the URL
+                                                    a.download = 'receipt.pdf'; // Set the download attribute to the desired file name
+                                                    document.body.appendChild(a); // Append the <a> element to the document body
+                                                    a.click(); // Simulate a click on the <a> element
+                                                    window.URL.revokeObjectURL(url); // Revoke the URL to release the Blob
+                                                    document.body.removeChild(a); // Remove the <a> element from the document body
+                                                }
+                                            };
+                                            xhr.send(); // Send the AJAX request
+                                        });
+                                    </script>
+                                </div>
                             </div>
                         </div>
+                        <div class="block time-slot" id="available-date">
+                            <h3 class="block-heading">Next available date</h3>
+                            <h3 class="block-heading">[Insert Date]</h3>
+                            <button class="button" href="<?php echo SITEURL; ?>cus-home-page.php">Go to Home</button>
+                        </div>
                     </section>
-
+                    
                     <!-- Cancelled message section -->
                     <!-- <section class="block" id="cancelled-section" style="display: none;">
                         <h3 class="block-heading">Order Cancelled</h3>
@@ -401,7 +408,6 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                 return true;
                             }
                         </script>
-
                     </section>
                 </section>
         </section>
