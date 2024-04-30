@@ -334,7 +334,7 @@ table td:not(.first-col), table th:not(.first-col) {
     font-weight: bold;
 }
 
-.contact-info-blk input, .track-order input, .customer-note {
+.contact-info-blk .input, .track-order input, .customer-note {
     width: 100%;
     border-radius: 5px;
     border: none;
@@ -343,11 +343,11 @@ table td:not(.first-col), table th:not(.first-col) {
     font-size: 1rem;
 }
 
-.contact-info-blk input, .track-order input {
+.contact-info-blk .input, .track-order input {
     margin-top: 8px;
 }
 
-.contact-info-blk input, .customer-note {
+.contact-info-blk .input, .customer-note {
     background-color: #D95039;
     color: white;
 }

@@ -311,22 +311,22 @@ if (isset($_POST['submit'])) {
                                     <div class="form-field">
                                         <div class="input-grp">
                                             <p>First Name</p>
-                                            <input type="text" id="first-name" name="first-name">
+                                            <input type="text" id="first-name" name="first-name" class="input">
                                             <div class="error"></div>
                                         </div>
                                         <div class="input-grp">
                                             <p>Last Name</p>
-                                            <input type="text" id="last-name" name="last-name">
+                                            <input type="text" id="last-name" name="last-name" class="input">
                                             <div class="error"></div>
                                         </div>
                                         <div class="input-grp">
                                             <p>Contact Number</p>
-                                            <input type="text" id="contact-number" name="contact-number">
+                                            <input type="text" id="contact-number" name="contact-number" class="input">
                                             <div class="error"></div>
                                         </div>
                                         <div class="input-grp">
                                             <p>Email</p>
-                                            <input type="email" id="email" name="email">
+                                            <input type="email" id="email" name="email" class="input">
                                             <div class="error"></div>
                                         </div>
                                     </div>
@@ -334,34 +334,62 @@ if (isset($_POST['submit'])) {
                                 <hr>
                                 <div class="right">
                                     <h3 class="block-heading">Address</h3>
+                                    <!-- <div class="form-field">
+                                        <div class="input-grp">
+                                            <p>Region</p>
+                                            <select name="region" class="form-control form-control-md input" id="region"></select>
+                                            <input type="text" id="first-name" name="first-name" class="input">
+                                            <div class="error"></div>
+                                        </div>
+                                        <div class="input-grp">
+                                            <p>Province</p>
+                                            <input type="text" id="last-name" name="last-name" class="input">
+                                            <div class="error"></div>
+                                        </div>
+                                        <div class="input-grp">
+                                            <p>City/Municipality</p>
+                                            <input type="text" id="contact-number" name="contact-number" class="input">
+                                            <div class="error"></div>
+                                        </div>
+                                        <div class="input-grp">
+                                            <p>Barangay</p>
+                                            <input type="email" id="email" name="email" class="input">
+                                            <div class="error"></div>
+                                        </div>
+                                        <div class="input-grp">
+                                            <p>House no./Bldg./Street</p>
+                                            <input type="text" class="form-control form-control-md" name="street" id="street-text" class="input">
+                                            <div class="error"></div>
+                                        </div>
+                                    </div> -->
                                     <div class="form-field">
                                         <div class="input-grp">
                                             <p>Region</p>
-                                            <select name="region" class="form-control form-control-md" id="region"></select>
+                                            <select name="region" class="form-control form-control-md input" id="region"></select>
                                             <input type="hidden" class="form-control form-control-md" name="region" id="region-text" required>
                                             <div class="error"></div>
                                         </div>
                                         <div class="input-grp">
                                             <p>Province</p>
-                                            <select name="province" class="form-control form-control-md" id="province"></select>
+                                            <select name="province" class="form-control form-control-md input" id="province"></select>
                                             <input type="hidden" class="form-control form-control-md" name="province" id="province-text" required>
                                             <div class="error"></div>
                                         </div>
                                         <div class="input-grp">
                                             <p>City/Municipality</p>
-                                            <select name="city" class="form-control form-control-md" id="city"></select>
+                                            <select name="city" class="form-control form-control-md input" id="city"></select>
                                             <input type="hidden" class="form-control form-control-md" name="city" id="city-text" required>
                                             <div class="error"></div>
                                         </div>
                                         <div class="input-grp">
                                             <p>Barangay</p>
-                                            <select name="barangay" class="form-control form-control-md" id="barangay"></select>
+                                            <select name="barangay" class="form-control form-control-md input" id="barangay"></select>
                                             <input type="hidden" class="form-control form-control-md" name="barangay" id="barangay-text" required>
                                             <div class="error"></div>
                                         </div>
                                         <div class="input-grp">
                                             <p>House no./Bldg./Street</p>
-                                            <input type="text" class="form-control form-control-md" name="street" id="street-text">
+                                            <input type="text" class="form-control form-control-md input" name="street" id="street-text">
                                             <div class="error"></div>
                                         </div>
                                     </div>
