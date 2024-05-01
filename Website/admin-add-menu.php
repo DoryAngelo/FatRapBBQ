@@ -29,14 +29,22 @@ if ($count > 0) {
 }
 
 if (isset($_POST['submit'])) {
-    $FOOD_STOCK = mysqli_real_escape_string($conn, $_POST['stock']);
+    $MENU_STOCK = mysqli_real_escape_string($conn, $_POST['stock']);
     $MENU_START = date("M d, Y h:i:s a", strtotime($_POST['start_date']));
     $MENU_END = date("M d, Y h:i:s a", strtotime($_POST['end_date']));
 
     $insert = "INSERT INTO menu(FOOD_ID, MENU_STOCK, MENU_START, MENU_END) 
-               VALUES('$FOOD_ID', '$FOOD_STOCK', '$MENU_START', '$MENU_END')";
+               VALUES('$FOOD_ID', '$MENU_STOCK', '$MENU_START', '$MENU_END')";
 
-    if (mysqli_query($conn, $insert)) {
+    $update = "UPDATE food 
+SET FOOD_STOCK = FOOD_STOCK - $MENU_STOCK
+WHERE FOOD_ID = '$FOOD_ID'";
+
+
+
+    if (mysqli_query($conn, $insert) &&  mysqli_query($conn, $update)) {
+
+
         header("location: admin-edit-menu.php");
         exit();
     } else {
@@ -120,21 +128,26 @@ if (isset($_POST['submit'])) {
                                             <div class="error"></div>
                                         </div>
                                         <div class="form-field-input">
-                                            <label for="price">Stock </label>
+                                            <label for="price">Stock <p>Maxmimum stock to be displayed is <?php echo $FOOD_STOCK ?></p></label>
                                             <input class="js-user" type="number" id="stock" name="stock" min="1" max="<?php echo $FOOD_STOCK ?>">
                                             <div class="error"></div>
                                         </div>
+                                        <?php
+                                        $today = date("Y-m-d");
+                                        $oneMonthFromNow = date("Y-m-d", strtotime("+1 month"));
+                                        $oneMonthFromNowFormatted = date("Y-m-d\TH:i", strtotime("+1 month"));
+                                        ?>
                                         <div class="form-field-input">
                                             <label for="start_date">Start Date and Time</label>
-                                            <input type="datetime-local" id="start_date" name="start_date">
-                                            <div class="error"></div>
-                                        </div>
-                                        <div class="form-field-input">
-                                            <label for="end_date">End Date and Time</label>
-                                            <input type="datetime-local" id="end_date" name="end_date">
+                                            <input type="datetime-local" id="start_date" name="start_date" min="<?php echo $today ?>T00:00" max="<?php echo $oneMonthFromNowFormatted ?>">
                                             <div class="error"></div>
                                         </div>
 
+                                        <div class="form-field-input">
+                                            <label for="end_date">End Date and Time</label>
+                                            <input type="datetime-local" id="end_date" name="end_date" min="<?php echo $today ?>T09:00" max="<?php echo $oneMonthFromNow ?>T17:00">
+                                            <div class="error"></div>
+                                        </div>
                                     </div>
                                 </div>
                                 <button class="big-btn" name="submit">Add Product</button>

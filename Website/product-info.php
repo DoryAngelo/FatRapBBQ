@@ -18,10 +18,11 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
 
 $FOOD_ID = $_GET['FOOD_ID'];
 
-$sql = "SELECT f.*, io.in_order_quantity 
-FROM food f 
-LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
-WHERE f.FOOD_ID = '$FOOD_ID'";
+$sql = "SELECT f.*, io.in_order_quantity, m.menu_stock
+                FROM food f 
+                LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
+                LEFT JOIN menu m ON f.FOOD_ID = m.food_id
+                WHERE f.FOOD_ID = '$FOOD_ID'";
 
 
 $res = mysqli_query($conn, $sql);
@@ -33,6 +34,7 @@ if ($count > 0) {
         $FOOD_DESC = $row['FOOD_DESC'];
         $FOOD_IMG = $row['FOOD_IMG'];
         $FOOD_PRICE = $row['FOOD_PRICE'];
+        $MENU_STOCK = $row['menu_stock'];
         $FOOD_STOCK = $row['FOOD_STOCK'];
         $IN_ORDER_QUANTITY = $row['in_order_quantity'];
     }
@@ -154,19 +156,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                 <div class="inline">
                                     <h1>₱<?php echo $FOOD_PRICE ?></h1>
                                     <div class="quantity-grp">
-                                        <i class='bx bxs-minus-circle js-minus' data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
+                                        <i class='bx bxs-minus-circle js-minus' data-stock="<?php echo $MENU_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
                                         <p class="amount js-num">1</p>
-                                        <i class='bx bxs-plus-circle js-plus' data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
+                                        <i class='bx bxs-plus-circle js-plus' data-stock="<?php echo $MENU_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
                                     </div>
                                     <?php if ($PRSN_ROLE === "Wholesaler") {
                                     ?>
-                                        <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?>
+                                        <p class="remaining"><?php echo ($MENU_STOCK < 0) ? 0 : $MENU_STOCK; ?>
                                             available</p>
                                     <?php
                                     } else {
 
                                     ?>
-                                        <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?>
+                                        <p class="remaining"><?php echo ($MENU_STOCK < 0) ? 0 : $MENU_STOCK; ?>
                                             sticks available</p>
                                     <?php
                                     }
@@ -174,7 +176,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                 </div>
                                 <input type="hidden" id="quantity" name="quantity" value="<?php echo ($IN_ORDER_QUANTITY == NULL) ? 1 : $IN_ORDER_QUANTITY; ?>">
                                 <input type="hidden" name="price" value="<?php echo $FOOD_PRICE ?>">
-                                <button name="order" type="submit" <?php echo ($FOOD_STOCK <= 0 || (isset($_POST['quantity']) && ($IN_ORDER_QUANTITY + intval($_POST['quantity']) > $FOOD_STOCK))) ? 'disabled' : ''; ?>>Add to Cart</button>
+                                <button name="order" type="submit" <?php echo ($MENU_STOCK <= 0 || (isset($_POST['quantity']) && ($IN_ORDER_QUANTITY + intval($_POST['quantity']) > $FOOD_STOCK))) ? 'disabled' : ''; ?>>Add to Cart</button>
 
                             </form>
                         </div>
@@ -223,7 +225,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         </div>
     </footer>
     <script>
-         var quantityData = <?php echo $IN_ORDER_QUANTITY; ?>;
+        var quantityData = <?php echo isset($IN_ORDER_QUANTITY) ? $IN_ORDER_QUANTITY : 0; ?>;
         document.addEventListener("DOMContentLoaded", function() {
             const plus = document.querySelector(".js-plus");
             const minus = document.querySelector(".js-minus");

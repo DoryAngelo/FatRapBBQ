@@ -106,9 +106,17 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                     <?php
 
                     if ($PRSN_ROLE === 'Admin') {
-                        $sql = "SELECT * FROM food WHERE FOOD_ACTIVE = 'Yes'";
+                        $sql = "SELECT m.*, f.*
+                FROM menu m
+                JOIN food f ON m.food_id = f.food_id
+                WHERE f.food_active = 'Yes'";
                     } else {
-                        $sql = "SELECT * FROM food WHERE FOOD_ACTIVE = 'Yes' AND FOOD_TYPE = '$PRSN_ROLE'";
+                        $sql = "SELECT m.*, f.*
+                FROM menu m
+                JOIN food f ON m.food_id = f.food_id
+                WHERE f.food_active = 'Yes' 
+                AND f.food_type = '$PRSN_ROLE'
+                AND NOW() BETWEEN STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p') AND STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')";
                     }
 
                     $res = mysqli_query($conn, $sql);

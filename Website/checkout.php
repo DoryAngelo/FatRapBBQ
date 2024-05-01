@@ -107,7 +107,7 @@ if (isset($_POST['submit'])) {
 
 
     $res3 = mysqli_query($conn, $sql3);
-
+    
     if ($res3 == true) {
         if (isset($_SESSION['prsn_id'])) {
             $sql4 = "SELECT PLACED_ORDER_ID FROM placed_order WHERE PRSN_ID = $CUS_ID AND PLACED_ORDER_STATUS = 'Placed' ORDER BY PLACED_ORDER_ID DESC LIMIT 1";
@@ -129,7 +129,7 @@ if (isset($_POST['submit'])) {
 
             $res5 = mysqli_query($conn, $sql5);
             if ($res5) {
-                header('location: checkout-success.php');
+                header('location: checkout-success.php?PLACED_ORDER_ID=' . $PLACED_ORDER_ID);
                 exit(); // Ensure no further execution after redirection
             }
         }

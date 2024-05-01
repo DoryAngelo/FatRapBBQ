@@ -118,6 +118,7 @@ $food_type = isset($_GET['type']) ? $_GET['type'] : 'all';
 
                                 if ($count > 0) {
                                     while ($row = mysqli_fetch_assoc($res)) {
+                                        $MENU_ID = $row['MENU_ID'];
                                         $FOOD_ID = $row['FOOD_ID'];
                                         $FOOD_IMG = $row['FOOD_IMG'];
                                         $FOOD_NAME = $row['FOOD_NAME'];
@@ -140,14 +141,14 @@ $food_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                             <td data-cell="Start"><?php echo $MENU_START?></td>
                                             <td data-cell="End"><?php echo $MENU_END ?></td>
                                             <td data-cell="Action">
-                                                <a href="<?php echo SITEURL; ?>admin-edit-product.php?FOOD_ID=<?php echo $FOOD_ID ?>" class="edit">Edit</a>
-                                                <a href="<?php echo SITEURL; ?>admin-add-menu.php?FOOD_ID=<?php echo $FOOD_ID ?>" class="edit">Display</a>
+                                                <!-- <a href="<?php echo SITEURL; ?>admin-edit-product.php?FOOD_ID=<?php echo $FOOD_ID ?>" class="edit">Edit</a> -->
+                                                <!-- <a href="<?php echo SITEURL; ?>admin-add-menu.php?FOOD_ID=<?php echo $FOOD_ID ?>" class="edit">Display</a> -->
                                             </td>
-                                            <td data-cell="Action"><a href="#" onclick="confirmDelete(<?php echo $FOOD_ID; ?>)" class="bx bxs-trash-alt trash"></a></td>
+                                            <td data-cell="Action"><a href="#" onclick="confirmDelete(<?php echo $MENU_ID; ?>)" class="bx bxs-trash-alt trash"></a></td>
                                             <script>
-                                                function confirmDelete(foodId) {
+                                                function confirmDelete(menuId) {
                                                     if (confirm("Are you sure you want to delete this item?")) {
-                                                        window.location.href = "delete_food.php?FOOD_ID=" + foodId;
+                                                        window.location.href = "delete_menu.php?MENU_ID=" + menuId;
                                                     } else {
                                                         // Do nothing
                                                     }
