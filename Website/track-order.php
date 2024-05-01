@@ -381,10 +381,6 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                     }
                                     ?>
                                     <button id="submit-button" name="submit" <?php if ($REFERENCE_NUMBER !== '') echo 'disabled'; ?>>Submit</button>
-<<<<<<< HEAD
-=======
-                                    <p id="submission-prompt">Thanks for submitting! Your order will now be prepared.</p>
->>>>>>> 73fa6363d4fff5c7a4e36d8aa3a71cb69fa8fb15
                                 </div>
                             </div>
                         </form>
