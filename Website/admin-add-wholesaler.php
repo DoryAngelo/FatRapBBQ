@@ -363,21 +363,26 @@ if (isset($_POST['submit'])) {
         }
     }
 
-    function validateImage() {
-        const imageValue = imageInput.value.trim();
+function validateImage() {
+    const imageValue = imageInput.value.trim();
 
-        // Check if file extension is valid only if an image is selected
-        if (imageValue !== '') {
-            const validExtensions = ['png', 'jpg', 'jpeg'];
-            const fileExtension = imageValue.split('.').pop().toLowerCase();
-
-            if (!validExtensions.includes(fileExtension)) {
-                setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
-            } else {
-                clearError(imageInput);
-            }
-        }
+    // Check if the input field is empty
+    if (imageValue === '') {
+        // Clear error message if input is empty
+        clearError(imageInput);
+        return; // Exit the function without further validation
     }
+
+    // Check if file extension is valid
+    const validExtensions = ['png', 'jpg', 'jpeg'];
+    const fileExtension = imageValue.split('.').pop().toLowerCase();
+
+    if (!validExtensions.includes(fileExtension)) {
+        setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
+    } else {
+        clearError(imageInput);
+    }
+}
 
     function validateInputs() {
         validateFirstName();

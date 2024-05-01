@@ -9,7 +9,7 @@ if ($PRSN_ROLE !== 'Admin') {
 
 $PRSN_ID = $_SESSION['prsn_id'];
 
-$food_type = isset($_GET['type']) ? $_GET['type'] : 'all'; 
+$food_type = isset($_GET['type']) ? $_GET['type'] : 'all';
 
 ?>
 
@@ -132,7 +132,10 @@ $food_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                                 </span>
                                             </td>
                                             <td data-cell="Price"><?php echo $FOOD_TYPE ?></td>
-                                            <td data-cell="Action"><a href="<?php echo SITEURL; ?>admin-edit-product.php?FOOD_ID=<?php echo $FOOD_ID ?>" class="edit">Edit</a></td>
+                                            <td data-cell="Action">
+                                                <a href="<?php echo SITEURL; ?>admin-edit-product.php?FOOD_ID=<?php echo $FOOD_ID ?>" class="edit">Edit</a>
+                                                <a href="<?php echo SITEURL; ?>admin-add-menu.php?FOOD_ID=<?php echo $FOOD_ID ?>" class="edit">Display</a>
+                                            </td>
                                             <td data-cell="Action"><a href="#" onclick="confirmDelete(<?php echo $FOOD_ID; ?>)" class="bx bxs-trash-alt trash"></a></td>
                                             <script>
                                                 function confirmDelete(foodId) {

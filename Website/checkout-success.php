@@ -18,6 +18,21 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
 
 $PLACED_ORDER_TRACKER = $_SESSION['PLACED_ORDER_TRACKER'];
 
+$PLACED_ORDER_ID = $_GET['PLACED_ORDER_ID'];
+
+$update = "UPDATE menu m
+JOIN (
+    SELECT m.food_id, io.in_order_quantity AS total_quantity
+    FROM in_order io
+    JOIN food f ON io.food_id = f.food_id
+    JOIN menu m ON f.food_id = m.food_id
+    WHERE io.placed_order_id = '$PLACED_ORDER_ID'
+    GROUP BY m.food_id
+) iot ON m.food_id = iot.food_id
+SET m.menu_stock = m.menu_stock - iot.total_quantity";
+
+$res = mysqli_query($conn, $update);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

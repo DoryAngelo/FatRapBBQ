@@ -219,7 +219,7 @@ if (isset($_POST['submit'])) {
                         }
                     }
 
-                    function validateForm() {
+                    function validateLogin() {
                         validateLogin();
                         validatePassword();
 

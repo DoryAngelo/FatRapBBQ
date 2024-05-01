@@ -275,7 +275,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         } ?>
 
         <script>
-            var quantityData = <?php echo $IN_ORDER_QUANTITY; ?>;
+            var quantityData = <?php echo isset($IN_ORDER_QUANTITY) ? $IN_ORDER_QUANTITY : 0; ?>;
             document.addEventListener("DOMContentLoaded", function() {
                 const plus = document.querySelector(".js-plus");
                 const minus = document.querySelector(".js-minus");
