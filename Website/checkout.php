@@ -433,6 +433,10 @@ if (isset($_POST['submit'])) {
                                     <div class="error-time error-text" style="display: none;">Time not available.</div>
                                 </div>
                             </div>
+                            <!--<div class="block time-slot">
+                                 <h3 class="block-heading">Available sticks</h3>
+                                <h3 class="block-heading">[Insert Date]</h3> 
+                            </div>-->
                         </section>
 
                         <script>
