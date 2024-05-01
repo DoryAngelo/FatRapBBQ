@@ -148,10 +148,10 @@ $countW = mysqli_num_rows($resW);
                                 <p>Awaiting Payment</p>
                                 <h1><?php echo $countAP ?></h1>
                             </a>
-                            <a class="box" href="<?php echo SITEURL; ?>admin-preparing-orders.php">
+                            <!-- <a class="box" href="<?php echo SITEURL; ?>admin-preparing-orders.php">
                                 <p>Preparing Orders</p>
                                 <h1><?php echo $countPr ?></h1>
-                            </a>
+                            </a> -->
                             <!-- <a class="box" href="<?php echo SITEURL; ?>admin-packing-orders.php">
                                     <p>Packing Orders</p>
                                     <h1>100></h1>
@@ -160,10 +160,10 @@ $countW = mysqli_num_rows($resW);
                                 <p>Ready for Pickup</p>
                                 <h1><?php echo $countFD ?></h1>
                             </a>
-                            <a class="box" href="<?php echo SITEURL; ?>admin-shipped-orders.php">
+                            <!-- <a class="box" href="<?php echo SITEURL; ?>admin-shipped-orders.php">
                                 <p>Shipped</p>
                                 <h1><?php echo $countS ?></h1>
-                            </a>
+                            </a> -->
                             <a class="box" href="<?php echo SITEURL; ?>admin-completed-orders.php">
                                 <p>Completed Orders</p>
                                 <h1><?php echo $countCo ?></h1>

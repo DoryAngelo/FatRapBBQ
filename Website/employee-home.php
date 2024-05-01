@@ -134,10 +134,10 @@ $countCa = mysqli_num_rows($resCa);
                                 <p>Ready for Pickup</p>
                                 <h1><?php echo $countFD ?></h1>
                             </a>
-                            <a class="box" href="<?php echo SITEURL; ?>employee-shipped.php">
+                            <!-- <a class="box" href="<?php echo SITEURL; ?>employee-shipped.php">
                                 <p>Shipped</p>
                                 <h1><?php echo $countS ?></h1>
-                            </a>
+                            </a> -->
                             <a class="box" href="<?php echo SITEURL; ?>employee-completed-orders.php">
                                 <p>Completed</p>
                                 <h1><?php echo $countCo?></h1>

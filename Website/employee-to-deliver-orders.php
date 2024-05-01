@@ -227,7 +227,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                         <div class="group">
                             <a href="<?php echo SITEURL; ?>employee-to-prepare-orders.php" class="view big-font">To Prepare</a>
                             <a href="<?php echo SITEURL; ?>employee-to-deliver-orders.php" class="view big-font">Ready for Pickup</a>
-                            <a href="<?php echo SITEURL; ?>employee-shipped.php" class="view big-font">Shipped</a>
+                            <!-- <a href="<?php echo SITEURL; ?>employee-shipped.php" class="view big-font">Shipped</a> -->
                             <a href="<?php echo SITEURL; ?>employee-completed-orders.php" class="view big-font">Completed Orders</a>
                             <a href="<?php echo SITEURL; ?>employee-canceled-orders.php" class="view big-font">Canceled Orders</a>
                         </div>

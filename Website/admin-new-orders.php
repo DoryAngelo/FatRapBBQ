@@ -265,9 +265,9 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
             <div class="group">
                 <a href="admin-new-orders.php" class="view big-font">New Orders</a>
                 <a href="admin-awaiting-payment.php" class="view big-font">Awaiting Payment</a>
-                <a href="admin-preparing-orders.php" class="view big-font">Preparing Orders</a>
+                <!-- <a href="admin-preparing-orders.php" class="view big-font">Preparing Orders</a> -->
                 <a href="admin-delivery-orders.php" class="view big-font">Ready for Pickup</a>
-                <a href="admin-shipped-orders.php" class="view big-font">Shipped Orders</a>
+                <!-- <a href="admin-shipped-orders.php" class="view big-font">Shipped Orders</a> -->
                 <a href="admin-completed-orders.php" class="view big-font">Completed Orders</a>
                 <a href="admin-canceled-orders.php" class="view big-font">Canceled Orders</a>
             </div>
