@@ -72,7 +72,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--change title-->
-    <title>Preparing | Employee</title>
+    <title>Currently Preparing | Employee</title>
     <link rel="stylesheet" href="header-styles.css">
     <link rel="stylesheet" href="admin-styles.css"><!--change css file-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -119,7 +119,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
         <section class="section" id="orders-page">
             <div class="container">
                 <div class="section-heading row">
-                    <h2>Preparing</h2>
+                    <h2>Currently Preparing</h2>
                     <select name="order-type" id="order-type" class="dropdown">
                         <option value="all" <?php echo ($order_type === 'all') ? 'selected' : ''; ?>>All</option>
                         <option value="Today" <?php echo ($order_type === 'Today') ? 'selected' : ''; ?>>Today</option>
@@ -226,9 +226,9 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                         </div>
                         <div class="group">
                             <a href="<?php echo SITEURL; ?>employee-to-prepare-orders.php" class="view big-font">To Prepare</a>
-                            <a href="<?php echo SITEURL; ?>employee-preparing-orders.php" class="view big-font">Preparing</a>
+                            <a href="<?php echo SITEURL; ?>employee-preparing-orders.php" class="view big-font">Currently Preparing</a>
                             <a href="<?php echo SITEURL; ?>employee-to-deliver-orders.php" class="view big-font">Ready for Pickup</a>
-                            <a href="<?php echo SITEURL; ?>employee-shipped.php" class="view big-font">Shipped</a>
+                            <!-- <a href="<?php echo SITEURL; ?>employee-shipped.php" class="view big-font">Shipped</a> -->
                             <a href="<?php echo SITEURL; ?>employee-completed-orders.php" class="view big-font">Completed Orders</a>
                             <a href="<?php echo SITEURL; ?>employee-canceled-orders.php" class="view big-font">Canceled Orders</a>
                         </div>

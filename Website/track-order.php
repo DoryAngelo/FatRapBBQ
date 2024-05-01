@@ -357,7 +357,7 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                     
                     <!-- section directly below this will only appear if order status is approved -->
                     <section class="block" id="payment-section">
-                        <form action="" method="post" onsubmit="return validateForm()">
+                        <form id="payment-ref-form" action="" method="post" onsubmit="return validateForm()">
                             <h3 class="block-heading">Payment</h3>
                             <div class="block-body">
                                 <!-- <div style="width: 10rem; height: 10rem; background-color: white;"></div> -->
@@ -367,7 +367,7 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                     <input name="reference-number" id="reference-number" type="text">
                                     <div class="error"></div>
                                     <button id="submit-button" name="submit" <?php if ($REFERENCE_NUMBER !== '') echo 'disabled'; ?>>Submit</button>
-                                    <p class="prompt" id="submission-prompt" style="display: none;">Thanks for submitting!</p>
+                                    <p id="submission-prompt">Thanks for submitting! Your order will now be prepared.</p>
                                 </div>
                             </div>
                         </form>
