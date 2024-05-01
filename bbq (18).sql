@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2024 at 12:08 PM
+-- Generation Time: May 01, 2024 at 09:03 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,11 +38,7 @@ CREATE TABLE `calendar` (
 --
 
 INSERT INTO `calendar` (`CALENDAR_ID`, `CALENDAR_DATE`, `DATE_STATUS`) VALUES
-(56, 'April 30 2024', 'available'),
-(58, 'April 22 2024', 'fullybooked'),
-(77, 'April 27 2024', 'available'),
-(78, 'April 23 2024', 'fullybooked'),
-(79, 'April 21 2024', 'closed');
+(80, 'May 29 2024', 'closed');
 
 -- --------------------------------------------------------
 
@@ -103,7 +99,7 @@ INSERT INTO `employee` (`EMP_ID`, `PRSN_ID`, `EMP_FNAME`, `EMP_LNAME`, `EMP_IMAG
 (18, 52, 'NewUpdate', 'NewUpdate', 'EMP_IMAGE_NewUpdate.png', 'NewUpdate', ''),
 (24, 83, 'Admin', 'Two', 'EMP_IMAGE_Admin Two_6620a0b1034dd.jpg', 'AdminTwo', 'Active'),
 (25, 84, 'Employee', 'Employee', 'EMP_IMAGE_Hi Hello_6620a0d64df55.jpg', 'Employee', 'Active'),
-(999, 16, 'Admin', 'Admin', '', 'Admin', 'Active');
+(999, 16, '', 'Admin', '', '85686', 'Active');
 
 -- --------------------------------------------------------
 
@@ -128,9 +124,7 @@ CREATE TABLE `food` (
 --
 
 INSERT INTO `food` (`FOOD_ID`, `CTGY_ID`, `FOOD_NAME`, `FOOD_PRICE`, `FOOD_DESC`, `FOOD_IMG`, `FOOD_STOCK`, `FOOD_ACTIVE`, `FOOD_TYPE`) VALUES
-(49, 0, 'Barbeque', 1000.00, 'NewProduct', 'FOOD_IMAGE_Barbeque.jpg', 49, 'Yes', 'Customer'),
-(50, 0, 'Test', 25.50, 'testttttttttt', 'FOOD_IMAGE_Test.jpg', 90, 'Yes', 'Customer'),
-(51, 0, 'Wholesaler Package 2', 1000.00, '100 bbq sticks', 'FOOD_IMAGE_Wholesaler Package 1_66209eae4d4c7.png', 1, 'No', 'Customer');
+(60, 0, 'Barbeque', 25.50, 'BBQ', 'FOOD_IMAGE_Barbeque.jpg', 50, 'Yes', 'Customer');
 
 -- --------------------------------------------------------
 
@@ -154,16 +148,29 @@ CREATE TABLE `in_order` (
 --
 
 INSERT INTO `in_order` (`IN_ORDER_ID`, `FOOD_ID`, `PRSN_ID`, `IN_ORDER_QUANTITY`, `IN_ORDER_TOTAL`, `IN_ORDER_STATUS`, `PLACED_ORDER_ID`, `GUEST_ORDER_IDENTIFIER`) VALUES
-(151, 50, 15, 5, 127.50, 'Ordered', 74, ''),
-(152, 49, 15, 1, 1000.00, 'Ordered', 75, ''),
-(153, 50, 15, 7, 178.50, 'Ordered', NULL, ''),
-(154, 49, 15, 4, 4000.00, 'Ordered', NULL, ''),
-(155, 49, 0, 5, 5000.00, 'Ordered', 76, '34e78574289e83ac77ea0ebc181887d2'),
-(156, 49, 0, 3, 3000.00, 'Ordered', 77, '34e78574289e83ac77ea0ebc181887d2'),
-(157, 50, 0, 9, 229.50, 'Ordered', 77, '34e78574289e83ac77ea0ebc181887d2'),
-(158, 49, 0, 6, 6000.00, 'Ordered', 78, '34e78574289e83ac77ea0ebc181887d2'),
-(159, 50, 0, 4, 102.00, 'Ordered', 78, '34e78574289e83ac77ea0ebc181887d2'),
-(160, 49, 0, 13, 13000.00, 'Ordered', 79, '9bb17c86495157e1d35ccf41f69ea484');
+(182, 60, 15, 10, 255.00, 'Ordered', 89, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu`
+--
+
+CREATE TABLE `menu` (
+  `MENU_ID` int(18) NOT NULL,
+  `FOOD_ID` int(18) NOT NULL,
+  `MENU_STOCK` int(18) NOT NULL,
+  `MENU_START` varchar(50) NOT NULL,
+  `MENU_END` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `menu`
+--
+
+INSERT INTO `menu` (`MENU_ID`, `FOOD_ID`, `MENU_STOCK`, `MENU_START`, `MENU_END`) VALUES
+(8, 60, 20, 'Jan 01, 1970 08:00:00 am', 'Jan 01, 1970 08:00:00 am'),
+(10, 60, 20, 'May 01, 2024 02:08:00 pm', 'May 01, 2024 06:08:00 pm');
 
 -- --------------------------------------------------------
 
@@ -192,7 +199,8 @@ INSERT INTO `person` (`PRSN_ID`, `PRSN_NAME`, `PRSN_EMAIL`, `PRSN_PASSWORD`, `PR
 (83, 'Admin Two', 'Admin2', 'd41d8cd98f00b204e9800998ecf8427e', '09123456789', 'Employee'),
 (84, 'Employee Employee', 'Employee', 'd3d73db423372e0bea89ca659ea9d115', '09123456789', 'Employee'),
 (85, 'WhNew WhNew', 'WhNew', '7503d4ae5f2684f8d09e30657bfc5809', '09123456789', 'Wholesaler'),
-(86, 'Wholesaler Wholesale', 'Wholesaler', '4ff918a8bde60d5bda668f617164af08', '09123456789', 'Wholesaler');
+(86, 'Wholesaler Wholesale', 'Wholesaler', '4ff918a8bde60d5bda668f617164af08', '09123456789', 'Wholesaler'),
+(90, 'dsd', 'asfdsf@gmail.com', '046c8fbd148b6243fc629390ee3aa349', '09123456789', 'Customer');
 
 -- --------------------------------------------------------
 
@@ -223,12 +231,7 @@ CREATE TABLE `placed_order` (
 --
 
 INSERT INTO `placed_order` (`PLACED_ORDER_ID`, `PRSN_ID`, `CUS_NAME`, `CUS_NUMBER`, `CUS_EMAIL`, `PLACED_ORDER_DATE`, `PLACED_ORDER_TOTAL`, `DELIVERY_ADDRESS`, `DELIVERY_DATE`, `PLACED_ORDER_STATUS`, `PLACED_ORDER_CONFIRMATION`, `PLACED_ORDER_TRACKER`, `PLACED_ORDER_NOTE`, `REFERENCE_NUMBER`, `GUEST_ORDER_IDENTIFIER`) VALUES
-(74, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-04-18 12:50:43am', 127.50, 'RegionTest, ProvinceTest, CityTest, BarangayTest, StreetTest', '2024-04-25 16:54', 'Completed', 'Confirmed', '986041e358b84400', '', '412', ''),
-(75, 15, 'New New', '09123456789', 'user@gmail.com', '2024-04-18 01:42:12am', 1000.00, 'New, New, New, New, New', '2024-04-30 16:42', 'Cancelled', 'Not Confirmed', 'aaf6cfdfa404f098', '', '41412', ''),
-(76, 0, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-04-18 05:34:00pm', 5000.00, 'RegionTest, ProvinceTest, CityTest, BarangayTest, StreetTest', '2024-04-30 15:33', 'Placed', '', 'cdbf26fc148b9b07', '', '', '34e78574289e83ac77ea0ebc181887d2'),
-(77, 0, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-04-18 05:39:41pm', 3229.50, 'RegionTest, ProvinceTest, CityTest, BarangayTest, StreetTest', '2024-04-30 14:39', 'Placed', '', 'cd719804ad6c16ed', '', '', '34e78574289e83ac77ea0ebc181887d2'),
-(78, 0, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-04-18 05:47:11pm', 6102.00, 'RegionTest, ProvinceTest, CityTest, BarangayTest, StreetTest', '2024-04-29 14:47', 'Placed', '', 'e4a5afc76df60e07', '', '', '34e78574289e83ac77ea0ebc181887d2'),
-(79, 0, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-04-18 05:48:00pm', 13000.00, 'RegionTest, ProvinceTest, CityTest, BarangayTest, StreetTest', '2024-04-30 13:47', 'Placed', '', 'b230b7ac2957481d', '', '', '9bb17c86495157e1d35ccf41f69ea484');
+(89, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-05-01 02:58:23pm', 255.00, 'National Capital Region (NCR), City Of Manila, Binondo, Barangay 288, StreetTest', '2024-05-01 14:58', 'Placed', '', 'e466b452178783d4', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -294,6 +297,12 @@ ALTER TABLE `in_order`
   ADD PRIMARY KEY (`IN_ORDER_ID`);
 
 --
+-- Indexes for table `menu`
+--
+ALTER TABLE `menu`
+  ADD PRIMARY KEY (`MENU_ID`);
+
+--
 -- Indexes for table `person`
 --
 ALTER TABLE `person`
@@ -319,7 +328,7 @@ ALTER TABLE `wholesaler`
 -- AUTO_INCREMENT for table `calendar`
 --
 ALTER TABLE `calendar`
-  MODIFY `CALENDAR_ID` int(16) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `CALENDAR_ID` int(16) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -343,25 +352,31 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT for table `food`
 --
 ALTER TABLE `food`
-  MODIFY `FOOD_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `FOOD_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `in_order`
 --
 ALTER TABLE `in_order`
-  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
+  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=183;
+
+--
+-- AUTO_INCREMENT for table `menu`
+--
+ALTER TABLE `menu`
+  MODIFY `MENU_ID` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `PRSN_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `PRSN_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT for table `placed_order`
 --
 ALTER TABLE `placed_order`
-  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT for table `wholesaler`
