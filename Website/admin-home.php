@@ -141,12 +141,14 @@ $countW = mysqli_num_rows($resW);
                     <section class="main-section">
                         <div class="grid-container">
                             <a class="box" href="<?php echo SITEURL; ?>admin-new-orders.php">
-                                <p>New Orders</p>
+                                <p>New</p>
                                 <h1><?php echo $countNO ?></h1>
+                                <p class="bottom">Orders</p>
                             </a>
                             <a class="box" href="<?php echo SITEURL; ?>admin-awaiting-payment.php">
                                 <p>Awaiting Payment</p>
                                 <h1><?php echo $countAP ?></h1>
+                                <p class="bottom">Orders</p>
                             </a>
                             <!-- <a class="box" href="<?php echo SITEURL; ?>admin-preparing-orders.php">
                                 <p>Preparing Orders</p>
@@ -159,18 +161,21 @@ $countW = mysqli_num_rows($resW);
                             <a class="box" href="<?php echo SITEURL; ?>admin-delivery-orders.php">
                                 <p>Ready for Pickup</p>
                                 <h1><?php echo $countFD ?></h1>
+                                <p class="bottom">Orders</p>
                             </a>
                             <!-- <a class="box" href="<?php echo SITEURL; ?>admin-shipped-orders.php">
                                 <p>Shipped</p>
                                 <h1><?php echo $countS ?></h1>
                             </a> -->
                             <a class="box" href="<?php echo SITEURL; ?>admin-completed-orders.php">
-                                <p>Completed Orders</p>
+                                <p>Completed</p>
                                 <h1><?php echo $countCo ?></h1>
+                                <p class="bottom">Orders</p>
                             </a>
                             <a class="box" href="<?php echo SITEURL; ?>admin-canceled-orders.php">
-                                <p>Canceled Orders</p>
+                                <p>Canceled</p>
                                 <h1><?php echo $countCa ?></h1>
+                                <p class="bottom">Orders</p>
                             </a>
                         </div>
                     </section>

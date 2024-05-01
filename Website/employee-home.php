@@ -125,6 +125,7 @@ $countCa = mysqli_num_rows($resCa);
                             <a class="box" href="<?php echo SITEURL; ?>employee-to-prepare-orders.php">
                                 <p>To Prepare</p>
                                 <h1><?php echo $countPa ?></h1>
+                                <p class="bottom">Orders</p>
                             </a>
                             <!-- <a class="box" href="<?php echo SITEURL; ?>employee-preparing-orders.php">
                                 <p>Currently Preparing</p>
@@ -133,6 +134,7 @@ $countCa = mysqli_num_rows($resCa);
                             <a class="box" href="<?php echo SITEURL; ?>employee-to-deliver-orders.php">
                                 <p>Ready for Pickup</p>
                                 <h1><?php echo $countFD ?></h1>
+                                <p class="bottom">Orders</p>
                             </a>
                             <!-- <a class="box" href="<?php echo SITEURL; ?>employee-shipped.php">
                                 <p>Shipped</p>
@@ -141,10 +143,12 @@ $countCa = mysqli_num_rows($resCa);
                             <a class="box" href="<?php echo SITEURL; ?>employee-completed-orders.php">
                                 <p>Completed</p>
                                 <h1><?php echo $countCo?></h1>
+                                <p class="bottom">Orders</p>
                             </a>
                             <a class="box" href="<?php echo SITEURL; ?>employee-canceled-orders.php">
                                 <p>Cancelled</p>
                                 <h1><?php echo $countCa ?></h1>
+                                <p class="bottom">Orders</p>
                             </a>
                         </div>
                     </section>

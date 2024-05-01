@@ -303,16 +303,22 @@ table button {
 .grid-container .box p {
     font-weight: bold;
     font-size: 0.9rem;
+    color: #7e95ac;
 }
 
 .grid-container .box h1 {
     font-size: 3rem;
+    color: var(--sidemenu-blue-text);
 }
 
-#dashboard .grid-container .box p {
+#dashboard .grid-container .box {
+    gap: 1.5rem;
+}
+
+/* #dashboard .grid-container .box p {
     position: absolute;
     top: 1rem;
-}
+} */
 
 #admin-calendar .grid-container {
     width: 100%;
