@@ -188,8 +188,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             <div class="container responsive">
                 <div class="text">
                     <h1>See our available dates</h1>
+                    <p>Days with the following colors below are unavailable dates for ordering</p>
                     <div class="legend">
-                        <button class="button available-tag">Available</button>
+                        <!-- <button class="button available-tag">Available</button> -->
                         <button class="button fully-booked-tag">Fully Booked</button>
                         <button class="button closed-tag">Closed</button>
                     </div>
@@ -241,7 +242,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                     <!-- <img src="images/pork-bbq.jpg" alt="picture of 3 pork bbq sticks"> -->
                     <div class="text">
                         <h1><?php echo $FOOD_NAME; ?></h1>
-                        <p>₱<?php echo $FOOD_PRICE; ?></p>
+                        <div>
+                            <p>₱<?php echo $FOOD_PRICE; ?></p>
+                            <p>1 stick</p>
+                        </div>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictumsum dolor sit amet</p>
                         <div class="action-grp responsive">
                             <form method="post" class="form">
@@ -317,7 +321,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         <section class="section" id="track-order-section">
             <div class="container responsive">
                 <div class="text">
-                    <h1>Want to track your order?</h1>
+                    <h1>Want to see your order status?</h1>
                     <p>Enter your order tracking number to see the status of your order</p>
                 </div>
                 <style>
