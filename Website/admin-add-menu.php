@@ -224,13 +224,18 @@ if (isset($_POST['submit'])) {
         function validateImage() {
             const imageValue = imageInput.value.trim();
 
+            // Check if the input field is empty
+            if (imageValue === '') {
+                // Clear error message if input is empty
+                clearError(imageInput);
+                return; // Exit the function without further validation
+            }
+
             // Check if file extension is valid
             const validExtensions = ['png', 'jpg', 'jpeg'];
             const fileExtension = imageValue.split('.').pop().toLowerCase();
 
-            if (imageValue === '') {
-                setError(imageInput, 'Please select an image file');
-            } else if (!validExtensions.includes(fileExtension)) {
+            if (!validExtensions.includes(fileExtension)) {
                 setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
             } else {
                 clearError(imageInput);

@@ -181,112 +181,117 @@ $FOOD_ID = $_GET['FOOD_ID'];
                 </script>
             </div>
             <script>
-        const productNameInput = document.getElementById('product-name');
-        const productDescInput = document.getElementById('product-desc');
-        const priceInput = document.getElementById('price');
-        const stockInput = document.getElementById('stock');
-        const imageInput = document.getElementById('image');
+                const productNameInput = document.getElementById('product-name');
+                const productDescInput = document.getElementById('product-desc');
+                const priceInput = document.getElementById('price');
+                const stockInput = document.getElementById('stock');
+                const imageInput = document.getElementById('image');
 
-        productNameInput.addEventListener('input', validateProductName);
-        productDescInput.addEventListener('input', validateProductDesc);
-        priceInput.addEventListener('input', validatePrice);
-        stockInput.addEventListener('input', validateStock);
-        imageInput.addEventListener('change', validateImage);
+                productNameInput.addEventListener('input', validateProductName);
+                productDescInput.addEventListener('input', validateProductDesc);
+                priceInput.addEventListener('input', validatePrice);
+                stockInput.addEventListener('input', validateStock);
+                imageInput.addEventListener('change', validateImage);
 
-        function setError(input, message) {
-            const errorDiv = input.nextElementSibling;
-            errorDiv.innerHTML = `<span class="error-text">${message}</span>`;
-        }
+                function setError(input, message) {
+                    const errorDiv = input.nextElementSibling;
+                    errorDiv.innerHTML = `<span class="error-text">${message}</span>`;
+                }
 
-        function clearError(input) {
-            const errorDiv = input.nextElementSibling;
-            errorDiv.innerHTML = ''; // Clear the error message
-        }
+                function clearError(input) {
+                    const errorDiv = input.nextElementSibling;
+                    errorDiv.innerHTML = ''; // Clear the error message
+                }
 
-        function validateProductName() {
-            const productNameValue = productNameInput.value.trim();
-            const nameRegex = /^[a-zA-Z0-9\s]+$/;
+                function validateProductName() {
+                    const productNameValue = productNameInput.value.trim();
+                    const nameRegex = /^[a-zA-Z0-9\s]+$/;
 
-            if (productNameValue === '') {
-                setError(productNameInput, 'Please enter the product name');
-            } else if (!nameRegex.test(productNameValue)) {
-                setError(productNameInput, 'Invalid product name');
-            } else {
-                clearError(productNameInput);
-            }
-        }
+                    if (productNameValue === '') {
+                        setError(productNameInput, 'Please enter the product name');
+                    } else if (!nameRegex.test(productNameValue)) {
+                        setError(productNameInput, 'Invalid product name');
+                    } else {
+                        clearError(productNameInput);
+                    }
+                }
 
-        function validateProductDesc() {
-            const productDescValue = productDescInput.value.trim();
+                function validateProductDesc() {
+                    const productDescValue = productDescInput.value.trim();
 
-            if (productDescValue === '') {
-                setError(productDescInput, 'Please enter the product description');
-            } else if (productDescValue.length > 50) {
-                setError(productDescInput, 'Product description must not exceed 50 characters');
-            } else {
-                clearError(productDescInput);
-            }
-        }
+                    if (productDescValue === '') {
+                        setError(productDescInput, 'Please enter the product description');
+                    } else if (productDescValue.length > 50) {
+                        setError(productDescInput, 'Product description must not exceed 50 characters');
+                    } else {
+                        clearError(productDescInput);
+                    }
+                }
 
-        function validatePrice() {
-            const priceValue = priceInput.value.trim();
+                function validatePrice() {
+                    const priceValue = priceInput.value.trim();
 
-            if (priceValue === '') {
-                setError(priceInput, 'Please enter the price');
-            } else if (isNaN(parseFloat(priceValue))) {
-                setError(priceInput, 'Price must be a number');
-            } else if (parseInt(priceValue) < 0) {
-                setError(priceInput, 'Price cannot be negative');
-            } else {
-                clearError(priceInput);
-            }
-        }
+                    if (priceValue === '') {
+                        setError(priceInput, 'Please enter the price');
+                    } else if (isNaN(parseFloat(priceValue))) {
+                        setError(priceInput, 'Price must be a number');
+                    } else if (parseInt(priceValue) < 0) {
+                        setError(priceInput, 'Price cannot be negative');
+                    } else {
+                        clearError(priceInput);
+                    }
+                }
 
-        function validateStock() {
-            const stockValue = stockInput.value.trim();
+                function validateStock() {
+                    const stockValue = stockInput.value.trim();
 
-            if (stockValue === '') {
-                setError(stockInput, 'Please enter the stock');
-            } else if (isNaN(parseInt(stockValue))) {
-                setError(stockInput, 'Stock must be a number');
-            } else if (parseInt(stockValue) < 0) {
-                setError(stockInput, 'Stock cannot be negative');
-            } else {
-                clearError(stockInput);
-            }
-        }
+                    if (stockValue === '') {
+                        setError(stockInput, 'Please enter the stock');
+                    } else if (isNaN(parseInt(stockValue))) {
+                        setError(stockInput, 'Stock must be a number');
+                    } else if (parseInt(stockValue) < 0) {
+                        setError(stockInput, 'Stock cannot be negative');
+                    } else {
+                        clearError(stockInput);
+                    }
+                }
 
-        function validateImage() {
-            const imageValue = imageInput.value.trim();
+                function validateImage() {
+                    const imageValue = imageInput.value.trim();
 
-            // Check if file extension is valid
-            const validExtensions = ['png', 'jpg', 'jpeg'];
-            const fileExtension = imageValue.split('.').pop().toLowerCase();
+                    // Check if the input field is empty
+                    if (imageValue === '') {
+                        // Clear error message if input is empty
+                        clearError(imageInput);
+                        return; // Exit the function without further validation
+                    }
 
-            if (imageValue === '') {
-                setError(imageInput, 'Please select an image file');
-            } else if (!validExtensions.includes(fileExtension)) {
-                setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
-            } else {
-                clearError(imageInput);
-            }
-        }
+                    // Check if file extension is valid
+                    const validExtensions = ['png', 'jpg', 'jpeg'];
+                    const fileExtension = imageValue.split('.').pop().toLowerCase();
 
-        function validateInputs() {
-            validateProductName();
-            validateProductDesc();
-            validatePrice();
-            validateStock();
-            validateImage();
+                    if (!validExtensions.includes(fileExtension)) {
+                        setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
+                    } else {
+                        clearError(imageInput);
+                    }
+                }
 
-            // Check if any error exists
-            const errors = document.querySelectorAll('.error-text');
-            if (errors.length > 0) {
-                return false; // Prevent form submission
-            }
-            return true; // Allow form submission
-        }
-    </script>
+                function validateInputs() {
+                    validateProductName();
+                    validateProductDesc();
+                    validatePrice();
+                    validateStock();
+                    validateImage();
+
+                    // Check if any error exists
+                    const errors = document.querySelectorAll('.error-text');
+                    if (errors.length > 0) {
+                        return false; // Prevent form submission
+                    }
+                    return true; // Allow form submission
+                }
+            </script>
 
         </section>
     </main>

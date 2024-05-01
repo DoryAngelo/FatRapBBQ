@@ -398,64 +398,83 @@ if (isset($_POST['submit'])) {
                         <!-- delivery info block-->
                         <section class="red-theme" id="delivery-block">
                             <div class="left-side">
-                                <h3 class="block-heading">When do you want your order to be delivered?</h2>
-                                    <?php
-                                    $sql = "SELECT CALENDAR_DATE, DATE_STATUS FROM calendar";
-                                    $res = mysqli_query($conn, $sql);
-                                    $calendar_data = array();
+                                <h3 class="block-heading">When do you want your order to be delivered?</h3>
+                                <?php
+                                $sql = "SELECT CALENDAR_DATE, DATE_STATUS FROM calendar";
+                                $res = mysqli_query($conn, $sql);
+                                $calendar_data = array();
 
-                                    if ($res) {
-                                        while ($row = mysqli_fetch_assoc($res)) {
-                                            // Convert date string to a format JavaScript can understand
-                                            $date = date_create_from_format("F d Y", $row['CALENDAR_DATE']);
-                                            $dateStr = date_format($date, "Y-m-d");
-                                            $calendar_data[$dateStr] = $row['DATE_STATUS'];
-                                        }
+                                if ($res) {
+                                    while ($row = mysqli_fetch_assoc($res)) {
+                                        // Convert date string to a format JavaScript can understand
+                                        $date = date_create_from_format("F d Y", $row['CALENDAR_DATE']);
+                                        $dateStr = date_format($date, "Y-m-d");
+                                        $calendar_data[$dateStr] = $row['DATE_STATUS'];
                                     }
-                                    $calendar_json = json_encode($calendar_data);
+                                }
+                                $calendar_json = json_encode($calendar_data);
+                                ?>
+                                <script>
+                                    var calendarData = <?php echo $calendar_json; ?>;
+                                </script>
+                                <div class="date-grp">
+                                    <?php
+                                    $today = date("Y-m-d");
+                                    $oneMonthFromNow = date("Y-m-d", strtotime("+1 month"));
                                     ?>
-                                    <script>
-                                        var calendarData = <?php echo $calendar_json; ?>;
-                                    </script>
-                                    <div class="date-grp">
-                                        <?php
-                                        $today = date("Y-m-d");
-                                        $oneMonthFromNow = date("Y-m-d", strtotime("+1 month"));
-                                        ?>
-                                        <input class="date" type="date" name="date" min="<?php echo $today ?>" max="<?php echo $oneMonthFromNow ?>" oninput="disableInvalidDates(this)">
-                                        <script>
-                                            function disableInvalidDates(input) {
-                                                var selectedDate = new Date(input.value);
-                                                var currentDate = new Date();
-                                                currentDate.setHours(0, 0, 0, 0);
-                                                var dateStr = selectedDate.toISOString().slice(0, 10);
-                                                var currentTime = new Date().toLocaleTimeString('en-US', {
-                                                    hour12: false,
-                                                    hour: '2-digit',
-                                                    minute: '2-digit'
-                                                });
-
-                                                if (selectedDate < currentDate) {
-                                                    input.setCustomValidity("Date invalid.");
-                                                } else if (calendarData[dateStr] === 'fullybooked' || calendarData[dateStr] === 'closed') {
-                                                    input.setCustomValidity("This date is not available.");
-                                                } else if (selectedDate.getTime() === currentDate.getTime() && input.value < currentTime) {
-                                                    input.setCustomValidity("Time invalid.");
-                                                } else {
-                                                    input.setCustomValidity("");
-                                                }
-                                            }
-                                        </script>
-                                    </div>
+                                    <input class="date" type="date" name="date" min="<?php echo $today ?>" max="<?php echo $oneMonthFromNow ?>" oninput="validateDateTime(this)">
+                                    <div class="error-date error-text" style="display: none;">Date not available.</div>
+                                </div>
                             </div>
                             <div class="block time-slot">
                                 <h3 class="block-heading">Time Slot</h3>
-                                    <div class="block-body">
-                                        <input type="time" name="time" min="09:00:00" max="17:00:00">
-                                        <div class="error"></div>
-                                    </div>
+                                <div class="block-body">
+                                    <input type="time" name="time" min="09:00:00" max="17:00:00">
+                                    <div class="error-time error-text" style="display: none;">Time not available.</div>
+                                </div>
                             </div>
                         </section>
+
+                        <script>
+                            function validateDateTime(input) {
+                                var selectedDate = new Date(input.value);
+                                var currentDate = new Date();
+                                currentDate.setHours(0, 0, 0, 0);
+                                var dateStr = selectedDate.toISOString().slice(0, 10);
+                                var currentTime = new Date().toLocaleTimeString('en-US', {
+                                    hour12: false,
+                                    hour: '2-digit',
+                                    minute: '2-digit'
+                                });
+
+                                var dateError = document.querySelector('.error-date');
+                                var timeError = document.querySelector('.error-time');
+
+                                if (selectedDate < currentDate || calendarData[dateStr] === 'fullybooked' || calendarData[dateStr] === 'closed') {
+                                    dateError.style.display = 'block';
+                                } else {
+                                    dateError.style.display = 'none';
+                                }
+
+                                if (selectedDate.getTime() === currentDate.getTime() && input.value < currentTime) {
+                                    timeError.style.display = 'block';
+                                } else {
+                                    timeError.style.display = 'none';
+                                }
+                            }
+
+                            const dateInput = document.getElementsByName('date')[0];
+                            const timeInput = document.getElementsByName('time')[0];
+
+                            dateInput.addEventListener('input', function() {
+                                validateDateTime(this);
+                            });
+
+                            timeInput.addEventListener('input', function() {
+                                validateDateTime(this);
+                            });
+                        </script>
+
                         <!-- customer note block-->
                         <section class="block red-theme">
                             <h3 class="block-heading">Additional Notes</h2>
@@ -483,15 +502,22 @@ if (isset($_POST['submit'])) {
             const lastNameInput = document.getElementById('last-name');
             const emailInput = document.getElementById('email');
             const numberInput = document.getElementById('contact-number');
+            const regionInput = document.getElementById('region');
+            const provinceInput = document.getElementById('province');
+            const cityInput = document.getElementById('city');
+            const barangayInput = document.getElementById('barangay');
+            const streetInput = document.getElementById('street');
 
-            const regionInput = document.getElementsByName('region')[0];
-            const provinceInput = document.getElementsByName('province')[0];
-            const cityInput = document.getElementsByName('city')[0];
-            const barangayInput = document.getElementsByName('barangay')[0];
-            const streetInput = document.getElementsByName('street')[0];
+            firstNameInput.addEventListener('input', validateName);
+            lastNameInput.addEventListener('input', validateName);
+            emailInput.addEventListener('input', validateEmail);
+            numberInput.addEventListener('input', validateNumber);
+            regionInput.addEventListener('input', validateInput);
+            provinceInput.addEventListener('input', validateInput);
+            cityInput.addEventListener('input', validateInput);
+            barangayInput.addEventListener('input', validateInput);
+            streetInput.addEventListener('input', validateInput);
 
-            const dateInput = document.getElementsByName('date')[0];
-            const timeInput = document.getElementsByName('time')[0];
 
             function setError(input, message) {
                 const errorDiv = input.nextElementSibling;
@@ -503,122 +529,68 @@ if (isset($_POST['submit'])) {
                 errorDiv.innerHTML = ''; // Clear the error message
             }
 
-            function validateInputs() {
-                let isValid = true;
-
-                const firstNameValue = firstNameInput.value.trim();
-                const lastNameValue = lastNameInput.value.trim();
-                const emailValue = emailInput.value.trim();
-                const numberValue = numberInput.value.trim();
-
-                const regionValue = regionInput.value.trim();
-                const provinceValue = provinceInput.value.trim();
-                const cityValue = cityInput.value.trim();
-                const barangayValue = barangayInput.value.trim();
-                const streetValue = streetInput.value.trim();
-
-                const dateValue = dateInput.value.trim();
-                const timeValue = timeInput.value.trim();
-
+            function validateName() {
+                const value = this.value.trim();
                 const nameRegex = /^[a-zA-Z\s]+$/;
+
+                if (value === '') {
+                    setError(this, 'Please enter your name');
+                } else if (!nameRegex.test(value)) {
+                    setError(this, 'Name must contain only letters');
+                } else {
+                    clearError(this);
+                }
+            }
+
+            function validateEmail() {
+                const value = this.value.trim();
+                const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]+$/;
+
+                if (value === '') {
+                    setError(this, 'Please enter your email');
+                } else if (!emailRegex.test(value)) {
+                    setError(this, 'Invalid email format');
+                } else {
+                    clearError(this);
+                }
+            }
+
+            function validateNumber() {
+                const value = this.value.trim();
                 const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
-                const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/; // Password should not contain special characters
-                const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]+$/; // Email must contain an '@'
 
-                if (firstNameValue === '') {
-                    setError(firstNameInput, 'Please enter your name');
-                    isValid = false;
-                } else if (!nameRegex.test(firstNameValue)) {
-                    setError(firstNameInput, 'Name must contain only letters');
-                    isValid = false;
+                if (value === '') {
+                    setError(this, 'Please enter your number');
+                } else if (!numberRegex.test(value)) {
+                    setError(this, 'Invalid number');
                 } else {
-                    clearError(firstNameInput);
+                    clearError(this);
+                }
+            }
+
+            function validateInput() {
+                const value = this.value.trim();
+
+                if (value === '') {
+                    setError(this, `Please enter your ${this.name}`);
+                } else {
+                    clearError(this);
+                }
+            }
+
+            function validateInputs() {
+                const inputs = [firstNameInput, lastNameInput, emailInput, numberInput, regionInput, provinceInput, cityInput, barangayInput, streetInput];
+
+                for (let input of inputs) {
+                    validateInput.call(input);
                 }
 
-                if (lastNameValue === '') {
-                    setError(lastNameInput, 'Please enter your name');
-                    isValid = false;
-                } else if (!nameRegex.test(lastNameValue)) {
-                    setError(lastNameInput, 'Name must contain only letters');
-                    isValid = false;
-                } else {
-                    clearError(lastNameInput);
-                }
-
-
-                if (emailValue === '') {
-                    setError(emailInput, 'Please enter your email');
-                    isValid = false;
-                } else if (!emailRegex.test(emailValue)) {
-                    setError(emailInput, 'Invalid email format');
-                    isValid = false;
-                } else {
-                    clearError(emailInput);
-                }
-
-                if (numberValue === '') {
-                    setError(numberInput, 'Please enter your number');
-                    isValid = false;
-                } else if (!numberRegex.test(numberValue)) {
-                    setError(numberInput, 'Invalid number');
-                    isValid = false;
-                } else {
-                    clearError(numberInput);
-                }
-
-                if (regionValue === '') {
-                    setError(regionInput, 'Please enter your region');
-                    isValid = false;
-                } else {
-                    clearError(regionInput);
-                }
-
-                if (provinceValue === '') {
-                    setError(provinceInput, 'Please enter your province');
-                    isValid = false;
-                } else {
-                    clearError(provinceInput);
-                }
-
-                if (cityValue === '') {
-                    setError(cityInput, 'Please enter your city');
-                    isValid = false;
-                } else {
-                    clearError(cityInput);
-                }
-
-                if (barangayValue === '') {
-                    setError(barangayInput, 'Please enter your barangay');
-                    isValid = false;
-                } else {
-                    clearError(barangayInput);
-                }
-
-                if (streetValue === '') {
-                    setError(streetInput, 'Please enter your street');
-                    isValid = false;
-                } else {
-                    clearError(streetInput);
-                }
-
-                if (dateValue === '') {
-                    setError(dateInput, 'Please enter your date');
-                    isValid = false;
-                } else {
-                    clearError(dateInput);
-                }
-
-                if (timeValue === '') {
-                    setError(timeInput, 'Please enter your time');
-                    isValid = false;
-                } else {
-                    clearError(timeInput);
-                }
-
-
-                return isValid;
+                // Check if any error exists
+                const errors = document.querySelectorAll('.error-text');
+                return errors.length === 0; // Allow form submission if no errors
             }
         </script>
+
     </main>
     <footer>
         <div class="footer-container">

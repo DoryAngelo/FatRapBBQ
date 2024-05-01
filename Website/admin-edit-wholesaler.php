@@ -335,8 +335,19 @@ if ($count > 0) {
                             function validateImage() {
                                 const imageValue = imageInput.value.trim();
 
+                                // Check if the input field is empty
                                 if (imageValue === '') {
-                                    setError(imageInput, 'Please select an image file');
+                                    // Clear error message if input is empty
+                                    clearError(imageInput);
+                                    return; // Exit the function without further validation
+                                }
+
+                                // Check if file extension is valid
+                                const validExtensions = ['png', 'jpg', 'jpeg'];
+                                const fileExtension = imageValue.split('.').pop().toLowerCase();
+
+                                if (!validExtensions.includes(fileExtension)) {
+                                    setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
                                 } else {
                                     clearError(imageInput);
                                 }
