@@ -123,7 +123,7 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                             $PLACED_ORDER_STATUS = $row2['PLACED_ORDER_STATUS'];
                                             $GUEST_ORDER_IDENTIFIER = $row2['GUEST_ORDER_IDENTIFIER'];
                                             $REFERENCE_NUMBER = $row2['REFERENCE_NUMBER'];
-                                            
+
 
                                             switch ($PLACED_ORDER_STATUS) {
                                                 case "Placed": //PLACED
@@ -266,7 +266,7 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                             <button class="button" href="<?php echo SITEURL; ?>cus-home-page.php">Go to Home</button>
                         </div>
                     </section>
-                    
+
                     <!-- Cancelled message section -->
                     <!-- <section class="block" id="cancelled-section" style="display: none;">
                         <h3 class="block-heading">Order Cancelled</h3>
@@ -354,7 +354,14 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                 </div>
                             </div>
                     </section>
-                    
+                    <style>
+                        .success-message {
+                            font-size: 0.9rem;
+                            font-style: italic;
+                            margin-top: 1rem;
+                            color: var(--available);
+                        }
+                    </style>
                     <!-- section directly below this will only appear if order status is approved -->
                     <section class="block" id="payment-section">
                         <form action="" method="post" onsubmit="return validateForm()">
@@ -366,8 +373,14 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                     <p class="ref-label">Reference number</p>
                                     <input name="reference-number" id="reference-number" type="text">
                                     <div class="error"></div>
+                                    <?php
+                                    if ($REFERENCE_NUMBER !== '') {
+                                    ?>
+                                        <p class="success-message">Thanks for submitting! Your order will now be prepared!</p>
+                                    <?php
+                                    }
+                                    ?>
                                     <button id="submit-button" name="submit" <?php if ($REFERENCE_NUMBER !== '') echo 'disabled'; ?>>Submit</button>
-                                    <p class="prompt" id="submission-prompt" style="display: none;">Thanks for submitting!</p>
                                 </div>
                             </div>
                         </form>
@@ -383,7 +396,6 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                             }
 
                             function validateForm() {
-
                                 var referenceNumberInput = document.getElementById("reference-number");
                                 var referenceNumber = referenceNumberInput.value.trim();
 
@@ -400,10 +412,11 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                     setError(referenceNumberInput, "Reference number must not contain alphabets.");
                                     return false;
                                 }
-                                if (referenceNumber.length !== 13 ) {
+                                if (referenceNumber.length !== 13) {
                                     setError(referenceNumberInput, "Reference number must be 13 digits.");
                                     return false;
                                 }
+
 
                                 return true;
                             }

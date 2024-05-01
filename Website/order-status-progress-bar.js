@@ -101,19 +101,19 @@ const updateSteps = (e) => {
   if (currentStep === 2) {
     sectionToShowHide.style.display = "block"; // Show the section
 
-    // Add a click event listener to the submit button
-    submitButton.addEventListener("click", function (event) {
-      // Prevent the default form submission behavior
-      event.preventDefault();
+    // // Add a click event listener to the submit button
+    // submitButton.addEventListener("click", function (event) {
+    //   // Prevent the default form submission behavior
+    //   event.preventDefault();
 
-      // Display the prompt message
-      promptMessage.style.display = "block";
+    //   // Display the prompt message
+    //   promptMessage.style.display = "block";
 
-      // Hide the prompt message after 2000 milliseconds (adjust as needed)
-      setTimeout(() => {
-        promptMessage.style.display = "none";
-      }, 2000);
-    });
+    //   // Hide the prompt message after 2000 milliseconds (adjust as needed)
+    //   setTimeout(() => {
+    //     promptMessage.style.display = "none";
+    //   }, 2000);s
+    // });
   } else {
     sectionToShowHide.style.display = "none"; // Hide the section
   }
