@@ -110,10 +110,14 @@ main {
     background-color: #ECEFEF;
     color: var(--text);
     padding: 4px 8px;
-    width: 7.25rem;
+    min-width: 7.25rem;
     border-radius: 3px;
     border: none;
     margin-left: 1.5rem;
+}
+
+.inline .dropdown {
+    margin-left: 0;
 }
 
 .with-side-menu{

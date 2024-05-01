@@ -136,6 +136,28 @@ $countW = mysqli_num_rows($resW);
             <div class="container">
                 <div class="section-heading">
                     <h2>Dashboard</h2>
+                    <div class="inline">
+                        <p>Date range:</p>
+                        <!-- <select name="order-type" id="order-type" class="dropdown">
+                        <option value="all" <?php echo ($order_type === 'all') ? 'selected' : ''; ?>>All</option>
+                        <option value="Today" <?php echo ($order_type === 'Today') ? 'selected' : ''; ?>>Today</option>
+                        <option value="Advanced" <?php echo ($order_type === 'Advanced') ? 'selected' : ''; ?>>Advanced</option>
+                        </select> -->
+                        <select name="order-type" id="order-type" class="dropdown">
+                            <option value="all">All time</option>
+                            <option value="Today">Today</option>
+                            <option value="">Including tomorrow</option>
+                            <option value="">Within 7 days </option>
+                            <option value="">Within 2 weeks </option>
+                            <option value="">Within 30 days </option>
+                        </select>
+                    </div>
+                    <script>
+                        // document.getElementById('order-type').addEventListener('change', function() {
+                        //     var selectedOrderType = this.value;
+                        //     window.location.href = "admin-new-orders.php?type=" + selectedOrderType;
+                        // });
+                    </script>
                 </div>
                 <section class="with-side-menu">
                     <section class="main-section">

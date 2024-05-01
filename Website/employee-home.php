@@ -114,10 +114,22 @@ $countCa = mysqli_num_rows($resCa);
             <div class="container">
                 <div class="section-heading">
                     <h2>Dashboard</h2>
-                    <!-- <div class="inline">
+                    <div class="inline">
                         <p>Date range:</p>
-                        <input type="date"> 
-                    </div>-->
+                        <!-- <select name="order-type" id="order-type" class="dropdown">
+                        <option value="all" <?php echo ($order_type === 'all') ? 'selected' : ''; ?>>All</option>
+                        <option value="Today" <?php echo ($order_type === 'Today') ? 'selected' : ''; ?>>Today</option>
+                        <option value="Advanced" <?php echo ($order_type === 'Advanced') ? 'selected' : ''; ?>>Advanced</option>
+                        </select> -->
+                        <select name="order-type" id="order-type" class="dropdown">
+                            <option value="all">All time</option>
+                            <option value="Today">Today</option>
+                            <option value="">Including tomorrow</option>
+                            <option value="">Within 7 days </option>
+                            <option value="">Within 2 weeks </option>
+                            <option value="">Within 30 days </option>
+                        </select>
+                    </div>
                 </div>
                 <section class="with-side-menu">
                     <section class="main-section">
@@ -127,10 +139,11 @@ $countCa = mysqli_num_rows($resCa);
                                 <h1><?php echo $countPa ?></h1>
                                 <p class="bottom">Orders</p>
                             </a>
-                            <!-- <a class="box" href="<?php echo SITEURL; ?>employee-preparing-orders.php">
+                            <a class="box" href="<?php echo SITEURL; ?>employee-preparing-orders.php">
                                 <p>Currently Preparing</p>
                                 <h1><?php echo $countPr ?></h1>
-                            </a> -->
+                                <p class="bottom">Orders</p>
+                            </a>
                             <a class="box" href="<?php echo SITEURL; ?>employee-to-deliver-orders.php">
                                 <p>Ready for Pickup</p>
                                 <h1><?php echo $countFD ?></h1>

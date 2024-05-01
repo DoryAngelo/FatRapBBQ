@@ -118,13 +118,24 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
     <main>
         <section class="section" id="orders-page">
             <div class="container">
-                <div class="section-heading row">
+                <div class="section-heading">
                     <h2>To Prepare</h2>
-                    <select name="order-type" id="order-type" class="dropdown">
+                    <div class="inline">
+                        <p>Date range:</p>
+                        <!-- <select name="order-type" id="order-type" class="dropdown">
                         <option value="all" <?php echo ($order_type === 'all') ? 'selected' : ''; ?>>All</option>
                         <option value="Today" <?php echo ($order_type === 'Today') ? 'selected' : ''; ?>>Today</option>
                         <option value="Advanced" <?php echo ($order_type === 'Advanced') ? 'selected' : ''; ?>>Advanced</option>
-                    </select>
+                        </select> -->
+                        <select name="order-type" id="order-type" class="dropdown">
+                            <option value="all">All time</option>
+                            <option value="Today">Today</option>
+                            <option value="">Including tomorrow</option>
+                            <option value="">Within 7 days </option>
+                            <option value="">Within 2 weeks </option>
+                            <option value="">Within 30 days </option>
+                        </select>
+                    </div>
                     <script>
                         document.getElementById('order-type').addEventListener('change', function() {
                             var selectedOrderType = this.value;
