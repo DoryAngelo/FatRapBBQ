@@ -420,7 +420,7 @@ table button {
     justify-content: space-between;
 }
 
-#orders-page .side-menu .group:not(:first-of-type) {
+#orders-page .side-menu .group:last-of-type {
     display: flex;
     flex-direction: column;
     gap: 0.6rem;

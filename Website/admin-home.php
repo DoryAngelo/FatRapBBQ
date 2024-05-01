@@ -202,10 +202,11 @@ $countW = mysqli_num_rows($resW);
                         </div>
                     </section>
                     <section class="side-menu">
-                        <div class="group inventory">
+                        <!-- if there is a product in the inventory that is low in stock, show id="low-inventory" and hide id="inventory"-->
+                        <div class="group inventory" id="low-inventory">
                             <h3>Low Inventory</h3>
                             <div class="inventory-box">
-                                <?php
+                            <?php
                                 $sql = "SELECT * FROM food WHERE FOOD_STOCK < 100";
                                 $res = mysqli_query($conn, $sql);
                                 $count = mysqli_num_rows($res);
@@ -225,9 +226,16 @@ $countW = mysqli_num_rows($resW);
                                     }
                                 }
                                 ?>
-                                <a href="<?php echo SITEURL; ?>admin-inventory.php" class="edit">Edit</a>
+                                <a href="<?php echo SITEURL; ?>employee-inventory.php" class="edit">Edit</a>
                             </div>
                         </div>
+                        <!-- else, show id="inventory" and hide id="low-inventory"-->
+                        <!-- <div class="group" id="inventory">
+                            <h3>Inventory</h3>
+                            <div class="position-notif">
+                                <a href="<?php echo SITEURL; ?>admin-inventory.php" class="view">View</a>
+                            </div>
+                        </div> -->
                         <div class="group">
                             <h3>Calendar</h3>
                             <a href="<?php echo SITEURL; ?>admin-edit-calendar.php" class="view">View</a>

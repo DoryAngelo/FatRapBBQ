@@ -209,32 +209,40 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                         </table>
                     </section>
                     <section class="side-menu">
-                        <div class="group inventory">
+                        <!-- if there is a product in the inventory that is low in stock, show id="low-inventory" and hide id="inventory"-->
+                        <div class="group inventory" id="low-inventory">
                             <h3>Low Inventory</h3>
                             <div class="inventory-box">
+                            <?php
+                                $sql = "SELECT * FROM food WHERE FOOD_STOCK < 100";
+                                $res = mysqli_query($conn, $sql);
+                                $count = mysqli_num_rows($res);
+                                $stockValues = array();
+                                if ($count > 0) {
+                                    while ($row = mysqli_fetch_assoc($res)) {
+                                        $FOOD_NAME = $row['FOOD_NAME'];
+                                        $FOOD_STOCK = $row['FOOD_STOCK'];
+                                ?>
+                                        <div class="inline">
+                                            <p><?php echo $FOOD_NAME ?></p>
+                                            <span class="<?php echo ($FOOD_STOCK < 100) ? 'red-text' : ''; ?>">
+                                                <p><?php echo $FOOD_STOCK ?></p>
+                                            </span>
+                                        </div>
                                 <?php
-                                    $sql = "SELECT * FROM food WHERE FOOD_STOCK < 100";
-                                    $res = mysqli_query($conn, $sql);
-                                    $count = mysqli_num_rows($res);
-                                    $stockValues = array();
-                                    if ($count > 0) {
-                                        while ($row = mysqli_fetch_assoc($res)) {
-                                            $FOOD_NAME = $row['FOOD_NAME'];
-                                            $FOOD_STOCK = $row['FOOD_STOCK'];
-                                    ?>
-                                            <div class="inline">
-                                                <p><?php echo $FOOD_NAME ?></p>
-                                                <span class="<?php echo ($FOOD_STOCK < 100) ? 'red-text' : ''; ?>">
-                                                    <p><?php echo $FOOD_STOCK ?></p>
-                                                </span>
-                                            </div>
-                                    <?php
-                                        }
                                     }
-                                    ?>
+                                }
+                                ?>
                                 <a href="<?php echo SITEURL; ?>employee-inventory.php" class="edit">Edit</a>
                             </div>
                         </div>
+                        <!-- else, show id="inventory" -->
+                        <!-- <div class="group" id="inventory">
+                            <h3>Inventory</h3>
+                            <div class="position-notif">
+                                <a href="<?php echo SITEURL; ?>employee-inventory.php" class="view">View</a>
+                            </div>
+                        </div> -->
                         <div class="group inventory">
                             <h3>Currently Preparing</h3>
                             <!-- shows the quantity of each product of all orders in the "preparing" order status -->

@@ -232,10 +232,11 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
     </table>
         </section>
         <section class="side-menu">
-            <div class="group inventory">
+            <!-- if there is a product in the inventory that is low in stock, show id="low-inventory" and hide id="inventory"-->
+           <div class="group inventory" id="low-inventory">
                 <h3>Low Inventory</h3>
                 <div class="inventory-box">
-                    <?php
+                <?php
                     $sql = "SELECT * FROM food WHERE FOOD_STOCK < 100";
                     $res = mysqli_query($conn, $sql);
                     $count = mysqli_num_rows($res);
@@ -255,9 +256,16 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                         }
                     }
                     ?>
-                    <a href="<?php echo SITEURL; ?>admin-edit-inventory.php" class="edit">Edit</a>
+                    <a href="<?php echo SITEURL; ?>employee-inventory.php" class="edit">Edit</a>
                 </div>
             </div>
+            <!-- else, show id="inventory" and hide id="low-inventory"-->
+            <!-- <div class="group" id="inventory">
+                <h3>Inventory</h3>
+                <div class="position-notif">
+                    <a href="<?php echo SITEURL; ?>admin-inventory.php" class="view">View</a>
+                </div>
+            </div> -->
             <div class="group">
                 <a href="admin-new-orders.php" class="view big-font">New Orders</a>
                 <a href="admin-awaiting-payment.php" class="view big-font">Awaiting Payment</a>

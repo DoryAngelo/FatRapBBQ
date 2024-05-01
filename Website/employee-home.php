@@ -166,7 +166,8 @@ $countCa = mysqli_num_rows($resCa);
                         </div>
                     </section>
                     <section class="side-menu">
-                        <div class="group inventory">
+                        <!-- if there is a product in the inventory that is low in stock, show id="low-inventory" and hide id="inventory"-->
+                        <div class="group inventory" id="low-inventory">
                             <h3>Low Inventory</h3>
                             <div class="inventory-box">
                             <?php
@@ -192,6 +193,13 @@ $countCa = mysqli_num_rows($resCa);
                                 <a href="<?php echo SITEURL; ?>employee-inventory.php" class="edit">Edit</a>
                             </div>
                         </div>
+                        <!-- else, show id="inventory" and hide id="low-inventory"-->
+                        <!-- <div class="group" id="inventory">
+                            <h3>Inventory</h3>
+                            <div class="position-notif">
+                                <a href="<?php echo SITEURL; ?>employee-inventory.php" class="view">View</a>
+                            </div>
+                        </div> -->
                         <div class="group inventory">
                             <h3>Currently Preparing</h3>
                             <!-- shows the quantity of each product of all orders in the "preparing" order status -->
