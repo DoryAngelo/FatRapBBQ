@@ -189,7 +189,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                 ?>
                                 <!-- <div class="error">No new orders</div> -->
                                 <tr>
-                                    <td colspan="5" class="error">No new orders to prepare</td>
+                                    <td colspan="5" class="error">No orders </td>
                                 </tr>
                             <?php
 
@@ -226,6 +226,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                         </div>
                         <div class="group">
                             <a href="<?php echo SITEURL; ?>employee-to-prepare-orders.php" class="view big-font">To Prepare</a>
+                            <a href="<?php echo SITEURL; ?>employee-preparing-orders.php" class="view big-font">Currently Preparing</a>
                             <a href="<?php echo SITEURL; ?>employee-to-deliver-orders.php" class="view big-font">Ready for Pickup</a>
                             <!-- <a href="<?php echo SITEURL; ?>employee-shipped.php" class="view big-font">Shipped</a> -->
                             <a href="<?php echo SITEURL; ?>employee-completed-orders.php" class="view big-font">Completed Orders</a>

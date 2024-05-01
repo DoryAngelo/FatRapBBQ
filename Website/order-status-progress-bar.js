@@ -12,6 +12,7 @@ const circles = document.querySelectorAll(".circle"),
   availableDate = document.getElementById("available-date"),
   sectionToShowHide = document.getElementById("payment-section"),
   receiptButton = document.getElementById("generate-receipt-btn"),
+  paymentRefForm = document.getElementById("payment-ref-form"),
   submitButton = document.getElementById("submit"),
   promptMessage = document.querySelector(".prompt");
 
@@ -101,19 +102,37 @@ const updateSteps = (e) => {
   if (currentStep === 2) {
     sectionToShowHide.style.display = "block"; // Show the section
 
+<<<<<<< HEAD
     // // Add a click event listener to the submit button
     // submitButton.addEventListener("click", function (event) {
     //   // Prevent the default form submission behavior
     //   event.preventDefault();
+=======
+    // Add a click event listener to the submit button
+    paymentRefForm.addEventListener('submit', (event) => {
+      // Prevent the default form submission behavior
+      event.preventDefault();
+>>>>>>> 73fa6363d4fff5c7a4e36d8aa3a71cb69fa8fb15
 
     //   // Display the prompt message
     //   promptMessage.style.display = "block";
 
+<<<<<<< HEAD
     //   // Hide the prompt message after 2000 milliseconds (adjust as needed)
     //   setTimeout(() => {
     //     promptMessage.style.display = "none";
     //   }, 2000);s
     // });
+=======
+      // statusTitle.textContent = "Payment reference number submitted";
+      // statusDesc.textContent = "Your order will now be prepared";
+
+      // Hide the prompt message after 2000 milliseconds (adjust as needed)
+      setTimeout(() => {
+        promptMessage.style.display = "none";
+      }, 2000);
+    });
+>>>>>>> 73fa6363d4fff5c7a4e36d8aa3a71cb69fa8fb15
   } else {
     sectionToShowHide.style.display = "none"; // Hide the section
   }

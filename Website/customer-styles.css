@@ -176,12 +176,12 @@ div.circle {
     background-color: var(--active-primary);
 }
 
-.track-order #payment-section p.prompt {
+.track-order #payment-section #submission-prompt {
     display: none;
     font-size: 0.9rem;
     font-style: italic;
     margin-top: 1rem;
-    color: var(--available);
+    color: var(--available-text);
 }
 
 /* order summary table in cart, checkout, and order tracking */
