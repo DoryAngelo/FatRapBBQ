@@ -101,23 +101,6 @@ const updateSteps = (e) => {
   // Show/hide the payment section based on the current step
   if (currentStep === 2) {
     sectionToShowHide.style.display = "block"; // Show the section
-
-    // Add a click event listener to the submit button
-    paymentRefForm.addEventListener('submit', (event) => {
-      // Prevent the default form submission behavior
-      event.preventDefault();
-
-      // Display the prompt message
-      promptMessage.style.display = "block";
-
-      // statusTitle.textContent = "Payment reference number submitted";
-      // statusDesc.textContent = "Your order will now be prepared";
-
-      // Hide the prompt message after 2000 milliseconds (adjust as needed)
-      setTimeout(() => {
-        promptMessage.style.display = "none";
-      }, 2000);
-    });
   } else {
     sectionToShowHide.style.display = "none"; // Hide the section
   }
