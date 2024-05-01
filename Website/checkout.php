@@ -455,6 +455,10 @@ if (isset($_POST['submit'])) {
                                         <div class="error"></div>
                                     </div>
                             </div>
+                            <!--<div class="block time-slot">
+                                 <h3 class="block-heading">Available sticks</h3>
+                                <h3 class="block-heading">[Insert Date]</h3> 
+                            </div>-->
                         </section>
                         <!-- customer note block-->
                         <section class="block red-theme">
