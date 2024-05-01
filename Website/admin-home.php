@@ -203,7 +203,7 @@ $countW = mysqli_num_rows($resW);
                     </section>
                     <section class="side-menu">
                         <div class="group inventory">
-                            <h3>Inventory</h3>
+                            <h3>Low Inventory</h3>
                             <div class="inventory-box">
                                 <?php
                                 $sql = "SELECT * FROM food WHERE FOOD_STOCK < 100";

@@ -383,13 +383,8 @@ table button {
     flex-direction: column;
     gap: 0.8rem;
     border-radius: 1rem;
-}
-
-.side-menu a {
-    text-decoration: none;
-    font-weight: bold;
-    color: var(--sidemenu-blue-text);
-    border-radius: 1.2rem;
+    background-color: rgb(242, 150, 150);
+    color: rgb(119, 45, 45);
 }
 
 .side-menu .inventory-box a.edit {
@@ -398,6 +393,23 @@ table button {
     border-radius: 0;
     margin: 0;
     width: max-content;
+    color: rgb(119, 45, 45);
+}
+
+.side-menu .blue {
+    background-color: var(--sidemenu-blue);
+    color: var(--sidemenu-blue-text);
+}
+
+.side-menu .blue a.edit, .side-menu .blue .red-text {
+    color: var(--sidemenu-blue-text);
+}
+
+.side-menu a {
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--sidemenu-blue-text);
+    border-radius: 1.2rem;
 }
 
 .side-menu .inventory-box a.edit:hover {
@@ -984,7 +996,12 @@ span.warning i {
 }
 
 .red-text {
-    color: red;
+    font-weight: bold;
+    color: rgb(243, 57, 57);
+}
+
+.inventory-box .red-text {
+    color: rgb(255, 230, 230);
 }
 
 .layout {
