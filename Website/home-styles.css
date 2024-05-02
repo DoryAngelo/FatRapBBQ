@@ -323,7 +323,7 @@ img {
     font-style: italic;
 }
 /* section 4 */
-#track-order-section {
+#track-order-section, #prdt-avail-section {
     background-color: #F5D636;
 }
 
@@ -395,6 +395,76 @@ img {
 
 #wholesale-section-hidden {
     display: none;
+}
+
+#prdt-avail-section .left-side {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+#prdt-avail-section .text p {
+    margin-top: 0;
+}
+
+#prdt-avail-section .input-grp {
+    display: flex;
+    gap: 3rem;
+}
+
+#prdt-avail-section .item-grp {
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+}
+
+#prdt-avail-section label {
+    font-weight: bold;
+}
+
+#prdt-avail-section .input {
+    background-color: #FEFBEA;
+    color: var(--text);
+    padding: 4px 8px;
+    border-radius: 3px;
+    border: none;
+    min-width: 8rem;
+}
+
+#prdt-avail-section .right-side {
+    width: 30%;
+    min-width: 10rem;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#prdt-avail-section .circle {
+    height: 10rem;
+    width: 10rem;
+    background-color: #FEFBEA;
+    border-radius: 50%;
+    color: var(--text);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 4px 4px 0px;
+}
+
+#prdt-avail-section .circle h1 {
+    font-size: 3rem;
+}
+
+.position {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#prdt-avail-section .circle p {
+    position: absolute;
+    bottom: -40%;
 }
 
 /* element sizes shrink before tablet size*/
@@ -479,5 +549,36 @@ img {
     .button, .calendar-block, .form {
         width: 100%;
     }
+
+    #prdt-avail-section .left-side {
+        text-align: center;
+    }
+
+    #prdt-avail-section .input-grp {
+        justify-content: center;
+        gap: 5vw;
+        min-width: max-content;
+    }
+
+    #prdt-avail-section .right-side {
+        width: 100%;
+    }
 }
 
+@media only screen and (width <= 490px) {
+    #prdt-avail-section .input {
+        min-width: clamp(4rem,25vw,8rem);
+    }   
+}
+
+@media only screen and (width <= 490px) {
+    #prdt-avail-section .input-grp {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    #prdt-avail-section .input {
+        width: 80%;
+        margin-inline: auto;
+    }
+}

@@ -218,6 +218,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                 </section>
             </div>
         </section>
+        <section class="section" id="prdt-avail-section">
+            <div class="container responsive">
+                <div class="left-side">
+                    <div class="text">
+                        <h1>Check product availability</h1>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam, culpa.</p>
+                    </div>
+                    <div class="input-grp">
+                        <div class="item-grp">
+                            <label for="date">Date</label>
+                            <input type="date" id="date" class="input">
+                        </div>
+                        <div class="item-grp">
+                            <label for="time">Time</label>
+                            <input type="time" id="time" class="input">
+                        </div>
+                        <div class="item-grp">
+                            <label for="product">Product</label>
+                            <select name="product" id="product" class="input">
+                                <option value="">Item 1</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-side center">
+                    <div class="circle center">
+                        <div class="position">
+                            <h1>10</h1>
+                            <p>sticks</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <!-- section 3 -->
         <?php
         if ($PRSN_ROLE !== 'Wholesaler') {
