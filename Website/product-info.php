@@ -18,7 +18,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
 
 $FOOD_ID = $_GET['FOOD_ID'];
 
-$sql = "SELECT f.*, io.in_order_quantity, m.menu_stock
+$sql = "SELECT f.*, io.in_order_quantity, m.*
                 FROM food f 
                 LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
                 LEFT JOIN menu m ON f.FOOD_ID = m.food_id
@@ -30,11 +30,12 @@ $count = mysqli_num_rows($res);
 if ($count > 0) {
     while ($row = mysqli_fetch_assoc($res)) {
         $FOOD_ID = $row['FOOD_ID'];
-        $FOOD_NAME = $row['FOOD_NAME'];
-        $FOOD_DESC = $row['FOOD_DESC'];
+        $MENU_ID = $row['MENU_ID']
+;        $FOOD_NAME = $row['FOOD_NAME'];
+        $FOOD_DESC = $row['FOOD_DESC']; 
         $FOOD_IMG = $row['FOOD_IMG'];
         $FOOD_PRICE = $row['FOOD_PRICE'];
-        $MENU_STOCK = $row['menu_stock'];
+        $MENU_STOCK = $row['MENU_STOCK'];
         $FOOD_STOCK = $row['FOOD_STOCK'];
         $IN_ORDER_QUANTITY = $row['in_order_quantity'];
     }
@@ -67,10 +68,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     } else {
         $IN_ORDER_TOTAL = $quantity * $FOOD_PRICE;
         if (isset($_SESSION['prsn_id'])) {
-            $sql2 = "INSERT INTO in_order (FOOD_ID, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS)
-            VALUES ('$FOOD_ID', '$PRSN_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered')";
+            $sql2 = "INSERT INTO in_order (FOOD_ID, MENU_ID, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS)
+            VALUES ('$FOOD_ID', '$MENU_ID','$PRSN_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered')";
         } else {
-            $sql2 = "INSERT INTO in_order (FOOD_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS, GUEST_ORDER_IDENTIFIER)
+            $sql2 = "INSERT INTO in_order (FOOD_ID, MENU_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS, GUEST_ORDER_IDENTIFIER)
             VALUES ('$FOOD_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered', '$GUEST_ID')";
         }
         $res2 = mysqli_query($conn, $sql2);
@@ -267,8 +268,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             }
         });
     </script>
-
-
 </body>
 
 </html>

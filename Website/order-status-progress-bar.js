@@ -32,23 +32,23 @@ const updateSteps = (e) => {
       statusTitle.textContent = "Awaiting payment for your order";
       statusDesc.textContent = "Kindly settle your payment below and enter your GCash reference number for this transaction.";
       break;
-    case "Preparing":
-      currentStep = 3;
+    case "To Prepare":
+      currentStep = 2;
       statusTitle.textContent = "Your order is being prepared";
       statusDesc.textContent = "Estimated time to prepare your order is at least 30 minutes. Note that preparation time depends on the quantity you have purchased.";
       break;
-    case "Packed":
-      currentStep = 4;
+    case "Currently Preparing":
+      currentStep = 2;
       statusTitle.textContent = "Your order is packed and is ready to be shipped";
       statusDesc.textContent = "We will book your order for delivery. Please note that the waiting time for delivery depends on your location.";
       break;
-    case "Shipped":
-      currentStep = 5;
+    case "Packed":
+      currentStep = 3;
       statusTitle.textContent = "Your order is shipped";
       statusDesc.textContent = "Your delivery is on the way. Please make sure to receive your order when it arrives.";
       break;
     case "Completed":
-      currentStep = 6;
+      currentStep = 3;
       statusTitle.textContent = "Your order is delivered successfully";
       statusDesc.textContent = "Thank you for ordering at Fat Rap's Barbeque! You may now close this tab.";
       break;

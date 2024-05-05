@@ -91,7 +91,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                 <div class="section-heading">
                     <h2>Cart</h2>
                 </div>
-                <form class="section-body" action="checkout.php" method="post">
+                <form class="section-body" action="checkout.php" method="post" onsubmit="return validateForm()">
                     <section class="block">
                         <div class="block-body">
                             <div class="table-wrap">
@@ -131,6 +131,8 @@ GROUP BY f.FOOD_ID";
                                         $res = mysqli_query($conn, $sql);
                                         $count = mysqli_num_rows($res);
                                         $stockValues = array();
+                                        $flagValues = array();
+                                        $quantityExceedsStock = false;
                                         if ($count > 0) {
                                             while ($row = mysqli_fetch_assoc($res)) {
                                                 $IN_ORDER_ID = $row['IN_ORDER_ID'];
@@ -141,6 +143,13 @@ GROUP BY f.FOOD_ID";
                                                 $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
                                                 $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
                                                 $stockValues[$FOOD_NAME] = $MENU_STOCK;
+
+                                                if ($IN_ORDER_QUANTITY > $MENU_STOCK) {
+                                                    $quantityExceedsStock = true;
+                                                    $flagValues[$FOOD_NAME] = $quantityExceedsStock;
+                                                } else {
+                                                    $flagValues[$FOOD_NAME] = false;
+                                                }
                                         ?>
                                                 <tr> <!-- one row for a product-->
                                                     <td data-cell="customer" class="first-col">
@@ -152,9 +161,9 @@ GROUP BY f.FOOD_ID";
                                                     <td class="narrow-col quantity-col">
                                                         <div class="with-remaining">
                                                             <div class="quantity-grp">
-                                                                <i class='bx bxs-minus-circle js-minus' data-in-order-id="<?php echo $IN_ORDER_ID; ?>" data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
+                                                                <i class='bx bxs-minus-circle js-minus' data-in-order-id="<?php echo $IN_ORDER_ID; ?>" data-stock="<?php echo $MENU_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
                                                                 <p class="amount js-num"><?php echo $IN_ORDER_QUANTITY ?></p>
-                                                                <i class='bx bxs-plus-circle js-plus' data-in-order-id="<?php echo $IN_ORDER_ID; ?>" data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
+                                                                <i class='bx bxs-plus-circle js-plus' data-in-order-id="<?php echo $IN_ORDER_ID; ?>" data-stock="<?php echo $MENU_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
                                                             </div>
                                                             <p class="remaining"><?php echo ($MENU_STOCK < 0) ? 0 : $MENU_STOCK; ?>
                                                                 sticks remaining</p>
@@ -205,20 +214,27 @@ GROUP BY f.FOOD_ID";
                     <!-- <a href="checkout.php" class="page-button center">Checkout</a> -->
                     <?php
 
-                    if ($count <= 0) {
+                    if ($count <= 0 || in_array(true, $flagValues)) {
                     ?>
-                        <button class="page-button center" disabled>Checkout</button>
+                        <button class="page-button center">Checkout</button>
                     <?php
                     } else {
                     ?>
                         <button name="checkout" type="submit" class="page-button center">Checkout</button>
-                        <!-- second version -->
-                        <!-- <a href="checkout.php" class="page-button center">Checkout</a> -->
-                        <!-- first version -->
-                        <!-- <input type="submit" value="Checkout" name="checkout" class="page-button center"> -->
                     <?php
                     }
                     ?>
+                    <script>
+                        function validateForm() {
+                            <?php if ($count <= 0 || in_array(true, $flagValues)) : ?>
+                                alert("Cannot proceed with checkout. Please review your order.");
+                                return false;
+                            <?php else : ?>
+                                return true;
+                            <?php endif; ?>
+                        }
+                    </script>
+
                 </form>
             </div>
 
