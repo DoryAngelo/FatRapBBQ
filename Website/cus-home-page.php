@@ -18,9 +18,13 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
 
 $FOOD_NAME = 'Barbeque';
 
-$sql = "SELECT * FROM food WHERE FOOD_ACTIVE='Yes' AND FOOD_NAME = '$FOOD_NAME'";
+$sql = "SELECT food.*, menu.menu_stock 
+        FROM food 
+        INNER JOIN menu ON food.food_id = menu.food_id 
+        WHERE food.FOOD_ACTIVE='Yes' AND food.FOOD_NAME = '$FOOD_NAME'";
 $res = mysqli_query($conn, $sql);
 $count8 = mysqli_num_rows($res);
+
 
 //check whether there are food available
 if ($count8 > 0) {
@@ -32,6 +36,7 @@ if ($count8 > 0) {
         $FOOD_DESC = $row['FOOD_DESC'];
         $FOOD_IMG = $row['FOOD_IMG'];
         $FOOD_STOCK = $row['FOOD_STOCK'];
+        $MENU_STOCK = $row['menu_stock'];
     }
 }
 
@@ -309,10 +314,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         <?php
         if ($PRSN_ROLE !== 'Wholesaler') {
             if ($count8 > 0) {
-                $sql = "SELECT f.*, io.in_order_quantity 
+                $sql = "SELECT f.*, io.in_order_quantity, m.menu_stock 
                 FROM food f 
                 LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
+                LEFT JOIN menu m ON f.FOOD_ID = m.food_id
                 WHERE f.FOOD_ID = '$FOOD_ID'";
+        
 
                 $res = mysqli_query($conn, $sql);
                 $count = mysqli_num_rows($res);
@@ -328,7 +335,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                     <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="picture of a pork bbq">
                     <!-- <img src="images/pork-bbq.jpg" alt="picture of 3 pork bbq sticks"> -->
                     <div class="text">
-                        <h1><?php echo $FOOD_NAME; ?></h1>
+                        <h1>Barbeque</h1>
                         <div>
                             <p>₱<?php echo $FOOD_PRICE; ?></p>
                             <p>1 stick</p>
