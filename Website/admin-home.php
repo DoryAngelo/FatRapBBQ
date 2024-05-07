@@ -157,7 +157,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                 </a> -->
                             <a class="box" href="<?php echo SITEURL; ?>admin-delivery-orders.php">
                                 <p>Ready for Pickup</p>
-                                <h1><?php echo $countFD ?></h1>
+                                <h1><?php echo $countS ?></h1>
                                 <p class="bottom">Orders</p>
                             </a>
                             <!-- <a class="box" href="<?php echo SITEURL; ?>admin-shipped-orders.php">
