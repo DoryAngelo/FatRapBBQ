@@ -166,7 +166,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                             </tr>
                             <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
                             <?php
-                            $sql = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'For Delivery'";
+                            $sql = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'Packed'";
                             $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
 
                             if ($order_type === 'Today') {
