@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 01, 2024 at 09:03 AM
+-- Generation Time: May 07, 2024 at 03:43 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -124,7 +124,8 @@ CREATE TABLE `food` (
 --
 
 INSERT INTO `food` (`FOOD_ID`, `CTGY_ID`, `FOOD_NAME`, `FOOD_PRICE`, `FOOD_DESC`, `FOOD_IMG`, `FOOD_STOCK`, `FOOD_ACTIVE`, `FOOD_TYPE`) VALUES
-(60, 0, 'Barbeque', 25.50, 'BBQ', 'FOOD_IMAGE_Barbeque.jpg', 50, 'Yes', 'Customer');
+(60, 0, 'Barbeque', 25.50, 'BBQ', 'FOOD_IMAGE_Barbeque.jpg', 150, 'Yes', 'Customer'),
+(61, 0, 'Isaw', 5.00, 'Isaw ng manok', 'FOOD_IMAGE_Isaw.jpg', 100, 'Yes', 'Customer');
 
 -- --------------------------------------------------------
 
@@ -135,6 +136,7 @@ INSERT INTO `food` (`FOOD_ID`, `CTGY_ID`, `FOOD_NAME`, `FOOD_PRICE`, `FOOD_DESC`
 CREATE TABLE `in_order` (
   `IN_ORDER_ID` int(18) UNSIGNED NOT NULL,
   `FOOD_ID` int(18) NOT NULL,
+  `MENU_ID` int(18) NOT NULL,
   `PRSN_ID` int(18) NOT NULL,
   `IN_ORDER_QUANTITY` int(11) NOT NULL,
   `IN_ORDER_TOTAL` decimal(10,2) NOT NULL,
@@ -147,8 +149,13 @@ CREATE TABLE `in_order` (
 -- Dumping data for table `in_order`
 --
 
-INSERT INTO `in_order` (`IN_ORDER_ID`, `FOOD_ID`, `PRSN_ID`, `IN_ORDER_QUANTITY`, `IN_ORDER_TOTAL`, `IN_ORDER_STATUS`, `PLACED_ORDER_ID`, `GUEST_ORDER_IDENTIFIER`) VALUES
-(182, 60, 15, 10, 255.00, 'Ordered', 89, '');
+INSERT INTO `in_order` (`IN_ORDER_ID`, `FOOD_ID`, `MENU_ID`, `PRSN_ID`, `IN_ORDER_QUANTITY`, `IN_ORDER_TOTAL`, `IN_ORDER_STATUS`, `PLACED_ORDER_ID`, `GUEST_ORDER_IDENTIFIER`) VALUES
+(182, 60, 0, 15, 10, 255.00, 'Ordered', 89, ''),
+(183, 60, 0, 15, 15, 375.00, 'Ordered', 90, ''),
+(186, 60, 11, 15, 3, 75.00, 'Ordered', 91, ''),
+(187, 60, 11, 15, 1, 25.50, 'Ordered', 92, ''),
+(189, 60, 13, 15, 10, 255.00, 'Ordered', 93, ''),
+(190, 61, 12, 15, 10, 50.00, 'Ordered', 93, '');
 
 -- --------------------------------------------------------
 
@@ -169,8 +176,8 @@ CREATE TABLE `menu` (
 --
 
 INSERT INTO `menu` (`MENU_ID`, `FOOD_ID`, `MENU_STOCK`, `MENU_START`, `MENU_END`) VALUES
-(8, 60, 20, 'Jan 01, 1970 08:00:00 am', 'Jan 01, 1970 08:00:00 am'),
-(10, 60, 20, 'May 01, 2024 02:08:00 pm', 'May 01, 2024 06:08:00 pm');
+(12, 61, 90, 'May 05, 2024 07:07:00 pm', 'May 10, 2024 07:08:00 pm'),
+(13, 60, 40, 'May 05, 2024 07:16:00 pm', 'May 08, 2024 07:16:00 pm');
 
 -- --------------------------------------------------------
 
@@ -231,7 +238,11 @@ CREATE TABLE `placed_order` (
 --
 
 INSERT INTO `placed_order` (`PLACED_ORDER_ID`, `PRSN_ID`, `CUS_NAME`, `CUS_NUMBER`, `CUS_EMAIL`, `PLACED_ORDER_DATE`, `PLACED_ORDER_TOTAL`, `DELIVERY_ADDRESS`, `DELIVERY_DATE`, `PLACED_ORDER_STATUS`, `PLACED_ORDER_CONFIRMATION`, `PLACED_ORDER_TRACKER`, `PLACED_ORDER_NOTE`, `REFERENCE_NUMBER`, `GUEST_ORDER_IDENTIFIER`) VALUES
-(89, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-05-01 02:58:23pm', 255.00, 'National Capital Region (NCR), City Of Manila, Binondo, Barangay 288, StreetTest', '2024-05-01 14:58', 'Placed', '', 'e466b452178783d4', '', '', '');
+(89, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-05-01 02:58:23pm', 255.00, 'National Capital Region (NCR), City Of Manila, Binondo, Barangay 288, StreetTest', '2024-05-30 14:58', 'Currently Preparing', 'Confirmed', 'e466b452178783d4', '', '1232132132324', ''),
+(90, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-05-05 05:17:31pm', 375.00, 'National Capital Region (NCR), City Of Manila, Binondo, Barangay 287, StreetTest', '2024-05-06 13:17', 'Currently Preparing', '', '0b83d74f86c293bf', '', '', ''),
+(91, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-05-05 06:11:28pm', 75.00, 'National Capital Region (NCR), City Of Manila, Binondo, Barangay 287, StreetTest', '2024-05-06 14:11', 'Placed', '', 'f045d8a2b76b9abe', '', '', ''),
+(92, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-05-05 06:25:15pm', 25.50, 'National Capital Region (NCR), City Of Manila, Binondo, Barangay 291, StreetTest', '2024-05-06 14:25', 'Placed', '', '0fa5232641a4fe56', '', '', ''),
+(93, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-05-05 07:17:57pm', 305.00, 'National Capital Region (NCR), City Of Manila, Binondo, Barangay 287, StreetTest', '2024-05-06 15:17', 'Placed', '', '6a4f1cf108cd2e7a', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -352,19 +363,19 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT for table `food`
 --
 ALTER TABLE `food`
-  MODIFY `FOOD_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `FOOD_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `in_order`
 --
 ALTER TABLE `in_order`
-  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=183;
+  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=191;
 
 --
 -- AUTO_INCREMENT for table `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `MENU_ID` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `MENU_ID` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `person`
@@ -376,7 +387,7 @@ ALTER TABLE `person`
 -- AUTO_INCREMENT for table `placed_order`
 --
 ALTER TABLE `placed_order`
-  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- AUTO_INCREMENT for table `wholesaler`
