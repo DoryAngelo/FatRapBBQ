@@ -178,12 +178,12 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                             </span>
                                             <span class="label">Payment</span>
                                         </div>
-                                        <!-- if status = packed -->
+                                        <!-- if status is ready for pickup-->
                                         <div class="step">
                                             <span class="circle">
                                                 <i class='bx bx-check'></i>
                                             </span>
-                                            <span class="label">Packed</span>
+                                            <span class="label">Ready for Pickup</span>
                                         </div>
                                         <div class="progress-bar">
                                             <span class="indicator"></span>

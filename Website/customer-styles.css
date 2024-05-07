@@ -746,7 +746,7 @@ a.back {
   .steps .progress-bar {
     position: absolute;
     height: 0.5rem;
-    width: 95%;
+    width: 93%;
     background: #DFDCCB;
     bottom: 58%;
     margin-left: 1.33%;
@@ -865,7 +865,7 @@ a.back {
 
 #delivery-block .input {
     background-color: #D95039;
-    /* color: white; */
+    color: white;
     padding: 4px 8px;
     border-radius: 3px;
     border: none;
@@ -875,9 +875,12 @@ a.back {
 
 .prod-availability p {
     text-wrap: nowrap;
+    hyphens: auto;
 }
+
 .prod-availability .name {
     font-weight: bold;
+    text-wrap: wrap;
 }
 
 @media only screen and (width <= 950px) {
