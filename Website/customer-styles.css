@@ -190,7 +190,7 @@ div.circle {
     overflow-x: auto;
 }
 
-table.order {
+table {
     border-collapse: collapse;
     width: 100%;
     /* min-width: 450px; */
@@ -259,7 +259,7 @@ table th {
     text-wrap: nowrap;
 }
 
-table td:not(.first-col), table th:not(.first-col) {
+table.order td:not(.first-col), table.order th:not(.first-col) {
     /* border: 1px solid red; */
     padding-inline: 5px;
 }
@@ -402,7 +402,9 @@ table td:not(.first-col), table th:not(.first-col) {
 
 .time-slot {
     background-color: #F8745E;
-    width: 40%;
+    /* width: 40%; */
+    width: 50%;
+    max-width: 25rem;
     min-height: 100%;
 }
 
@@ -846,6 +848,38 @@ a.back {
     color: #115B2D;
 }
 
+#delivery-block .input-grp {
+    display: flex;
+    gap: 3rem;
+}
+
+#delivery-block .item-grp {
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+}
+
+#delivery-block label {
+    font-weight: bold;
+}
+
+#delivery-block .input {
+    background-color: #D95039;
+    /* color: white; */
+    padding: 4px 8px;
+    border-radius: 3px;
+    border: none;
+    width: 8rem;
+    height: 29px;
+}
+
+.prod-availability p {
+    text-wrap: nowrap;
+}
+.prod-availability .name {
+    font-weight: bold;
+}
+
 @media only screen and (width <= 950px) {
     /* .menu .section-body {
         grid-template-columns: repeat(auto-fit, minmax(150px, 150px)); 
@@ -885,6 +919,17 @@ a.back {
 
     .track-order #payment-section .block-body {
         gap: 5vw;
+    }
+}
+
+@media only screen and (width <= 745px) {
+    #delivery-block {
+        flex-direction: column;
+    }
+
+    #delivery-block .time-slot{
+        width: 100%;
+        max-width: 100%;
     }
 }
 
@@ -972,7 +1017,7 @@ a.back {
         padding: 3%;
     }
 
-    #delivery-block, .contact-info-blk {
+    .contact-info-blk {
         flex-direction: column;
     }
 
@@ -986,10 +1031,6 @@ a.back {
 
     #delivery-block .left-side{
         width: auto;
-    }
-
-    #delivery-block .time-slot{
-        width: 100%;
     }
     
     .steps .circle {
@@ -1065,5 +1106,13 @@ a.back {
     }
     .menu .menu-item .inline h2 {
         font-size: 1.33rem;
+    }
+
+    #delivery-block .input-grp {
+        /* gap: 6vw; */
+    }
+
+    #delivery-block .input {
+        width: 6rem;
     }
 }

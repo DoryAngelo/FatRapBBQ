@@ -417,20 +417,42 @@ if (isset($_POST['submit'])) {
                                 <script>
                                     var calendarData = <?php echo $calendar_json; ?>;
                                 </script>
-                                <div class="date-grp">
+                                <!-- <div class="date-grp">
                                     <?php
                                     $today = date("Y-m-d");
                                     $oneMonthFromNow = date("Y-m-d", strtotime("+1 month"));
                                     ?>
                                     <input class="date" type="date" name="date" min="<?php echo $today ?>" max="<?php echo $oneMonthFromNow ?>" oninput="validateDateTime(this)">
                                     <div class="error-date error-text" style="display: none;">Date not available.</div>
+                                </div> -->
+                                <div class="input-grp">
+                                    <div class="item-grp">
+                                        <label for="date">Date</label>
+                                        <input class="date input" type="date" name="date" min="<?php echo $today ?>" max="<?php echo $oneMonthFromNow ?>" oninput="validateDateTime(this)">
+                                        <div class="error-date error-text" style="display: none;">Date not available.</div>
+                                    </div>
+                                    <div class="item-grp">
+                                        <label for="time">Time</label>
+                                        <input class="input" type="time" name="time" min="09:00:00" max="17:00:00">
+                                        <div class="error-time error-text" style="display: none;">Time not available.</div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="block time-slot">
-                                <h3 class="block-heading">Time Slot</h3>
+                                <h3 class="block-heading">Product Availability</h3>
                                 <div class="block-body">
-                                    <input type="time" name="time" min="09:00:00" max="17:00:00">
-                                    <div class="error-time error-text" style="display: none;">Time not available.</div>
+                                    <div class="prod-availability"> <!-- contents from cart and its remaining stock in inventory --Price---->
+                                        <div class="inline">
+                                            <p class="name">Barbeque</p>
+                                            <p>100 sticks</p>
+                                        </div>
+                                        <div class="inline">
+                                            <p class="name">Barbeque erwtwetr</p>
+                                            <p>100 stickswetrer</p>
+                                        </div>
+                                    </div>
+                                    <!-- <input type="time" name="time" min="09:00:00" max="17:00:00">
+                                    <div class="error-time error-text" style="display: none;">Time not available.</div> -->
                                 </div>
                             </div>
                             <!--<div class="block time-slot">
