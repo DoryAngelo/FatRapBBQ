@@ -104,20 +104,22 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                 </div>
                 <section class="section-body">
                     <?php
-
                     if ($PRSN_ROLE === 'Admin') {
-                        $sql = "SELECT m.*, f.*
-                FROM menu m
-                JOIN food f ON m.food_id = f.food_id
-                WHERE f.food_active = 'Yes'";
+                        $sql = "SELECT DISTINCT f.*, MIN(STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p')) AS min_start, MAX(STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')) AS max_end
+            FROM menu m
+            JOIN food f ON m.food_id = f.food_id
+            WHERE f.food_active = 'Yes'
+            GROUP BY f.food_id";
                     } else {
-                        $sql = "SELECT m.*, f.*
-                FROM menu m
-                JOIN food f ON m.food_id = f.food_id
-                WHERE f.food_active = 'Yes' 
-                AND f.food_type = '$PRSN_ROLE'
-                AND NOW() BETWEEN STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p') AND STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')";
+                        $sql = "SELECT DISTINCT f.*, MIN(STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p')) AS min_start, MAX(STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')) AS max_end
+            FROM menu m
+            JOIN food f ON m.food_id = f.food_id
+            WHERE f.food_active = 'Yes' 
+            AND f.food_type = '$PRSN_ROLE'
+            AND NOW() BETWEEN STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p') AND STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')
+            GROUP BY f.food_id";
                     }
+
 
                     $res = mysqli_query($conn, $sql);
                     $count = mysqli_num_rows($res);

@@ -18,12 +18,13 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
 
 $FOOD_ID = $_GET['FOOD_ID'];
 
-$sql = "SELECT f.*, io.in_order_quantity, m.*
-                FROM food f 
-                LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
-                LEFT JOIN menu m ON f.FOOD_ID = m.food_id
-                WHERE f.FOOD_ID = '$FOOD_ID'";
-
+$sql = "SELECT f.*, SUM(m.MENU_STOCK) AS total_menu_stock, io.in_order_quantity
+        FROM food f 
+        LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
+        LEFT JOIN menu m ON f.FOOD_ID = m.food_id
+        WHERE f.FOOD_ID = '$FOOD_ID'
+        AND NOW() BETWEEN STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p') AND STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')
+        GROUP BY f.FOOD_ID";
 
 $res = mysqli_query($conn, $sql);
 $count = mysqli_num_rows($res);
@@ -35,7 +36,7 @@ if ($count > 0) {
         $FOOD_DESC = $row['FOOD_DESC']; 
         $FOOD_IMG = $row['FOOD_IMG'];
         $FOOD_PRICE = $row['FOOD_PRICE'];
-        $MENU_STOCK = $row['MENU_STOCK'];
+        $MENU_STOCK = $row['total_menu_stock'];
         $FOOD_STOCK = $row['FOOD_STOCK'];
         $IN_ORDER_QUANTITY = $row['in_order_quantity'];
     }
