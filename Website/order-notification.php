@@ -23,8 +23,8 @@ $res = mysqli_query($conn, $sql);
 // Check for new orders
 if ($_SESSION['prsn_role'] === 'Admin') {
     $selectNO = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'Placed'";
-} else { // For employees, check if there are orders in preparing status
-    $selectNO = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'Preparing'";
+} else { 
+    $selectNO = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'To Prepare'";
 }
 $resNO = mysqli_query($conn, $selectNO);
 $countNO = mysqli_num_rows($resNO);

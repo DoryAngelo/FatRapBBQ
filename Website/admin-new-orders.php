@@ -19,16 +19,16 @@ if (isset($_POST['confirmed'])) {
         case "Placed":
             $PLACED_ORDER_STATUS = "Awaiting Payment";
 
-            $update = "UPDATE food f
-            JOIN (
-                SELECT food_id, in_order_quantity
-                FROM in_order
-                WHERE placed_order_id = '$PLACED_ORDER_ID'
-                GROUP BY food_id
-            ) iot ON f.food_id = iot.food_id
-            SET f.food_stock = f.food_stock - iot.in_order_quantity";
+            // $update = "UPDATE food f
+            // JOIN (
+            //     SELECT food_id, in_order_quantity
+            //     FROM in_order
+            //     WHERE placed_order_id = '$PLACED_ORDER_ID'
+            //     GROUP BY food_id
+            // ) iot ON f.food_id = iot.food_id
+            // SET f.food_stock = f.food_stock - iot.in_order_quantity";
 
-            $res = mysqli_query($conn, $update);
+            // $res = mysqli_query($conn, $update);
 
             break;
         case "Awaiting Payment":
@@ -143,13 +143,14 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                         <option value="Advanced" <?php echo ($order_type === 'Advanced') ? 'selected' : ''; ?>>Advanced</option>
                         </select> -->
                         <select name="order-type" id="order-type" class="dropdown">
-                            <option value="all">All time</option>
-                            <option value="Today">Today</option>
-                            <option value="">Including tomorrow</option>
-                            <option value="">Within 7 days </option>
-                            <option value="">Within 2 weeks </option>
-                            <option value="">Within 30 days </option>
+                            <option value="all" <?php echo ($order_type === 'all') ? 'selected' : ''; ?>>All time</option>
+                            <option value="Today" <?php echo ($order_type === 'Today') ? 'selected' : ''; ?>>Today</option>
+                            <option value="Tomorrow" <?php echo ($order_type === 'Tomorrow') ? 'selected' : ''; ?>>Including tomorrow</option>
+                            <option value="7days" <?php echo ($order_type === '7days') ? 'selected' : ''; ?>>Within 7 days</option>
+                            <option value="2weeks" <?php echo ($order_type === '2weeks') ? 'selected' : ''; ?>>Within 2 weeks</option>
+                            <option value="30days" <?php echo ($order_type === '30days') ? 'selected' : ''; ?>>Within 30 days</option>
                         </select>
+
                     </div>
                     <script>
                         document.getElementById('order-type').addEventListener('change', function() {
@@ -178,12 +179,17 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                 $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
 
                                 if ($order_type === 'Today') {
-                                    // Add condition for orders scheduled for delivery today
                                     $sql .= " AND DATE_FORMAT(STR_TO_DATE(delivery_date, '%Y-%m-%d %H:%i'), '%Y-%m-%d') = CURDATE()";
-                                } elseif ($order_type === 'Advanced') {
-                                    // Add condition for orders scheduled for delivery after today
-                                    $sql .= " AND DATE_FORMAT(STR_TO_DATE(delivery_date, '%Y-%m-%d %H:%i'), '%Y-%m-%d') > CURDATE()";
+                                } elseif ($order_type === 'Tomorrow') {
+                                    $sql .= " AND DATE_FORMAT(STR_TO_DATE(delivery_date, '%Y-%m-%d %H:%i'), '%Y-%m-%d') >= CURDATE() AND DATE_FORMAT(STR_TO_DATE(delivery_date, '%Y-%m-%d %H:%i'), '%Y-%m-%d') <= DATE_ADD(CURDATE(), INTERVAL 1 DAY)";
+                                } elseif ($order_type === '7days') {
+                                    $sql .= " AND delivery_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY)";
+                                } elseif ($order_type === '2weeks') {
+                                    $sql .= " AND delivery_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 14 DAY)";
+                                } elseif ($order_type === '30days') {
+                                    $sql .= " AND delivery_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY)";
                                 }
+
 
                                 $res = mysqli_query($conn, $sql);
                                 $count = mysqli_num_rows($res);
@@ -223,10 +229,10 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                                     }
                                                 }
                                             </script>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                            </form>
+                        </div>
+                        </td>
+                        </tr>
                     <?php
                                     }
                                 } else {
@@ -247,11 +253,11 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
             </div>
         </section>
         <section class="side-menu">
-           <!-- if there is a product in the inventory that is low in stock, show id="low-inventory" and hide id="inventory"-->
-           <div class="group inventory" id="low-inventory">
+            <!-- if there is a product in the inventory that is low in stock, show id="low-inventory" and hide id="inventory"-->
+            <div class="group inventory" id="low-inventory">
                 <h3>Low Inventory</h3>
                 <div class="inventory-box">
-                <?php
+                    <?php
                     $sql = "SELECT * FROM food WHERE FOOD_STOCK < 100";
                     $res = mysqli_query($conn, $sql);
                     $count = mysqli_num_rows($res);
@@ -271,7 +277,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                         }
                     }
                     ?>
-                    <a href="<?php echo SITEURL; ?>employee-inventory.php" class="edit">Edit</a>
+                    <a href="<?php echo SITEURL; ?>admin-inventory.php" class="edit">Edit</a>
                 </div>
             </div>
             <!-- else, show id="inventory" and hide id="low-inventory"-->

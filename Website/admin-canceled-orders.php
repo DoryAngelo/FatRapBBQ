@@ -133,12 +133,12 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                         <option value="Advanced" <?php echo ($order_type === 'Advanced') ? 'selected' : ''; ?>>Advanced</option>
                         </select> -->
                         <select name="order-type" id="order-type" class="dropdown">
-                            <option value="all">All time</option>
-                            <option value="Today">Today</option>
-                            <option value="">Including tomorrow</option>
-                            <option value="">Within 7 days </option>
-                            <option value="">Within 2 weeks </option>
-                            <option value="">Within 30 days </option>
+                            <option value="all" <?php echo ($order_type === 'all') ? 'selected' : ''; ?>>All time</option>
+                            <option value="Today" <?php echo ($order_type === 'Today') ? 'selected' : ''; ?>>Today</option>
+                            <option value="Tomorrow" <?php echo ($order_type === 'Tomorrow') ? 'selected' : ''; ?>>Including tomorrow</option>
+                            <option value="7days" <?php echo ($order_type === '7days') ? 'selected' : ''; ?>>Within 7 days</option>
+                            <option value="2weeks" <?php echo ($order_type === '2weeks') ? 'selected' : ''; ?>>Within 2 weeks</option>
+                            <option value="30days" <?php echo ($order_type === '30days') ? 'selected' : ''; ?>>Within 30 days</option>
                         </select>
                     </div>
                     <script>
@@ -167,11 +167,15 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                             $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
 
                             if ($order_type === 'Today') {
-                                // Add condition for orders scheduled for delivery today
                                 $sql .= " AND DATE_FORMAT(STR_TO_DATE(delivery_date, '%Y-%m-%d %H:%i'), '%Y-%m-%d') = CURDATE()";
-                            } elseif ($order_type === 'Advanced') {
-                                // Add condition for orders scheduled for delivery after today
-                                $sql .= " AND DATE_FORMAT(STR_TO_DATE(delivery_date, '%Y-%m-%d %H:%i'), '%Y-%m-%d') > CURDATE()";
+                            } elseif ($order_type === 'Tomorrow') {
+                                $sql .= " AND DATE_FORMAT(STR_TO_DATE(delivery_date, '%Y-%m-%d %H:%i'), '%Y-%m-%d') >= CURDATE() AND DATE_FORMAT(STR_TO_DATE(delivery_date, '%Y-%m-%d %H:%i'), '%Y-%m-%d') <= DATE_ADD(CURDATE(), INTERVAL 1 DAY)";
+                            } elseif ($order_type === '7days') {
+                                $sql .= " AND delivery_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY)";
+                            } elseif ($order_type === '2weeks') {
+                                $sql .= " AND delivery_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 14 DAY)";
+                            } elseif ($order_type === '30days') {
+                                $sql .= " AND delivery_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY)";
                             }
 
                             $res = mysqli_query($conn, $sql);
@@ -253,7 +257,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                         }
                     }
                     ?>
-                    <a href="<?php echo SITEURL; ?>employee-inventory.php" class="edit">Edit</a>
+                    <a href="<?php echo SITEURL; ?>admin-inventory.php" class="edit">Edit</a>
                 </div>
             </div>
             <!-- else, show id="inventory" and hide id="low-inventory"-->

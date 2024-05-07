@@ -10,54 +10,7 @@ if ($PRSN_ROLE !== 'Employee') {
     header('location:' . SITEURL . 'login-page.php');
 }
 
-$selectPa = "SELECT * 
-FROM placed_order
-WHERE PLACED_ORDER_CONFIRMATION = 'Confirmed' AND PLACED_ORDER_STATUS = 'Preparing'";
-
-$resPa = mysqli_query($conn, $selectPa);
-
-$countPa = mysqli_num_rows($resPa);
-
-$selectPr = "SELECT * 
-FROM placed_order
-WHERE PLACED_ORDER_STATUS = 'Preparing'";
-
-$resPr = mysqli_query($conn, $selectPr);
-
-$countPr = mysqli_num_rows($resPr);
-
-$selectFD = "SELECT * 
-FROM placed_order
-WHERE PLACED_ORDER_STATUS = 'For Delivery'";
-
-$resFD = mysqli_query($conn, $selectFD);
-
-$countFD = mysqli_num_rows($resFD);
-
-$selectS = "SELECT * 
-FROM placed_order
-WHERE PLACED_ORDER_STATUS = 'Shipped'";
-
-$resS = mysqli_query($conn, $selectS);
-
-$countS = mysqli_num_rows($resS);
-
-$selectCo = "SELECT * 
-FROM placed_order
-WHERE PLACED_ORDER_STATUS = 'Completed'";
-
-$resCo = mysqli_query($conn, $selectCo);
-
-$countCo = mysqli_num_rows($resCo);
-
-$selectCa = "SELECT * 
-FROM placed_order
-WHERE PLACED_ORDER_STATUS = 'Cancelled'";
-
-$resCa = mysqli_query($conn, $selectCa);
-
-$countCa = mysqli_num_rows($resCa);
-
+$order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
 
 ?>
 
@@ -116,37 +69,76 @@ $countCa = mysqli_num_rows($resCa);
                     <h2>Dashboard</h2>
                     <div class="inline">
                         <p>Date range:</p>
-                        <!-- <select name="order-type" id="order-type" class="dropdown">
-                        <option value="all" <?php echo ($order_type === 'all') ? 'selected' : ''; ?>>All</option>
-                        <option value="Today" <?php echo ($order_type === 'Today') ? 'selected' : ''; ?>>Today</option>
-                        <option value="Advanced" <?php echo ($order_type === 'Advanced') ? 'selected' : ''; ?>>Advanced</option>
-                        </select> -->
                         <select name="order-type" id="order-type" class="dropdown">
-                            <option value="all">All time</option>
-                            <option value="Today">Today</option>
-                            <option value="">Including tomorrow</option>
-                            <option value="">Within 7 days </option>
-                            <option value="">Within 2 weeks </option>
-                            <option value="">Within 30 days </option>
+                            <option value="all" <?php echo ($order_type === 'all') ? 'selected' : ''; ?>>All time</option>
+                            <option value="Today" <?php echo ($order_type === 'Today') ? 'selected' : ''; ?>>Today</option>
+                            <option value="Tomorrow" <?php echo ($order_type === 'Tomorrow') ? 'selected' : ''; ?>>Including tomorrow</option>
+                            <option value="7days" <?php echo ($order_type === '7days') ? 'selected' : ''; ?>>Within 7 days</option>
+                            <option value="2weeks" <?php echo ($order_type === '2weeks') ? 'selected' : ''; ?>>Within 2 weeks</option>
+                            <option value="30days" <?php echo ($order_type === '30days') ? 'selected' : ''; ?>>Within 30 days</option>
                         </select>
                     </div>
                 </div>
+                <script>
+                    document.getElementById('order-type').addEventListener('change', function() {
+                        var selectedOrderType = this.value;
+                        window.location.href = "employee-home.php?type=" + selectedOrderType;
+                    });
+                </script>
+                <?php
+                $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
+
+                $selectCounts = "SELECT 
+                PLACED_ORDER_STATUS,
+                COUNT(*) as count 
+                FROM placed_order";
+
+                if ($order_type === 'Today') {
+                    $selectCounts .= " WHERE DATE(delivery_date) = CURDATE()";
+                } elseif ($order_type === 'Tomorrow') {
+                    $selectCounts .= " WHERE DATE(delivery_date) = CURDATE() + INTERVAL 1 DAY";
+                } elseif ($order_type === '7days') {
+                    $selectCounts .= " WHERE delivery_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY)";
+                } elseif ($order_type === '2weeks') {
+                    $selectCounts .= " WHERE delivery_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 14 DAY)";
+                } elseif ($order_type === '30days') {
+                    $selectCounts .= " WHERE delivery_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY)";
+                }
+
+                $selectCounts .= " GROUP BY PLACED_ORDER_STATUS";
+
+                $resCounts = mysqli_query($conn, $selectCounts);
+
+                $counters = array();
+                while ($row = mysqli_fetch_assoc($resCounts)) {
+                    $counters[$row['PLACED_ORDER_STATUS']] = $row['count'];
+                }
+
+                $countNO = isset($counters['Placed']) ? $counters['Placed'] : 0;
+                $countAP = isset($counters['Awaiting Payment']) ? $counters['Awaiting Payment'] : 0;
+                $countPr = isset($counters['To Prepare']) ? $counters['To Prepare'] : 0;
+                $countFD = isset($counters['Currently Preparing']) ? $counters['Currently Preparing'] : 0;
+                $countS = isset($counters['Packed']) ? $counters['Packed'] : 0;
+                $countCo = isset($counters['Completed']) ? $counters['Completed'] : 0;
+                $countCa = isset($counters['Cancelled']) ? $counters['Cancelled'] : 0;
+                ?>
+
                 <section class="with-side-menu">
                     <section class="main-section">
                         <div class="grid-container">
                             <a class="box" href="<?php echo SITEURL; ?>employee-to-prepare-orders.php">
                                 <p>To Prepare</p>
-                                <h1><?php echo $countPa ?></h1>
+                                <h1><?php echo $countPr ?></h1>
                                 <p class="bottom">Orders</p>
                             </a>
                             <a class="box" href="<?php echo SITEURL; ?>employee-preparing-orders.php">
                                 <p>Currently Preparing</p>
-                                <h1><?php echo $countPr ?></h1>
+                                <h1><?php echo $countFD ?></h1>
                                 <p class="bottom">Orders</p>
                             </a>
                             <a class="box" href="<?php echo SITEURL; ?>employee-to-deliver-orders.php">
                                 <p>Ready for Pickup</p>
-                                <h1><?php echo $countFD ?></h1>
+                                <h1><?php echo $countS ?></h1>
                                 <p class="bottom">Orders</p>
                             </a>
                             <!-- <a class="box" href="<?php echo SITEURL; ?>employee-shipped.php">
@@ -155,7 +147,7 @@ $countCa = mysqli_num_rows($resCa);
                             </a> -->
                             <a class="box" href="<?php echo SITEURL; ?>employee-completed-orders.php">
                                 <p>Completed</p>
-                                <h1><?php echo $countCo?></h1>
+                                <h1><?php echo $countCo ?></h1>
                                 <p class="bottom">Orders</p>
                             </a>
                             <a class="box" href="<?php echo SITEURL; ?>employee-canceled-orders.php">
@@ -170,7 +162,7 @@ $countCa = mysqli_num_rows($resCa);
                         <div class="group inventory" id="low-inventory">
                             <h3>Low Inventory</h3>
                             <div class="inventory-box">
-                            <?php
+                                <?php
                                 $sql = "SELECT * FROM food WHERE FOOD_STOCK < 100";
                                 $res = mysqli_query($conn, $sql);
                                 $count = mysqli_num_rows($res);
@@ -200,31 +192,47 @@ $countCa = mysqli_num_rows($resCa);
                                 <a href="<?php echo SITEURL; ?>employee-inventory.php" class="view">View</a>
                             </div>
                         </div> -->
+                        <?php
+
+
+
+
+                        if ($count > 0) {
+                            while ($row = mysqli_fetch_assoc($res)) {
+                                $FOOD_NAME = $row['FOOD_NAME'];
+                                $FOOD_STOCK = $row['FOOD_STOCK'];
+                            }
+                        }
+
+                        ?>
                         <div class="group inventory">
                             <h3>Currently Preparing</h3>
                             <!-- shows the quantity of each product of all orders in the "preparing" order status -->
                             <div class="inventory-box blue">
-                            <?php
-                                $sql = "SELECT * FROM food WHERE FOOD_STOCK < 100";
+                                <?php
+
+                                $sql = "SELECT f.food_name, SUM(io.in_order_quantity) AS total_in_order_quantity
+                                        FROM food f
+                                        JOIN in_order io ON f.food_id = io.food_id
+                                        JOIN placed_order po ON io.placed_order_id = po.placed_order_id
+                                        WHERE po.placed_order_status = 'Currently Preparing'
+                                        GROUP BY f.food_name";
                                 $res = mysqli_query($conn, $sql);
-                                $count = mysqli_num_rows($res);
-                                $stockValues = array();
-                                if ($count > 0) {
+                                if ($res && mysqli_num_rows($res) > 0) {
                                     while ($row = mysqli_fetch_assoc($res)) {
-                                        $FOOD_NAME = $row['FOOD_NAME'];
-                                        $FOOD_STOCK = $row['FOOD_STOCK'];
+                                        $food_name = $row['food_name'];
+                                        $total_quantity = $row['total_in_order_quantity'];
                                 ?>
                                         <div class="inline">
-                                            <p><?php echo $FOOD_NAME ?></p>
-                                            <span class="<?php echo ($FOOD_STOCK < 100) ? 'red-text' : ''; ?>">
-                                                <p><?php echo $FOOD_STOCK ?></p>
+                                            <p><?php echo $food_name; ?></p>
+                                            <p><?php echo $total_quantity; ?></p>
                                             </span>
                                         </div>
                                 <?php
                                     }
                                 }
                                 ?>
-                                <a href="<?php echo SITEURL; ?>employee-inventory.php" class="edit">Edit</a>
+                                <!-- <a href="<?php echo SITEURL; ?>employee-inventory.php" class="edit">Edit</a> -->
                             </div>
                         </div>
                     </section>

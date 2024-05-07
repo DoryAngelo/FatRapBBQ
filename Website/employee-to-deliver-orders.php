@@ -17,19 +17,19 @@ if (isset($_POST['confirmed'])) {
 
     switch ($PLACED_ORDER_STATUS) {
         case "Paid":
-            $PLACED_ORDER_STATUS = "Preparing";
+            $PLACED_ORDER_STATUS = "To Prepare";
             break;
-        case "Preparing":
-            $PLACED_ORDER_STATUS = "For Delivery";
+        case "To Prepare":
+            $PLACED_ORDER_STATUS = "Currently Preparing";
             break;
-        case "For Delivery":
-            $PLACED_ORDER_STATUS = "Shipped";
+        case "Currently Preparing":
+            $PLACED_ORDER_STATUS = "Packed";
             break;
-        case "Shipped":
+        case "Packed":
             $PLACED_ORDER_STATUS = "Completed";
             break;
         case "Cancelled":
-            $PLACED_ORDER_STATUS = "Ordered";
+            $PLACED_ORDER_STATUS = "Placed";
             break;
     }
 
@@ -122,18 +122,13 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                     <h2>Ready for Pickup</h2>
                     <div class="inline">
                         <p>Date range:</p>
-                        <!-- <select name="order-type" id="order-type" class="dropdown">
-                        <option value="all" <?php echo ($order_type === 'all') ? 'selected' : ''; ?>>All</option>
-                        <option value="Today" <?php echo ($order_type === 'Today') ? 'selected' : ''; ?>>Today</option>
-                        <option value="Advanced" <?php echo ($order_type === 'Advanced') ? 'selected' : ''; ?>>Advanced</option>
-                        </select> -->
                         <select name="order-type" id="order-type" class="dropdown">
-                            <option value="all">All time</option>
-                            <option value="Today">Today</option>
-                            <option value="">Including tomorrow</option>
-                            <option value="">Within 7 days </option>
-                            <option value="">Within 2 weeks </option>
-                            <option value="">Within 30 days </option>
+                            <option value="all" <?php echo ($order_type === 'all') ? 'selected' : ''; ?>>All time</option>
+                            <option value="Today" <?php echo ($order_type === 'Today') ? 'selected' : ''; ?>>Today</option>
+                            <option value="Tomorrow" <?php echo ($order_type === 'Tomorrow') ? 'selected' : ''; ?>>Including tomorrow</option>
+                            <option value="7days" <?php echo ($order_type === '7days') ? 'selected' : ''; ?>>Within 7 days</option>
+                            <option value="2weeks" <?php echo ($order_type === '2weeks') ? 'selected' : ''; ?>>Within 2 weeks</option>
+                            <option value="30days" <?php echo ($order_type === '30days') ? 'selected' : ''; ?>>Within 30 days</option>
                         </select>
                     </div>
                     <script>
@@ -155,16 +150,21 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                             </tr>
                             <!-- PLACEHOLDER TABLE ROWS FOR FRONTEND TESTING PURPOSES -->
                             <?php
-                            $sql = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'For Delivery'";
+                            $sql = "SELECT * FROM placed_order WHERE PLACED_ORDER_STATUS = 'Packed'";
                             $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
 
                             if ($order_type === 'Today') {
-                                // Add condition for orders scheduled for delivery today
                                 $sql .= " AND DATE_FORMAT(STR_TO_DATE(delivery_date, '%Y-%m-%d %H:%i'), '%Y-%m-%d') = CURDATE()";
-                            } elseif ($order_type === 'Advanced') {
-                                // Add condition for orders scheduled for delivery after today
-                                $sql .= " AND DATE_FORMAT(STR_TO_DATE(delivery_date, '%Y-%m-%d %H:%i'), '%Y-%m-%d') > CURDATE()";
+                            } elseif ($order_type === 'Tomorrow') {
+                                $sql .= " AND DATE_FORMAT(STR_TO_DATE(delivery_date, '%Y-%m-%d %H:%i'), '%Y-%m-%d') >= CURDATE() AND DATE_FORMAT(STR_TO_DATE(delivery_date, '%Y-%m-%d %H:%i'), '%Y-%m-%d') <= DATE_ADD(CURDATE(), INTERVAL 1 DAY)";
+                            } elseif ($order_type === '7days') {
+                                $sql .= " AND delivery_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY)";
+                            } elseif ($order_type === '2weeks') {
+                                $sql .= " AND delivery_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 14 DAY)";
+                            } elseif ($order_type === '30days') {
+                                $sql .= " AND delivery_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY)";
                             }
+
                             $res = mysqli_query($conn, $sql);
                             $count = mysqli_num_rows($res);
                             if ($count > 0) {
@@ -213,7 +213,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                         <div class="group inventory" id="low-inventory">
                             <h3>Low Inventory</h3>
                             <div class="inventory-box">
-                            <?php
+                                <?php
                                 $sql = "SELECT * FROM food WHERE FOOD_STOCK < 100";
                                 $res = mysqli_query($conn, $sql);
                                 $count = mysqli_num_rows($res);
@@ -247,27 +247,30 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                             <h3>Currently Preparing</h3>
                             <!-- shows the quantity of each product of all orders in the "preparing" order status -->
                             <div class="inventory-box blue">
-                            <?php
-                                $sql = "SELECT * FROM food WHERE FOOD_STOCK < 100";
+                                <?php
+
+                                $sql = "SELECT f.food_name, SUM(io.in_order_quantity) AS total_in_order_quantity
+                                        FROM food f
+                                        JOIN in_order io ON f.food_id = io.food_id
+                                        JOIN placed_order po ON io.placed_order_id = po.placed_order_id
+                                        WHERE po.placed_order_status = 'Currently Preparing'
+                                        GROUP BY f.food_name";
                                 $res = mysqli_query($conn, $sql);
-                                $count = mysqli_num_rows($res);
-                                $stockValues = array();
-                                if ($count > 0) {
+                                if ($res && mysqli_num_rows($res) > 0) {
                                     while ($row = mysqli_fetch_assoc($res)) {
-                                        $FOOD_NAME = $row['FOOD_NAME'];
-                                        $FOOD_STOCK = $row['FOOD_STOCK'];
+                                        $food_name = $row['food_name'];
+                                        $total_quantity = $row['total_in_order_quantity'];
                                 ?>
                                         <div class="inline">
-                                            <p><?php echo $FOOD_NAME ?></p>
-                                            <span class="<?php echo ($FOOD_STOCK < 100) ? 'red-text' : ''; ?>">
-                                                <p><?php echo $FOOD_STOCK ?></p>
+                                            <p><?php echo $food_name; ?></p>
+                                            <p><?php echo $total_quantity; ?></p>
                                             </span>
                                         </div>
                                 <?php
                                     }
                                 }
                                 ?>
-                                <a href="<?php echo SITEURL; ?>employee-inventory.php" class="edit">Edit</a>
+                                <!-- <a href="<?php echo SITEURL; ?>employee-inventory.php" class="edit">Edit</a> -->
                             </div>
                         </div>
                         <div class="group">

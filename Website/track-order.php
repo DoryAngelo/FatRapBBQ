@@ -136,19 +136,19 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                                     <p id="status">Awaiting Payment</p>
                                                 <?php
                                                     break;
-                                                case "Preparing": //PAID
+                                                case "To Prepare": //PAID
                                                 ?>
-                                                    <p id="status">Preparing</p>
+                                                    <p id="status">To Prepare</p>
                                                 <?php
                                                     break;
-                                                case "For Delivery":
+                                                case "Currently Preparing":
+                                                ?>
+                                                    <p id="status">Currently Preparing</p>
+                                                <?php
+                                                    break;
+                                                case "Packed": //SHIPPED
                                                 ?>
                                                     <p id="status">Packed</p>
-                                                <?php
-                                                    break;
-                                                case "Shipped": //SHIPPED
-                                                ?>
-                                                    <p id="status">Shipped</p>
                                                 <?php
                                                     break;
                                                 case "Completed": //DELIVERED
@@ -178,13 +178,6 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                             </span>
                                             <span class="label">Payment</span>
                                         </div>
-                                        <!-- if status = paid -->
-                                        <!-- <div class="step">
-                                            <span class="circle">
-                                                <i class='bx bx-check'></i>
-                                            </span>
-                                            <span class="label">Preparing</span>
-                                        </div> -->
                                         <!-- if status = packed -->
                                         <div class="step">
                                             <span class="circle">
@@ -192,29 +185,11 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                             </span>
                                             <span class="label">Packed</span>
                                         </div>
-                                        <!-- if status = shipped -->
-                                        <!-- <div class="step">
-                                            <span class="circle">
-                                                <i class='bx bx-check'></i>
-                                            </span>
-                                            <span class="label">Shipped</span>
-                                        </div> -->
-                                        <!-- if status = delivered -->
-                                        <!-- <div class="step">
-                                            <span class="circle">
-                                                <i class='bx bx-check'></i>
-                                            </span>
-                                            <span class="label">Delivered</span>
-                                        </div> -->
                                         <div class="progress-bar">
                                             <span class="indicator"></span>
                                         </div>
                                     </div>
-                                    <!-- admin buttons controlling the progress bar -->
-                                    <!-- <div class="buttons">
-                                            <button id="prev" disabled>Prev</button>
-                                            <button id="next">Next</button>
-                                        </div> -->
+
                                 </div>
                                 <style>
                                     .error-text {
@@ -417,10 +392,16 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                     return false;
                                 }
 
-
                                 return true;
                             }
+
+                            
+                            const referenceNumberInput = document.getElementById("reference-number");
+                            referenceNumberInput.addEventListener('click', function() {
+                                validateForm();
+                            });
                         </script>
+
                     </section>
                 </section>
         </section>

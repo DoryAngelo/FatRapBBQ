@@ -12,72 +12,7 @@ if ($PRSN_ROLE !== 'Admin') {
     header('location:' . SITEURL . 'login-page.php');
 }
 
-$selectNO = "SELECT * 
-FROM placed_order
-WHERE PLACED_ORDER_STATUS = 'Placed'";
-
-$resNO = mysqli_query($conn, $selectNO);
-
-$countNO = mysqli_num_rows($resNO);
-
-$selectAP = "SELECT * 
-FROM placed_order
-WHERE PLACED_ORDER_STATUS = 'Awaiting Payment'";
-
-$resAP = mysqli_query($conn, $selectAP);
-
-$countAP = mysqli_num_rows($resAP);
-
-$selectPr = "SELECT * 
-FROM placed_order
-WHERE PLACED_ORDER_STATUS = 'Preparing'";
-
-$resPr = mysqli_query($conn, $selectPr);
-
-$countPr = mysqli_num_rows($resPr);
-
-$selectFD = "SELECT * 
-FROM placed_order
-WHERE PLACED_ORDER_STATUS = 'For Delivery'";
-
-$resFD = mysqli_query($conn, $selectFD);
-
-$countFD = mysqli_num_rows($resFD);
-
-
-$selectS = "SELECT * 
-FROM placed_order
-WHERE PLACED_ORDER_STATUS = 'Shipped'";
-
-$resS = mysqli_query($conn, $selectS);
-
-$countS = mysqli_num_rows($resS);
-
-$selectCo = "SELECT * 
-FROM placed_order
-WHERE PLACED_ORDER_STATUS = 'Completed'";
-
-$resCo = mysqli_query($conn, $selectCo);
-
-$countCo = mysqli_num_rows($resCo);
-
-$selectCa = "SELECT * 
-FROM placed_order
-WHERE PLACED_ORDER_STATUS = 'Cancelled'";
-
-$resCa = mysqli_query($conn, $selectCa);
-
-$countCa = mysqli_num_rows($resCa);
-
-
-$selectW = "SELECT * 
-FROM wholesaler
-WHERE WHL_STATUS = 'New'";
-
-$resW = mysqli_query($conn, $selectW);
-
-$countW = mysqli_num_rows($resW);
-
+$order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
 
 ?>
 
@@ -138,27 +73,67 @@ $countW = mysqli_num_rows($resW);
                     <h2>Dashboard</h2>
                     <div class="inline">
                         <p>Date range:</p>
-                        <!-- <select name="order-type" id="order-type" class="dropdown">
-                        <option value="all" <?php echo ($order_type === 'all') ? 'selected' : ''; ?>>All</option>
-                        <option value="Today" <?php echo ($order_type === 'Today') ? 'selected' : ''; ?>>Today</option>
-                        <option value="Advanced" <?php echo ($order_type === 'Advanced') ? 'selected' : ''; ?>>Advanced</option>
-                        </select> -->
                         <select name="order-type" id="order-type" class="dropdown">
-                            <option value="all">All time</option>
-                            <option value="Today">Today</option>
-                            <option value="">Including tomorrow</option>
-                            <option value="">Within 7 days </option>
-                            <option value="">Within 2 weeks </option>
-                            <option value="">Within 30 days </option>
+                            <option value="all" <?php echo ($order_type === 'all') ? 'selected' : ''; ?>>All time</option>
+                            <option value="Today" <?php echo ($order_type === 'Today') ? 'selected' : ''; ?>>Today</option>
+                            <option value="Tomorrow" <?php echo ($order_type === 'Tomorrow') ? 'selected' : ''; ?>>Including tomorrow</option>
+                            <option value="7days" <?php echo ($order_type === '7days') ? 'selected' : ''; ?>>Within 7 days</option>
+                            <option value="2weeks" <?php echo ($order_type === '2weeks') ? 'selected' : ''; ?>>Within 2 weeks</option>
+                            <option value="30days" <?php echo ($order_type === '30days') ? 'selected' : ''; ?>>Within 30 days</option>
                         </select>
                     </div>
                     <script>
-                        // document.getElementById('order-type').addEventListener('change', function() {
-                        //     var selectedOrderType = this.value;
-                        //     window.location.href = "admin-new-orders.php?type=" + selectedOrderType;
-                        // });
+                        document.getElementById('order-type').addEventListener('change', function() {
+                            var selectedOrderType = this.value;
+                            window.location.href = "admin-home.php?type=" + selectedOrderType;
+                        });
                     </script>
                 </div>
+                <?php
+                $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
+
+                $selectCounts = "SELECT 
+                PLACED_ORDER_STATUS,
+                COUNT(*) as count 
+                FROM placed_order";
+
+                if ($order_type === 'Today') {
+                    $selectCounts .= " WHERE DATE(delivery_date) = CURDATE()";
+                } elseif ($order_type === 'Tomorrow') {
+                    $selectCounts .= " WHERE DATE(delivery_date) = CURDATE() + INTERVAL 1 DAY";
+                } elseif ($order_type === '7days') {
+                    $selectCounts .= " WHERE delivery_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY)";
+                } elseif ($order_type === '2weeks') {
+                    $selectCounts .= " WHERE delivery_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 14 DAY)";
+                } elseif ($order_type === '30days') {
+                    $selectCounts .= " WHERE delivery_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY)";
+                }
+
+                $selectCounts .= " GROUP BY PLACED_ORDER_STATUS";
+
+                $resCounts = mysqli_query($conn, $selectCounts);
+
+                $counters = array();
+                while ($row = mysqli_fetch_assoc($resCounts)) {
+                    $counters[$row['PLACED_ORDER_STATUS']] = $row['count'];
+                }
+
+                $countNO = isset($counters['Placed']) ? $counters['Placed'] : 0;
+                $countAP = isset($counters['Awaiting Payment']) ? $counters['Awaiting Payment'] : 0;
+                $countPr = isset($counters['To Prepare']) ? $counters['To Prepare'] : 0;
+                $countFD = isset($counters['Currently Preparing']) ? $counters['Currently Preparing'] : 0;
+                $countS = isset($counters['Packed']) ? $counters['Packed'] : 0;
+                $countCo = isset($counters['Completed']) ? $counters['Completed'] : 0;
+                $countCa = isset($counters['Cancelled']) ? $counters['Cancelled'] : 0;
+           
+                $selectW = "SELECT *
+                FROM wholesaler
+                WHERE WHL_STATUS = 'New'";
+
+                $resW = mysqli_query($conn, $selectW);
+
+                $countW = mysqli_num_rows($resW);
+                ?>
                 <section class="with-side-menu">
                     <section class="main-section">
                         <div class="grid-container">
@@ -206,7 +181,7 @@ $countW = mysqli_num_rows($resW);
                         <div class="group inventory" id="low-inventory">
                             <h3>Low Inventory</h3>
                             <div class="inventory-box">
-                            <?php
+                                <?php
                                 $sql = "SELECT * FROM food WHERE FOOD_STOCK < 100";
                                 $res = mysqli_query($conn, $sql);
                                 $count = mysqli_num_rows($res);
@@ -226,7 +201,7 @@ $countW = mysqli_num_rows($resW);
                                     }
                                 }
                                 ?>
-                                <a href="<?php echo SITEURL; ?>employee-inventory.php" class="edit">Edit</a>
+                                <a href="<?php echo SITEURL; ?>admin-inventory.php" class="edit">Edit</a>
                             </div>
                         </div>
                         <!-- else, show id="inventory" and hide id="low-inventory"-->
