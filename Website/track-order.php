@@ -334,7 +334,7 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                             font-size: 0.9rem;
                             font-style: italic;
                             margin-top: 1rem;
-                            color: var(--available);
+                            color: #112B06;
                         }
                     </style>
                     <!-- section directly below this will only appear if order status is approved -->
