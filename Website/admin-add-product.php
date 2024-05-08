@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Menu Item | Admin</title>
+    <title>Add New Product | Admin</title>
     <link rel="stylesheet" href="header-styles.css">
     <link rel="stylesheet" href="admin-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -107,8 +107,8 @@ if (isset($_POST['submit'])) {
             <div class="container">
                 <div class="section-wrapper">
                     <div class="section-heading row back">
-                        <h2>Add Menu Item</h2>
-                        <a href="<?php echo SITEURL; ?>admin-edit-menu.php">Back</a>
+                        <h2>Add New Product</h2>
+                        <a href="#" onclick="window.history.back();">Back</a>
                     </div>
                     <section class="section-body">
                         <section class="main-section column">

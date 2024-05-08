@@ -18,7 +18,7 @@ $FOOD_ID = $_GET['FOOD_ID'];
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Menu Item | Fat Rap's Barbeque's Online Store</title>
+    <title>Edit Product | Fat Rap's Barbeque's Online Store</title>
     <link rel="stylesheet" href="header-styles.css">
     <link rel="stylesheet" href="admin-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -67,8 +67,8 @@ $FOOD_ID = $_GET['FOOD_ID'];
             <div class="container">
                 <div class="section-wrapper">
                     <div class="section-heading row back">
-                        <h2>Edit Menu Item</h2>
-                        <a href="<?php echo SITEURL; ?>admin-edit-menu.php">Back</a>
+                        <h2>Edit Product</h2>
+                        <a href="#" onclick="window.history.back();">Back</a>
                     </div>
                     <?php
 

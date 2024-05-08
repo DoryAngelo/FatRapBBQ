@@ -21,7 +21,7 @@ $food_type = isset($_GET['type']) ? $_GET['type'] : 'all';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--change title-->
-    <title>Edit Menu | Admin</title>
+    <title>Menu | Admin</title>
     <link rel="stylesheet" href="header-styles.css">
     <link rel="stylesheet" href="admin-styles.css"><!--change css file-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,7 +69,7 @@ $food_type = isset($_GET['type']) ? $_GET['type'] : 'all';
         <section class="section">
             <div class="container">
                 <div class="section-heading row">
-                    <h2>Edit Menu</h2>
+                    <h2>Menu</h2>
                     <select name="food-type" id="food-type" class="dropdown">
                         <option value="all" <?php echo ($food_type === 'all') ? 'selected' : ''; ?>>All</option>
                         <option value="Customer" <?php echo ($food_type === 'Customer') ? 'selected' : ''; ?>>Customer</option>
@@ -92,8 +92,8 @@ $food_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                     <th class="header">Stock</th>
                                     <th class="header">Start</th>
                                     <th class="header">End</th>
-                                    <th class="header">Action</th><!--for edit button column-->
-                                    <th class="header"></th><!--for delete button column-->
+                                    <!-- <th class="header">Action</th>for edit button column -->
+                                    <th class="header"></th> <!-- for delete button column-->
                                 </tr>
                                 <?php
 
@@ -140,10 +140,10 @@ $food_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                             </td>
                                             <td data-cell="Start"><?php echo $MENU_START?></td>
                                             <td data-cell="End"><?php echo $MENU_END ?></td>
-                                            <td data-cell="Action">
+                                            <!-- <td data-cell="Action"> -->
                                                 <!-- <a href="<?php echo SITEURL; ?>admin-edit-product.php?FOOD_ID=<?php echo $FOOD_ID ?>" class="edit">Edit</a> -->
-                                                <!-- <a href="<?php echo SITEURL; ?>admin-add-menu.php?FOOD_ID=<?php echo $FOOD_ID ?>" class="edit">Display</a> -->
-                                            </td>
+                                                <!-- <a href="<?php echo SITEURL; ?>admin-add-menu.php?FOOD_ID=<?php echo $FOOD_ID ?>" class="edit">Edit</a> "Display" link in inventory page -->
+                                            <!-- </td> -->
                                             <td data-cell="Action"><a href="#" onclick="confirmDelete(<?php echo $MENU_ID; ?>)" class="bx bxs-trash-alt trash"></a></td>
                                             <script>
                                                 function confirmDelete(menuId) {
@@ -169,7 +169,7 @@ $food_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                 ?>
                             </table>
                         </div>
-                        <a href="<?php echo SITEURL; ?>admin-add-product.php" class="page-btn"><button class="big-btn">Add a new product</button></a>
+                        <!-- <a href="<?php echo SITEURL; ?>admin-add-product.php" class="page-btn"><button class="big-btn">Add a new product</button></a> -->
                     </section>
                 </section>
             </div>

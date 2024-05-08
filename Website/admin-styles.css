@@ -502,6 +502,8 @@ button.reject:hover {
 
 .page-btn {
     text-decoration: none;
+    width: max-content;
+    margin-inline: auto;
 }
 
 .block {
