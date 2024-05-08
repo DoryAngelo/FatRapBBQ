@@ -445,7 +445,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                     echo '<script>window.location.href = "track-order.php";</script>';
                                     exit(); // Ensure no further PHP execution after redirection
                                 } else {
-                                    echo '<div class="error">Order does not exist.</div>';
+                                    echo 'Order number does not exist.';
                                 }
                             }
                             ?>
