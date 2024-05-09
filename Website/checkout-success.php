@@ -17,12 +17,13 @@ if (isset($_SESSION['prsn_id'])) {
 $PRSN_ROLE = $_SESSION['prsn_role'];
 
 $PLACED_ORDER_TRACKER = $_SESSION['PLACED_ORDER_TRACKER'];
-
 $PLACED_ORDER_ID = $_GET['PLACED_ORDER_ID'];
 
 $select = "SELECT io.menu_id, io.food_id, SUM(io.in_order_quantity) AS total_quantity
            FROM in_order io
+           JOIN menu m ON io.menu_id = m.menu_id
            WHERE io.placed_order_id = '$PLACED_ORDER_ID'
+           AND NOW() BETWEEN STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p') AND STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')
            GROUP BY io.menu_id, io.food_id";
 
 $select_result = mysqli_query($conn, $select);
@@ -50,12 +51,14 @@ foreach ($menu_quantities as $menu_id => $data) {
         $excess = abs($updated_stock);
         $updated_stock = 0;
 
-        $other_menu_ids_query = "SELECT menu_id FROM menu WHERE food_id = '$food_id' AND menu_id != '$menu_id'";
+        $other_menu_ids_query = "SELECT menu_id FROM menu 
+                                 WHERE food_id = '$food_id' 
+                                 AND menu_id != '$menu_id'
+                                 AND NOW() BETWEEN STR_TO_DATE(menu_start, '%M %d, %Y %h:%i:%s %p') AND STR_TO_DATE(menu_end, '%M %d, %Y %h:%i:%s %p')";
         $other_menu_ids_result = mysqli_query($conn, $other_menu_ids_query);
 
         $num_other_menu_ids = mysqli_num_rows($other_menu_ids_result);
         $excess_per_menu = $excess / $num_other_menu_ids;
-
 
         while ($other_menu_row = mysqli_fetch_assoc($other_menu_ids_result)) {
             $other_menu_id = $other_menu_row['menu_id'];
