@@ -18,31 +18,51 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
 
 $FOOD_ID = $_GET['FOOD_ID'];
 
-$sql = "SELECT f.*, SUM(m.MENU_STOCK) AS total_menu_stock, io.in_order_quantity, m.MENU_ID
+$sql = "SELECT f.*, SUM(m.MENU_STOCK) AS total_menu_stock, m.MENU_ID
         FROM food f 
-        LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
         LEFT JOIN menu m ON f.FOOD_ID = m.food_id
         WHERE f.FOOD_ID = '$FOOD_ID'
         AND NOW() BETWEEN STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p') AND STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')
         AND m.MENU_STOCK != 0
         GROUP BY f.FOOD_ID";
 
-
 $res = mysqli_query($conn, $sql);
 $count = mysqli_num_rows($res);
 if ($count > 0) {
     while ($row = mysqli_fetch_assoc($res)) {
-        $FOOD_ID = $row['FOOD_ID'];
         $MENU_ID = $row['MENU_ID'];
         $FOOD_NAME = $row['FOOD_NAME'];
-        $FOOD_DESC = $row['FOOD_DESC']; 
+        $FOOD_DESC = $row['FOOD_DESC'];
         $FOOD_IMG = $row['FOOD_IMG'];
         $FOOD_PRICE = $row['FOOD_PRICE'];
         $MENU_STOCK = $row['total_menu_stock'];
-        $FOOD_STOCK = $row['FOOD_STOCK'];
-        $IN_ORDER_QUANTITY = $row['in_order_quantity'];
     }
 }
+
+if (isset($_SESSION['prsn_id'])) {
+    $sql9 = "SELECT f.*, io.in_order_quantity, m.*
+    FROM food f 
+    LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
+    LEFT JOIN menu m ON f.FOOD_ID = m.food_id
+    WHERE f.FOOD_ID = '$FOOD_ID'
+    AND io.PRSN_ID = '$PRSN_ID'";
+} else if (isset($_SESSION['guest_id'])) {
+    $sql9 = "SELECT f.*, io.in_order_quantity, m.*
+        FROM food f 
+        LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
+        LEFT JOIN menu m ON f.FOOD_ID = m.food_id
+        WHERE f.FOOD_ID = '$FOOD_ID'
+        AND io.GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
+}
+
+$res9 = mysqli_query($conn, $sql9);
+$count9 = mysqli_num_rows($res9);
+if ($count9 > 0) {
+    while ($row9 = mysqli_fetch_assoc($res9)) {
+        $IN_ORDER_QUANTITY = $row9['in_order_quantity'];
+    }
+}
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     $quantity = $_POST['quantity'];
@@ -160,9 +180,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                 <div class="inline">
                                     <h1>₱<?php echo $FOOD_PRICE ?></h1>
                                     <div class="quantity-grp">
-                                        <i class='bx bxs-minus-circle js-minus' data-stock="<?php echo $MENU_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
+                                        <i class='bx bxs-minus-circle js-minus circle' data-stock="<?php echo $MENU_STOCK; ?>"></i>
                                         <p class="amount js-num">1</p>
-                                        <i class='bx bxs-plus-circle js-plus' data-stock="<?php echo $MENU_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
+                                        <i class='bx bxs-plus-circle js-plus circle' data-stock="<?php echo $MENU_STOCK; ?>"></i>
                                     </div>
                                     <?php if ($PRSN_ROLE === "Wholesaler") {
                                     ?>
@@ -229,7 +249,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         </div>
     </footer>
     <script>
-        var quantityData = <?php echo isset($IN_ORDER_QUANTITY) ? $IN_ORDER_QUANTITY : 0; ?>;
         document.addEventListener("DOMContentLoaded", function() {
             const plus = document.querySelector(".js-plus");
             const minus = document.querySelector(".js-minus");
@@ -237,6 +256,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             const quantityInput = document.getElementById("quantity");
             const addButton = document.querySelector('[name="order"]');
             const stock = parseInt(plus.dataset.stock);
+            const quantityData = <?php echo isset($IN_ORDER_QUANTITY) ? $IN_ORDER_QUANTITY : 0; ?>;
 
             updateButtonState(); // Call the function initially to set the button state
 
@@ -267,7 +287,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             }
 
             function updateButtonState() {
-                addButton.disabled = (stock <= 0 || parseInt(num.innerText) + parseInt('<?php echo $IN_ORDER_QUANTITY; ?>') > stock);
+                addButton.disabled = (stock <= 0 || parseInt(num.innerText) + quantityData > stock);
             }
         });
     </script>
