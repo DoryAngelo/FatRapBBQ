@@ -55,7 +55,7 @@ if (isset($_POST['submit'])) {
 
     $date = $_POST['date'];
     $time = $_POST['time'];
-    $DELIVERY_DATE = $date . " " . $time;
+    $DELIVERY_DATE = $date . " " . date("h:i A", strtotime($time));
     $PLACED_ORDER_STATUS = "Placed";
     $random = random_bytes(8);
     $PLACED_ORDER_TRACKER = bin2hex($random);
@@ -337,31 +337,31 @@ if (isset($_POST['submit'])) {
                                     <div class="form-field">
                                         <div class="input-grp">
                                             <p>Region</p>
-                                            <select name="region" class="form-control form-control-md input" id="region"></select>
-                                            <input type="hidden" class="form-control form-control-md" name="region" id="region-text" required>
+                                            <select name="region" class="form-control form-control-md input" id="region" required></select>
+                                            <input type="hidden" class="form-control form-control-md" name="region" id="region-text">
                                             <div class="error"></div>
                                         </div>
                                         <div class="input-grp">
                                             <p>Province</p>
-                                            <select name="province" class="form-control form-control-md input" id="province"></select>
-                                            <input type="hidden" class="form-control form-control-md" name="province" id="province-text" required>
+                                            <select name="province" class="form-control form-control-md input" id="province" required></select>
+                                            <input type="hidden" class="form-control form-control-md" name="province" id="province-text">
                                             <div class="error"></div>
                                         </div>
                                         <div class="input-grp">
                                             <p>City/Municipality</p>
-                                            <select name="city" class="form-control form-control-md input" id="city"></select>
-                                            <input type="hidden" class="form-control form-control-md" name="city" id="city-text" required>
+                                            <select name="city" class="form-control form-control-md input" id="city" required></select>
+                                            <input type="hidden" class="form-control form-control-md" name="city" id="city-text">
                                             <div class="error"></div>
                                         </div>
                                         <div class="input-grp">
                                             <p>Barangay</p>
-                                            <select name="barangay" class="form-control form-control-md input" id="barangay"></select>
-                                            <input type="hidden" class="form-control form-control-md" name="barangay" id="barangay-text" required>
+                                            <select name="barangay" class="form-control form-control-md input" id="barangay" required></select>
+                                            <input type="hidden" class="form-control form-control-md" name="barangay" id="barangay-text">
                                             <div class="error"></div>
                                         </div>
                                         <div class="input-grp">
                                             <p>House no./Bldg./Street</p>
-                                            <input type="text" class="form-control form-control-md input" name="street" id="street-text">
+                                            <input type="text" class="form-control form-control-md input" name="street" id="street-text" required>
                                             <div class="error"></div>
                                         </div>
                                     </div>
@@ -394,14 +394,14 @@ if (isset($_POST['submit'])) {
                                     $today = date("Y-m-d");
                                     $oneMonthFromNow = date("Y-m-d", strtotime("+1 month"));
                                     ?>
-                                    <input class="date" type="date" name="date" min="<?php echo $today ?>" max="<?php echo $oneMonthFromNow ?>" oninput="validateDateTime(this)">
+                                    <input class="date" type="date" name="date" min="<?php echo $today ?>" max="<?php echo $oneMonthFromNow ?>" oninput="validateDateTime(this)" required>
                                     <div class="error-date error-text" style="display: none;">Date not available.</div>
                                 </div>
                             </div>
                             <div class="block time-slot">
                                 <h3 class="block-heading">Time Slot</h3>
                                 <div class="block-body">
-                                    <input type="time" name="time" min="09:00:00" max="17:00:00">
+                                    <input type="time" name="time" min="09:00:00" max="17:00:00" required>
                                     <div class="error-time error-text" style="display: none;">Time not available.</div>
                                 </div>
                             </div>
@@ -473,12 +473,12 @@ if (isset($_POST['submit'])) {
         <script>
             const firstNameInput = document.getElementById('first-name');
             const lastNameInput = document.getElementById('last-name');
-            const contactNumberInput = document.getElementById('contact-number');
+            const numberInput = document.getElementById('contact-number');
             const emailInput = document.getElementById('email');
 
             firstNameInput.addEventListener('input', validateFirstName);
             lastNameInput.addEventListener('input', validateLastName);
-            contactNumberInput.addEventListener('input', validateContactNumber);
+            numberInput.addEventListener('input', validateNumber);
             emailInput.addEventListener('input', validateEmail);
 
             function setError(input, message) {
@@ -489,7 +489,7 @@ if (isset($_POST['submit'])) {
             function clearError(input) {
                 const errorDiv = input.nextElementSibling;
                 errorDiv.innerHTML = ''; // Clear the error message
-            }   
+            }
 
             function validateFirstName() {
                 const firstNameValue = firstNameInput.value.trim();
@@ -498,7 +498,7 @@ if (isset($_POST['submit'])) {
                 if (firstNameValue === '') {
                     setError(firstNameInput, 'Please enter your first name');
                 } else if (!nameRegex.test(firstNameValue)) {
-                    setError(firstNameInput, 'Invalid first name');
+                    setError(firstNameInput, 'First name must contain only letters');
                 } else {
                     clearError(firstNameInput);
                 }
@@ -511,33 +511,33 @@ if (isset($_POST['submit'])) {
                 if (lastNameValue === '') {
                     setError(lastNameInput, 'Please enter your last name');
                 } else if (!nameRegex.test(lastNameValue)) {
-                    setError(lastNameInput, 'Invalid last name');
+                    setError(lastNameInput, 'Last name must contain only letters');
                 } else {
                     clearError(lastNameInput);
                 }
             }
 
-            function validateContactNumber() {
-                const contactNumberValue = contactNumberInput.value.trim();
+            function validateNumber() {
+                const numberValue = numberInput.value.trim();
                 const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
 
-                if (contactNumberValue === '') {
-                    setError(contactNumberInput, 'Please enter your contact number');
-                } else if (!numberRegex.test(contactNumberValue)) {
-                    setError(contactNumberInput, 'Invalid contact number');
+                if (numberValue === '') {
+                    setError(numberInput, 'Please enter your number');
+                } else if (!numberRegex.test(numberValue)) {
+                    setError(numberInput, 'Invalid number');
                 } else {
-                    clearError(contactNumberInput);
+                    clearError(numberInput);
                 }
             }
 
             function validateEmail() {
                 const emailValue = emailInput.value.trim();
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]+$/;
 
                 if (emailValue === '') {
                     setError(emailInput, 'Please enter your email');
                 } else if (!emailRegex.test(emailValue)) {
-                    setError(emailInput, 'Invalid email');
+                    setError(emailInput, 'Invalid email format');
                 } else {
                     clearError(emailInput);
                 }
@@ -546,18 +546,16 @@ if (isset($_POST['submit'])) {
             function validateInputs() {
                 validateFirstName();
                 validateLastName();
-                validateContactNumber();
+                validateNumber();
                 validateEmail();
 
-                // Check if any error exists
-                const errors = document.querySelectorAll('.error-text');
+                const errors = document.querySelectorAll('.error-text:not(.error-date):not(.error-time)');
                 if (errors.length > 0) {
                     return false; // Prevent form submission
                 }
                 return true; // Allow form submission
             }
         </script>
-
 
     </main>
     <footer>
