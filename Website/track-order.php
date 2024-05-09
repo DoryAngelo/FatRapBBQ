@@ -293,7 +293,7 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                                         <td data-cell="customer" class="first-col">
                                                             <div class="pic-grp">
                                                                 <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
-                                                                <p>Pork BBQ</p>
+                                                                <p><?php echo $FOOD_NAME?></p>
                                                             </div>
                                                         </td> <!--Pic and Name-->
                                                         <td>
