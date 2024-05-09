@@ -35,6 +35,7 @@
 
 var my_handlers = {
     // fill province
+    // fill provinces
     fill_provinces: function () {
         //selected region
         var region_code = $(this).val();
@@ -51,7 +52,7 @@ var my_handlers = {
         //province
         let dropdown = $('#province');
         dropdown.empty();
-        dropdown.append('<option selected="true" disabled>Choose State/Province</option>');
+        // dropdown.append('<option selected="true" disabled>Choose State/Province</option>');
         dropdown.prop('selectedIndex', 0);
 
         //city
@@ -70,7 +71,7 @@ var my_handlers = {
         var url = 'ph-json/province.json';
         $.getJSON(url, function (data) {
             var result = data.filter(function (value) {
-                return value.region_code == region_code;
+                return value.region_code == region_code && value.province_name !== "City Of Manila";
             });
 
             result.sort(function (a, b) {
@@ -83,6 +84,7 @@ var my_handlers = {
 
         });
     },
+
     // fill city
     fill_cities: function () {
         //selected province
@@ -99,7 +101,7 @@ var my_handlers = {
         //city
         let dropdown = $('#city');
         dropdown.empty();
-        dropdown.append('<option selected="true" disabled>Choose city/municipality</option>');
+        // dropdown.append('<option selected="true" disabled>Choose city/municipality</option>');
         dropdown.prop('selectedIndex', 0);
 
         //barangay
@@ -140,7 +142,7 @@ var my_handlers = {
         // barangay
         let dropdown = $('#barangay');
         dropdown.empty();
-        dropdown.append('<option selected="true" disabled>Choose barangay</option>');
+        // dropdown.append('<option selected="true" disabled>Choose barangay</option>');
         dropdown.prop('selectedIndex', 0);
 
         // filter & Fill
@@ -205,15 +207,20 @@ $(function () {
     dropdown.append('<option selected="true" disabled>Choose Region</option>');
     dropdown.prop('selectedIndex', 0);
     const url = 'ph-json/region.json';
-    // Populate dropdown with list of regions
+    // Populate dropdown with NCR option
     $.getJSON(url, function (data) {
-        // Filter regions to include only NCR
-        var ncr = data.filter(function (region) {
-            return region.region_code === '13'; // '13' is the region_code for NCR
+        // Filter only NCR options
+        var ncr = data.filter(function (entry) {
+            return entry.region_name.includes('NCR');
         });
-        // Append NCR to the dropdown
+        // Append NCR regions to the dropdown
         $.each(ncr, function (key, entry) {
             dropdown.append($('<option></option>').attr('value', entry.region_code).text(entry.region_name));
         });
     });
 });
+
+
+
+
+

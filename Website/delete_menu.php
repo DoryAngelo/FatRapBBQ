@@ -3,7 +3,7 @@
 @include 'constants.php';
 
 $PRSN_ID = $_SESSION['prsn_id'];
-$PRSN_ROLE = $_SESSION['prsn_role'];
+$PRSN_ROLE = strtolower($_SESSION['prsn_role']);
 
 $MENU_ID = $_GET['MENU_ID'];
 
