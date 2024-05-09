@@ -18,7 +18,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
 
 $FOOD_ID = $_GET['FOOD_ID'];
 
-$sql = "SELECT f.*, SUM(m.MENU_STOCK) AS total_menu_stock, io.in_order_quantity
+$sql = "SELECT f.*, SUM(m.MENU_STOCK) AS total_menu_stock, io.in_order_quantity, m.MENU_ID
         FROM food f 
         LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
         LEFT JOIN menu m ON f.FOOD_ID = m.food_id
@@ -31,8 +31,8 @@ $count = mysqli_num_rows($res);
 if ($count > 0) {
     while ($row = mysqli_fetch_assoc($res)) {
         $FOOD_ID = $row['FOOD_ID'];
-        $MENU_ID = $row['MENU_ID']
-;        $FOOD_NAME = $row['FOOD_NAME'];
+        $MENU_ID = $row['MENU_ID'];
+        $FOOD_NAME = $row['FOOD_NAME'];
         $FOOD_DESC = $row['FOOD_DESC']; 
         $FOOD_IMG = $row['FOOD_IMG'];
         $FOOD_PRICE = $row['FOOD_PRICE'];
@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             VALUES ('$FOOD_ID', '$MENU_ID','$PRSN_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered')";
         } else {
             $sql2 = "INSERT INTO in_order (FOOD_ID, MENU_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS, GUEST_ORDER_IDENTIFIER)
-            VALUES ('$FOOD_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered', '$GUEST_ID')";
+            VALUES ('$FOOD_ID', '$MENU_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered', '$GUEST_ID')";
         }
         $res2 = mysqli_query($conn, $sql2);
     }

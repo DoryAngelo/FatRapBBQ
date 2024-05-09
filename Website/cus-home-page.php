@@ -18,10 +18,14 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
 
 $FOOD_NAME = 'Barbeque';
 
-$sql = "SELECT food.*, menu.menu_stock 
+$sql = "SELECT food.*, SUM(menu.menu_stock) AS total_menu_stock
         FROM food 
         INNER JOIN menu ON food.food_id = menu.food_id 
-        WHERE food.FOOD_ACTIVE='Yes' AND food.FOOD_NAME = '$FOOD_NAME'";
+        WHERE food.FOOD_ACTIVE='Yes' 
+        AND food.FOOD_NAME = 'Barbeque'
+        AND NOW() BETWEEN STR_TO_DATE(menu.menu_start, '%M %d, %Y %h:%i:%s %p') AND STR_TO_DATE(menu.menu_end, '%M %d, %Y %h:%i:%s %p')";
+
+
 $res = mysqli_query($conn, $sql);
 $count8 = mysqli_num_rows($res);
 
@@ -36,7 +40,7 @@ if ($count8 > 0) {
         $FOOD_DESC = $row['FOOD_DESC'];
         $FOOD_IMG = $row['FOOD_IMG'];
         $FOOD_STOCK = $row['FOOD_STOCK'];
-        $MENU_STOCK = $row['menu_stock'];
+        $TOTAL_MENU_STOCK = $row['total_menu_stock'];
     }
 }
 
@@ -69,6 +73,7 @@ if ($count > 0) {
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     $quantity = $_POST['quantity'];
     $FOOD_PRICE = $_POST['price'];
+    $MENU_ID = $_POST['menu_id'];
 
     if (isset($_SESSION['prsn_id'])) {
         $sql = "SELECT * FROM in_order WHERE FOOD_ID = $FOOD_ID AND PRSN_ID = $PRSN_ID AND PLACED_ORDER_ID IS NULL";
@@ -94,10 +99,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         $IN_ORDER_TOTAL = $quantity * $FOOD_PRICE;
         if (isset($_SESSION['prsn_id'])) {
             $sql2 = "INSERT INTO in_order (FOOD_ID, MENU_ID, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS)
-            VALUES ('$FOOD_ID', '$PRSN_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered')";
+            VALUES ('$FOOD_ID', '$MENU_ID', '$PRSN_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered')";
         } else {
-            $sql2 = "INSERT INTO in_order (FOOD_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS, GUEST_ORDER_IDENTIFIER)
-            VALUES ('$FOOD_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered', '$GUEST_ID')";
+            $sql2 = "INSERT INTO in_order (FOOD_ID, MENU_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS, GUEST_ORDER_IDENTIFIER)
+            VALUES ('$FOOD_ID', '$MENU_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered', '$GUEST_ID')";
         }
         $res2 = mysqli_query($conn, $sql2);
     }
@@ -312,61 +317,66 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
 
         <!-- section 3 -->
         <?php
+        // Check if the person role is not a wholesaler
         if ($PRSN_ROLE !== 'Wholesaler') {
+            // Check if there are items with 'Barbeque' as the food name
             if ($count8 > 0) {
-                $sql = "SELECT f.*, io.in_order_quantity, m.menu_stock 
+                // Fetch information for the product 'Barbeque'
+                $sql = "SELECT f.*, io.in_order_quantity, m.menu_stock,  m.menu_id
                 FROM food f 
                 LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
                 LEFT JOIN menu m ON f.FOOD_ID = m.food_id
-                WHERE f.FOOD_ID = '$FOOD_ID'";
-        
+                WHERE f.FOOD_NAME = 'Barbeque' 
+                AND NOW() BETWEEN STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p') AND STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')
+                GROUP BY f.FOOD_ID";
 
                 $res = mysqli_query($conn, $sql);
                 $count = mysqli_num_rows($res);
+
+                // Display section if product found and menu is within time range
+                if ($count > 0) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                        $IN_ORDER_QUANTITY = $row['in_order_quantity'];
+                        $FOOD_PRICE = $row['FOOD_PRICE']; 
+                        $MENU_ID = $row['menu_id']; 
+                        $FOOD_STOCK = $row['FOOD_STOCK']; 
+        ?>
+                        <section class="section" id="product-section">
+                            <div class="container responsive">
+                                <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="picture of a pork bbq">
+                                <div class="text">
+                                    <h1>Barbeque</h1>
+                                    <div>
+                                        <p>₱<?php echo $FOOD_PRICE; ?></p>
+                                        <p>1 stick</p>
+                                    </div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictumsum dolor sit amet</p>
+                                    <div class="action-grp responsive">
+                                        <form method="post" class="form">
+                                            <input type="hidden" id="quantity" name="quantity" value="<?php echo ($IN_ORDER_QUANTITY == NULL) ? 1 : $IN_ORDER_QUANTITY; ?>">
+                                            <input type="hidden" name="price" value="<?php echo $FOOD_PRICE ?>">
+                                            <input type="hidden" name="menu_id" value="<?php echo $MENU_ID ?>">
+                                            <button class="button" name="order" type="submit" <?php echo ($TOTAL_MENU_STOCK <= 0 || (isset($_POST['quantity']) && ($IN_ORDER_QUANTITY + intval($_POST['quantity']) > $FOOD_STOCK))) ? 'disabled' : ''; ?>>Order Now</button>
+                                        </form>
+                                        <div class="with-remaining">
+                                            <div class="quantity-group">
+                                                <i class='bx bxs-minus-circle js-minus circle' data-stock="<?php echo $TOTAL_MENU_STOCK; ?>"></i>
+                                                <p class="amount js-num">1</p>
+                                                <i class='bx bxs-plus-circle js-plus circle' data-stock="<?php echo $TOTAL_MENU_STOCK; ?>"></i>
+                                            </div>
+                                            <p class="remaining"><?php echo ($TOTAL_MENU_STOCK < 0) ? 0 : $TOTAL_MENU_STOCK; ?> sticks remaining</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+        <?php
+                    }
+                }
             }
         }
-        if ($count > 0) {
-            while ($row = mysqli_fetch_assoc($res)) {
-                $IN_ORDER_QUANTITY = $row['in_order_quantity'];
-            }
         ?>
-            <section class="section" id="product-section">
-                <div class="container responsive">
-                    <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="picture of a pork bbq">
-                    <!-- <img src="images/pork-bbq.jpg" alt="picture of 3 pork bbq sticks"> -->
-                    <div class="text">
-                        <h1>Barbeque</h1>
-                        <div>
-                            <p>₱<?php echo $FOOD_PRICE; ?></p>
-                            <p>1 stick</p>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dictumsum dolor sit amet</p>
-                        <div class="action-grp responsive">
-                            <form method="post" class="form">
-                                <input type="hidden" id="quantity" name="quantity" value="<?php echo ($IN_ORDER_QUANTITY == NULL) ? 1 : $IN_ORDER_QUANTITY; ?>">
-                                <input type="hidden" name="price" value="<?php echo $FOOD_PRICE ?>">
-                                <!-- <button name="order" type="submit" class="button" <?php echo ($MENU_STOCK <= 0) ? 'disabled' : ''; ?>>Order Now</button> -->
-                                <button class="button" name="order" type="submit" <?php echo ($MENU_STOCK <= 0 || (isset($_POST['quantity']) && ($IN_ORDER_QUANTITY + intval($_POST['quantity']) > $FOOD_STOCK))) ? 'disabled' : ''; ?>>Order Now</button>
 
-                            </form>
-                            <div class="with-remaining">
-                                <div class="quantity-group">
-                                    <i class='bx bxs-minus-circle js-minus circle' data-stock="<?php echo $MENU_STOCK; ?>"></i>
-                                    <p class="amount js-num">1</p>
-                                    <i class='bx bxs-plus-circle js-plus circle' data-stock="<?php echo $MENU_STOCK; ?>"></i>
-                                </div>
-                                <p class="remaining"><?php echo ($MENU_STOCK < 0) ? 0 : $MENU_STOCK; ?> sticks remaining</p>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-
-        <?php
-
-
-        } ?>
 
         <script>
             var quantityData = <?php echo isset($IN_ORDER_QUANTITY) ? $IN_ORDER_QUANTITY : 0; ?>;

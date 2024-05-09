@@ -22,12 +22,10 @@ $PLACED_ORDER_ID = $_GET['PLACED_ORDER_ID'];
 
 $update = "UPDATE menu m
 JOIN (
-    SELECT m.menu_id, SUM(io.in_order_quantity) AS total_quantity
+    SELECT io.menu_id, SUM(io.in_order_quantity) AS total_quantity
     FROM in_order io
-    JOIN food f ON io.food_id = f.food_id
-    JOIN menu m ON f.food_id = m.food_id
     WHERE io.placed_order_id = '$PLACED_ORDER_ID'
-    GROUP BY m.menu_id
+    GROUP BY io.menu_id
 ) iot ON m.menu_id = iot.menu_id
 SET m.menu_stock = m.menu_stock - iot.total_quantity";
 
