@@ -54,6 +54,7 @@ if (isset($_SESSION['prsn_id'])) {
         WHERE f.FOOD_ID = '$FOOD_ID'
         AND io.GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
 }
+$IN_ORDER_QUANTITY = 1;
 
 $res9 = mysqli_query($conn, $sql9);
 $count9 = mysqli_num_rows($res9);
@@ -65,7 +66,7 @@ if ($count9 > 0) {
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
-    $quantity = $_POST['quantity'];
+    $quantity = isset($_POST['quantity']) ? $_POST['quantity'] : 1;
     $FOOD_PRICE = $_POST['price'];
 
     if (isset($_SESSION['prsn_id'])) {
@@ -89,7 +90,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             $res_update = mysqli_query($conn, $sql);
         }
     } else {
-        $IN_ORDER_TOTAL = $quantity * $FOOD_PRICE;
+        $quantity = isset($_POST['quantity']) ? $_POST['quantity'] : 1;
+        $IN_ORDER_TOTAL = (double)$quantity * (double)$FOOD_PRICE;
         if (isset($_SESSION['prsn_id'])) {
             $sql2 = "INSERT INTO in_order (FOOD_ID, MENU_ID, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS)
             VALUES ('$FOOD_ID', '$MENU_ID','$PRSN_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered')";
