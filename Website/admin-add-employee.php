@@ -274,11 +274,15 @@ if (isset($_POST['submit'])) {
         function setError(input, message) {
             const errorDiv = input.nextElementSibling;
             errorDiv.innerHTML = `<span class="error-text">${message}</span>`;
+            console.log("Error set:", message);
         }
 
         function clearError(input) {
             const errorDiv = input.nextElementSibling;
-            errorDiv.innerHTML = ''; // Clear the error message
+            if (errorDiv) {
+                errorDiv.innerHTML = ''; // Clear the error message
+                console.log("Error cleared");
+            }
         }
 
         function validateFirstName() {
@@ -401,7 +405,7 @@ if (isset($_POST['submit'])) {
             validateImage();
 
             // Check if any error exists
-            const errors = document.querySelectorAll('.error-text');
+            const errors = document.querySelectorAll('.error-text:not(.error-date):not(.error-time)');
             if (errors.length > 0) {
                 return false; // Prevent form submission
             }

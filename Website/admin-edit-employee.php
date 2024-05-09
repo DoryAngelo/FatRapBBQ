@@ -242,6 +242,22 @@ $EMP_ID = $_GET['EMP_ID'];
                             setInterval(checkForNewOrders, 2000);
                         </script>
                         <script>
+                            function togglePassword(passwordFieldId) {
+                                const passwordField = document.getElementById(passwordFieldId);
+                                const eyeIconOpen = document.getElementById(`eyeIconOpen${passwordFieldId.toUpperCase()}`);
+                                const eyeIconClosed = document.getElementById(`eyeIconClosed${passwordFieldId.toUpperCase()}`);
+
+                                if (passwordField.type === 'password') {
+                                    passwordField.type = 'text';
+                                    eyeIconOpen.style.display = 'none';
+                                    eyeIconClosed.style.display = 'block';
+                                } else {
+                                    passwordField.type = 'password';
+                                    eyeIconOpen.style.display = 'block';
+                                    eyeIconClosed.style.display = 'none';
+                                }
+                            }
+
                             const firstNameInput = document.getElementById('first-name');
                             const lastNameInput = document.getElementById('last-name');
                             const numberInput = document.getElementById('number');
@@ -263,12 +279,18 @@ $EMP_ID = $_GET['EMP_ID'];
                             function setError(input, message) {
                                 const errorDiv = input.nextElementSibling;
                                 errorDiv.innerHTML = `<span class="error-text">${message}</span>`;
+                                console.log("Error set:", message);
                             }
 
                             function clearError(input) {
                                 const errorDiv = input.nextElementSibling;
-                                errorDiv.innerHTML = ''; // Clear the error message
+                                if (errorDiv) {
+                                    errorDiv.innerHTML = ''; // Clear the error message
+                                    console.log("Error cleared");
+                                }
                             }
+
+
 
                             function validateFirstName() {
                                 const firstNameValue = firstNameInput.value.trim();
@@ -397,12 +419,12 @@ $EMP_ID = $_GET['EMP_ID'];
                                 validateConfirmPassword();
                                 validateImage();
 
-                                // Check if any error exists
+                                console.log("Form submission intercepted for validation");
                                 const errors = document.querySelectorAll('.error-text');
                                 if (errors.length > 0) {
-                                    return false; // Prevent form submission
+                                    return false; // Prevent form submission if there are errors
                                 }
-                                return true; // Allow form submission
+                                return true; // Allow form submission if there are no errors
                             }
                         </script>
                         <?php

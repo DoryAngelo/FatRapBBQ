@@ -310,9 +310,9 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                                 }
                                             }
                                             if (isset($_SESSION['prsn_id'])) {
-                                                $sql3 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE PRSN_ID = $PRSN_ID AND PLACED_ORDER_ID = '$PLACED_ORDER_ID'";
+                                                $sql3 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  in_order WHERE PRSN_ID = $PRSN_ID AND PLACED_ORDER_ID = '$PLACED_ORDER_ID'";
                                             } else {
-                                                $sql3 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  IN_ORDER WHERE GUEST_ORDER_IDENTIFIER = '$GUEST_ORDER_IDENTIFIER' AND PLACED_ORDER_ID = '$PLACED_ORDER_ID'";
+                                                $sql3 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM  in_order WHERE GUEST_ORDER_IDENTIFIER = '$GUEST_ORDER_IDENTIFIER' AND PLACED_ORDER_ID = '$PLACED_ORDER_ID'";
                                             }
                                             $res3 = mysqli_query($conn, $sql3);
                                             $row3 = mysqli_fetch_assoc($res3);

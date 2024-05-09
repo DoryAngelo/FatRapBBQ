@@ -241,14 +241,19 @@ if ($count > 0) {
                             cpasswordInput.addEventListener('input', validateConfirmPassword);
                             imageInput.addEventListener('change', validateImage);
 
+
                             function setError(input, message) {
                                 const errorDiv = input.nextElementSibling;
                                 errorDiv.innerHTML = `<span class="error-text">${message}</span>`;
+                                console.log("Error set:", message);
                             }
 
                             function clearError(input) {
                                 const errorDiv = input.nextElementSibling;
-                                errorDiv.innerHTML = ''; // Clear the error message
+                                if (errorDiv) {
+                                    errorDiv.innerHTML = ''; // Clear the error message
+                                    console.log("Error cleared");
+                                }
                             }
 
                             function validateFirstName() {
@@ -365,12 +370,12 @@ if ($count > 0) {
                                 validateConfirmPassword();
                                 validateImage();
 
-                                // Check if any error exists
+                                console.log("Form submission intercepted for validation");
                                 const errors = document.querySelectorAll('.error-text');
                                 if (errors.length > 0) {
-                                    return false; // Prevent form submission
+                                    return false; // Prevent form submission if there are errors
                                 }
-                                return true; // Allow form submission
+                                return true; // Allow form submission if there are no errors
                             }
                         </script>
 
