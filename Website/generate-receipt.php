@@ -8,6 +8,7 @@ class PDF extends FPDF
 {
     function Header()
     {
+          
         $this->Image('images/client-logo.png', 10, 6, 30);
         $this->SetFont('Arial', 'B', 15);
         $this->Cell(40);
@@ -15,11 +16,11 @@ class PDF extends FPDF
 
         $this->SetFont('Arial', "I", 8);
         $this->Cell(38);
-        $this->Cell(30, 5, '123 Magaling St.,', 0, 1);
+        $this->Cell(30, 5, 'Sta. Ignaciana, Brgy. Kalusugan,', 0, 1);
         $this->Cell(38);
-        $this->Cell(30, 5, 'Brgy. Something, Somewhere City', 0, 1);
+        $this->Cell(30, 5, 'Quezon City, Metro Manila, Philippines', 0, 1);
         $this->Cell(38);
-        $this->Cell(30, 5, 'Contact Number', 0, 0);
+        $this->Cell(30, 5, '09178073760 | 09190873861', 0, 0);
         $this->Ln(20);
 
         $width = $this->GetPageWidth();
