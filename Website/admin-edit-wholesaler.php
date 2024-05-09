@@ -21,6 +21,7 @@ if ($count > 0) {
         $PRSN_NUMBER = $row['PRSN_PHONE'];
         $PRSN_NAME = $row['PRSN_NAME'];
         $PRSN_EMAIL = $row['PRSN_EMAIL'];
+        $WHL_STATUS = $row['WHL_STATUS'];
     }
 }
 
@@ -120,8 +121,8 @@ if ($count > 0) {
                                         <div class="form-field-input">
                                             <label for="role">Status</label>
                                             <select class="dropdown" name="status" id="status" required>
-                                                <option value="Active">Active</option>
-                                                <option value="Inactive">Inactive</option>
+                                                <option value="Active" <?php if ($WHL_STATUS == 'Active') echo ' selected'; ?>>Active</option>
+                                                <option value="Inactive" <?php if ($WHL_STATUS == 'Inactive') echo ' selected'; ?>>Inactive</option>
                                             </select>
                                         </div>
                                         <div class="form-field-input">
@@ -278,7 +279,7 @@ if ($count > 0) {
 
                             function validateNumber() {
                                 const numberValue = numberInput.value.trim();
-                                const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
+                                const numberRegex = /^(?!\s)(09\d{9})$/;
 
                                 if (numberValue === '') {
                                     setError(numberInput, 'Please enter your number');
@@ -304,28 +305,30 @@ if ($count > 0) {
 
                             function validatePassword() {
                                 const passwordValue = passwordInput.value.trim();
-                                const cpasswordValue = cpasswordInput.value.trim();
                                 const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/;
 
                                 if (passwordValue === '') {
-                                    setError(passwordInput, 'Please enter your password');
-                                } else if (!passwordRegex.test(passwordValue)) {
+                                    clearError(passwordInput);
+                                    return;
+                                }
+
+                                if (!passwordRegex.test(passwordValue)) {
                                     setError(passwordInput, 'Invalid password format');
-                                } else if (cpasswordValue !== '' && cpasswordValue !== passwordValue) {
-                                    setError(cpasswordInput, 'Passwords do not match');
                                 } else {
                                     clearError(passwordInput);
-                                    clearError(cpasswordInput);
                                 }
                             }
 
                             function validateConfirmPassword() {
-                                const passwordValue = passwordInput.value.trim();
                                 const cpasswordValue = cpasswordInput.value.trim();
+                                const passwordValue = passwordInput.value.trim();
 
                                 if (cpasswordValue === '') {
-                                    setError(cpasswordInput, 'Please confirm your password');
-                                } else if (cpasswordValue !== passwordValue) {
+                                    clearError(cpasswordValue);
+                                    return;
+                                }
+
+                                if (cpasswordValue !== passwordValue) {
                                     setError(cpasswordInput, 'Passwords do not match');
                                 } else {
                                     clearError(cpasswordInput);

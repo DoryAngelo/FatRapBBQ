@@ -96,6 +96,7 @@ $EMP_ID = $_GET['EMP_ID'];
                                         $PRSN_EMAIL = $row['PRSN_EMAIL'];
                                         $PRSN_ROLE = $row['PRSN_ROLE'];
                                         $EMP_BRANCH = $row['EMP_BRANCH'];
+                                        $EMP_STATUS = $row['EMP_STATUS'];
                                 ?>
                                         <section>
                                             <?php
@@ -139,15 +140,15 @@ $EMP_ID = $_GET['EMP_ID'];
                                                 <div class="form-field-input">
                                                     <label for="role">Role</label>
                                                     <select class="dropdown" name="role" id="role" required>
-                                                        <option value="Employee" <?php if ($PRSN_ROLE== 'Employee') echo ' selected'; ?>>Employee</option>
+                                                        <option value="Employee" <?php if ($PRSN_ROLE == 'Employee') echo ' selected'; ?>>Employee</option>
                                                         <option value="Admin" <?php if ($PRSN_ROLE == 'Admin') echo ' selected'; ?>>Admin</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-field-input">
                                                     <label for="role">Status</label>
                                                     <select class="dropdown" name="status" id="status" required>
-                                                        <option value="Active">Active</option>
-                                                        <option value="Inactive">Inactive</option>
+                                                        <option value="Active" <?php if ($EMP_STATUS == 'Active') echo ' selected'; ?>>Active</option>
+                                                        <option value="Inactive" <?php if ($EMP_STATUS == 'Inactive') echo ' selected'; ?>>Inactive</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-field-input">
@@ -297,7 +298,7 @@ $EMP_ID = $_GET['EMP_ID'];
 
                             function validateNumber() {
                                 const numberValue = numberInput.value.trim();
-                                const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
+                                const numberRegex = /^(?!\s)(09\d{9})$/;
 
                                 if (numberValue === '') {
                                     setError(numberInput, 'Please enter your number');
@@ -307,6 +308,8 @@ $EMP_ID = $_GET['EMP_ID'];
                                     clearError(numberInput);
                                 }
                             }
+
+
 
                             function validateBranch() {
                                 const branchValue = branchInput.value.trim();
@@ -336,8 +339,11 @@ $EMP_ID = $_GET['EMP_ID'];
                                 const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/;
 
                                 if (passwordValue === '') {
-                                    setError(passwordInput, 'Please enter your password');
-                                } else if (!passwordRegex.test(passwordValue)) {
+                                    clearError(passwordInput);
+                                    return;
+                                }
+
+                                if (!passwordRegex.test(passwordValue)) {
                                     setError(passwordInput, 'Invalid password format');
                                 } else {
                                     clearError(passwordInput);
@@ -349,8 +355,11 @@ $EMP_ID = $_GET['EMP_ID'];
                                 const passwordValue = passwordInput.value.trim();
 
                                 if (cpasswordValue === '') {
-                                    setError(cpasswordInput, 'Please confirm your password');
-                                } else if (cpasswordValue !== passwordValue) {
+                                    clearError(cpasswordValue);
+                                    return;
+                                }
+
+                                if (cpasswordValue !== passwordValue) {
                                     setError(cpasswordInput, 'Passwords do not match');
                                 } else {
                                     clearError(cpasswordInput);
@@ -360,13 +369,18 @@ $EMP_ID = $_GET['EMP_ID'];
                             function validateImage() {
                                 const imageValue = imageInput.value.trim();
 
+                                // Check if the input field is empty
+                                if (imageValue === '') {
+                                    // Clear error message if input is empty
+                                    clearError(imageInput);
+                                    return; // Exit the function without further validation
+                                }
+
                                 // Check if file extension is valid
                                 const validExtensions = ['png', 'jpg', 'jpeg'];
                                 const fileExtension = imageValue.split('.').pop().toLowerCase();
 
-                                if (imageValue === '') {
-                                    setError(imageInput, 'Please select an image file');
-                                } else if (!validExtensions.includes(fileExtension)) {
+                                if (!validExtensions.includes(fileExtension)) {
                                     setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
                                 } else {
                                     clearError(imageInput);
