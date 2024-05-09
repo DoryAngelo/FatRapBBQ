@@ -5,7 +5,13 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+
 if (isset($_POST['submit'])) {
+    if (empty($_POST['login_value']) || empty($_POST['password'])) {
+        $_SESSION['error_message'] = "Please enter username and password";
+        header('Location: login-page.php');
+        exit();
+    }
     $loginValue = $_POST['login_value'];
 
     // Check if the input value contains an "@" symbol
@@ -193,7 +199,7 @@ if (isset($_POST['submit'])) {
                         const loginValue = loginInput.value.trim();
                         const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]+$/;
 
-                        if (loginValue === '') { 
+                        if (loginValue === '') {
                             setError(loginInput, 'Please enter your email or username');
                         } else if (loginValue.includes('@')) { // Check if login value contains '@' symbol
                             if (!emailRegex.test(loginValue)) {
@@ -201,7 +207,7 @@ if (isset($_POST['submit'])) {
                             } else {
                                 clearError(loginInput);
                             }
-                        } else { 
+                        } else {
                             clearError(loginInput);
                         }
                     }
@@ -225,9 +231,9 @@ if (isset($_POST['submit'])) {
 
                         const errors = document.querySelectorAll('.error-text');
                         if (errors.length > 0) {
-                            return false; 
+                            return false;
                         }
-                        return true; 
+                        return true;
                     }
                 </script>
 
