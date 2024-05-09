@@ -69,12 +69,8 @@ foreach ($menu_quantities as $menu_id => $data) {
     $update_query = "UPDATE menu SET menu_stock = '$updated_stock' WHERE menu_id = '$menu_id'";
     mysqli_query($conn, $update_query);
 }
-
-
-
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 

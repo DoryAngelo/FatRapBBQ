@@ -107,7 +107,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                                     <tbody>
                                         <?php
                                         if (isset($_SESSION['prsn_id'])) {
-                                            $sql = "SELECT io.IN_ORDER_ID, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, f.FOOD_STOCK, SUM(m.menu_stock) AS total_menu_stock, io.PRSN_ID, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
+                                            $sql = "SELECT io.IN_ORDER_ID, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, SUM(m.MENU_STOCK) AS total_menu_stock, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
             FROM in_order io
             LEFT JOIN placed_order po ON io.placed_order_id = po.placed_order_id
             JOIN food f ON io.FOOD_ID = f.FOOD_ID
@@ -115,9 +115,11 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
             WHERE io.IN_ORDER_STATUS != 'Delivered' 
             AND io.PRSN_ID = '$PRSN_ID'
             AND po.placed_order_id IS NULL
+            AND NOW() BETWEEN STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p') AND STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')
+            AND m.MENU_STOCK != 0
             GROUP BY f.FOOD_ID";
                                         } else {
-                                            $sql = "SELECT io.IN_ORDER_ID, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, f.FOOD_STOCK, SUM(m.menu_stock) AS total_menu_stock, io.PRSN_ID, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
+                                            $sql = "SELECT io.IN_ORDER_ID, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, SUM(m.MENU_STOCK) AS total_menu_stock, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
             FROM in_order io
             LEFT JOIN placed_order po ON io.placed_order_id = po.placed_order_id
             JOIN food f ON io.FOOD_ID = f.FOOD_ID
@@ -125,8 +127,11 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
             WHERE io.IN_ORDER_STATUS != 'Delivered' 
             AND io.GUEST_ORDER_IDENTIFIER = '$GUEST_ID'
             AND po.placed_order_id IS NULL
+            AND NOW() BETWEEN STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p') AND STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')
+            AND m.MENU_STOCK != 0
             GROUP BY f.FOOD_ID";
                                         }
+
 
                                         $res = mysqli_query($conn, $sql);
                                         $count = mysqli_num_rows($res);
