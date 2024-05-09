@@ -27,9 +27,13 @@ JOIN (
     WHERE io.placed_order_id = '$PLACED_ORDER_ID'
     GROUP BY io.menu_id
 ) iot ON m.menu_id = iot.menu_id
-SET m.menu_stock = m.menu_stock - iot.total_quantity";
+SET m.menu_stock = CASE
+    WHEN m.menu_stock - iot.total_quantity < 0 THEN 0
+    ELSE m.menu_stock - iot.total_quantity
+END";
 
 $res = mysqli_query($conn, $update);
+
 
 ?>
 <!DOCTYPE html>

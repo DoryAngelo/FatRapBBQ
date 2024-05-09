@@ -24,7 +24,9 @@ $sql = "SELECT f.*, SUM(m.MENU_STOCK) AS total_menu_stock, io.in_order_quantity,
         LEFT JOIN menu m ON f.FOOD_ID = m.food_id
         WHERE f.FOOD_ID = '$FOOD_ID'
         AND NOW() BETWEEN STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p') AND STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')
+        AND m.MENU_STOCK != 0
         GROUP BY f.FOOD_ID";
+
 
 $res = mysqli_query($conn, $sql);
 $count = mysqli_num_rows($res);
