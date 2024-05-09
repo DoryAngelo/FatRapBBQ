@@ -20,19 +20,58 @@ $PLACED_ORDER_TRACKER = $_SESSION['PLACED_ORDER_TRACKER'];
 
 $PLACED_ORDER_ID = $_GET['PLACED_ORDER_ID'];
 
-$update = "UPDATE menu m
-JOIN (
-    SELECT io.menu_id, SUM(io.in_order_quantity) AS total_quantity
-    FROM in_order io
-    WHERE io.placed_order_id = '$PLACED_ORDER_ID'
-    GROUP BY io.menu_id
-) iot ON m.menu_id = iot.menu_id
-SET m.menu_stock = CASE
-    WHEN m.menu_stock - iot.total_quantity < 0 THEN 0
-    ELSE m.menu_stock - iot.total_quantity
-END";
+$select = "SELECT io.menu_id, io.food_id, SUM(io.in_order_quantity) AS total_quantity
+           FROM in_order io
+           WHERE io.placed_order_id = '$PLACED_ORDER_ID'
+           GROUP BY io.menu_id, io.food_id";
 
-$res = mysqli_query($conn, $update);
+$select_result = mysqli_query($conn, $select);
+
+$menu_quantities = [];
+while ($row = mysqli_fetch_assoc($select_result)) {
+    $menu_quantities[$row['menu_id']] = [
+        'food_id' => $row['food_id'],
+        'total_quantity' => $row['total_quantity']
+    ];
+}
+
+foreach ($menu_quantities as $menu_id => $data) {
+    $food_id = $data['food_id'];
+    $total_quantity = $data['total_quantity'];
+
+    $get_stock_query = "SELECT menu_stock FROM menu WHERE menu_id = '$menu_id'";
+    $stock_result = mysqli_query($conn, $get_stock_query);
+    $row = mysqli_fetch_assoc($stock_result);
+    $current_stock = $row['menu_stock'];
+
+    $updated_stock = $current_stock - $total_quantity;
+
+    if ($updated_stock < 0) {
+        $excess = abs($updated_stock);
+        $updated_stock = 0;
+
+        $other_menu_ids_query = "SELECT menu_id FROM menu WHERE food_id = '$food_id' AND menu_id != '$menu_id'";
+        $other_menu_ids_result = mysqli_query($conn, $other_menu_ids_query);
+
+        $num_other_menu_ids = mysqli_num_rows($other_menu_ids_result);
+        $excess_per_menu = $excess / $num_other_menu_ids;
+
+
+        while ($other_menu_row = mysqli_fetch_assoc($other_menu_ids_result)) {
+            $other_menu_id = $other_menu_row['menu_id'];
+
+            $update_excess_query = "UPDATE menu SET menu_stock = menu_stock - $excess_per_menu
+                                    WHERE menu_id = '$other_menu_id'";
+            mysqli_query($conn, $update_excess_query);
+        }
+    }
+
+    $update_query = "UPDATE menu SET menu_stock = '$updated_stock' WHERE menu_id = '$menu_id'";
+    mysqli_query($conn, $update_query);
+}
+
+
+
 
 
 ?>
