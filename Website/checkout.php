@@ -107,7 +107,7 @@ if (isset($_POST['submit'])) {
 
 
     $res3 = mysqli_query($conn, $sql3);
-    
+
     if ($res3 == true) {
         if (isset($_SESSION['prsn_id'])) {
             $sql4 = "SELECT PLACED_ORDER_ID FROM placed_order WHERE PRSN_ID = $CUS_ID AND PLACED_ORDER_STATUS = 'Placed' ORDER BY PLACED_ORDER_ID DESC LIMIT 1";
@@ -334,34 +334,6 @@ if (isset($_POST['submit'])) {
                                 <hr>
                                 <div class="right">
                                     <h3 class="block-heading">Address</h3>
-                                    <!-- <div class="form-field">
-                                        <div class="input-grp">
-                                            <p>Region</p>
-                                            <select name="region" class="form-control form-control-md input" id="region"></select>
-                                            <input type="text" id="first-name" name="first-name" class="input">
-                                            <div class="error"></div>
-                                        </div>
-                                        <div class="input-grp">
-                                            <p>Province</p>
-                                            <input type="text" id="last-name" name="last-name" class="input">
-                                            <div class="error"></div>
-                                        </div>
-                                        <div class="input-grp">
-                                            <p>City/Municipality</p>
-                                            <input type="text" id="contact-number" name="contact-number" class="input">
-                                            <div class="error"></div>
-                                        </div>
-                                        <div class="input-grp">
-                                            <p>Barangay</p>
-                                            <input type="email" id="email" name="email" class="input">
-                                            <div class="error"></div>
-                                        </div>
-                                        <div class="input-grp">
-                                            <p>House no./Bldg./Street</p>
-                                            <input type="text" class="form-control form-control-md" name="street" id="street-text" class="input">
-                                            <div class="error"></div>
-                                        </div>
-                                    </div> -->
                                     <div class="form-field">
                                         <div class="input-grp">
                                             <p>Region</p>
@@ -417,48 +389,22 @@ if (isset($_POST['submit'])) {
                                 <script>
                                     var calendarData = <?php echo $calendar_json; ?>;
                                 </script>
-                                <!-- <div class="date-grp">
+                                <div class="date-grp">
                                     <?php
                                     $today = date("Y-m-d");
                                     $oneMonthFromNow = date("Y-m-d", strtotime("+1 month"));
                                     ?>
                                     <input class="date" type="date" name="date" min="<?php echo $today ?>" max="<?php echo $oneMonthFromNow ?>" oninput="validateDateTime(this)">
                                     <div class="error-date error-text" style="display: none;">Date not available.</div>
-                                </div> -->
-                                <div class="input-grp">
-                                    <div class="item-grp">
-                                        <label for="date">Date</label>
-                                        <input class="date input" type="date" name="date" min="<?php echo $today ?>" max="<?php echo $oneMonthFromNow ?>" oninput="validateDateTime(this)">
-                                        <div class="error-date error-text" style="display: none;">Date not available.</div>
-                                    </div>
-                                    <div class="item-grp">
-                                        <label for="time">Time</label>
-                                        <input class="input" type="time" name="time" min="09:00:00" max="17:00:00">
-                                        <div class="error-time error-text" style="display: none;">Time not available.</div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="block time-slot">
-                                <h3 class="block-heading">Product Availability</h3>
+                                <h3 class="block-heading">Time Slot</h3>
                                 <div class="block-body">
-                                    <div class="prod-availability"> <!-- contents from cart and its remaining stock in inventory --Price---->
-                                        <div class="inline">
-                                            <p class="name">Barbeque</p>
-                                            <p>100 sticks</p>
-                                        </div>
-                                        <div class="inline">
-                                            <p class="name">Barbeque erwtwetr</p>
-                                            <p>100 stickswetrer</p>
-                                        </div>
-                                    </div>
-                                    <!-- <input type="time" name="time" min="09:00:00" max="17:00:00">
-                                    <div class="error-time error-text" style="display: none;">Time not available.</div> -->
+                                    <input type="time" name="time" min="09:00:00" max="17:00:00">
+                                    <div class="error-time error-text" style="display: none;">Time not available.</div>
                                 </div>
                             </div>
-                            <!--<div class="block time-slot">
-                                 <h3 class="block-heading">Available sticks</h3>
-                                <h3 class="block-heading">[Insert Date]</h3> 
-                            </div>-->
                         </section>
 
                         <script>
@@ -501,6 +447,7 @@ if (isset($_POST['submit'])) {
                             });
                         </script>
 
+
                         <!-- customer note block-->
                         <section class="block red-theme">
                             <h3 class="block-heading">Additional Notes</h2>
@@ -526,24 +473,13 @@ if (isset($_POST['submit'])) {
         <script>
             const firstNameInput = document.getElementById('first-name');
             const lastNameInput = document.getElementById('last-name');
+            const contactNumberInput = document.getElementById('contact-number');
             const emailInput = document.getElementById('email');
-            const numberInput = document.getElementById('contact-number');
-            const regionInput = document.getElementById('region');
-            const provinceInput = document.getElementById('province');
-            const cityInput = document.getElementById('city');
-            const barangayInput = document.getElementById('barangay');
-            const streetInput = document.getElementById('street');
 
-            firstNameInput.addEventListener('input', validateName);
-            lastNameInput.addEventListener('input', validateName);
+            firstNameInput.addEventListener('input', validateFirstName);
+            lastNameInput.addEventListener('input', validateLastName);
+            contactNumberInput.addEventListener('input', validateContactNumber);
             emailInput.addEventListener('input', validateEmail);
-            numberInput.addEventListener('input', validateNumber);
-            regionInput.addEventListener('input', validateInput);
-            provinceInput.addEventListener('input', validateInput);
-            cityInput.addEventListener('input', validateInput);
-            barangayInput.addEventListener('input', validateInput);
-            streetInput.addEventListener('input', validateInput);
-
 
             function setError(input, message) {
                 const errorDiv = input.nextElementSibling;
@@ -553,69 +489,75 @@ if (isset($_POST['submit'])) {
             function clearError(input) {
                 const errorDiv = input.nextElementSibling;
                 errorDiv.innerHTML = ''; // Clear the error message
-            }
+            }   
 
-            function validateName() {
-                const value = this.value.trim();
+            function validateFirstName() {
+                const firstNameValue = firstNameInput.value.trim();
                 const nameRegex = /^[a-zA-Z\s]+$/;
 
-                if (value === '') {
-                    setError(this, 'Please enter your name');
-                } else if (!nameRegex.test(value)) {
-                    setError(this, 'Name must contain only letters');
+                if (firstNameValue === '') {
+                    setError(firstNameInput, 'Please enter your first name');
+                } else if (!nameRegex.test(firstNameValue)) {
+                    setError(firstNameInput, 'Invalid first name');
                 } else {
-                    clearError(this);
+                    clearError(firstNameInput);
+                }
+            }
+
+            function validateLastName() {
+                const lastNameValue = lastNameInput.value.trim();
+                const nameRegex = /^[a-zA-Z\s]+$/;
+
+                if (lastNameValue === '') {
+                    setError(lastNameInput, 'Please enter your last name');
+                } else if (!nameRegex.test(lastNameValue)) {
+                    setError(lastNameInput, 'Invalid last name');
+                } else {
+                    clearError(lastNameInput);
+                }
+            }
+
+            function validateContactNumber() {
+                const contactNumberValue = contactNumberInput.value.trim();
+                const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
+
+                if (contactNumberValue === '') {
+                    setError(contactNumberInput, 'Please enter your contact number');
+                } else if (!numberRegex.test(contactNumberValue)) {
+                    setError(contactNumberInput, 'Invalid contact number');
+                } else {
+                    clearError(contactNumberInput);
                 }
             }
 
             function validateEmail() {
-                const value = this.value.trim();
-                const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]+$/;
+                const emailValue = emailInput.value.trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-                if (value === '') {
-                    setError(this, 'Please enter your email');
-                } else if (!emailRegex.test(value)) {
-                    setError(this, 'Invalid email format');
+                if (emailValue === '') {
+                    setError(emailInput, 'Please enter your email');
+                } else if (!emailRegex.test(emailValue)) {
+                    setError(emailInput, 'Invalid email');
                 } else {
-                    clearError(this);
-                }
-            }
-
-            function validateNumber() {
-                const value = this.value.trim();
-                const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
-
-                if (value === '') {
-                    setError(this, 'Please enter your number');
-                } else if (!numberRegex.test(value)) {
-                    setError(this, 'Invalid number');
-                } else {
-                    clearError(this);
-                }
-            }
-
-            function validateInput() {
-                const value = this.value.trim();
-
-                if (value === '') {
-                    setError(this, `Please enter your ${this.name}`);
-                } else {
-                    clearError(this);
+                    clearError(emailInput);
                 }
             }
 
             function validateInputs() {
-                const inputs = [firstNameInput, lastNameInput, emailInput, numberInput, regionInput, provinceInput, cityInput, barangayInput, streetInput];
-
-                for (let input of inputs) {
-                    validateInput.call(input);
-                }
+                validateFirstName();
+                validateLastName();
+                validateContactNumber();
+                validateEmail();
 
                 // Check if any error exists
                 const errors = document.querySelectorAll('.error-text');
-                return errors.length === 0; // Allow form submission if no errors
+                if (errors.length > 0) {
+                    return false; // Prevent form submission
+                }
+                return true; // Allow form submission
             }
         </script>
+
 
     </main>
     <footer>
