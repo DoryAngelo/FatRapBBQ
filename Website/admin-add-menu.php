@@ -160,16 +160,14 @@ WHERE FOOD_ID = '$FOOD_ID'";
     </main>
     <script>
         const productNameInput = document.getElementById('product-name');
-        const productDescInput = document.getElementById('product-desc');
-        const priceInput = document.getElementById('price');
         const stockInput = document.getElementById('stock');
-        const imageInput = document.getElementById('image');
+        const startDateInput = document.getElementById('start_date');
+        const endDateInput = document.getElementById('end_date');
 
         productNameInput.addEventListener('input', validateProductName);
-        productDescInput.addEventListener('input', validateProductDesc);
-        priceInput.addEventListener('input', validatePrice);
         stockInput.addEventListener('input', validateStock);
-        imageInput.addEventListener('change', validateImage);
+        startDateInput.addEventListener('input', validateStartDateTime);
+        endDateInput.addEventListener('input', validateEndDateTime);
 
         function setError(input, message) {
             const errorDiv = input.nextElementSibling;
@@ -183,40 +181,16 @@ WHERE FOOD_ID = '$FOOD_ID'";
 
         function validateProductName() {
             const productNameValue = productNameInput.value.trim();
-            const nameRegex = /^[a-zA-Z0-9\s]+$/;
+            const nameRegex = /^[a-zA-Z\s]+$/;
 
             if (productNameValue === '') {
                 setError(productNameInput, 'Please enter the product name');
+            } else if (productNameValue.length > 20) {
+                setError(productNameInput, 'Product name must not exceed 20 characters');
             } else if (!nameRegex.test(productNameValue)) {
                 setError(productNameInput, 'Invalid product name');
             } else {
                 clearError(productNameInput);
-            }
-        }
-
-        function validateProductDesc() {
-            const productDescValue = productDescInput.value.trim();
-
-            if (productDescValue === '') {
-                setError(productDescInput, 'Please enter the product description');
-            } else if (productDescValue.length > 50) {
-                setError(productDescInput, 'Product description must not exceed 50 characters');
-            } else {
-                clearError(productDescInput);
-            }
-        }
-
-        function validatePrice() {
-            const priceValue = priceInput.value.trim();
-
-            if (priceValue === '') {
-                setError(priceInput, 'Please enter the price');
-            } else if (isNaN(parseFloat(priceValue))) {
-                setError(priceInput, 'Price must be a number');
-            } else if (parseInt(priceValue) < 0) {
-                setError(priceInput, 'Price cannot be negative');
-            } else {
-                clearError(priceInput);
             }
         }
 
@@ -227,40 +201,38 @@ WHERE FOOD_ID = '$FOOD_ID'";
                 setError(stockInput, 'Please enter the stock');
             } else if (isNaN(parseInt(stockValue))) {
                 setError(stockInput, 'Stock must be a number');
-            } else if (parseInt(stockValue) < 0) {
-                setError(stockInput, 'Stock cannot be negative');
+            } else if (parseInt(stockValue) < 1 || parseInt(stockValue) > <?php echo $FOOD_STOCK ?>) {
+                setError(stockInput, 'Stock must be between 1 and <?php echo $FOOD_STOCK ?>');
             } else {
                 clearError(stockInput);
             }
         }
 
-        function validateImage() {
-            const imageValue = imageInput.value.trim();
+        function validateStartDateTime() {
+            const startDateValue = startDateInput.value;
 
-            // Check if the input field is empty
-            if (imageValue === '') {
-                // Clear error message if input is empty
-                clearError(imageInput);
-                return; // Exit the function without further validation
-            }
-
-            // Check if file extension is valid
-            const validExtensions = ['png', 'jpg', 'jpeg'];
-            const fileExtension = imageValue.split('.').pop().toLowerCase();
-
-            if (!validExtensions.includes(fileExtension)) {
-                setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
+            if (startDateValue === '') {
+                setError(startDateInput, 'Please enter the start date and time');
             } else {
-                clearError(imageInput);
+                clearError(startDateInput);
+            }
+        }
+
+        function validateEndDateTime() {
+            const endDateValue = endDateInput.value;
+
+            if (endDateValue === '') {
+                setError(endDateInput, 'Please enter the end date and time');
+            } else {
+                clearError(endDateInput);
             }
         }
 
         function validateInputs() {
             validateProductName();
-            validateProductDesc();
-            validatePrice();
             validateStock();
-            validateImage();
+            validateStartDateTime();
+            validateEndDateTime();
 
             // Check if any error exists
             const errors = document.querySelectorAll('.error-text');
@@ -270,6 +242,7 @@ WHERE FOOD_ID = '$FOOD_ID'";
             return true; // Allow form submission
         }
     </script>
+
 
 
     <script>

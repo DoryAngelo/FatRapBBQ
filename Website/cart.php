@@ -107,25 +107,25 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                                     <tbody>
                                         <?php
                                         if (isset($_SESSION['prsn_id'])) {
-                                            $sql = "SELECT io.IN_ORDER_ID, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, f.FOOD_STOCK, m.menu_stock, io.PRSN_ID, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
-                                            FROM in_order io
-                                            LEFT JOIN placed_order po ON io.placed_order_id = po.placed_order_id
-                                            JOIN food f ON io.FOOD_ID = f.FOOD_ID
-                                            LEFT JOIN menu m ON f.FOOD_ID = m.food_id
-                                            WHERE io.IN_ORDER_STATUS != 'Delivered' 
-                                            AND io.PRSN_ID = '$PRSN_ID'
-                                            AND po.placed_order_id IS NULL
-                                            GROUP BY f.FOOD_ID";
+                                            $sql = "SELECT io.IN_ORDER_ID, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, f.FOOD_STOCK, SUM(m.menu_stock) AS total_menu_stock, io.PRSN_ID, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
+            FROM in_order io
+            LEFT JOIN placed_order po ON io.placed_order_id = po.placed_order_id
+            JOIN food f ON io.FOOD_ID = f.FOOD_ID
+            LEFT JOIN menu m ON f.FOOD_ID = m.food_id
+            WHERE io.IN_ORDER_STATUS != 'Delivered' 
+            AND io.PRSN_ID = '$PRSN_ID'
+            AND po.placed_order_id IS NULL
+            GROUP BY f.FOOD_ID";
                                         } else {
-                                            $sql = "SELECT io.IN_ORDER_ID, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, f.FOOD_STOCK, m.menu_stock, io.PRSN_ID, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
-FROM in_order io
-LEFT JOIN placed_order po ON io.placed_order_id = po.placed_order_id
-JOIN food f ON io.FOOD_ID = f.FOOD_ID
-LEFT JOIN menu m ON f.FOOD_ID = m.food_id
-WHERE io.IN_ORDER_STATUS != 'Delivered' 
-AND io.GUEST_ORDER_IDENTIFIER = '$GUEST_ID'
-AND po.placed_order_id IS NULL
-GROUP BY f.FOOD_ID";
+                                            $sql = "SELECT io.IN_ORDER_ID, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, f.FOOD_STOCK, SUM(m.menu_stock) AS total_menu_stock, io.PRSN_ID, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
+            FROM in_order io
+            LEFT JOIN placed_order po ON io.placed_order_id = po.placed_order_id
+            JOIN food f ON io.FOOD_ID = f.FOOD_ID
+            LEFT JOIN menu m ON f.FOOD_ID = m.food_id
+            WHERE io.IN_ORDER_STATUS != 'Delivered' 
+            AND io.GUEST_ORDER_IDENTIFIER = '$GUEST_ID'
+            AND po.placed_order_id IS NULL
+            GROUP BY f.FOOD_ID";
                                         }
 
                                         $res = mysqli_query($conn, $sql);
@@ -139,7 +139,7 @@ GROUP BY f.FOOD_ID";
                                                 $FOOD_NAME = $row['FOOD_NAME'];
                                                 $FOOD_PRICE = $row['FOOD_PRICE'];
                                                 $FOOD_IMG = $row['FOOD_IMG'];
-                                                $MENU_STOCK = $row['menu_stock'];
+                                                $MENU_STOCK = $row['total_menu_stock'];
                                                 $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
                                                 $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
                                                 $stockValues[$FOOD_NAME] = $MENU_STOCK;
@@ -188,9 +188,9 @@ GROUP BY f.FOOD_ID";
                                         }
                                         if ($count >= 0) {
                                             if (isset($_SESSION['prsn_id'])) {
-                                                $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM IN_ORDER WHERE PRSN_ID = '$PRSN_ID' AND PLACED_ORDER_ID IS NULL";
+                                                $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM in_order WHERE PRSN_ID = '$PRSN_ID' AND PLACED_ORDER_ID IS NULL";
                                             } else {
-                                                $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM IN_ORDER WHERE GUEST_ORDER_IDENTIFIER = '$GUEST_ID' AND PLACED_ORDER_ID IS NULL";
+                                                $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM in_order WHERE GUEST_ORDER_IDENTIFIER = '$GUEST_ID' AND PLACED_ORDER_ID IS NULL";
                                             }
                                             $res2 = mysqli_query($conn, $sql2);
                                             $row2 = mysqli_fetch_assoc($res2);

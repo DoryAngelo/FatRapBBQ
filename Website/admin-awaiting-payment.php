@@ -189,6 +189,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                     $DELIVERY_ADDRESS = $row['DELIVERY_ADDRESS'];
                                     $DELIVERY_DATE = $row['DELIVERY_DATE'];
                                     $PLACED_ORDER_STATUS = $row['PLACED_ORDER_STATUS'];
+                                    $REFERENCE_NUMBER = $row['REFERENCE_NUMBER'];
                             ?>
                                     <tr>
                                         <td data-cell="Date and Time"><?php echo $PLACED_ORDER_DATE ?></td>
@@ -201,8 +202,19 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                                 <form method="POST">
                                                     <input type="hidden" name="PLACED_ORDER_ID" value="<?php echo $PLACED_ORDER_ID; ?>">
                                                     <input type="hidden" name="PLACED_ORDER_STATUS" value="<?php echo $PLACED_ORDER_STATUS; ?>">
-                                                    <button class="btn-check" name="confirmed"><i class='bx bxs-check-circle'></i></button>
-                                                    <button class="btn-cross" name="not-confirmed"><i class='bx bxs-x-circle'></i></button>
+                                                    <input type="hidden" name="REFERENCE_NUMBER" value="<?php echo $REFERENCE_NUMBER; ?>">
+                                                    <?php if (empty($REFERENCE_NUMBER)) {
+                                                    ?>
+                                                        <button class="btn-cross" name="not-confirmed"><i class='bx bxs-x-circle'></i></button>
+                                                    <?php
+                                                    } else {
+                                                    ?>
+                                                        <button class="btn-check" name="confirmed"><i class='bx bxs-check-circle'></i></button>
+                                                        <button class="btn-cross" name="not-confirmed"><i class='bx bxs-x-circle'></i></button>
+                                                    <?php
+                                                    }
+                                                    ?>
+
                                         <td><a href="#" onclick="confirmDelete(<?php echo $PLACED_ORDER_ID; ?>)" class="bx bxs-trash-alt trash"></a></td>
                                         <script>
                                             function confirmDelete(PLACED_ORDER_ID) {
@@ -233,10 +245,10 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
         </section>
         <section class="side-menu">
             <!-- if there is a product in the inventory that is low in stock, show id="low-inventory" and hide id="inventory"-->
-           <div class="group inventory" id="low-inventory">
+            <div class="group inventory" id="low-inventory">
                 <h3>Low Inventory</h3>
                 <div class="inventory-box">
-                <?php
+                    <?php
                     $sql = "SELECT * FROM food WHERE FOOD_STOCK < 100";
                     $res = mysqli_query($conn, $sql);
                     $count = mysqli_num_rows($res);
@@ -267,7 +279,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                 </div>
             </div> -->
             <div class="group">
-            <a href="admin-new-orders.php" class="view big-font">New Orders</a>
+                <a href="admin-new-orders.php" class="view big-font">New Orders</a>
                 <a href="admin-awaiting-payment.php" class="view big-font">Awaiting Payment</a>
                 <!-- <a href="admin-preparing-orders.php" class="view big-font">Preparing Orders</a> -->
                 <a href="admin-delivery-orders.php" class="view big-font">Ready for Pickup</a>

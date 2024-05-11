@@ -241,166 +241,177 @@ if (isset($_POST['submit'])) {
             </div>
         </section>
     </main>
-    <<script>
-    //for eye icon password
-    function togglePassword(passwordFieldId) {
-        const passwordField = document.getElementById(passwordFieldId);
-        const eyeIconOpen = document.getElementById(`eyeIconOpen${passwordFieldId.toUpperCase()}`);
-        const eyeIconClosed = document.getElementById(`eyeIconClosed${passwordFieldId.toUpperCase()}`);
+    <script>
+        // for eye icon password
+        function togglePassword(passwordFieldId) {
+            const passwordField = document.getElementById(passwordFieldId);
+            const eyeIconOpen = document.getElementById(`eyeIconOpen${passwordFieldId.toUpperCase()}`);
+            const eyeIconClosed = document.getElementById(`eyeIconClosed${passwordFieldId.toUpperCase()}`);
 
-        if (passwordField.type === 'password') {
-            passwordField.type = 'text';
-            eyeIconOpen.style.display = 'none';
-            eyeIconClosed.style.display = 'block';
-        } else {
-            passwordField.type = 'password';
-            eyeIconOpen.style.display = 'block';
-            eyeIconClosed.style.display = 'none';
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                eyeIconOpen.style.display = 'none';
+                eyeIconClosed.style.display = 'block';
+            } else {
+                passwordField.type = 'password';
+                eyeIconOpen.style.display = 'block';
+                eyeIconClosed.style.display = 'none';
+            }
         }
-    }
 
-    const firstNameInput = document.getElementById('first-name');
-    const lastNameInput = document.getElementById('last-name');
-    const numberInput = document.getElementById('number');
-    const usernameInput = document.getElementById('username');
-    const passwordInput = document.getElementById('password');
-    const cpasswordInput = document.getElementById('cpassword');
-    const imageInput = document.getElementById('image');
+        const firstNameInput = document.getElementById('first-name');
+        const lastNameInput = document.getElementById('last-name');
+        const numberInput = document.getElementById('number');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const cpasswordInput = document.getElementById('cpassword');
+        const imageInput = document.getElementById('image');
 
-    firstNameInput.addEventListener('input', validateFirstName);
-    lastNameInput.addEventListener('input', validateLastName);
-    numberInput.addEventListener('input', validateNumber);
-    usernameInput.addEventListener('input', validateUsername);
-    passwordInput.addEventListener('input', validatePassword);
-    cpasswordInput.addEventListener('input', validateConfirmPassword);
-    imageInput.addEventListener('change', validateImage);
+        firstNameInput.addEventListener('input', validateFirstName);
+        lastNameInput.addEventListener('input', validateLastName);
+        numberInput.addEventListener('input', validateNumber);
+        usernameInput.addEventListener('input', validateUsername);
+        passwordInput.addEventListener('input', validatePassword);
+        cpasswordInput.addEventListener('input', validateConfirmPassword);
+        imageInput.addEventListener('change', validateImage);
 
-    function setError(input, message) {
-        const errorDiv = input.nextElementSibling;
-        errorDiv.innerHTML = `<span class="error-text">${message}</span>`;
-    }
 
-    function clearError(input) {
-        const errorDiv = input.nextElementSibling;
-        errorDiv.innerHTML = ''; // Clear the error message
-    }
-
-    function validateFirstName() {
-        const firstNameValue = firstNameInput.value.trim();
-        const nameRegex = /^[a-zA-Z\s]+$/;
-
-        if (firstNameValue === '') {
-            setError(firstNameInput, 'Please enter your first name');
-        } else if (!nameRegex.test(firstNameValue)) {
-            setError(firstNameInput, 'First name must contain only letters');
-        } else {
-            clearError(firstNameInput);
+        function setError(input, message) {
+            const errorDiv = input.nextElementSibling;
+            errorDiv.innerHTML = `<span class="error-text">${message}</span>`;
+            console.log("Error set:", message);
         }
-    }
 
-    function validateLastName() {
-        const lastNameValue = lastNameInput.value.trim();
-        const nameRegex = /^[a-zA-Z\s]+$/;
-
-        if (lastNameValue === '') {
-            setError(lastNameInput, 'Please enter your last name');
-        } else if (!nameRegex.test(lastNameValue)) {
-            setError(lastNameInput, 'Last name must contain only letters');
-        } else {
-            clearError(lastNameInput);
+        function clearError(input) {
+            const errorDiv = input.nextElementSibling;
+            if (errorDiv) {
+                errorDiv.innerHTML = ''; // Clear the error message
+                console.log("Error cleared");
+            }
         }
-    }
 
-    function validateNumber() {
-        const numberValue = numberInput.value.trim();
-        const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
+        function validateFirstName() {
+            const firstNameValue = firstNameInput.value.trim();
+            const nameRegex = /^[a-zA-Z\s]+$/;
 
-        if (numberValue === '') {
-            setError(numberInput, 'Please enter your number');
-        } else if (!numberRegex.test(numberValue)) {
-            setError(numberInput, 'Invalid number');
-        } else {
-            clearError(numberInput);
+            if (firstNameValue === '') {
+                setError(firstNameInput, 'Please enter your first name');
+            } else if (!nameRegex.test(firstNameValue)) {
+                setError(firstNameInput, 'First name must contain only letters');
+            } else {
+                clearError(firstNameInput);
+            }
         }
-    }
 
-    function validateUsername() {
-        const usernameValue = usernameInput.value.trim();
-        const usernameRegex = /^[a-zA-Z0-9]+$/;
+        function validateLastName() {
+            const lastNameValue = lastNameInput.value.trim();
+            const nameRegex = /^[a-zA-Z\s]+$/;
 
-        if (usernameValue === '') {
-            setError(usernameInput, 'Please enter your username');
-        } else if (!usernameRegex.test(usernameValue)) {
-            setError(usernameInput, 'Invalid username format');
-        } else {
-            clearError(usernameInput);
+            if (lastNameValue === '') {
+                setError(lastNameInput, 'Please enter your last name');
+            } else if (!nameRegex.test(lastNameValue)) {
+                setError(lastNameInput, 'Last name must contain only letters');
+            } else {
+                clearError(lastNameInput);
+            }
         }
-    }
 
-    function validatePassword() {
-        const passwordValue = passwordInput.value.trim();
-        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/;
+        function validateNumber() {
+            const numberValue = numberInput.value.trim();
+            const numberRegex = /^(?!\s)(09\d{9})$/;
 
-        if (passwordValue === '') {
-            setError(passwordInput, 'Please enter your password');
-        } else if (!passwordRegex.test(passwordValue)) {
-            setError(passwordInput, 'Invalid password format');
-        } else {
-            clearError(passwordInput);
+            if (numberValue === '') {
+                setError(numberInput, 'Please enter your number');
+            } else if (!numberRegex.test(numberValue)) {
+                setError(numberInput, 'Invalid number');
+            } else {
+                clearError(numberInput);
+            }
         }
-    }
 
-    function validateConfirmPassword() {
-        const cpasswordValue = cpasswordInput.value.trim();
-        const passwordValue = passwordInput.value.trim();
+        function validateUsername() {
+            const usernameValue = usernameInput.value.trim();
+            const usernameRegex = /^[a-zA-Z0-9]+$/;
 
-        if (cpasswordValue === '') {
-            setError(cpasswordInput, 'Please confirm your password');
-        } else if (cpasswordValue !== passwordValue) {
-            setError(cpasswordInput, 'Passwords do not match');
-        } else {
-            clearError(cpasswordInput);
+            if (usernameValue === '') {
+                setError(usernameInput, 'Please enter your username');
+            } else if (!usernameRegex.test(usernameValue)) {
+                setError(usernameInput, 'Invalid username format');
+            } else {
+                clearError(usernameInput);
+            }
         }
-    }
 
-function validateImage() {
-    const imageValue = imageInput.value.trim();
+        function validatePassword() {
+            const passwordValue = passwordInput.value.trim();
+            const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/;
 
-    // Check if the input field is empty
-    if (imageValue === '') {
-        // Clear error message if input is empty
-        clearError(imageInput);
-        return; // Exit the function without further validation
-    }
+            if (passwordValue === '') {
+                clearError(passwordInput);
+                return;
+            }
 
-    // Check if file extension is valid
-    const validExtensions = ['png', 'jpg', 'jpeg'];
-    const fileExtension = imageValue.split('.').pop().toLowerCase();
-
-    if (!validExtensions.includes(fileExtension)) {
-        setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
-    } else {
-        clearError(imageInput);
-    }
-}
-
-    function validateInputs() {
-        validateFirstName();
-        validateLastName();
-        validateNumber();
-        validateUsername();
-        validatePassword();
-        validateConfirmPassword();
-        validateImage();
-
-        // Check if any error exists
-        const errors = document.querySelectorAll('.error-text');
-        if (errors.length > 0) {
-            return false; // Prevent form submission
+            if (!passwordRegex.test(passwordValue)) {
+                setError(passwordInput, 'Invalid password format');
+            } else {
+                clearError(passwordInput);
+            }
         }
-        return true; // Allow form submission
-    }
-</script>
+
+        function validateConfirmPassword() {
+            const cpasswordValue = cpasswordInput.value.trim();
+            const passwordValue = passwordInput.value.trim();
+
+            if (cpasswordValue === '') {
+                clearError(cpasswordValue);
+                return;
+            }
+
+            if (cpasswordValue !== passwordValue) {
+                setError(cpasswordInput, 'Passwords do not match');
+            } else {
+                clearError(cpasswordInput);
+            }
+        }
+
+        function validateImage() {
+            const imageValue = imageInput.value.trim();
+
+            // Check if the input field is empty
+            if (imageValue === '') {
+                // Clear error message if input is empty
+                clearError(imageInput);
+                return; // Exit the function without further validation
+            }
+
+            // Check if file extension is valid
+            const validExtensions = ['png', 'jpg', 'jpeg'];
+            const fileExtension = imageValue.split('.').pop().toLowerCase();
+
+            if (!validExtensions.includes(fileExtension)) {
+                setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
+            } else {
+                clearError(imageInput);
+            }
+        }
+
+        function validateInputs() {
+            validateFirstName();
+            validateLastName();
+            validateNumber();
+            validateUsername();
+            validatePassword();
+            validateConfirmPassword();
+            validateImage();
+
+            console.log("Form submission intercepted for validation");
+            const errors = document.querySelectorAll('.error-text');
+            if (errors.length > 0) {
+                return false; // Prevent form submission if there are errors
+            }
+            return true; // Allow form submission if there are no errors
+        }
+    </script>
 
 </body>
 <script>

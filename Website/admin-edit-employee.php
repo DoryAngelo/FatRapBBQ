@@ -96,6 +96,7 @@ $EMP_ID = $_GET['EMP_ID'];
                                         $PRSN_EMAIL = $row['PRSN_EMAIL'];
                                         $PRSN_ROLE = $row['PRSN_ROLE'];
                                         $EMP_BRANCH = $row['EMP_BRANCH'];
+                                        $EMP_STATUS = $row['EMP_STATUS'];
                                 ?>
                                         <section>
                                             <?php
@@ -139,15 +140,15 @@ $EMP_ID = $_GET['EMP_ID'];
                                                 <div class="form-field-input">
                                                     <label for="role">Role</label>
                                                     <select class="dropdown" name="role" id="role" required>
-                                                        <option value="Employee" <?php if ($PRSN_ROLE== 'Employee') echo ' selected'; ?>>Employee</option>
+                                                        <option value="Employee" <?php if ($PRSN_ROLE == 'Employee') echo ' selected'; ?>>Employee</option>
                                                         <option value="Admin" <?php if ($PRSN_ROLE == 'Admin') echo ' selected'; ?>>Admin</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-field-input">
                                                     <label for="role">Status</label>
                                                     <select class="dropdown" name="status" id="status" required>
-                                                        <option value="Active">Active</option>
-                                                        <option value="Inactive">Inactive</option>
+                                                        <option value="Active" <?php if ($EMP_STATUS == 'Active') echo ' selected'; ?>>Active</option>
+                                                        <option value="Inactive" <?php if ($EMP_STATUS == 'Inactive') echo ' selected'; ?>>Inactive</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-field-input">
@@ -241,6 +242,22 @@ $EMP_ID = $_GET['EMP_ID'];
                             setInterval(checkForNewOrders, 2000);
                         </script>
                         <script>
+                            function togglePassword(passwordFieldId) {
+                                const passwordField = document.getElementById(passwordFieldId);
+                                const eyeIconOpen = document.getElementById(`eyeIconOpen${passwordFieldId.toUpperCase()}`);
+                                const eyeIconClosed = document.getElementById(`eyeIconClosed${passwordFieldId.toUpperCase()}`);
+
+                                if (passwordField.type === 'password') {
+                                    passwordField.type = 'text';
+                                    eyeIconOpen.style.display = 'none';
+                                    eyeIconClosed.style.display = 'block';
+                                } else {
+                                    passwordField.type = 'password';
+                                    eyeIconOpen.style.display = 'block';
+                                    eyeIconClosed.style.display = 'none';
+                                }
+                            }
+
                             const firstNameInput = document.getElementById('first-name');
                             const lastNameInput = document.getElementById('last-name');
                             const numberInput = document.getElementById('number');
@@ -262,12 +279,18 @@ $EMP_ID = $_GET['EMP_ID'];
                             function setError(input, message) {
                                 const errorDiv = input.nextElementSibling;
                                 errorDiv.innerHTML = `<span class="error-text">${message}</span>`;
+                                console.log("Error set:", message);
                             }
 
                             function clearError(input) {
                                 const errorDiv = input.nextElementSibling;
-                                errorDiv.innerHTML = ''; // Clear the error message
+                                if (errorDiv) {
+                                    errorDiv.innerHTML = ''; // Clear the error message
+                                    console.log("Error cleared");
+                                }
                             }
+
+
 
                             function validateFirstName() {
                                 const firstNameValue = firstNameInput.value.trim();
@@ -297,7 +320,7 @@ $EMP_ID = $_GET['EMP_ID'];
 
                             function validateNumber() {
                                 const numberValue = numberInput.value.trim();
-                                const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
+                                const numberRegex = /^(?!\s)(09\d{9})$/;
 
                                 if (numberValue === '') {
                                     setError(numberInput, 'Please enter your number');
@@ -307,6 +330,8 @@ $EMP_ID = $_GET['EMP_ID'];
                                     clearError(numberInput);
                                 }
                             }
+
+
 
                             function validateBranch() {
                                 const branchValue = branchInput.value.trim();
@@ -336,8 +361,11 @@ $EMP_ID = $_GET['EMP_ID'];
                                 const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/;
 
                                 if (passwordValue === '') {
-                                    setError(passwordInput, 'Please enter your password');
-                                } else if (!passwordRegex.test(passwordValue)) {
+                                    clearError(passwordInput);
+                                    return;
+                                }
+
+                                if (!passwordRegex.test(passwordValue)) {
                                     setError(passwordInput, 'Invalid password format');
                                 } else {
                                     clearError(passwordInput);
@@ -349,8 +377,11 @@ $EMP_ID = $_GET['EMP_ID'];
                                 const passwordValue = passwordInput.value.trim();
 
                                 if (cpasswordValue === '') {
-                                    setError(cpasswordInput, 'Please confirm your password');
-                                } else if (cpasswordValue !== passwordValue) {
+                                    clearError(cpasswordValue);
+                                    return;
+                                }
+
+                                if (cpasswordValue !== passwordValue) {
                                     setError(cpasswordInput, 'Passwords do not match');
                                 } else {
                                     clearError(cpasswordInput);
@@ -360,13 +391,18 @@ $EMP_ID = $_GET['EMP_ID'];
                             function validateImage() {
                                 const imageValue = imageInput.value.trim();
 
+                                // Check if the input field is empty
+                                if (imageValue === '') {
+                                    // Clear error message if input is empty
+                                    clearError(imageInput);
+                                    return; // Exit the function without further validation
+                                }
+
                                 // Check if file extension is valid
                                 const validExtensions = ['png', 'jpg', 'jpeg'];
                                 const fileExtension = imageValue.split('.').pop().toLowerCase();
 
-                                if (imageValue === '') {
-                                    setError(imageInput, 'Please select an image file');
-                                } else if (!validExtensions.includes(fileExtension)) {
+                                if (!validExtensions.includes(fileExtension)) {
                                     setError(imageInput, 'Only PNG, JPG, and JPEG files are allowed');
                                 } else {
                                     clearError(imageInput);
@@ -383,12 +419,12 @@ $EMP_ID = $_GET['EMP_ID'];
                                 validateConfirmPassword();
                                 validateImage();
 
-                                // Check if any error exists
+                                console.log("Form submission intercepted for validation");
                                 const errors = document.querySelectorAll('.error-text');
                                 if (errors.length > 0) {
-                                    return false; // Prevent form submission
+                                    return false; // Prevent form submission if there are errors
                                 }
-                                return true; // Allow form submission
+                                return true; // Allow form submission if there are no errors
                             }
                         </script>
                         <?php

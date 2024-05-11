@@ -108,7 +108,8 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                         $sql = "SELECT DISTINCT f.*, MIN(STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p')) AS min_start, MAX(STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')) AS max_end
             FROM menu m
             JOIN food f ON m.food_id = f.food_id
-            WHERE f.food_active = 'Yes'
+            WHERE f.food_active = 'Yes' 
+            AND m.menu_stock > 0
             GROUP BY f.food_id";
                     } else {
                         $sql = "SELECT DISTINCT f.*, MIN(STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p')) AS min_start, MAX(STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')) AS max_end
@@ -117,10 +118,9 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
             WHERE f.food_active = 'Yes' 
             AND f.food_type = '$PRSN_ROLE'
             AND NOW() BETWEEN STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p') AND STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')
+            AND m.menu_stock > 0
             GROUP BY f.food_id";
                     }
-
-
                     $res = mysqli_query($conn, $sql);
                     $count = mysqli_num_rows($res);
                     if ($count > 0) {
@@ -146,77 +146,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                     ?>
                 </section>
             </div>
-
         </section>
-        <!-- <section class="section menu">
-            <div class="container">
-                <div class="section-heading">
-                    <h2>Menu</h2>                
-                </div> 
-                <section class="section-body">
-                    <a class="menu-item" >
-                        <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
-                        <div class="text">
-                            <p class="name">Pork BBQ</p>
-                            <div class="inline">
-                                <h2>₱25.00</h3>
-                                <p>1 stick</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a class="menu-item" >
-                        <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
-                        <div class="text">
-                            <p class="name">Pork BBQ</p>
-                            <div class="inline">
-                                <h2>₱25.00</h3>
-                                <p>1 stick</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a class="menu-item" >
-                        <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
-                        <div class="text">
-                            <p class="name">Pork BBQ</p>
-                            <div class="inline">
-                                <h2>₱25.00</h3>
-                                <p>1 stick</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a class="menu-item" >
-                        <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
-                        <div class="text">
-                            <p class="name">Pork BBQ</p>
-                            <div class="inline">
-                                <h2>₱25.00</h3>
-                                <p>1 stick</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a class="menu-item" >
-                        <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
-                        <div class="text">
-                            <p class="name">Pork BBQ</p>
-                            <div class="inline">
-                                <h2>₱25.00</h3>
-                                <p>1 stick</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a class="menu-item" >
-                        <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="">
-                        <div class="text">
-                            <p class="name">Pork BBQ</p>
-                            <div class="inline">
-                                <h2>₱25.00</h3>
-                                <p>1 stick</p>
-                            </div>
-                        </div>
-                    </a>
-                </section>
-            </div>
-        </section> -->
     </main>
     <footer>
         <div class="footer-container">

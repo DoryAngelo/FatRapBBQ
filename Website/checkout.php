@@ -23,116 +23,149 @@ if (isset($_SESSION['prsn_id'])) {
 $PRSN_ROLE = $_SESSION['prsn_role'];
 
 if (isset($_SESSION['prsn_id'])) {
-    $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM IN_ORDER WHERE PRSN_ID = '$PRSN_ID' AND PLACED_ORDER_ID IS NULL";
+    $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM in_order WHERE PRSN_ID = '$PRSN_ID' AND PLACED_ORDER_ID IS NULL";
 } else {
-    $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM IN_ORDER WHERE GUEST_ORDER_IDENTIFIER = '$GUEST_ID' AND PLACED_ORDER_ID IS NULL";
+    $sql2 = "SELECT SUM(IN_ORDER_TOTAL) AS Total FROM in_order WHERE GUEST_ORDER_IDENTIFIER = '$GUEST_ID' AND PLACED_ORDER_ID IS NULL";
 }
 $res2 = mysqli_query($conn, $sql2);
 $row2 = mysqli_fetch_assoc($res2);
 $total = $row2['Total'];
+
+function performConcurrencyCheck($conn, $IN_ORDER_ID, $IN_ORDER_QUANTITY)
+{
+    $sql = "SELECT menu_stock FROM menu WHERE food_id IN (SELECT FOOD_ID FROM in_order WHERE IN_ORDER_ID = '$IN_ORDER_ID')";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $availableStock = $row['menu_stock'];
+
+    // Check if available stock is sufficient for the order
+    if ($availableStock < $IN_ORDER_QUANTITY) {
+        return false; // Insufficient stock
+    } else {
+        return true; // Sufficient stock
+    }
+}
 
 if (isset($_POST['submit'])) {
     if (isset($_SESSION['prsn_id'])) {
         $CUS_ID = $PRSN_ID;
     }
 
-    $CUS_FNAME = $_POST['first-name'];
-    $CUS_LNAME = $_POST['last-name'];
-    $CUS_NAME = $CUS_FNAME . " " . $CUS_LNAME;
+    $cartItems = $_POST['cart']; // Assuming you're sending cart items via POST
+    $checkoutAllowed = true;
+    foreach ($cartItems as $item) {
+        $IN_ORDER_ID = $item['IN_ORDER_ID'];
+        $IN_ORDER_QUANTITY = $item['IN_ORDER_QUANTITY'];
+        // Check concurrency for each item
+        if (!performConcurrencyCheck($conn, $IN_ORDER_ID, $IN_ORDER_QUANTITY)) {
+            $checkoutAllowed = false; // Disallow checkout if any item has insufficient stock
+            break; // Exit the loop
+        }
+    }
 
-    $CUS_NUMBER = $_POST['contact-number'];
-    $CUS_EMAIL = $_POST['email'];
-    $PLACED_ORDER_DATE = date("Y-m-d h:i:sa");
-    $PLACED_ORDER_TOTAL = $total;
+    if ($checkoutAllowed) {
+        $CUS_FNAME = $_POST['first-name'];
+        $CUS_LNAME = $_POST['last-name'];
+        $CUS_NAME = $CUS_FNAME . " " . $CUS_LNAME;
 
-    $Region = $_POST['region'];
-    $Province = $_POST['province'];
-    $City = $_POST['city'];
-    $Barangay = $_POST['barangay'];
-    $Street = $_POST['street'];
-    $DELIVERY_ADDRESS = $Region . ", " . $Province . ", " . $City . ", " . $Barangay . ", " . $Street;
+        $CUS_NUMBER = $_POST['contact-number'];
+        $CUS_EMAIL = $_POST['email'];
+        $PLACED_ORDER_DATE = date("Y-m-d h:i:sa");
+        $PLACED_ORDER_TOTAL = $total;
+
+        $Region = $_POST['region'];
+        $Province = $_POST['province'];
+        $City = $_POST['city'];
+        $Barangay = $_POST['barangay'];
+        $Street = $_POST['street'];
+        $DELIVERY_ADDRESS = $Region . ", " . $Province . ", " . $City . ", " . $Barangay . ", " . $Street;
 
 
-    $date = $_POST['date'];
-    $time = $_POST['time'];
-    $DELIVERY_DATE = $date . " " . $time;
-    $PLACED_ORDER_STATUS = "Placed";
-    $random = random_bytes(8);
-    $PLACED_ORDER_TRACKER = bin2hex($random);
-
-    $PLACED_ORDER_NOTE = $_POST['customer-note'];
-
-    $select = " SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'";
-
-    $result = mysqli_query($conn, $select);
-
-    while (mysqli_num_rows($result) > 0) {
+        $date = $_POST['date'];
+        $time = $_POST['time'];
+        $DELIVERY_DATE = $date . " " . date("h:i A", strtotime($time));
+        $PLACED_ORDER_STATUS = "Placed";
         $random = random_bytes(8);
         $PLACED_ORDER_TRACKER = bin2hex($random);
-        $select = "SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'";
+
+        $PLACED_ORDER_NOTE = $_POST['customer-note'];
+
+        $select = " SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'";
+
         $result = mysqli_query($conn, $select);
-    }
 
-    $_SESSION['PLACED_ORDER_TRACKER'] =  $PLACED_ORDER_TRACKER;
+        while (mysqli_num_rows($result) > 0) {
+            $random = random_bytes(8);
+            $PLACED_ORDER_TRACKER = bin2hex($random);
+            $select = "SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'";
+            $result = mysqli_query($conn, $select);
+        }
 
-    if (isset($_SESSION['prsn_id'])) {
-        $sql3 = "INSERT INTO placed_order SET
-        PRSN_ID = '$CUS_ID',
-        CUS_NAME = '$CUS_NAME',
-        CUS_NUMBER = '$CUS_NUMBER',
-        CUS_EMAIL= '$CUS_EMAIL',
-        PLACED_ORDER_DATE = '$PLACED_ORDER_DATE',
-        PLACED_ORDER_TOTAL = $PLACED_ORDER_TOTAL,
-        DELIVERY_ADDRESS = '$DELIVERY_ADDRESS',
-        DELIVERY_DATE = '$DELIVERY_DATE',
-        PLACED_ORDER_STATUS = '$PLACED_ORDER_STATUS',
-        PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER',
-        PLACED_ORDER_NOTE = '$PLACED_ORDER_NOTE'
-        ";
-    } else {
-        $sql3 = "INSERT INTO placed_order SET
-        CUS_NAME = '$CUS_NAME',
-        CUS_NUMBER = '$CUS_NUMBER',
-        CUS_EMAIL= '$CUS_EMAIL',
-        PLACED_ORDER_DATE = '$PLACED_ORDER_DATE',
-        PLACED_ORDER_TOTAL = $PLACED_ORDER_TOTAL,
-        DELIVERY_ADDRESS = '$DELIVERY_ADDRESS',
-        DELIVERY_DATE = '$DELIVERY_DATE',
-        PLACED_ORDER_STATUS = '$PLACED_ORDER_STATUS',
-        PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER',
-        PLACED_ORDER_NOTE = '$PLACED_ORDER_NOTE',
-        GUEST_ORDER_IDENTIFIER = '$GUEST_ID'
-        ";
-    }
+        $_SESSION['PLACED_ORDER_TRACKER'] =  $PLACED_ORDER_TRACKER;
 
-
-    $res3 = mysqli_query($conn, $sql3);
-    
-    if ($res3 == true) {
         if (isset($_SESSION['prsn_id'])) {
-            $sql4 = "SELECT PLACED_ORDER_ID FROM placed_order WHERE PRSN_ID = $CUS_ID AND PLACED_ORDER_STATUS = 'Placed' ORDER BY PLACED_ORDER_ID DESC LIMIT 1";
+            $sql3 = "INSERT INTO placed_order SET
+            PRSN_ID = '$CUS_ID',
+            CUS_NAME = '$CUS_NAME',
+            CUS_NUMBER = '$CUS_NUMBER',
+            CUS_EMAIL= '$CUS_EMAIL',
+            PLACED_ORDER_DATE = '$PLACED_ORDER_DATE',
+            PLACED_ORDER_TOTAL = $PLACED_ORDER_TOTAL,
+            DELIVERY_ADDRESS = '$DELIVERY_ADDRESS',
+            DELIVERY_DATE = '$DELIVERY_DATE',
+            PLACED_ORDER_STATUS = '$PLACED_ORDER_STATUS',
+            PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER',
+            PLACED_ORDER_NOTE = '$PLACED_ORDER_NOTE'
+            ";
         } else {
-            $sql4 = "SELECT PLACED_ORDER_ID FROM placed_order WHERE GUEST_ORDER_IDENTIFIER = '$GUEST_ID' AND PLACED_ORDER_STATUS = 'Placed' ORDER BY PLACED_ORDER_ID DESC LIMIT 1";
+            $sql3 = "INSERT INTO placed_order SET
+            CUS_NAME = '$CUS_NAME',
+            CUS_NUMBER = '$CUS_NUMBER',
+            CUS_EMAIL= '$CUS_EMAIL',
+            PLACED_ORDER_DATE = '$PLACED_ORDER_DATE',
+            PLACED_ORDER_TOTAL = $PLACED_ORDER_TOTAL,
+            DELIVERY_ADDRESS = '$DELIVERY_ADDRESS',
+            DELIVERY_DATE = '$DELIVERY_DATE',
+            PLACED_ORDER_STATUS = '$PLACED_ORDER_STATUS',
+            PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER',
+            PLACED_ORDER_NOTE = '$PLACED_ORDER_NOTE',
+            GUEST_ORDER_IDENTIFIER = '$GUEST_ID'
+            ";
         }
 
-        $res4 = mysqli_query($conn, $sql4);
-        if ($res4 && mysqli_num_rows($res4) > 0) {
-            $row5 = mysqli_fetch_assoc($res4);
-            $PLACED_ORDER_ID = $row5['PLACED_ORDER_ID'];
 
-            // Update the in_order table with the latest placed_order_id
+        $res3 = mysqli_query($conn, $sql3);
+
+        if ($res3 == true) {
             if (isset($_SESSION['prsn_id'])) {
-                $sql5 = "UPDATE in_order SET PLACED_ORDER_ID = $PLACED_ORDER_ID WHERE PRSN_ID = $CUS_ID AND IN_ORDER_STATUS = 'Ordered' AND PLACED_ORDER_ID IS NULL";
+                $sql4 = "SELECT PLACED_ORDER_ID FROM placed_order WHERE PRSN_ID = $CUS_ID AND PLACED_ORDER_STATUS = 'Placed' ORDER BY PLACED_ORDER_ID DESC LIMIT 1";
             } else {
-                $sql5 = "UPDATE in_order SET PLACED_ORDER_ID = $PLACED_ORDER_ID WHERE GUEST_ORDER_IDENTIFIER = '$GUEST_ID' AND IN_ORDER_STATUS = 'Ordered' AND PLACED_ORDER_ID IS NULL";
+                $sql4 = "SELECT PLACED_ORDER_ID FROM placed_order WHERE GUEST_ORDER_IDENTIFIER = '$GUEST_ID' AND PLACED_ORDER_STATUS = 'Placed' ORDER BY PLACED_ORDER_ID DESC LIMIT 1";
             }
 
-            $res5 = mysqli_query($conn, $sql5);
-            if ($res5) {
-                header('location: checkout-success.php?PLACED_ORDER_ID=' . $PLACED_ORDER_ID);
-                exit(); // Ensure no further execution after redirection
+            $res4 = mysqli_query($conn, $sql4);
+            if ($res4 && mysqli_num_rows($res4) > 0) {
+                $row5 = mysqli_fetch_assoc($res4);
+                $PLACED_ORDER_ID = $row5['PLACED_ORDER_ID'];
+
+                // Update the in_order table with the latest placed_order_id
+                if (isset($_SESSION['prsn_id'])) {
+                    $sql5 = "UPDATE in_order SET PLACED_ORDER_ID = $PLACED_ORDER_ID WHERE PRSN_ID = $CUS_ID AND IN_ORDER_STATUS = 'Ordered' AND PLACED_ORDER_ID IS NULL";
+                } else {
+                    $sql5 = "UPDATE in_order SET PLACED_ORDER_ID = $PLACED_ORDER_ID WHERE GUEST_ORDER_IDENTIFIER = '$GUEST_ID' AND IN_ORDER_STATUS = 'Ordered' AND PLACED_ORDER_ID IS NULL";
+                }
+
+                $res5 = mysqli_query($conn, $sql5);
+                if ($res5) {
+                    header('location: checkout-success.php?PLACED_ORDER_ID=' . $PLACED_ORDER_ID);
+                    exit(); // Ensure no further execution after redirection
+                }
             }
         }
+    } else {
+
+        echo "<script>alert('Cannot proceed with checkout. Please review your order.');</script>";
+        // header('location: cart.php');
     }
 }
 ?>
@@ -270,6 +303,7 @@ if (isset($_POST['submit'])) {
                                                             <td>
                                                                 <p>₱<?php echo $IN_ORDER_TOTAL; ?></p>
                                                             </td><!--Sub Total-->
+                                                            <input type="hidden" name="cart[<?php echo $IN_ORDER_ID; ?>][IN_ORDER_ID]" value="<?php echo $IN_ORDER_ID; ?>">
                                                         </tr>
                                                 <?php
                                                     }
@@ -334,62 +368,34 @@ if (isset($_POST['submit'])) {
                                 <hr>
                                 <div class="right">
                                     <h3 class="block-heading">Address</h3>
-                                    <!-- <div class="form-field">
-                                        <div class="input-grp">
-                                            <p>Region</p>
-                                            <select name="region" class="form-control form-control-md input" id="region"></select>
-                                            <input type="text" id="first-name" name="first-name" class="input">
-                                            <div class="error"></div>
-                                        </div>
-                                        <div class="input-grp">
-                                            <p>Province</p>
-                                            <input type="text" id="last-name" name="last-name" class="input">
-                                            <div class="error"></div>
-                                        </div>
-                                        <div class="input-grp">
-                                            <p>City/Municipality</p>
-                                            <input type="text" id="contact-number" name="contact-number" class="input">
-                                            <div class="error"></div>
-                                        </div>
-                                        <div class="input-grp">
-                                            <p>Barangay</p>
-                                            <input type="email" id="email" name="email" class="input">
-                                            <div class="error"></div>
-                                        </div>
-                                        <div class="input-grp">
-                                            <p>House no./Bldg./Street</p>
-                                            <input type="text" class="form-control form-control-md" name="street" id="street-text" class="input">
-                                            <div class="error"></div>
-                                        </div>
-                                    </div> -->
                                     <div class="form-field">
                                         <div class="input-grp">
                                             <p>Region</p>
-                                            <select name="region" class="form-control form-control-md input" id="region"></select>
-                                            <input type="hidden" class="form-control form-control-md" name="region" id="region-text" required>
+                                            <select name="region" class="form-control form-control-md input" id="region" required></select>
+                                            <input type="hidden" class="form-control form-control-md" name="region" id="region-text">
                                             <div class="error"></div>
                                         </div>
                                         <div class="input-grp">
                                             <p>Province</p>
-                                            <select name="province" class="form-control form-control-md input" id="province"></select>
-                                            <input type="hidden" class="form-control form-control-md" name="province" id="province-text" required>
+                                            <select name="province" class="form-control form-control-md input" id="province" required></select>
+                                            <input type="hidden" class="form-control form-control-md" name="province" id="province-text">
                                             <div class="error"></div>
                                         </div>
                                         <div class="input-grp">
                                             <p>City/Municipality</p>
-                                            <select name="city" class="form-control form-control-md input" id="city"></select>
-                                            <input type="hidden" class="form-control form-control-md" name="city" id="city-text" required>
+                                            <select name="city" class="form-control form-control-md input" id="city" required></select>
+                                            <input type="hidden" class="form-control form-control-md" name="city" id="city-text">
                                             <div class="error"></div>
                                         </div>
                                         <div class="input-grp">
                                             <p>Barangay</p>
-                                            <select name="barangay" class="form-control form-control-md input" id="barangay"></select>
-                                            <input type="hidden" class="form-control form-control-md" name="barangay" id="barangay-text" required>
+                                            <select name="barangay" class="form-control form-control-md input" id="barangay" required></select>
+                                            <input type="hidden" class="form-control form-control-md" name="barangay" id="barangay-text">
                                             <div class="error"></div>
                                         </div>
                                         <div class="input-grp">
                                             <p>House no./Bldg./Street</p>
-                                            <input type="text" class="form-control form-control-md input" name="street" id="street-text">
+                                            <input type="text" class="form-control form-control-md input" name="street" id="street-text" required>
                                             <div class="error"></div>
                                         </div>
                                     </div>
@@ -417,48 +423,22 @@ if (isset($_POST['submit'])) {
                                 <script>
                                     var calendarData = <?php echo $calendar_json; ?>;
                                 </script>
-                                <!-- <div class="date-grp">
+                                <div class="date-grp">
                                     <?php
                                     $today = date("Y-m-d");
                                     $oneMonthFromNow = date("Y-m-d", strtotime("+1 month"));
                                     ?>
-                                    <input class="date" type="date" name="date" min="<?php echo $today ?>" max="<?php echo $oneMonthFromNow ?>" oninput="validateDateTime(this)">
+                                    <input class="date" type="date" name="date" min="<?php echo $today ?>" max="<?php echo $oneMonthFromNow ?>" oninput="validateDateTime(this)" required>
                                     <div class="error-date error-text" style="display: none;">Date not available.</div>
-                                </div> -->
-                                <div class="input-grp">
-                                    <div class="item-grp">
-                                        <label for="date">Date</label>
-                                        <input class="date input" type="date" name="date" min="<?php echo $today ?>" max="<?php echo $oneMonthFromNow ?>" oninput="validateDateTime(this)">
-                                        <div class="error-date error-text" style="display: none;">Date not available.</div>
-                                    </div>
-                                    <div class="item-grp">
-                                        <label for="time">Time</label>
-                                        <input class="input" type="time" name="time" min="09:00:00" max="17:00:00">
-                                        <div class="error-time error-text" style="display: none;">Time not available.</div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="block time-slot">
-                                <h3 class="block-heading">Product Availability</h3>
+                                <h3 class="block-heading">Time Slot</h3>
                                 <div class="block-body">
-                                    <div class="prod-availability"> <!-- contents from cart and its remaining stock in inventory --Price---->
-                                        <div class="inline">
-                                            <p class="name">Barbeque</p>
-                                            <p>100 sticks</p>
-                                        </div>
-                                        <div class="inline">
-                                            <p class="name">Barbeque erwtwetr</p>
-                                            <p>100 stickswetrer</p>
-                                        </div>
-                                    </div>
-                                    <!-- <input type="time" name="time" min="09:00:00" max="17:00:00">
-                                    <div class="error-time error-text" style="display: none;">Time not available.</div> -->
+                                    <input type="time" name="time" min="09:00:00" max="17:00:00" required>
+                                    <div class="error-time error-text" style="display: none;">Time not available.</div>
                                 </div>
                             </div>
-                            <!--<div class="block time-slot">
-                                 <h3 class="block-heading">Available sticks</h3>
-                                <h3 class="block-heading">[Insert Date]</h3> 
-                            </div>-->
                         </section>
 
                         <script>
@@ -501,6 +481,7 @@ if (isset($_POST['submit'])) {
                             });
                         </script>
 
+
                         <!-- customer note block-->
                         <section class="block red-theme">
                             <h3 class="block-heading">Additional Notes</h2>
@@ -526,24 +507,13 @@ if (isset($_POST['submit'])) {
         <script>
             const firstNameInput = document.getElementById('first-name');
             const lastNameInput = document.getElementById('last-name');
-            const emailInput = document.getElementById('email');
             const numberInput = document.getElementById('contact-number');
-            const regionInput = document.getElementById('region');
-            const provinceInput = document.getElementById('province');
-            const cityInput = document.getElementById('city');
-            const barangayInput = document.getElementById('barangay');
-            const streetInput = document.getElementById('street');
+            const emailInput = document.getElementById('email');
 
-            firstNameInput.addEventListener('input', validateName);
-            lastNameInput.addEventListener('input', validateName);
-            emailInput.addEventListener('input', validateEmail);
+            firstNameInput.addEventListener('input', validateFirstName);
+            lastNameInput.addEventListener('input', validateLastName);
             numberInput.addEventListener('input', validateNumber);
-            regionInput.addEventListener('input', validateInput);
-            provinceInput.addEventListener('input', validateInput);
-            cityInput.addEventListener('input', validateInput);
-            barangayInput.addEventListener('input', validateInput);
-            streetInput.addEventListener('input', validateInput);
-
+            emailInput.addEventListener('input', validateEmail);
 
             function setError(input, message) {
                 const errorDiv = input.nextElementSibling;
@@ -555,65 +525,69 @@ if (isset($_POST['submit'])) {
                 errorDiv.innerHTML = ''; // Clear the error message
             }
 
-            function validateName() {
-                const value = this.value.trim();
+            function validateFirstName() {
+                const firstNameValue = firstNameInput.value.trim();
                 const nameRegex = /^[a-zA-Z\s]+$/;
 
-                if (value === '') {
-                    setError(this, 'Please enter your name');
-                } else if (!nameRegex.test(value)) {
-                    setError(this, 'Name must contain only letters');
+                if (firstNameValue === '') {
+                    setError(firstNameInput, 'Please enter your first name');
+                } else if (!nameRegex.test(firstNameValue)) {
+                    setError(firstNameInput, 'First name must contain only letters');
                 } else {
-                    clearError(this);
+                    clearError(firstNameInput);
                 }
             }
 
-            function validateEmail() {
-                const value = this.value.trim();
-                const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]+$/;
+            function validateLastName() {
+                const lastNameValue = lastNameInput.value.trim();
+                const nameRegex = /^[a-zA-Z\s]+$/;
 
-                if (value === '') {
-                    setError(this, 'Please enter your email');
-                } else if (!emailRegex.test(value)) {
-                    setError(this, 'Invalid email format');
+                if (lastNameValue === '') {
+                    setError(lastNameInput, 'Please enter your last name');
+                } else if (!nameRegex.test(lastNameValue)) {
+                    setError(lastNameInput, 'Last name must contain only letters');
                 } else {
-                    clearError(this);
+                    clearError(lastNameInput);
                 }
             }
 
             function validateNumber() {
-                const value = this.value.trim();
+                const numberValue = numberInput.value.trim();
                 const numberRegex = /^(?! )\S*(?<! )09\d{9}$/;
 
-                if (value === '') {
-                    setError(this, 'Please enter your number');
-                } else if (!numberRegex.test(value)) {
-                    setError(this, 'Invalid number');
+                if (numberValue === '') {
+                    setError(numberInput, 'Please enter your number');
+                } else if (!numberRegex.test(numberValue)) {
+                    setError(numberInput, 'Invalid number');
                 } else {
-                    clearError(this);
+                    clearError(numberInput);
                 }
             }
 
-            function validateInput() {
-                const value = this.value.trim();
+            function validateEmail() {
+                const emailValue = emailInput.value.trim();
+                const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]+$/;
 
-                if (value === '') {
-                    setError(this, `Please enter your ${this.name}`);
+                if (emailValue === '') {
+                    setError(emailInput, 'Please enter your email');
+                } else if (!emailRegex.test(emailValue)) {
+                    setError(emailInput, 'Invalid email format');
                 } else {
-                    clearError(this);
+                    clearError(emailInput);
                 }
             }
 
             function validateInputs() {
-                const inputs = [firstNameInput, lastNameInput, emailInput, numberInput, regionInput, provinceInput, cityInput, barangayInput, streetInput];
+                validateFirstName();
+                validateLastName();
+                validateNumber();
+                validateEmail();
 
-                for (let input of inputs) {
-                    validateInput.call(input);
+                const errors = document.querySelectorAll('.error-text:not(.error-date):not(.error-time)');
+                if (errors.length > 0) {
+                    return false; // Prevent form submission
                 }
-
-                // Check if any error exists
-                const errors = document.querySelectorAll('.error-text');
-                return errors.length === 0; // Allow form submission if no errors
+                return true; // Allow form submission
             }
         </script>
 
