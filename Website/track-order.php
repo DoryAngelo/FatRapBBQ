@@ -235,10 +235,46 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                 </div>
                             </div>
                         </div>
+                        <?php
+                        $sql = "SELECT calendar_date
+FROM calendar
+WHERE date_status IN ('fully booked', 'closed')";
+
+                        $res = mysqli_query($conn, $sql);
+
+                        if (!$res) {
+                            die("Error in SQL query: " . mysqli_error($conn));
+                        }
+
+                        $not_available_dates = [];
+                        while ($row = mysqli_fetch_assoc($res)) {
+                            $not_available_dates[] = $row['calendar_date'];
+                        }
+
+                        
+                        $nearest_available_date = null;
+                        $current_date = date('M d Y'); 
+
+                        
+                        for ($i = 1; $i <= 365; $i++) { 
+                            $next_date = date('M d Y', strtotime($current_date . " +$i days"));
+                            if (!in_array($next_date, $not_available_dates)) {
+                                $nearest_available_date = $next_date;
+                                break; 
+                            }
+                        }
+
+
+
+                        ?>
                         <div class="block time-slot" id="available-date">
                             <h3 class="block-heading">Next available date</h3>
-                            <h3 class="block-heading">[Insert Date]</h3>
-                            <button class="button" href="<?php echo SITEURL; ?>cus-home-page.php">Go to Home</button>
+                            <h3 class="block-heading"><?php echo $nearest_available_date ?></h3>
+                            <form action="cus-home-page.php">
+                                <button class="button">Go to Home</button>
+
+                            </form>
+
                         </div>
                     </section>
 
@@ -293,7 +329,7 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                                         <td data-cell="customer" class="first-col">
                                                             <div class="pic-grp">
                                                                 <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
-                                                                <p><?php echo $FOOD_NAME?></p>
+                                                                <p><?php echo $FOOD_NAME ?></p>
                                                             </div>
                                                         </td> <!--Pic and Name-->
                                                         <td>
@@ -395,7 +431,7 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                 return true;
                             }
 
-                            
+
                             const referenceNumberInput = document.getElementById("reference-number");
                             referenceNumberInput.addEventListener('click', function() {
                                 validateForm();
