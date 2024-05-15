@@ -362,6 +362,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                             <div class="quantity-group">
                                                 <i class='bx bxs-minus-circle js-minus circle' data-stock="<?php echo $TOTAL_MENU_STOCK; ?>"></i>
                                                 <p class="amount js-num">1</p>
+                                                <!-- <input type="text" class="amount js-num" value="1"> textfield--> 
                                                 <i class='bx bxs-plus-circle js-plus circle' data-stock="<?php echo $TOTAL_MENU_STOCK; ?>"></i>
                                             </div>
                                             <p class="remaining"><?php echo ($TOTAL_MENU_STOCK < 0) ? 0 : $TOTAL_MENU_STOCK; ?> sticks remaining</p>

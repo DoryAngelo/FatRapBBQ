@@ -99,27 +99,31 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
         <section class="section menu">
             <div class="container">
                 <div class="section-heading">
-
                     <h2>Menu</h2>
+                    <div>
+                        <p>Select date and time: </p>
+                        <input type="date" id="date" class="input">
+                        <input type="time" id="time" class="input">
+                    </div>
                 </div>
                 <section class="section-body">
                     <?php
                     if ($PRSN_ROLE === 'Admin') {
                         $sql = "SELECT DISTINCT f.*, MIN(STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p')) AS min_start, MAX(STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')) AS max_end
-            FROM menu m
-            JOIN food f ON m.food_id = f.food_id
-            WHERE f.food_active = 'Yes' 
-            AND m.menu_stock > 0
-            GROUP BY f.food_id";
-                    } else {
-                        $sql = "SELECT DISTINCT f.*, MIN(STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p')) AS min_start, MAX(STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')) AS max_end
-            FROM menu m
-            JOIN food f ON m.food_id = f.food_id
-            WHERE f.food_active = 'Yes' 
-            AND f.food_type = '$PRSN_ROLE'
-            AND NOW() BETWEEN STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p') AND STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')
-            AND m.menu_stock > 0
-            GROUP BY f.food_id";
+                    FROM menu m
+                    JOIN food f ON m.food_id = f.food_id
+                    WHERE f.food_active = 'Yes' 
+                    AND m.menu_stock > 0
+                    GROUP BY f.food_id";
+                            } else {
+                                $sql = "SELECT DISTINCT f.*, MIN(STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p')) AS min_start, MAX(STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')) AS max_end
+                    FROM menu m
+                    JOIN food f ON m.food_id = f.food_id
+                    WHERE f.food_active = 'Yes' 
+                    AND f.food_type = '$PRSN_ROLE'
+                    AND NOW() BETWEEN STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p') AND STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')
+                    AND m.menu_stock > 0
+                    GROUP BY f.food_id";
                     }
                     $res = mysqli_query($conn, $sql);
                     $count = mysqli_num_rows($res);
