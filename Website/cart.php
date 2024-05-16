@@ -113,23 +113,23 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                                     <tbody>
                                         <?php
                                         if (isset($_SESSION['prsn_id'])) {
-                                            $sql = "SELECT io.IN_ORDER_ID, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, f.FOOD_STOCK, io.PRSN_ID, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
-            FROM in_order io
-            LEFT JOIN placed_order po ON io.placed_order_id = po.placed_order_id
-            JOIN food f ON io.FOOD_ID = f.FOOD_ID
-            WHERE io.IN_ORDER_STATUS != 'Delivered' 
-            AND io.PRSN_ID = '$PRSN_ID'
-            AND po.placed_order_id IS NULL
-            GROUP BY f.FOOD_ID";
+                                            $sql = "SELECT io.IN_ORDER_ID, f.FOOD_ID, f.HOURLY_CAP, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, f.FOOD_STOCK, io.PRSN_ID, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
+        FROM in_order io
+        LEFT JOIN placed_order po ON io.placed_order_id = po.placed_order_id
+        JOIN food f ON io.FOOD_ID = f.FOOD_ID
+        WHERE io.IN_ORDER_STATUS != 'Delivered' 
+        AND io.PRSN_ID = '$PRSN_ID'
+        AND po.placed_order_id IS NULL
+        GROUP BY f.FOOD_ID";
                                         } else {
-                                            $sql = "SELECT io.IN_ORDER_ID, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, f.FOOD_STOCK, io.PRSN_ID, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
-            FROM in_order io
-            LEFT JOIN placed_order po ON io.placed_order_id = po.placed_order_id
-            JOIN food f ON io.FOOD_ID = f.FOOD_ID
-            WHERE io.IN_ORDER_STATUS != 'Delivered' 
-            AND io.GUEST_ORDER_IDENTIFIER = '$GUEST_ID'
-            AND po.placed_order_id IS NULL
-            GROUP BY f.FOOD_ID";
+                                            $sql = "SELECT io.IN_ORDER_ID, f.FOOD_ID, f.HOURLY_CAP, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, f.FOOD_STOCK, io.PRSN_ID, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
+        FROM in_order io
+        LEFT JOIN placed_order po ON io.placed_order_id = po.placed_order_id
+        JOIN food f ON io.FOOD_ID = f.FOOD_ID
+        WHERE io.IN_ORDER_STATUS != 'Delivered' 
+        AND io.GUEST_ORDER_IDENTIFIER = '$GUEST_ID'
+        AND po.placed_order_id IS NULL
+        GROUP BY f.FOOD_ID";
                                         }
 
                                         $res = mysqli_query($conn, $sql);
@@ -137,23 +137,54 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                                         $stockValues = array();
                                         $flagValues = array();
                                         $quantityExceedsStock = false;
+
                                         if ($count > 0) {
                                             while ($row = mysqli_fetch_assoc($res)) {
                                                 $IN_ORDER_ID = $row['IN_ORDER_ID'];
+                                                $FOOD_ID = $row['FOOD_ID'];
                                                 $FOOD_NAME = $row['FOOD_NAME'];
                                                 $FOOD_PRICE = $row['FOOD_PRICE'];
                                                 $FOOD_IMG = $row['FOOD_IMG'];
                                                 $FOOD_STOCK = $row['FOOD_STOCK'];
+                                                $HOURLY_CAP = $row['HOURLY_CAP'];
                                                 $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
                                                 $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
-                                                $stockValues[$FOOD_NAME] = $FOOD_STOCK;
+                                                $avail = min($FOOD_STOCK, $HOURLY_CAP);
 
-                                                if ($IN_ORDER_QUANTITY > $FOOD_STOCK) {
-                                                    $quantityExceedsStock = true;
-                                                    $flagValues[$FOOD_NAME] = $quantityExceedsStock;
-                                                } else {
-                                                    $flagValues[$FOOD_NAME] = false;
+                                                // Get total quantity ordered for the same food item, delivery date, and hour
+                                                $FOOD_ID = $row['FOOD_ID'];
+                                                $SELECTED_DATE = $_SESSION['DATE_SELECTED'];
+                                                $SELECTED_TIME = $_SESSION['TIME_SELECTED'];
+                                                $selected_datetime = strtotime($SELECTED_DATE . " " . $SELECTED_TIME);
+                                                $selected_hour = date('G', $selected_datetime);
+                                                $sql_orders = "
+                SELECT SUM(in_order_quantity) AS total_quantity
+                FROM in_order
+                WHERE placed_order_id IS NOT NULL
+                AND food_id = '$FOOD_ID'
+                AND DELIVERY_DATE = '$SELECTED_DATE'
+                AND DELIVERY_HOUR = '$selected_hour'
+                GROUP BY food_id, delivery_date, delivery_hour
+            ";
+
+                                                $res_orders = mysqli_query($conn, $sql_orders);
+                                                $total_quantity = 0;
+                                                if (mysqli_num_rows($res_orders) > 0) {
+                                                    while ($order_row = mysqli_fetch_assoc($res_orders)) {
+                                                        $total_quantity = $order_row['total_quantity'];
+                                                        $avail -= $total_quantity;
+                                                    }
                                                 }
+
+
+                                                // // Update flags based on availability
+                                                // $stockValues[$FOOD_NAME] = $avail;
+                                                // if ($IN_ORDER_QUANTITY > $avail) {
+                                                //     $quantityExceedsStock = true;
+                                                //     $flagValues[$FOOD_NAME] = $quantityExceedsStock;
+                                                // } else {
+                                                //     $flagValues[$FOOD_NAME] = false;
+                                                // }
                                         ?>
                                                 <tr> <!-- one row for a product-->
                                                     <td data-cell="customer" class="first-col">
@@ -165,9 +196,9 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                                                     <td class="narrow-col quantity-col">
                                                         <div class="with-remaining">
                                                             <div class="quantity-grp">
-                                                                <input type="number" class="quantity-input" data-in-order-id="<?php echo $IN_ORDER_ID; ?>" data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>" data-food-name="<?php echo $FOOD_NAME; ?>" value="<?php echo $IN_ORDER_QUANTITY; ?>" min="1" max="<?php echo $FOOD_STOCK; ?>">
+                                                                <input type="number" class="quantity-input" data-in-order-id="<?php echo $IN_ORDER_ID; ?>" data-stock="<?php echo $avail; ?>" data-price="<?php echo $FOOD_PRICE; ?>" data-food-name="<?php echo $FOOD_NAME; ?>" value="<?php echo $IN_ORDER_QUANTITY; ?>" min="1" max="<?php echo $avail; ?>">
                                                             </div>
-                                                            <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> sticks remaining</p>
+                                                            <p class="remaining"><?php echo ($avail < 0) ? 0 : $avail; ?> sticks remaining</p>
                                                         </div>
                                                     </td>
                                                     <td class="narrow-col price-col">
@@ -201,6 +232,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                                         }
                                         ?>
                                     </tbody>
+
                                 </table>
                             </div>
                             <div class="payment">

@@ -31,6 +31,33 @@ if ($count > 0) {
         $FOOD_PRICE = $row['FOOD_PRICE'];
         $FOOD_STOCK = $row['FOOD_STOCK'];
         $HOURLY_CAP = $row['HOURLY_CAP'];
+        $avail = min($FOOD_STOCK, $HOURLY_CAP);
+
+        $SELECTED_DATE = $_SESSION['DATE_SELECTED'];
+        $SELECTED_TIME = $_SESSION['TIME_SELECTED'];
+        $selected_datetime = strtotime($SELECTED_DATE . " " . $SELECTED_TIME);
+        $selected_hour = date('G', $selected_datetime);
+
+
+        $sql_orders = "
+SELECT SUM(in_order_quantity) AS total_quantity
+FROM in_order
+WHERE placed_order_id IS NOT NULL
+AND food_id = '$FOOD_ID'
+AND DELIVERY_DATE = '$SELECTED_DATE'
+AND DELIVERY_HOUR = '$selected_hour'
+GROUP BY food_id, delivery_date, delivery_hour
+";
+
+        $res = mysqli_query($conn, $sql_orders);
+        $count = mysqli_num_rows($res);
+
+        if ($count > 0) {
+            while ($row = mysqli_fetch_assoc($res)) {
+                $total_quantity = $row['total_quantity'];
+                $avail -= $total_quantity;
+            }
+        }
     }
 }
 
@@ -76,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         $res2 = mysqli_query($conn, $sql2);
     }
     // Redirect to the home page after processing
-    $_SESSION['fromProdInfo'] = 'yes'; 
+    $_SESSION['fromProdInfo'] = 'yes';
     header('location:menu.php');
 }
 ?>
@@ -158,18 +185,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                 <div class="inline">
                                     <h1>₱<?php echo $FOOD_PRICE ?></h1>
                                     <div class="quantity-grp">
-                                        <input type="number" class="amount js-num" value="1" min="1" max="<?php echo $FOOD_STOCK; ?>">
+                                        <input type="number" class="amount js-num" value="1" min="1" max="<?php echo $avail; ?>">
                                     </div>
                                     <?php if ($PRSN_ROLE === "Wholesaler") { ?>
-                                        <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> available</p>
+                                        <p class="remaining"><?php echo ($avail < 0) ? 0 : $avail; ?> available</p>
                                     <?php } else { ?>
                                         <p></p>
-                                        <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> sticks available</p>
+                                        <p class="remaining"><?php echo ($avail < 0) ? 0 : $avail; ?> sticks available</p>
                                     <?php } ?>
                                 </div>
                                 <input type="hidden" id="quantity" name="quantity" value="1">
                                 <input type="hidden" name="price" value="<?php echo $FOOD_PRICE ?>">
-                                <button name="order" type="submit" <?php echo ($FOOD_STOCK <= 0 || (isset($_POST['quantity']) && ($IN_ORDER_QUANTITY + intval($_POST['quantity']) > $FOOD_STOCK))) ? 'disabled' : ''; ?>>Add to Cart</button>
+                                <button name="order" type="submit" <?php echo ($avail <= 0 || (isset($_POST['quantity']) && ($IN_ORDER_QUANTITY + intval($_POST['quantity']) > $avail))) ? 'disabled' : ''; ?>>Add to Cart</button>
                             </form>
                         </div>
                     </section>
@@ -218,7 +245,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             const inputField = document.querySelector('.js-num');
             const quantityInput = document.getElementById("quantity");
             const addButton = document.querySelector('[name="order"]');
-            const maxStock = <?php echo $FOOD_STOCK; ?>;
+            const maxStock = <?php echo $avail; ?>;
             const quantityData = <?php echo isset($IN_ORDER_QUANTITY) ? $IN_ORDER_QUANTITY : 0; ?>;
 
             inputField.addEventListener('input', function() {
@@ -242,7 +269,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             updateButtonState();
         });
     </script>
-    
+
     <!-- floating button -->
     <a href="<?php echo SITEURL; ?>cart.php" class="material-icons floating-btn" style="font-size: 45px;">shopping_cart</a>
 
