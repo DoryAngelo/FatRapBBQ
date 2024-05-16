@@ -224,7 +224,13 @@ const updateCalendar = () => {
             // selectedString = selectedDateString;
             // selectedDateElement.innerHTML = '<h3>' + selectedString + '</h3>';
             // updateNumbers();
-            alert('Date is Fully Booked');
+            //alert('Date is Fully Booked');
+
+            Swal.fire({
+                icon: "error",
+                title: "Date is Fully Booked!",
+                text: "Please choose another available date.",
+              });
         });
     }
     var closedDates = document.querySelectorAll('.closed');
