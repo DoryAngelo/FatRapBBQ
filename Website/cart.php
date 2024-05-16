@@ -153,8 +153,8 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
 
                                                 // Get total quantity ordered for the same food item, delivery date, and hour
                                                 $FOOD_ID = $row['FOOD_ID'];
-                                                $SELECTED_DATE = $_SESSION['DATE_SELECTED'];
-                                                $SELECTED_TIME = $_SESSION['TIME_SELECTED'];
+                                                $SELECTED_DATE = isset($_SESSION['DATE_SELECTED']) ? $_SESSION['DATE_SELECTED'] : date('M j Y');
+                                                $SELECTED_TIME = isset($_SESSION['TIME_SELECTED']) ? $_SESSION['TIME_SELECTED'] : date('g:i a');
                                                 $selected_datetime = strtotime($SELECTED_DATE . " " . $SELECTED_TIME);
                                                 $selected_hour = date('G', $selected_datetime);
                                                 $sql_orders = "
