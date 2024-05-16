@@ -33,10 +33,10 @@ $total = $row2['Total'];
 
 function performConcurrencyCheck($conn, $IN_ORDER_ID, $IN_ORDER_QUANTITY)
 {
-    $sql = "SELECT menu_stock FROM menu WHERE food_id IN (SELECT FOOD_ID FROM in_order WHERE IN_ORDER_ID = '$IN_ORDER_ID')";
+    $sql = "SELECT FOOD_STOCK FROM food WHERE food_id IN (SELECT FOOD_ID FROM in_order WHERE IN_ORDER_ID = '$IN_ORDER_ID')";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
-    $availableStock = $row['menu_stock'];
+    $availableStock = $row['FOOD_STOCK'];
 
     // Check if available stock is sufficient for the order
     if ($availableStock < $IN_ORDER_QUANTITY) {
@@ -267,28 +267,26 @@ if (isset($_POST['submit'])) {
                                             </thead>
                                             <tbody>
                                                 <?php
-
                                                 if (isset($_SESSION['prsn_id'])) {
-                                                    $sql = "SELECT io.IN_ORDER_ID, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, f.FOOD_STOCK, SUM(m.menu_stock) AS total_menu_stock, io.PRSN_ID, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
-        FROM in_order io
-        LEFT JOIN placed_order po ON io.placed_order_id = po.placed_order_id
-        JOIN food f ON io.FOOD_ID = f.FOOD_ID
-        LEFT JOIN menu m ON f.FOOD_ID = m.food_id
-        WHERE io.IN_ORDER_STATUS != 'Delivered' 
-        AND io.PRSN_ID = '$PRSN_ID'
-        AND po.placed_order_id IS NULL
-        GROUP BY f.FOOD_ID";
+                                                    $sql = "SELECT io.IN_ORDER_ID, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, f.FOOD_STOCK, io.PRSN_ID, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
+            FROM in_order io
+            LEFT JOIN placed_order po ON io.placed_order_id = po.placed_order_id
+            JOIN food f ON io.FOOD_ID = f.FOOD_ID
+            WHERE io.IN_ORDER_STATUS != 'Delivered' 
+            AND io.PRSN_ID = '$PRSN_ID'
+            AND po.placed_order_id IS NULL
+            GROUP BY f.FOOD_ID";
                                                 } else {
-                                                    $sql = "SELECT io.IN_ORDER_ID, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, f.FOOD_STOCK, SUM(m.menu_stock) AS total_menu_stock, io.PRSN_ID, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
-        FROM in_order io
-        LEFT JOIN placed_order po ON io.placed_order_id = po.placed_order_id
-        JOIN food f ON io.FOOD_ID = f.FOOD_ID
-        LEFT JOIN menu m ON f.FOOD_ID = m.food_id
-        WHERE io.IN_ORDER_STATUS != 'Delivered' 
-        AND io.GUEST_ORDER_IDENTIFIER = '$GUEST_ID'
-        AND po.placed_order_id IS NULL
-        GROUP BY f.FOOD_ID";
+                                                    $sql = "SELECT io.IN_ORDER_ID, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, f.FOOD_STOCK, io.PRSN_ID, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
+            FROM in_order io
+            LEFT JOIN placed_order po ON io.placed_order_id = po.placed_order_id
+            JOIN food f ON io.FOOD_ID = f.FOOD_ID
+            WHERE io.IN_ORDER_STATUS != 'Delivered' 
+            AND io.GUEST_ORDER_IDENTIFIER = '$GUEST_ID'
+            AND po.placed_order_id IS NULL
+            GROUP BY f.FOOD_ID";
                                                 }
+
                                                 $res = mysqli_query($conn, $sql);
                                                 $count = mysqli_num_rows($res);
                                                 if ($count > 0) {
@@ -384,18 +382,6 @@ if (isset($_POST['submit'])) {
                                     <h3 class="block-heading">Address</h3>
                                     <div class="form-field">
                                         <div class="input-grp">
-                                            <p>Region</p>
-                                            <select name="region" class="form-control form-control-md input" id="region" required></select>
-                                            <input type="hidden" class="form-control form-control-md" name="region" id="region-text">
-                                            <div class="error"></div>
-                                        </div>
-                                        <div class="input-grp">
-                                            <p>Province</p>
-                                            <select name="province" class="form-control form-control-md input" id="province" required></select>
-                                            <input type="hidden" class="form-control form-control-md" name="province" id="province-text">
-                                            <div class="error"></div>
-                                        </div>
-                                        <div class="input-grp">
                                             <p>City/Municipality</p>
                                             <select name="city" class="form-control form-control-md input" id="city" required></select>
                                             <input type="hidden" class="form-control form-control-md" name="city" id="city-text">
@@ -414,6 +400,8 @@ if (isset($_POST['submit'])) {
                                         </div>
                                     </div>
                                 </div>
+
+
                         </section>
                         <!-- delivery info block-->
                         <section class="red-theme" id="delivery-block">

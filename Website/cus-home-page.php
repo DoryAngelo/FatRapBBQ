@@ -16,59 +16,59 @@ if (isset($_SESSION['prsn_id'])) {
 
 $PRSN_ROLE = $_SESSION['prsn_role'];
 
-$FOOD_NAME = 'Barbeque';
+// $FOOD_NAME = 'Barbeque';
 
-$sql = "SELECT food.*, SUM(menu.menu_stock) AS total_menu_stock
-        FROM food 
-        INNER JOIN menu ON food.food_id = menu.food_id 
-        WHERE food.FOOD_ACTIVE='Yes' 
-        AND food.FOOD_NAME = 'Barbeque'
-        AND NOW() BETWEEN STR_TO_DATE(menu.menu_start, '%M %d, %Y %h:%i:%s %p') AND STR_TO_DATE(menu.menu_end, '%M %d, %Y %h:%i:%s %p')";
-
-
-$res = mysqli_query($conn, $sql);
-$count8 = mysqli_num_rows($res);
+// $sql = "SELECT food.*, SUM(menu.menu_stock) AS total_menu_stock
+//         FROM food 
+//         INNER JOIN menu ON food.food_id = menu.food_id 
+//         WHERE food.FOOD_ACTIVE='Yes' 
+//         AND food.FOOD_NAME = 'Barbeque'
+//         AND NOW() BETWEEN STR_TO_DATE(menu.menu_start, '%M %d, %Y %h:%i:%s %p') AND STR_TO_DATE(menu.menu_end, '%M %d, %Y %h:%i:%s %p')";
 
 
-//check whether there are food available
-if ($count8 > 0) {
-    while ($row = mysqli_fetch_assoc($res)) {
-        //get the values
-        $FOOD_ID = $row['FOOD_ID'];
-        $FOOD_NAME = $row['FOOD_NAME'];
-        $FOOD_PRICE = $row['FOOD_PRICE'];
-        $FOOD_DESC = $row['FOOD_DESC'];
-        $FOOD_IMG = $row['FOOD_IMG'];
-        $FOOD_STOCK = $row['FOOD_STOCK'];
-        $TOTAL_MENU_STOCK = $row['total_menu_stock'];
-    }
-}
+// $res = mysqli_query($conn, $sql);
+// $count8 = mysqli_num_rows($res);
 
-if (isset($_SESSION['prsn_id'])) {
-    $sql = "SELECT f.*, io.in_order_quantity, m.*
-    FROM food f 
-    LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
-    LEFT JOIN menu m ON f.FOOD_ID = m.food_id
-    WHERE f.FOOD_ID = '$FOOD_ID'
-    AND io.PRSN_ID = '$PRSN_ID'";
-} else if (isset($_SESSION['guest_id'])) {
-    $sql = "SELECT f.*, io.in_order_quantity, m.*
-        FROM food f 
-        LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
-        LEFT JOIN menu m ON f.FOOD_ID = m.food_id
-        WHERE f.FOOD_ID = '$FOOD_ID'
-        AND io.GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
-}
 
-$res = mysqli_query($conn, $sql);
-$count = mysqli_num_rows($res);
-if ($count > 0) {
-    while ($row = mysqli_fetch_assoc($res)) {
-        $MENU_ID = $row['MENU_ID'];
-        $MENU_STOCK = $row['MENU_STOCK'];
-        $IN_ORDER_QUANTITY = $row['in_order_quantity'];
-    }
-}
+// //check whether there are food available
+// if ($count8 > 0) {
+//     while ($row = mysqli_fetch_assoc($res)) {
+//         //get the values
+//         $FOOD_ID = $row['FOOD_ID'];
+//         $FOOD_NAME = $row['FOOD_NAME'];
+//         $FOOD_PRICE = $row['FOOD_PRICE'];
+//         $FOOD_DESC = $row['FOOD_DESC'];
+//         $FOOD_IMG = $row['FOOD_IMG'];
+//         $FOOD_STOCK = $row['FOOD_STOCK'];
+//         $TOTAL_MENU_STOCK = $row['total_menu_stock'];
+//     }
+// }
+
+// if (isset($_SESSION['prsn_id'])) {
+//     $sql = "SELECT f.*, io.in_order_quantity, m.*
+//     FROM food f 
+//     LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
+//     LEFT JOIN menu m ON f.FOOD_ID = m.food_id
+//     WHERE f.FOOD_ID = '$FOOD_ID'
+//     AND io.PRSN_ID = '$PRSN_ID'";
+// } else if (isset($_SESSION['guest_id'])) {
+//     $sql = "SELECT f.*, io.in_order_quantity, m.*
+//         FROM food f 
+//         LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
+//         LEFT JOIN menu m ON f.FOOD_ID = m.food_id
+//         WHERE f.FOOD_ID = '$FOOD_ID'
+//         AND io.GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
+// }
+
+// $res = mysqli_query($conn, $sql);
+// $count = mysqli_num_rows($res);
+// if ($count > 0) {
+//     while ($row = mysqli_fetch_assoc($res)) {
+//         $MENU_ID = $row['MENU_ID'];
+//         $MENU_STOCK = $row['MENU_STOCK'];
+//         $IN_ORDER_QUANTITY = $row['in_order_quantity'];
+//     }
+// }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     $quantity = $_POST['quantity'];
@@ -174,7 +174,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                 <div class="text">
                     <h1>Order our best-selling BBQ</h1>
                     <p>Indulge in the ultimate barbeque experience and place your order today!</p>
-                    <a href="#product-section" class="button">Order Now</a>
+                    <a href="menu.php" class="button">Order Now</a>
                 </div>
                 <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="picture of a pork bbq">
                 <!-- <img src="images/pork-bbq.jpg" alt="picture of 3 pork bbq sticks"> -->
@@ -316,7 +316,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         </script> -->
 
         <!-- section 3 -->
-        <?php
+        <!-- <?php
         // Check if the person role is not a wholesaler
         if ($PRSN_ROLE !== 'Wholesaler') {
             // Check if there are items with 'Barbeque' as the food name
@@ -421,7 +421,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                     addButton.disabled = (stock <= 0 || parseInt(num.innerText) + parseInt('<?php echo $IN_ORDER_QUANTITY; ?>') > stock);
                 }
             });
-        </script>
+        </script> -->
         <!-- section 4 -->
         <section class="section" id="track-order-section">
             <div class="container responsive">

@@ -19,59 +19,27 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
 $PLACED_ORDER_TRACKER = $_SESSION['PLACED_ORDER_TRACKER'];
 $PLACED_ORDER_ID = $_GET['PLACED_ORDER_ID'];
 
-$select = "SELECT io.menu_id, io.food_id, SUM(io.in_order_quantity) AS total_quantity
+$select = "SELECT io.food_id, SUM(io.in_order_quantity) AS total_quantity
            FROM in_order io
-           JOIN menu m ON io.menu_id = m.menu_id
            WHERE io.placed_order_id = '$PLACED_ORDER_ID'
-           AND NOW() BETWEEN STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p') AND STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')
-           GROUP BY io.menu_id, io.food_id";
+           GROUP BY io.food_id";
 
 $select_result = mysqli_query($conn, $select);
 
-$menu_quantities = [];
+$food_quantities = [];
 while ($row = mysqli_fetch_assoc($select_result)) {
-    $menu_quantities[$row['menu_id']] = [
-        'food_id' => $row['food_id'],
-        'total_quantity' => $row['total_quantity']
-    ];
+    $food_quantities[$row['food_id']] = $row['total_quantity'];
 }
 
-foreach ($menu_quantities as $menu_id => $data) {
-    $food_id = $data['food_id'];
-    $total_quantity = $data['total_quantity'];
-
-    $get_stock_query = "SELECT menu_stock FROM menu WHERE menu_id = '$menu_id'";
-    $stock_result = mysqli_query($conn, $get_stock_query);
-    $row = mysqli_fetch_assoc($stock_result);
-    $current_stock = $row['menu_stock'];
-
-    $updated_stock = $current_stock - $total_quantity;
-
-    if ($updated_stock < 0) {
-        $excess = abs($updated_stock);
-        $updated_stock = 0;
-
-        $other_menu_ids_query = "SELECT menu_id FROM menu 
-                                 WHERE food_id = '$food_id' 
-                                 AND menu_id != '$menu_id'
-                                 AND NOW() BETWEEN STR_TO_DATE(menu_start, '%M %d, %Y %h:%i:%s %p') AND STR_TO_DATE(menu_end, '%M %d, %Y %h:%i:%s %p')";
-        $other_menu_ids_result = mysqli_query($conn, $other_menu_ids_query);
-
-        $num_other_menu_ids = mysqli_num_rows($other_menu_ids_result);
-        $excess_per_menu = $excess / $num_other_menu_ids;
-
-        while ($other_menu_row = mysqli_fetch_assoc($other_menu_ids_result)) {
-            $other_menu_id = $other_menu_row['menu_id'];
-
-            $update_excess_query = "UPDATE menu SET menu_stock = menu_stock - $excess_per_menu
-                                    WHERE menu_id = '$other_menu_id'";
-            mysqli_query($conn, $update_excess_query);
-        }
-    }
-
-    $update_query = "UPDATE menu SET menu_stock = '$updated_stock' WHERE menu_id = '$menu_id'";
+foreach ($food_quantities as $food_id => $total_quantity) {
+    // Update food_stock in the food table
+    $update_query = "UPDATE food 
+                     SET food_stock = food_stock - $total_quantity 
+                     WHERE food_id = '$food_id'";
     mysqli_query($conn, $update_query);
 }
+
+
 ?>
 
 <!DOCTYPE html>
