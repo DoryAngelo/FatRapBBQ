@@ -274,13 +274,12 @@ h1.section-heading {
     height: 1.625rem;
     font-size: 1.625rem;
     font-weight: bold;
-    background-color: #FEFBEA;
-    color: #304D23;
+    background-color: var(--light-blue);
+    color: var(--text);
 }
 
 .calendar-block .header button:hover {
-    background-color: var(--bg);
-    cursor: pointer;
+    background-color: var(--db-highlight-blue);
 }
 
 .days {
@@ -313,17 +312,25 @@ h1.section-heading {
     height: 5rem;
     transition: 0.2s;
     font-size: 1.625rem;
+    background-color: var(--light-blue);
 }
 
-.date.available{
+/* .date:hover,
+.date.active {
+    background: var(--db-highlight-blue);
+    color: white;
+} */
+
+
+.available{
     background: var(--available);
     color: white;
 }
-.date.fullybooked{
+.fullybooked{
     background: var(--fully-booked);
     color: white;
 }
- .date.closed{
+ .closed{
     background: var(--closed);
     color: white;
 } 

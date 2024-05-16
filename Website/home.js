@@ -42,11 +42,11 @@ const updateCalendar = () => {
     for (let i = 1; i <= totalDays; i++) {
         const date = new Date(currentYear, currentMonth, i);
         if (date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth() && date.getDate() === today.getDate()) {
-            datesHTML += `<div id="${getMonthName(currentDate.getMonth())} ${i} ${currentDate.getFullYear()}" class="date active available">${i}</div>`;
+            datesHTML += `<button id="${getMonthName(currentDate.getMonth())} ${i} ${currentDate.getFullYear()}" class="date active available">${i}</button>`;
         } else if (date <= today || date > resultDate || (date < today && today.getHours() > -1)) {
             datesHTML += `<div class="date inactive ${currentDate.getMonth()} ${i}">${i}</div>`;
         } else {
-            datesHTML += `<div id="${getMonthName(currentDate.getMonth())} ${i} ${currentDate.getFullYear()}" class="date active available">${i}</div>`;
+            datesHTML += `<button id="${getMonthName(currentDate.getMonth())} ${i} ${currentDate.getFullYear()}" class="date active available">${i}</button>`;
         }
     }
 
@@ -76,7 +76,20 @@ const updateCalendar = () => {
     else {
         nextBtn.classList.remove("disabled");
     }
-
+    
+    var sampleDivs = document.querySelectorAll('.date:not(.inactive)');
+    for (var x = 0, sampleDivsLength = sampleDivs.length; x < sampleDivsLength; x++) {
+        //console.log(sampleDivs[x]);
+        sampleDivs[x].addEventListener("click", function () {
+            // const selectedDateString = getMonthName(currentDate.getMonth()) + ' ' + this.innerHTML + ' ' + currentDate.getFullYear();
+            // selectedDate = selectedDateString;
+            // selectedString = selectedDateString;
+            // selectedDateElement.innerHTML = '<h3>' + selectedString + '</h3>';
+            // updateNumbers();
+            document.location.href = 'menu.php';
+        });
+    }
+    
     calendarData.forEach(function (databasedate) {
         var month = databasedate.CALENDAR_DATE.split(' ');
         console.log(month);
