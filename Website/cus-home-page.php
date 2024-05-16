@@ -204,7 +204,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             <div class="container responsive">
                 <div class="text">
                     <h1>See our available dates</h1>
-                    <p>Days with the following colors below are unavailable dates for ordering</p>
+                    <p>Select the date you want your order to be delivered and choose a time slot</p>
                     <div class="legend">
                         <button class="button available-tag">Available</button> 
                         <button class="button fully-booked-tag">Fully Booked</button>
