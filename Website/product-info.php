@@ -37,6 +37,7 @@ if ($count > 0) {
         $FOOD_IMG = $row['FOOD_IMG'];
         $FOOD_PRICE = $row['FOOD_PRICE'];
         $FOOD_STOCK = $row['FOOD_STOCK'];
+        $HOURLY_CAP = $row['HOURLY_CAP'];
     }
 }
 
@@ -103,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         $res2 = mysqli_query($conn, $sql2);
     }
     // Redirect to the home page after processing
-    $_SESSION['fromProdInfo'] = 'yes'; 
+    $_SESSION['fromProdInfo'] = 'yes';
     header('location:menu.php');
 }
 ?>
@@ -194,16 +195,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                         <p class="remaining">10:00 am - 11:00 am <?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> sticks available</p>
                                     <?php } ?>
                                 </div>
-
                                 <input type="hidden" id="quantity" name="quantity" value="1">
                                 <input type="hidden" name="price" value="<?php echo $FOOD_PRICE ?>">
+                                <input type="date" name="date">
                                 <button name="order" type="submit" <?php echo ($FOOD_STOCK <= 0 || (isset($_POST['quantity']) && ($IN_ORDER_QUANTITY + intval($_POST['quantity']) > $FOOD_STOCK))) ? 'disabled' : ''; ?>>Add to Cart</button>
                             </form>
                         </div>
                     </section>
-                    <?php
+                    <section class="tiles">
+                        <?php
+                        $startHour = 10; // Start hour
+                        $endHour = 17;   // End hour
 
-                    ?>
+                        // Loop through each hour from 10:00 am to 5:00 pm
+                        for ($hour = $startHour; $hour <= $endHour; $hour++) {
+                            // Calculate the hour in 12-hour format
+                            $displayHour = ($hour % 12 == 0) ? 12 : $hour % 12;
+                            // Determine AM or PM
+                            $period = ($hour < 12) ? 'am' : 'pm';
+
+                            // Check if food stock is available for this hour
+                            $tileAvailable = false; // Assume no stock available by default
+                            if ($FOOD_STOCK > 0 && $hour >= date('H') + 4) {
+                                // Assuming tiles start appearing 4 hours from the current time
+                                $tileAvailable = true;
+                            }
+
+                            // Define the URL or JavaScript function for the tile
+                            $tileLink = "javascript:void(0)"; // Default link is a JavaScript function, change this to a specific URL if needed
+
+                            // If the tile is available, set the link to a specific URL or JavaScript function
+                            if ($tileAvailable) {
+                                // Here you can set the link to a specific URL or JavaScript function
+                                // For example, if you have a JavaScript function named 'handleTileClick(hour)', you can use:
+                                // $tileLink = "javascript:handleTileClick($hour)";
+                                // Or if you have a PHP file to handle the click action, you can use:
+                                // $tileLink = "handle_click.php?hour=$hour";
+                                $tileLink = "javascript:void(0)"; // Example: Using JavaScript function
+                            }
+                        ?>
+
+                            <!-- Wrap each tile in an <a> tag -->
+                            <a href="<?php echo $tileLink; ?>" class="tile <?php echo ($tileAvailable) ? 'available' : 'unavailable'; ?>">
+                                <p><?php echo $displayHour; ?>:00 <?php echo $period; ?></p>
+                                <?php if ($tileAvailable) : ?>
+                                    <p><?php echo min($FOOD_STOCK, $HOURLY_CAP); ?> available</p>
+                                <?php endif; ?>
+                            </a>
+                        <?php } ?>
+                    </section>
+
                 </div>
             </div>
         </section>
@@ -273,7 +314,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             updateButtonState();
         });
     </script>
-    
+
     <!-- floating button -->
     <a href="<?php echo SITEURL; ?>cart.php" class="material-icons floating-btn" style="font-size: 45px;">shopping_cart</a>
 
