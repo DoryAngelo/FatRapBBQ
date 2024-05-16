@@ -114,7 +114,7 @@ const updateCalendar = () => {
             // selectedString = selectedDateString;
             // selectedDateElement.innerHTML = '<h3>' + selectedString + '</h3>';
             // updateNumbers();
-            document.location.href = 'menu.php?'+ selectedDateString;
+            document.location.href = 'menu.php?DATE_SELECTED='+ selectedDateString;
         });
     }
 
