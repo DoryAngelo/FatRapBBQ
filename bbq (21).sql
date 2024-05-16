@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2024 at 06:34 PM
+-- Generation Time: May 16, 2024 at 08:49 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -126,7 +126,7 @@ CREATE TABLE `food` (
 --
 
 INSERT INTO `food` (`FOOD_ID`, `CTGY_ID`, `FOOD_NAME`, `FOOD_PRICE`, `FOOD_DESC`, `FOOD_IMG`, `FOOD_STOCK`, `FOOD_ACTIVE`, `FOOD_TYPE`, `HOURLY_CAP`) VALUES
-(60, 0, 'Barbeque', 25.50, 'BBQ', 'FOOD_IMAGE_Barbeque.jpg', 15000, 'Yes', 'Customer', 50);
+(60, 0, 'Barbeque', 25.50, 'BBQ', 'FOOD_IMAGE_Barbeque.jpg', 14880, 'Yes', 'Customer', 50);
 
 -- --------------------------------------------------------
 
@@ -143,18 +143,16 @@ CREATE TABLE `in_order` (
   `IN_ORDER_TOTAL` decimal(10,2) NOT NULL,
   `IN_ORDER_STATUS` varchar(21) NOT NULL,
   `PLACED_ORDER_ID` int(18) UNSIGNED DEFAULT NULL,
-  `GUEST_ORDER_IDENTIFIER` varchar(50) NOT NULL
+  `GUEST_ORDER_IDENTIFIER` varchar(50) NOT NULL,
+  `DELIVERY_DATE` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `in_order`
 --
 
-INSERT INTO `in_order` (`IN_ORDER_ID`, `FOOD_ID`, `MENU_ID`, `PRSN_ID`, `IN_ORDER_QUANTITY`, `IN_ORDER_TOTAL`, `IN_ORDER_STATUS`, `PLACED_ORDER_ID`, `GUEST_ORDER_IDENTIFIER`) VALUES
-(309, 61, 0, 15, 2, 10.00, 'Ordered', 137, ''),
-(310, 61, 0, 15, 5, 25.00, 'Ordered', 138, ''),
-(311, 61, 0, 15, 1, 5.00, 'Ordered', 139, ''),
-(312, 60, 0, 15, 13, 325.00, 'Ordered', NULL, '');
+INSERT INTO `in_order` (`IN_ORDER_ID`, `FOOD_ID`, `MENU_ID`, `PRSN_ID`, `IN_ORDER_QUANTITY`, `IN_ORDER_TOTAL`, `IN_ORDER_STATUS`, `PLACED_ORDER_ID`, `GUEST_ORDER_IDENTIFIER`, `DELIVERY_DATE`) VALUES
+(315, 60, 0, 15, 20, 510.00, 'Ordered', 141, '', 'May 17 2024 2:25 pm');
 
 -- --------------------------------------------------------
 
@@ -219,10 +217,7 @@ CREATE TABLE `placed_order` (
 --
 
 INSERT INTO `placed_order` (`PLACED_ORDER_ID`, `PRSN_ID`, `CUS_NAME`, `CUS_NUMBER`, `CUS_EMAIL`, `PLACED_ORDER_DATE`, `PLACED_ORDER_TOTAL`, `DELIVERY_ADDRESS`, `DELIVERY_DATE`, `PLACED_ORDER_STATUS`, `PLACED_ORDER_CONFIRMATION`, `PLACED_ORDER_TRACKER`, `PLACED_ORDER_NOTE`, `REFERENCE_NUMBER`, `GUEST_ORDER_IDENTIFIER`) VALUES
-(136, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-05-12 11:35:18pm', 25.50, 'National Capital Region (NCR), Ncr, Fourth District, City Of Muntinlupa, Buli, StreetTest', '2024-05-16 11:35 AM', 'Cancelled', '', 'cc3e857155474103', '', '', ''),
-(137, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-05-16 07:42:43pm', 10.00, ', , , , StreetTest', '2024-05-18 02:42 PM', 'Placed', '', 'd1cbc8b20a73a62d', '', '', ''),
-(138, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-05-16 07:44:39pm', 25.00, ', , , , StreetTest', '2024-05-18 02:44 PM', 'Placed', '', '54fda1bad78d429c', '', '', ''),
-(139, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-05-16 10:00:21pm', 5.00, ', , , , StreetTest', '2024-05-18 9:56 AM', 'Placed', '', '1fb66e40fddd32e4', '', '', '');
+(141, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-05-17 02:38:44am', 510.00, ', , , , StreetTest', 'May 17 2024 2:25 pm', 'Placed', '', '4d44903c6c3b6fd4', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -344,7 +339,7 @@ ALTER TABLE `food`
 -- AUTO_INCREMENT for table `in_order`
 --
 ALTER TABLE `in_order`
-  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=313;
+  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=316;
 
 --
 -- AUTO_INCREMENT for table `person`
@@ -356,7 +351,7 @@ ALTER TABLE `person`
 -- AUTO_INCREMENT for table `placed_order`
 --
 ALTER TABLE `placed_order`
-  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
+  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
 
 --
 -- AUTO_INCREMENT for table `wholesaler`
