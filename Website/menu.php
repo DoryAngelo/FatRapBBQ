@@ -116,12 +116,6 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
             <div class="container">
                 <div class="section-heading">
                     <h2>Menu</h2>
-                    <!-- <?php if (!empty($selectedDate) && !empty($selectedTime)) : ?>
-                        <p>Selected Date: <?php echo $selectedDate; ?></p>
-                        <p>Selected Time: <?php echo $selectedTime; ?></p>
-                    <?php else : ?>
-                        <p>No date and time selected.</p>
-                    <?php endif; ?> -->
                 </div>
                 <section class="section-body">
                     <?php

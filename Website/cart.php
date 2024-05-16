@@ -91,9 +91,11 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
             <div class="container">
                 <div class="section-heading">
                     <h2>Cart</h2>
-                    <div>
-
-                    </div>
+                    <!-- <div>
+                        <p>Delivery date and time: </p>
+                        <input type="date" id="date" class="input">
+                        <input type="time" id="time" class="input">
+                    </div> -->
                 </div>
                 <form id="checkout-form" action="checkout.php" class="section-body" method="post">
                     <section class="block">

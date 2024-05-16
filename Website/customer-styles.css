@@ -883,6 +883,21 @@ a.back {
     text-wrap: wrap;
 }
 
+.time-slots .tile-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.time-slots .tile-wrapper .tile {
+    width: max-content;
+    font-weight: normal;
+    font-size: 1rem;
+    border-radius: 4px;
+    background: transparent;
+    border: 1px solid var(--text);
+}
+
 /*floating button section*/
 .floating-btn {
     width: 80px;
