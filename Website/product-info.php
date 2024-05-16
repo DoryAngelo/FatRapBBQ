@@ -104,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         $res2 = mysqli_query($conn, $sql2);
     }
     // Redirect to the home page after processing
-    $_SESSION['fromProdInfo'] = 'yes';
+    $_SESSION['fromProdInfo'] = 'yes'; 
     header('location:menu.php');
 }
 ?>
@@ -189,10 +189,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                         <input type="number" class="amount js-num" value="1" min="1" max="<?php echo $FOOD_STOCK; ?>">
                                     </div>
                                     <?php if ($PRSN_ROLE === "Wholesaler") { ?>
-                                        <p class="remaining">10:00 am - 11:00 am<?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> available</p>
+                                        <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> available</p>
                                     <?php } else { ?>
                                         <p></p>
-                                        <p class="remaining">10:00 am - 11:00 am <?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> sticks available</p>
+                                        <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> sticks available</p>
                                     <?php } ?>
                                 </div>
                                 <div class="date-grp">
@@ -333,7 +333,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             updateButtonState();
         });
     </script>
-
+    
     <!-- floating button -->
     <a href="<?php echo SITEURL; ?>cart.php" class="material-icons floating-btn" style="font-size: 45px;">shopping_cart</a>
 
