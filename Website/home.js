@@ -77,18 +77,6 @@ const updateCalendar = () => {
         nextBtn.classList.remove("disabled");
     }
     
-    var sampleDivs = document.querySelectorAll('.date:not(.inactive)');
-    for (var x = 0, sampleDivsLength = sampleDivs.length; x < sampleDivsLength; x++) {
-        //console.log(sampleDivs[x]);
-        sampleDivs[x].addEventListener("click", function () {
-            // const selectedDateString = getMonthName(currentDate.getMonth()) + ' ' + this.innerHTML + ' ' + currentDate.getFullYear();
-            // selectedDate = selectedDateString;
-            // selectedString = selectedDateString;
-            // selectedDateElement.innerHTML = '<h3>' + selectedString + '</h3>';
-            // updateNumbers();
-            document.location.href = 'menu.php';
-        });
-    }
     
     calendarData.forEach(function (databasedate) {
         var month = databasedate.CALENDAR_DATE.split(' ');
@@ -115,6 +103,45 @@ const updateCalendar = () => {
             }
         }
     });
+
+    var availableDates = document.querySelectorAll('.available');
+    for (var x = 0, availableDatesLength = availableDates.length; x < availableDatesLength; x++) {
+        //console.log(sampleDivs[x]);
+        availableDates[x].addEventListener("click", function () {
+             const selectedDateString = getMonthName(currentDate.getMonth()) + ' ' + this.innerHTML + ' ' + currentDate.getFullYear();
+             console.log(selectedDateString);
+            // selectedDate = selectedDateString;
+            // selectedString = selectedDateString;
+            // selectedDateElement.innerHTML = '<h3>' + selectedString + '</h3>';
+            // updateNumbers();
+            document.location.href = 'menu.php?'+ selectedDateString;
+        });
+    }
+
+    var fbDates = document.querySelectorAll('.fullybooked');
+    for (var x = 0, fbDatesLength = fbDates.length; x < fbDatesLength; x++) {
+        //console.log(sampleDivs[x]);
+        fbDates[x].addEventListener("click", function () {
+            // const selectedDateString = getMonthName(currentDate.getMonth()) + ' ' + this.innerHTML + ' ' + currentDate.getFullYear();
+            // selectedDate = selectedDateString;
+            // selectedString = selectedDateString;
+            // selectedDateElement.innerHTML = '<h3>' + selectedString + '</h3>';
+            // updateNumbers();
+            alert('Date is Fully Booked');
+        });
+    }
+    var closedDates = document.querySelectorAll('.closed');
+    for (var x = 0, closedDatesLength = closedDates.length; x < closedDatesLength; x++) {
+        //console.log(sampleDivs[x]);
+        closedDates[x].addEventListener("click", function () {
+            // const selectedDateString = getMonthName(currentDate.getMonth()) + ' ' + this.innerHTML + ' ' + currentDate.getFullYear();
+            // selectedDate = selectedDateString;
+            // selectedString = selectedDateString;
+            // selectedDateElement.innerHTML = '<h3>' + selectedString + '</h3>';
+            // updateNumbers();
+            alert('Date is Closed');
+        });
+    }
     //updateNumbers();
 }
 
