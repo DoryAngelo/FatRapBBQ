@@ -246,10 +246,9 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                     <input type="hidden" id="quantity" name="quantity" value="1">
                     <!-- <a href="checkout.php" class="page-button center">Checkout</a> -->
                     <?php
-
-                    if ($count <= 0 || in_array(true, $flagValues)) {
+                    if ($count <= 0) {
                     ?>
-                        <button class="page-button center">Checkout</button>
+                        <button class="page-button center" disabled>Checkout</button>
                     <?php
                     } else {
                     ?>
@@ -259,7 +258,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                     ?>
                     <script>
                         function validateForm() {
-                            <?php if ($count <= 0 || in_array(true, $flagValues)) : ?>
+                            <?php if ($count <= 0) : ?>
                                 alert("Cannot proceed with checkout. Please review your order.");
                                 return false;
                             <?php else : ?>

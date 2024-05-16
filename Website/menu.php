@@ -36,7 +36,7 @@ if (isset($_SESSION['prsn_id'])) {
 
 $PRSN_ROLE = $_SESSION['prsn_role'];
 
-$SELECTED_DATE =  $_SESSION['DATE_SELECTED'] . " " .  $_SESSION['TIME_SELECTED'];
+
 
 
 ?>
@@ -163,13 +163,13 @@ $SELECTED_DATE =  $_SESSION['DATE_SELECTED'] . " " .  $_SESSION['TIME_SELECTED']
                             $FOOD_PRICE = $row['FOOD_PRICE'];
 
                             $avail = min($FOOD_STOCK, $HOURLY_CAP);
-                            
-                            $SELECTED_DATE = $_SESSION['DATE_SELECTED'];
-                            $SELECTED_TIME = $_SESSION['TIME_SELECTED'];
+
+                            $SELECTED_DATE = isset($_SESSION['DATE_SELECTED']) ? $_SESSION['DATE_SELECTED'] : date('M j Y');
+                            $SELECTED_TIME = isset($_SESSION['TIME_SELECTED']) ? $_SESSION['TIME_SELECTED'] : date('g:i a');
                             $selected_datetime = strtotime($SELECTED_DATE . " " . $SELECTED_TIME);
                             $selected_hour = date('G', $selected_datetime);
 
-                           
+
                             $sql_orders = "
                 SELECT SUM(in_order_quantity) AS total_quantity
                 FROM in_order
@@ -182,12 +182,11 @@ $SELECTED_DATE =  $_SESSION['DATE_SELECTED'] . " " .  $_SESSION['TIME_SELECTED']
 
                             $res = mysqli_query($conn, $sql_orders);
                             $count = mysqli_num_rows($res);
-                           
+
                             if ($count > 0) {
                                 while ($row = mysqli_fetch_assoc($res)) {
                                     $total_quantity = $row['total_quantity'];
                                     $avail -= $total_quantity;
-                                    
                                 }
                             }
 

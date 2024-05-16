@@ -33,8 +33,8 @@ if ($count > 0) {
         $HOURLY_CAP = $row['HOURLY_CAP'];
         $avail = min($FOOD_STOCK, $HOURLY_CAP);
 
-        $SELECTED_DATE = $_SESSION['DATE_SELECTED'];
-        $SELECTED_TIME = $_SESSION['TIME_SELECTED'];
+        $SELECTED_DATE = isset($_SESSION['DATE_SELECTED']) ? $_SESSION['DATE_SELECTED'] : date('M j Y');
+        $SELECTED_TIME = isset($_SESSION['TIME_SELECTED']) ? $_SESSION['TIME_SELECTED'] : date('g:i a');
         $selected_datetime = strtotime($SELECTED_DATE . " " . $SELECTED_TIME);
         $selected_hour = date('G', $selected_datetime);
 
@@ -61,8 +61,8 @@ GROUP BY food_id, delivery_date, delivery_hour
     }
 }
 
-$SELECTED_DATE = $_SESSION['DATE_SELECTED'];
-$SELECTED_TIME = $_SESSION['TIME_SELECTED'];
+$SELECTED_DATE = isset($_SESSION['DATE_SELECTED']) ? $_SESSION['DATE_SELECTED'] : date('M j Y');
+$SELECTED_TIME = isset($_SESSION['TIME_SELECTED']) ? $_SESSION['TIME_SELECTED'] : date('g:i a');
 $selected_datetime = strtotime($SELECTED_DATE . " " . $SELECTED_TIME);
 $selected_hour = date('G', $selected_datetime);
 
