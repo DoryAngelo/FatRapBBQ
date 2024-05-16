@@ -195,64 +195,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                         <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> sticks available</p>
                                     <?php } ?>
                                 </div>
-                                <!-- <div class="date-grp">
-                                    <p>Date</p>
-                                    <input type="date">
-                                </div>
-                                <div class="time-slots">
-                                    <p>Time</p>
-                                    <div class="tile-wrapper">
-                                        <?php
-                                            $startHour = 10; // Start hour
-                                            $endHour = 17;   // End hour
-
-                                            // Loop through each hour from 10:00 am to 5:00 pm
-                                            for ($hour = $startHour; $hour <= $endHour; $hour++) {
-                                                // Calculate the hour in 12-hour format
-                                                $displayHour = ($hour % 12 == 0) ? 12 : $hour % 12;
-                                                // Determine AM or PM
-                                                $period = ($hour < 12) ? 'am' : 'pm';
-
-                                                // Check if food stock is available for this hour
-                                                $tileAvailable = false; // Assume no stock available by default
-                                                if ($FOOD_STOCK > 0 && $hour >= date('H') + 4) {
-                                                    // Assuming tiles start appearing 4 hours from the current time
-                                                    $tileAvailable = true;
-                                                }
-
-                                                // Define the URL or JavaScript function for the tile
-                                                $tileLink = "javascript:void(0)"; // Default link is a JavaScript function, change this to a specific URL if needed
-
-                                                // If the tile is available, set the link to a specific URL or JavaScript function
-                                                if ($tileAvailable) {
-                                                    // Here you can set the link to a specific URL or JavaScript function
-                                                    // For example, if you have a JavaScript function named 'handleTileClick(hour)', you can use:
-                                                    // $tileLink = "javascript:handleTileClick($hour)";
-                                                    // Or if you have a PHP file to handle the click action, you can use:
-                                                    // $tileLink = "handle_click.php?hour=$hour";
-                                                    $tileLink = "javascript:void(0)"; // Example: Using JavaScript function
-                                                }
-                                        ?>
-
-                                        <!-- Wrap each tile in an button tag -->
-                                        <!-- <a href="<?php echo $tileLink; ?>" class="tile <?php echo ($tileAvailable) ? 'available' : 'unavailable'; ?>">
-                                            <p><?php echo $displayHour; ?>:00 <?php echo $period; ?></p>
-                                            <?php if ($tileAvailable) : ?>
-                                                <p><?php echo min($FOOD_STOCK, $HOURLY_CAP); ?> available</p>
-                                            <?php endif; ?>
-                                        </a> -->
-                                        <?php } ?>
-                                        
-                                        <button class="tile">10:00AM</button>
-                                        <button class="tile">11:00AM</button>
-                                        <button class="tile">12:00AM</button>
-                                        <button class="tile">1:00PM</button>
-                                        <button class="tile">2:00PM</button>
-                                        <button class="tile">3:00PM</button>
-                                        <button class="tile">4:00PM</button>
-                                        <button class="tile">5:00PM</button>
-                                    </div>
-                                </div> -->
                                 <input type="hidden" id="quantity" name="quantity" value="1">
                                 <input type="hidden" name="price" value="<?php echo $FOOD_PRICE ?>">
                                 <button name="order" type="submit" <?php echo ($FOOD_STOCK <= 0 || (isset($_POST['quantity']) && ($IN_ORDER_QUANTITY + intval($_POST['quantity']) > $FOOD_STOCK))) ? 'disabled' : ''; ?>>Add to Cart</button>
