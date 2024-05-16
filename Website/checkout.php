@@ -80,8 +80,9 @@ if (isset($_POST['submit'])) {
         $Street = $_POST['street'];
         $DELIVERY_ADDRESS = $Region . ", " . $Province . ", " . $City . ", " . $Barangay . ", " . $Street;
 
-
-        $DELIVERY_DATE = $_SESSION['selectedDateTime'];
+        $SELECTED_DATE = $_SESSION['DATE_SELECTED'];
+        $SELECTED_TIME = $_SESSION['TIME_SELECTED'];
+        $DELIVERY_DATE = $SELECTED_DATE . " " . $SELECTED_TIME;
         $PLACED_ORDER_STATUS = "Placed";
         $random = random_bytes(8);
         $PLACED_ORDER_TRACKER = bin2hex($random);
