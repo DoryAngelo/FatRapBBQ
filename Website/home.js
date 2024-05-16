@@ -118,6 +118,40 @@ const updateCalendar = () => {
         });
     }
 
+    // var availableDates = document.querySelectorAll('.available');
+    // for (var x = 0, availableDatesLength = availableDates.length; x < availableDatesLength; x++) {
+    //     availableDates[x].addEventListener("click", function () {
+    //         const selectedDateString = getMonthName(currentDate.getMonth()) + ' ' + this.innerHTML + ' ' + currentDate.getFullYear();
+    //         console.log(selectedDateString);
+
+    //         Swal.fire({
+    //             title: 'Select Time',
+    //             html: '<input type="time" id="time" min="10:00" max="17:00">',
+    //             showCancelButton: true,
+    //             confirmButtonText: 'Submit',
+    //             cancelButtonText: 'Cancel',
+    //             cancelButtonColor: '#d33',
+    //             icon: 'info',
+    //             iconColor: '#007bff',
+    //             confirmButtonColor: '#28a745',
+    //             preConfirm: () => {
+    //                 var selectedTime = document.getElementById("time").value;
+    //                 // Set selected date and time into a session
+    //                 var xhr = new XMLHttpRequest();
+    //                 xhr.open("POST", "menu.php", true);
+    //                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    //                 xhr.onreadystatechange = function () {
+    //                     if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+    //                         // Redirect to menu.php
+    //                         window.location.href = "menu.php";
+    //                     }
+    //                 };
+    //                 xhr.send("DATE_SELECTED=" + encodeURIComponent(selectedDateString) + "&TIME_SELECTED=" + encodeURIComponent(selectedTime));
+    //             }
+    //         });
+    //     });
+    // }
+
     var fbDates = document.querySelectorAll('.fullybooked');
     for (var x = 0, fbDatesLength = fbDates.length; x < fbDatesLength; x++) {
         //console.log(sampleDivs[x]);
@@ -221,7 +255,6 @@ updateCalendar();
 //         setSuccess(number);
 //     }
 // };
-
 
 
 

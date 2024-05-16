@@ -3,14 +3,13 @@
 
 @include 'constants.php';
 
-// if (isset($_SESSION['prsn_id'])) {
-//     $PRSN_ID = $_SESSION['prsn_id'];
-// } else {
-//     $_SESSION['prsn_role'] = "Customer";
-//     $GUEST_ID = $_SESSION['guest_id'];
-// }
+// $selectedDate = isset($_SESSION['DATE_SELECTED']) ? $_SESSION['DATE_SELECTED'] : "";
+// $selectedTime = isset($_SESSION['TIME_SELECTED']) ? $_SESSION['TIME_SELECTED'] : "";
 
-// $PRSN_ROLE = $_SESSION['prsn_role'];
+// if (isset($_SESSION['DATE_SELECTED']) && isset($_SESSION['TIME_SELECTED'])) {
+//     $selectedDate = $_SESSION['DATE_SELECTED'];
+//     $selectedTime = $_SESSION['TIME_SELECTED'];
+// }
 
 if (isset($_SESSION['prsn_id'])) {
     $PRSN_ID = $_SESSION['prsn_id'];
@@ -25,14 +24,6 @@ if (isset($_SESSION['prsn_id'])) {
 }
 
 $PRSN_ROLE = $_SESSION['prsn_role'];
-
-// if (isset($_GET['datetime'])) {
-//     $_SESSION['selectedDateTime'] = $_GET['datetime'];
-// }
-
-// $selectedDateTime = isset($_SESSION['selectedDateTime']) ? $_SESSION['selectedDateTime'] : '';
-// $selectedDate = $selectedDateTime ? date('Y-m-d', strtotime($selectedDateTime)) : '';
-// $selectedTime = $selectedDateTime ? date('H:i', strtotime($selectedDateTime)) : '';
 
 ?>
 
@@ -97,22 +88,22 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
         </div>
     </header>
     <main>
-        <?php if(isset($_SESSION['fromProdInfo']) && $_SESSION['fromProdInfo'] == 'yes')
-        {?>
-        <script>
-        Swal.fire({
-            title: 'Success!',
-            text: 'Your order has been added to the cart.',
-            icon: 'success',
-            iconColor: '#edcb1c',
-            confirmButtonText: '<font color="#3a001e">Continue</font>',
-            confirmButtonColor: '#edcb1c',
-            color: 'white',
-            background: '#539b3b',
-        });
-        </script>
+        <?php if (isset($_SESSION['fromProdInfo']) && $_SESSION['fromProdInfo'] == 'yes') { ?>
+            <script>
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Your order has been added to the cart.',
+                    icon: 'success',
+                    iconColor: '#edcb1c',
+                    confirmButtonText: '<font color="#3a001e">Continue</font>',
+                    confirmButtonColor: '#edcb1c',
+                    color: 'white',
+                    background: '#539b3b',
+                });
+            </script>
         <?php
-        unset($_SESSION['fromProdInfo']);}
+            unset($_SESSION['fromProdInfo']);
+        }
         if ($PRSN_ROLE == "Wholesaler") {
         ?>
             <div class="wholesaler-menu-banner">
@@ -125,6 +116,12 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
             <div class="container">
                 <div class="section-heading">
                     <h2>Menu</h2>
+                    <!-- <?php if (!empty($selectedDate) && !empty($selectedTime)) : ?>
+                        <p>Selected Date: <?php echo $selectedDate; ?></p>
+                        <p>Selected Time: <?php echo $selectedTime; ?></p>
+                    <?php else : ?>
+                        <p>No date and time selected.</p>
+                    <?php endif; ?> -->
                 </div>
                 <section class="section-body">
                     <?php

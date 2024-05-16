@@ -95,7 +95,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
 
                     </div>
                 </div>
-                <form id="checkout-form" class="section-body" method="post">
+                <form id="checkout-form" action="checkout.php" class="section-body" method="post">
                     <section class="block">
                         <div class="block-body">
                             <div class="table-wrap">
@@ -129,7 +129,6 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
             AND po.placed_order_id IS NULL
             GROUP BY f.FOOD_ID";
                                         }
-
 
                                         $res = mysqli_query($conn, $sql);
                                         $count = mysqli_num_rows($res);
