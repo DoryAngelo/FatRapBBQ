@@ -76,8 +76,8 @@ const updateCalendar = () => {
     else {
         nextBtn.classList.remove("disabled");
     }
-    
-    
+
+
     calendarData.forEach(function (databasedate) {
         var month = databasedate.CALENDAR_DATE.split(' ');
         console.log(month);
@@ -104,18 +104,81 @@ const updateCalendar = () => {
         }
     });
 
+    function formatTime(timeString) {
+        var time = new Date("2000-01-01 " + timeString);
+        var hours = time.getHours();
+        var minutes = time.getMinutes();
+        var ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12; 
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        var formattedTime = hours + ':' + minutes + ' ' + ampm;
+        return formattedTime;
+    }
+
     var availableDates = document.querySelectorAll('.available');
     for (var x = 0, availableDatesLength = availableDates.length; x < availableDatesLength; x++) {
-        //console.log(sampleDivs[x]);
         availableDates[x].addEventListener("click", function () {
-             const selectedDateString = getMonthName(currentDate.getMonth()) + ' ' + this.innerHTML + ' ' + currentDate.getFullYear();
-             console.log(selectedDateString);
-            // selectedDate = selectedDateString;
-            // selectedString = selectedDateString;
-            // selectedDateElement.innerHTML = '<h3>' + selectedString + '</h3>';
-            // updateNumbers();
-            document.location.href = 'menu.php?DATE_SELECTED='+ selectedDateString;
+            const selectedDateString = getMonthName(currentDate.getMonth()) + ' ' + this.innerHTML + ' ' + currentDate.getFullYear();
+
+            Swal.fire({
+                title: 'Select Time',
+                html: '<input type="time" id="time" min="10:00" max="17:00">',
+                showCancelButton: true,
+                confirmButtonText: 'Submit',
+                cancelButtonText: 'Cancel',
+                cancelButtonColor: '#d33',
+                icon: 'info',
+                iconColor: '#007bff',
+                confirmButtonColor: '#28a745',
+                preConfirm: () => {
+                    var selectedTime = document.getElementById("time").value;
+
+                    // Validate selected time
+                    var errorMessage = getErrorMessage(selectedTime, selectedDateString);
+                    if (errorMessage) {
+                        Swal.showValidationMessage(errorMessage);
+                    } else {
+                        // Convert selected time to desired format (1:51 pm)
+                        var formattedTime = formatTime(selectedTime);
+                        console.log("Redirecting to menu.php with Date:", selectedDateString, "and Time:", formattedTime);
+                        // Redirect to menu.php with selected date and time as URL parameters
+                        window.location.href = 'menu.php?DATE_SELECTED=' + encodeURIComponent(selectedDateString) + '&TIME_SELECTED=' + encodeURIComponent(formattedTime);
+                    }
+                }
+            });
         });
+    }
+
+    // Function to validate selected time and get error message
+    function getErrorMessage(timeString, selectedDateString) {
+        var selectedTime = new Date("2000-01-01 " + timeString);
+        var minTime = new Date("2000-01-01 10:00");
+        var maxTime = new Date("2000-01-01 17:00");
+
+        // Current date and time
+        var currentDate = new Date();
+        var currentHour = currentDate.getHours();
+        var currentMinute = currentDate.getMinutes();
+        var currentDateString = currentDate.toLocaleDateString();
+
+        // If the selected date is today, ensure selected time is at least an hour from now
+        if (selectedDateString === currentDateString) {
+            if (selectedTime.getHours() === currentHour) {
+                if (selectedTime.getMinutes() <= currentMinute + 60) {
+                    return 'Please select a time that is at least one hour from now.';
+                }
+            } else if (selectedTime < currentDate) {
+                return 'Please select a time in the future.';
+            }
+        }
+
+        // Check if selected time is within the allowed range
+        if (selectedTime < minTime || selectedTime > maxTime) {
+            return 'Please select a time between 10:00 am and 5:00 pm.';
+        }
+
+        return ''; // No error message
     }
 
     // var availableDates = document.querySelectorAll('.available');
