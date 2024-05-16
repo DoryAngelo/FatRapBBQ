@@ -467,6 +467,30 @@ img {
     bottom: -40%;
 }
 
+/*floating button section*/
+.floating-btn {
+    width: 80px;
+    height: 80px;
+    background: #F5D636;
+    display: flex;
+    visibility: hidden;
+    text-align: center;
+    padding-top: 20px;
+    justify-content: center;
+    text-decoration: none;
+    border-radius: 50%;
+    color: #3A001E;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.50);
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    transition: background 0.25s;
+}
+
+.floating-btn:active {
+    background: #EDCB1C;
+}
+
 /* element sizes shrink before tablet size*/
 @media only screen and (width <= 1200px) {
     h1 {
@@ -486,6 +510,13 @@ img {
         max-height: auto;
     }
 }
+
+@media only screen and (width <= 1000px) {
+    .floating-btn {
+        visibility: visible !important;
+    }
+}
+
 
 /*layout changes at this breakpoint (around tablet size)*/
 @media only screen and (width <= 860px) {
