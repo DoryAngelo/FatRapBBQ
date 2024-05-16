@@ -828,11 +828,11 @@ a.back {
     background-color: var(--light-blue);
 }
 
-/* .date:hover,
+ .date:hover,
 .date.active {
     background: var(--db-highlight-blue);
     color: white;
-} */
+} 
 
 
 .available{
