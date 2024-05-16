@@ -18,13 +18,6 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
 
 $FOOD_ID = $_GET['FOOD_ID'];
 
-// $sql = "SELECT f.*, SUM(m.MENU_STOCK) AS total_menu_stock, m.MENU_ID
-//         FROM food f 
-//         LEFT JOIN menu m ON f.FOOD_ID = m.food_id
-//         WHERE f.FOOD_ID = '$FOOD_ID'
-//         AND NOW() BETWEEN STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p') AND STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')
-//         AND m.MENU_STOCK != 0
-//         GROUP BY f.FOOD_ID";
 
 $sql = "SELECT * FROM food WHERE FOOD_ID = '$FOOD_ID'";
 
@@ -38,34 +31,40 @@ if ($count > 0) {
         $FOOD_PRICE = $row['FOOD_PRICE'];
         $FOOD_STOCK = $row['FOOD_STOCK'];
         $HOURLY_CAP = $row['HOURLY_CAP'];
+        $avail = min($FOOD_STOCK, $HOURLY_CAP);
+
+        $SELECTED_DATE = isset($_SESSION['DATE_SELECTED']) ? $_SESSION['DATE_SELECTED'] : date('M j Y');
+        $SELECTED_TIME = isset($_SESSION['TIME_SELECTED']) ? $_SESSION['TIME_SELECTED'] : date('g:i a');
+        $selected_datetime = strtotime($SELECTED_DATE . " " . $SELECTED_TIME);
+        $selected_hour = date('G', $selected_datetime);
+
+
+        $sql_orders = "
+SELECT SUM(in_order_quantity) AS total_quantity
+FROM in_order
+WHERE placed_order_id IS NOT NULL
+AND food_id = '$FOOD_ID'
+AND DELIVERY_DATE = '$SELECTED_DATE'
+AND DELIVERY_HOUR = '$selected_hour'
+GROUP BY food_id, delivery_date, delivery_hour
+";
+
+        $res = mysqli_query($conn, $sql_orders);
+        $count = mysqli_num_rows($res);
+
+        if ($count > 0) {
+            while ($row = mysqli_fetch_assoc($res)) {
+                $total_quantity = $row['total_quantity'];
+                $avail -= $total_quantity;
+            }
+        }
     }
 }
 
-// if (isset($_SESSION['prsn_id'])) {
-//     $sql9 = "SELECT f.*, io.in_order_quantity, m.*
-//     FROM food f 
-//     LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
-//     LEFT JOIN menu m ON f.FOOD_ID = m.food_id
-//     WHERE f.FOOD_ID = '$FOOD_ID'
-//     AND io.PRSN_ID = '$PRSN_ID'";
-// } else if (isset($_SESSION['guest_id'])) {
-//     $sql9 = "SELECT f.*, io.in_order_quantity, m.*
-//         FROM food f 
-//         LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
-//         LEFT JOIN menu m ON f.FOOD_ID = m.food_id
-//         WHERE f.FOOD_ID = '$FOOD_ID'
-//         AND io.GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
-// }
-// $IN_ORDER_QUANTITY = 0;
-
-// $res9 = mysqli_query($conn, $sql9);
-// $count9 = mysqli_num_rows($res9);
-// if ($count9 > 0) {
-//     while ($row9 = mysqli_fetch_assoc($res9)) {
-//         $IN_ORDER_QUANTITY = $row9['in_order_quantity'];
-//     }
-// }
-
+$SELECTED_DATE = isset($_SESSION['DATE_SELECTED']) ? $_SESSION['DATE_SELECTED'] : date('M j Y');
+$SELECTED_TIME = isset($_SESSION['TIME_SELECTED']) ? $_SESSION['TIME_SELECTED'] : date('g:i a');
+$selected_datetime = strtotime($SELECTED_DATE . " " . $SELECTED_TIME);
+$selected_hour = date('G', $selected_datetime);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
     $quantity = isset($_POST['quantity']) ? $_POST['quantity'] : 1;
@@ -95,16 +94,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         $quantity = isset($_POST['quantity']) ? $_POST['quantity'] : 1;
         $IN_ORDER_TOTAL = (float)$quantity * (float)$FOOD_PRICE;
         if (isset($_SESSION['prsn_id'])) {
-            $sql2 = "INSERT INTO in_order (FOOD_ID, MENU_ID, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS)
-            VALUES ('$FOOD_ID', '$MENU_ID','$PRSN_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered')";
+            $sql2 = "INSERT INTO in_order (FOOD_ID, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS, DELIVERY_DATE, DELIVERY_HOUR)
+            VALUES ('$FOOD_ID', '$PRSN_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered', '$SELECTED_DATE', '$selected_hour')";
         } else {
-            $sql2 = "INSERT INTO in_order (FOOD_ID, MENU_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS, GUEST_ORDER_IDENTIFIER)
-            VALUES ('$FOOD_ID', '$MENU_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered', '$GUEST_ID')";
+            $sql2 = "INSERT INTO in_order (FOOD_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS, GUEST_ORDER_IDENTIFIER, DELIVERY_DATE, DELIVERY_HOUR)
+            VALUES ('$FOOD_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered', '$GUEST_ID', '$SELECTED_DATE', '$selected_hour')";
         }
         $res2 = mysqli_query($conn, $sql2);
     }
     // Redirect to the home page after processing
-    $_SESSION['fromProdInfo'] = 'yes'; 
+    $_SESSION['fromProdInfo'] = 'yes';
     header('location:menu.php');
 }
 ?>
@@ -186,76 +185,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                 <div class="inline">
                                     <h1>₱<?php echo $FOOD_PRICE ?></h1>
                                     <div class="quantity-grp">
-                                        <input type="number" class="amount js-num" value="1" min="1" max="<?php echo $FOOD_STOCK; ?>">
+                                        <input type="number" class="amount js-num" value="1" min="1" max="<?php echo $avail; ?>">
                                     </div>
                                     <?php if ($PRSN_ROLE === "Wholesaler") { ?>
-                                        <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> available</p>
+                                        <p class="remaining"><?php echo ($avail < 0) ? 0 : $avail; ?> available</p>
                                     <?php } else { ?>
                                         <p></p>
-                                        <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> sticks available</p>
+                                        <p class="remaining"><?php echo ($avail < 0) ? 0 : $avail; ?> sticks available</p>
                                     <?php } ?>
                                 </div>
-                                <!-- <div class="date-grp">
-                                    <p>Date</p>
-                                    <input type="date">
-                                </div>
-                                <div class="time-slots">
-                                    <p>Time</p>
-                                    <div class="tile-wrapper">
-                                        <?php
-                                            $startHour = 10; // Start hour
-                                            $endHour = 17;   // End hour
-
-                                            // Loop through each hour from 10:00 am to 5:00 pm
-                                            for ($hour = $startHour; $hour <= $endHour; $hour++) {
-                                                // Calculate the hour in 12-hour format
-                                                $displayHour = ($hour % 12 == 0) ? 12 : $hour % 12;
-                                                // Determine AM or PM
-                                                $period = ($hour < 12) ? 'am' : 'pm';
-
-                                                // Check if food stock is available for this hour
-                                                $tileAvailable = false; // Assume no stock available by default
-                                                if ($FOOD_STOCK > 0 && $hour >= date('H') + 4) {
-                                                    // Assuming tiles start appearing 4 hours from the current time
-                                                    $tileAvailable = true;
-                                                }
-
-                                                // Define the URL or JavaScript function for the tile
-                                                $tileLink = "javascript:void(0)"; // Default link is a JavaScript function, change this to a specific URL if needed
-
-                                                // If the tile is available, set the link to a specific URL or JavaScript function
-                                                if ($tileAvailable) {
-                                                    // Here you can set the link to a specific URL or JavaScript function
-                                                    // For example, if you have a JavaScript function named 'handleTileClick(hour)', you can use:
-                                                    // $tileLink = "javascript:handleTileClick($hour)";
-                                                    // Or if you have a PHP file to handle the click action, you can use:
-                                                    // $tileLink = "handle_click.php?hour=$hour";
-                                                    $tileLink = "javascript:void(0)"; // Example: Using JavaScript function
-                                                }
-                                        ?>
-
-                                        Wrap each tile in an button tag
-                                        <a href="<?php echo $tileLink; ?>" class="tile <?php echo ($tileAvailable) ? 'available' : 'unavailable'; ?>">
-                                            <p><?php echo $displayHour; ?>:00 <?php echo $period; ?></p>
-                                            <?php if ($tileAvailable) : ?>
-                                                <p><?php echo min($FOOD_STOCK, $HOURLY_CAP); ?> available</p>
-                                            <?php endif; ?>
-                                        </a>
-                                        <?php } ?>
-                                        
-                                        <button class="tile">10:00AM</button>
-                                        <button class="tile">11:00AM</button>
-                                        <button class="tile">12:00AM</button>
-                                        <button class="tile">1:00PM</button>
-                                        <button class="tile">2:00PM</button>
-                                        <button class="tile">3:00PM</button>
-                                        <button class="tile">4:00PM</button>
-                                        <button class="tile">5:00PM</button>
-                                    </div>
-                                </div> -->
                                 <input type="hidden" id="quantity" name="quantity" value="1">
                                 <input type="hidden" name="price" value="<?php echo $FOOD_PRICE ?>">
-                                <button name="order" type="submit" <?php echo ($FOOD_STOCK <= 0 || (isset($_POST['quantity']) && ($IN_ORDER_QUANTITY + intval($_POST['quantity']) > $FOOD_STOCK))) ? 'disabled' : ''; ?>>Add to Cart</button>
+                                <button name="order" type="submit" <?php echo ($avail <= 0 || (isset($_POST['quantity']) && ($IN_ORDER_QUANTITY + intval($_POST['quantity']) > $avail))) ? 'disabled' : ''; ?>>Add to Cart</button>
                             </form>
                         </div>
                     </section>
@@ -304,7 +245,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             const inputField = document.querySelector('.js-num');
             const quantityInput = document.getElementById("quantity");
             const addButton = document.querySelector('[name="order"]');
-            const maxStock = <?php echo $FOOD_STOCK; ?>;
+            const maxStock = <?php echo $avail; ?>;
             const quantityData = <?php echo isset($IN_ORDER_QUANTITY) ? $IN_ORDER_QUANTITY : 0; ?>;
 
             inputField.addEventListener('input', function() {
@@ -328,7 +269,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             updateButtonState();
         });
     </script>
-    
+
     <!-- floating button -->
     <a href="<?php echo SITEURL; ?>cart.php" class="material-icons floating-btn" style="font-size: 45px;">shopping_cart</a>
 

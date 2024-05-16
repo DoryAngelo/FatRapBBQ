@@ -36,7 +36,7 @@ if (isset($_SESSION['prsn_id'])) {
 
 $PRSN_ROLE = $_SESSION['prsn_role'];
 
-$SELECTED_DATE =  $_SESSION['DATE_SELECTED'] . " " .  $_SESSION['TIME_SELECTED'];
+
 
 
 ?>
@@ -150,6 +150,9 @@ $SELECTED_DATE =  $_SESSION['DATE_SELECTED'] . " " .  $_SESSION['TIME_SELECTED']
                     }
                     $res = mysqli_query($conn, $sql);
                     $count = mysqli_num_rows($res);
+
+                    echo "<script>console.log('Total food items count: $count');</script>";
+
                     if ($count > 0) {
                         while ($row = mysqli_fetch_assoc($res)) {
                             $FOOD_ID = $row['FOOD_ID'];
@@ -159,38 +162,35 @@ $SELECTED_DATE =  $_SESSION['DATE_SELECTED'] . " " .  $_SESSION['TIME_SELECTED']
                             $HOURLY_CAP = $row['HOURLY_CAP'];
                             $FOOD_PRICE = $row['FOOD_PRICE'];
 
-                            // Initialize availability
                             $avail = min($FOOD_STOCK, $HOURLY_CAP);
 
-                            // Calculate the total quantity of placed orders for the selected date and hour
-                            $SELECTED_DATE = $_SESSION['DATE_SELECTED'];
-                            $SELECTED_TIME = $_SESSION['TIME_SELECTED'];
+                            $SELECTED_DATE = isset($_SESSION['DATE_SELECTED']) ? $_SESSION['DATE_SELECTED'] : date('M j Y');
+                            $SELECTED_TIME = isset($_SESSION['TIME_SELECTED']) ? $_SESSION['TIME_SELECTED'] : date('g:i a');
                             $selected_datetime = strtotime($SELECTED_DATE . " " . $SELECTED_TIME);
                             $selected_hour = date('G', $selected_datetime);
 
+
                             $sql_orders = "
-                SELECT food_id, HOUR(delivery_date) as delivery_hour, SUM(in_order_quantity) AS total_quantity
+                SELECT SUM(in_order_quantity) AS total_quantity
                 FROM in_order
                 WHERE placed_order_id IS NOT NULL
                 AND food_id = '$FOOD_ID'
-                AND DATE(delivery_date) = '$SELECTED_DATE'
-                AND HOUR(delivery_date) = '$selected_hour'
-                GROUP BY food_id, delivery_hour
+                AND DELIVERY_DATE = '$SELECTED_DATE'
+                AND DELIVERY_HOUR = '$selected_hour'
+                GROUP BY food_id, delivery_date, delivery_hour
             ";
-                            $res_orders = mysqli_query($conn, $sql_orders);
-                            $hourly_orders = [];
-                            while ($order_row = mysqli_fetch_assoc($res_orders)) {
-                                $delivery_hour = $order_row['delivery_hour'];
-                                $total_quantity = $order_row['total_quantity'];
-                                $hourly_orders[$delivery_hour] = $total_quantity;
+
+                            $res = mysqli_query($conn, $sql_orders);
+                            $count = mysqli_num_rows($res);
+
+                            if ($count > 0) {
+                                while ($row = mysqli_fetch_assoc($res)) {
+                                    $total_quantity = $row['total_quantity'];
+                                    $avail -= $total_quantity;
+                                }
                             }
 
-                            // Calculate remaining availability for the selected hour
-                            if (isset($hourly_orders[$selected_hour])) {
-                                $remaining_stock = $FOOD_STOCK - $hourly_orders[$selected_hour];
-                                if ($remaining_stock < 0) $remaining_stock = 0;
-                                $avail = min($remaining_stock, $HOURLY_CAP);
-                            }
+
                     ?>
                             <a class="menu-item position disable-click" href="<?php echo SITEURL; ?>product-info.php?FOOD_ID=<?php echo $FOOD_ID ?>"><!--insert "disable-click" to class="menu-item position" if out of stock to disable clicking-->
                                 <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
@@ -213,7 +213,6 @@ $SELECTED_DATE =  $_SESSION['DATE_SELECTED'] . " " .  $_SESSION['TIME_SELECTED']
                     }
                     ?>
                 </section>
-
 
             </div>
         </section>

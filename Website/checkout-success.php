@@ -83,7 +83,12 @@ foreach ($food_quantities as $food_id => $total_quantity) {
                 <div class="success-box">
                     <div class="success-title">
                         <h1>Success!</h1>
-                        <p class="title-desc">Your order tracker is: <?php echo $PLACED_ORDER_TRACKER; ?></p>
+                        <p class="title-desc">
+                            Your order tracker is:
+                            <a href="track-order.php?tracker=<?php echo urlencode($PLACED_ORDER_TRACKER); ?>">
+                                <?php echo htmlspecialchars($PLACED_ORDER_TRACKER); ?>
+                            </a>
+                        </p>
                         <a href="cus-home-page.php" class="button">Go to Home</a>
                     </div>
                 </div>

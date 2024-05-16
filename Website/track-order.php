@@ -25,7 +25,7 @@ if (isset($_SESSION['prsn_id'])) {
 
 $PRSN_ROLE = $_SESSION['prsn_role'];
 
-$PLACED_ORDER_TRACKER = $_SESSION['tracker'];
+$PLACED_ORDER_TRACKER = isset($_GET['tracker']) ? $_GET['tracker'] : '';
 
 $sql2 = "SELECT * FROM placed_order WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER'";
 

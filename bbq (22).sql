@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2024 at 08:49 PM
+-- Generation Time: May 16, 2024 at 09:27 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -126,7 +126,7 @@ CREATE TABLE `food` (
 --
 
 INSERT INTO `food` (`FOOD_ID`, `CTGY_ID`, `FOOD_NAME`, `FOOD_PRICE`, `FOOD_DESC`, `FOOD_IMG`, `FOOD_STOCK`, `FOOD_ACTIVE`, `FOOD_TYPE`, `HOURLY_CAP`) VALUES
-(60, 0, 'Barbeque', 25.50, 'BBQ', 'FOOD_IMAGE_Barbeque.jpg', 14880, 'Yes', 'Customer', 50);
+(60, 0, 'Barbeque', 25.50, 'BBQ', 'FOOD_IMAGE_Barbeque.jpg', 14820, 'Yes', 'Customer', 50);
 
 -- --------------------------------------------------------
 
@@ -144,15 +144,16 @@ CREATE TABLE `in_order` (
   `IN_ORDER_STATUS` varchar(21) NOT NULL,
   `PLACED_ORDER_ID` int(18) UNSIGNED DEFAULT NULL,
   `GUEST_ORDER_IDENTIFIER` varchar(50) NOT NULL,
-  `DELIVERY_DATE` varchar(50) NOT NULL
+  `DELIVERY_DATE` varchar(50) NOT NULL,
+  `DELIVERY_HOUR` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `in_order`
 --
 
-INSERT INTO `in_order` (`IN_ORDER_ID`, `FOOD_ID`, `MENU_ID`, `PRSN_ID`, `IN_ORDER_QUANTITY`, `IN_ORDER_TOTAL`, `IN_ORDER_STATUS`, `PLACED_ORDER_ID`, `GUEST_ORDER_IDENTIFIER`, `DELIVERY_DATE`) VALUES
-(315, 60, 0, 15, 20, 510.00, 'Ordered', 141, '', 'May 17 2024 2:25 pm');
+INSERT INTO `in_order` (`IN_ORDER_ID`, `FOOD_ID`, `MENU_ID`, `PRSN_ID`, `IN_ORDER_QUANTITY`, `IN_ORDER_TOTAL`, `IN_ORDER_STATUS`, `PLACED_ORDER_ID`, `GUEST_ORDER_IDENTIFIER`, `DELIVERY_DATE`, `DELIVERY_HOUR`) VALUES
+(320, 60, 0, 15, 20, 510.00, 'Ordered', 144, '', 'May 17 2024', '16');
 
 -- --------------------------------------------------------
 
@@ -217,7 +218,7 @@ CREATE TABLE `placed_order` (
 --
 
 INSERT INTO `placed_order` (`PLACED_ORDER_ID`, `PRSN_ID`, `CUS_NAME`, `CUS_NUMBER`, `CUS_EMAIL`, `PLACED_ORDER_DATE`, `PLACED_ORDER_TOTAL`, `DELIVERY_ADDRESS`, `DELIVERY_DATE`, `PLACED_ORDER_STATUS`, `PLACED_ORDER_CONFIRMATION`, `PLACED_ORDER_TRACKER`, `PLACED_ORDER_NOTE`, `REFERENCE_NUMBER`, `GUEST_ORDER_IDENTIFIER`) VALUES
-(141, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-05-17 02:38:44am', 510.00, ', , , , StreetTest', 'May 17 2024 2:25 pm', 'Placed', '', '4d44903c6c3b6fd4', '', '', '');
+(144, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-05-17 03:26:35am', 510.00, ', , , , StreetTest', 'May 17 2024 4:25 pm', 'Placed', '', 'c239f8a1773bc74e', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -339,7 +340,7 @@ ALTER TABLE `food`
 -- AUTO_INCREMENT for table `in_order`
 --
 ALTER TABLE `in_order`
-  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=316;
+  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=321;
 
 --
 -- AUTO_INCREMENT for table `person`
@@ -351,7 +352,7 @@ ALTER TABLE `person`
 -- AUTO_INCREMENT for table `placed_order`
 --
 ALTER TABLE `placed_order`
-  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
+  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
 
 --
 -- AUTO_INCREMENT for table `wholesaler`
