@@ -288,6 +288,10 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                     const foodName = input.dataset.foodName;
                     const foodPrice = parseFloat(input.dataset.price);
 
+                    const remainingElement = input.closest('.quantity-col').querySelector('.remaining');
+                    const remainingStock = stock - newQuantity;
+                    remainingElement.textContent = `${remainingStock < 0 ? 0 : remainingStock} sticks remaining`;
+
                     if (newQuantity < 1 || newQuantity > stock) {
                         alert(`Quantity for ${foodName} must be between 1 and ${stock}.`);
                         input.value = Math.min(Math.max(newQuantity, 1), stock); // Reset to valid range

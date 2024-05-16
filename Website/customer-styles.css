@@ -565,12 +565,12 @@ a.back {
 
 .product-info-page img{
     width: 35%;
-    height: 17rem;
+    height: 100%;
     border-radius: 1rem 0 0 1rem;
 }
 
 .product-info-page .right-grp {
-    height: 100%;
+    /* height: 100%; */
     width: 70%;
     padding: 3%;
     display: flex;
@@ -590,6 +590,9 @@ a.back {
 
 .product-info-page .bottom {
     /* border: 1px solid blue; */
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
 }
 
 .product-info-page .bottom button {
@@ -606,7 +609,6 @@ a.back {
 
 .product-info-page .inline {
     max-width: 400px;
-    margin-bottom: 0.8rem;
     justify-content: start;
     /* border: 1px solid pink; */
 }
@@ -881,6 +883,10 @@ a.back {
 .prod-availability .name {
     font-weight: bold;
     text-wrap: wrap;
+}
+
+.time-slots p, .date-grp p {
+    margin-bottom: 0.6rem;
 }
 
 .time-slots .tile-wrapper {
