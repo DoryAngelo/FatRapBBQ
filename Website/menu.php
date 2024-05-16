@@ -116,7 +116,6 @@ $selectedTime = $selectedDateTime ? date('H:i', strtotime($selectedDateTime)) : 
 
                     if ($res) {
                         while ($row = mysqli_fetch_assoc($res)) {
-                            // Convert date string to a format JavaScript can understand
                             $date = date_create_from_format("F d Y", $row['CALENDAR_DATE']);
                             $dateStr = date_format($date, "Y-m-d");
                             $calendar_data[$dateStr] = $row['DATE_STATUS'];
@@ -261,10 +260,6 @@ $selectedTime = $selectedDateTime ? date('H:i', strtotime($selectedDateTime)) : 
                         });
                         
                     </script>
-
-
-
-
                 </div>
                 <section class="section-body">
                     <?php
