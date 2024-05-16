@@ -492,7 +492,7 @@ if (isset($_POST['submit'])) {
                         </section>
                         <!-- note block-->
                         <div class="block note">
-                            <p>Note: We can only deliver from 9AM to 5PM. Moreover, delivery will be shouldered by third-party couriers.</p>
+                            <p>Note: Orders can only be picked up from 10AM to 5PM. Moreover, mode for picking up orders will be shouldered by customers</p>
                         </div>
                         <div class="btn-container center">
                             <a href="<?php echo SITEURL; ?>cart.php" class="page-button clear-bg">Back</a>
