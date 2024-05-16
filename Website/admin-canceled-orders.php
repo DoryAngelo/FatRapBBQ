@@ -103,7 +103,7 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
             </label>
             <ul class='menubar'>
                 <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
-                <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-inventory.php">Menu</a></li>
                 <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
                 <?php
                 if (isset($_SESSION['prsn_id'])) {
@@ -234,10 +234,10 @@ $order_type = isset($_GET['type']) ? $_GET['type'] : 'all';
         </section>
         <section class="side-menu">
             <!-- if there is a product in the inventory that is low in stock, show id="low-inventory" and hide id="inventory"-->
-           <div class="group inventory" id="low-inventory">
+            <div class="group inventory" id="low-inventory">
                 <h3>Low Inventory</h3>
                 <div class="inventory-box">
-                <?php
+                    <?php
                     $sql = "SELECT * FROM food WHERE FOOD_STOCK < 100";
                     $res = mysqli_query($conn, $sql);
                     $count = mysqli_num_rows($res);

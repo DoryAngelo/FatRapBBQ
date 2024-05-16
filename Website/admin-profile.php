@@ -46,7 +46,7 @@ $PRSN_ID = $_SESSION['prsn_id'];
             </label>
             <ul class='menubar'>
                 <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
-                <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-inventory.php">Menu</a></li>
                 <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
                 <?php
                 if (isset($_SESSION['prsn_id'])) {

@@ -14,6 +14,7 @@ if (isset($_POST['submit'])) {
     $FOOD_DESC = mysqli_real_escape_string($conn, $_POST['product-desc']);
     $FOOD_PRICE =  $_POST['price'];
     $FOOD_STOCK = $_POST['stock'];
+    $HOURLY_CAP = $_POST['hcap'];
     $FOOD_ACTIVE = $_POST['active'];
     $FOOD_TYPE = $_POST['type'];
 
@@ -41,11 +42,11 @@ if (isset($_POST['submit'])) {
     } else {
         $FOOD_IMG = "";
     }
-    $insert = "INSERT INTO food(FOOD_NAME, FOOD_PRICE, FOOD_DESC, FOOD_IMG, FOOD_STOCK, FOOD_ACTIVE, FOOD_TYPE) 
-                       VALUES('$FOOD_NAME', '$FOOD_PRICE', '$FOOD_DESC', '$FOOD_IMG', '$FOOD_STOCK', '$FOOD_ACTIVE', '$FOOD_TYPE')";
+    $insert = "INSERT INTO food(FOOD_NAME, FOOD_PRICE, FOOD_DESC, FOOD_IMG, FOOD_STOCK, FOOD_ACTIVE, FOOD_TYPE, HOURLY_CAP) 
+                       VALUES('$FOOD_NAME', '$FOOD_PRICE', '$FOOD_DESC', '$FOOD_IMG', '$FOOD_STOCK', '$FOOD_ACTIVE', '$FOOD_TYPE', '$HOURLY_CAP')";
     mysqli_query($conn, $insert);
 
-    header("location: admin-edit-menu.php");
+    header("location: admin-inventory.php");
     exit();
 }
 
@@ -85,7 +86,7 @@ if (isset($_POST['submit'])) {
             </label>
             <ul class='menubar'>
                 <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
-                <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-inventory.php">Menu</a></li>
                 <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
                 <?php
                 if (isset($_SESSION['prsn_id'])) {
@@ -143,6 +144,11 @@ if (isset($_POST['submit'])) {
                                             <div class="error"></div>
                                         </div>
                                         <div class="form-field-input">
+                                            <label for="price">Hourly Capacity </label>
+                                            <input class="js-user" type="number" id="hcap" name="hcap">
+                                            <div class="error"></div>
+                                        </div>
+                                        <div class="form-field-input">
                                             <label for="type">Type</label>
                                             <select class="dropdown" name="type" id="type">
                                                 <option value="Customer">Customer</option>
@@ -179,12 +185,14 @@ if (isset($_POST['submit'])) {
         const productDescInput = document.getElementById('product-desc');
         const priceInput = document.getElementById('price');
         const stockInput = document.getElementById('stock');
+        const hcapInput = document.getElementById('hcap');
         const imageInput = document.getElementById('image');
 
         productNameInput.addEventListener('input', validateProductName);
         productDescInput.addEventListener('input', validateProductDesc);
         priceInput.addEventListener('input', validatePrice);
         stockInput.addEventListener('input', validateStock);
+        hcapInput.addEventListener('input', validateHourlyCapacity); // Add event listener for hourly capacity
         imageInput.addEventListener('change', validateImage);
 
         function setError(input, message) {
@@ -250,6 +258,21 @@ if (isset($_POST['submit'])) {
             }
         }
 
+        // Function to validate hourly capacity
+        function validateHourlyCapacity() {
+            const hcapValue = hcapInput.value.trim();
+
+            if (hcapValue === '') {
+                setError(hcapInput, 'Please enter the hourly capacity');
+            } else if (isNaN(parseInt(hcapValue))) {
+                setError(hcapInput, 'Hourly capacity must be a number');
+            } else if (parseInt(hcapValue) < 0) {
+                setError(hcapInput, 'Hourly capacity cannot be negative');
+            } else {
+                clearError(hcapInput);
+            }
+        }
+
         function validateImage() {
             const imageValue = imageInput.value.trim();
 
@@ -276,6 +299,7 @@ if (isset($_POST['submit'])) {
             validateProductDesc();
             validatePrice();
             validateStock();
+            validateHourlyCapacity(); // Validate hourly capacity
             validateImage();
 
             // Check if any error exists

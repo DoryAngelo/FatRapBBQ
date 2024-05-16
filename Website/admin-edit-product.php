@@ -45,7 +45,7 @@ $FOOD_ID = $_GET['FOOD_ID'];
             </label>
             <ul class='menubar'>
                 <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
-                <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-inventory.php">Menu</a></li>
                 <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
                 <?php
                 if (isset($_SESSION['prsn_id'])) {
@@ -87,6 +87,7 @@ $FOOD_ID = $_GET['FOOD_ID'];
                             $FOOD_STOCK = $row['FOOD_STOCK'];
                             $FOOD_IMAGE = $row['FOOD_IMG'];
                             $FOOD_ACTIVE = $row['FOOD_ACTIVE'];
+                            $HOURLY_CAP = $row['HOURLY_CAP'];
                     ?>
 
                             <section class="section-body">
@@ -119,6 +120,11 @@ $FOOD_ID = $_GET['FOOD_ID'];
                                                 <div class="form-field-input">
                                                     <label for="price">Stock </label>
                                                     <input class="js-user" type="number" id="stock" name="stock" value="<?php echo $FOOD_STOCK; ?>">
+                                                    <div class="error"></div>
+                                                </div>
+                                                <div class="form-field-input">
+                                                    <label for="price">Hourly Capacity </label>
+                                                    <input class="js-user" type="number" id="hcap" name="hcap" value="<?php echo $HOURLY_CAP; ?>">
                                                     <div class="error"></div>
                                                 </div>
                                                 <div class="form-field-input">
@@ -185,12 +191,14 @@ $FOOD_ID = $_GET['FOOD_ID'];
                 const productDescInput = document.getElementById('product-desc');
                 const priceInput = document.getElementById('price');
                 const stockInput = document.getElementById('stock');
+                const hcapInput = document.getElementById('hcap');
                 const imageInput = document.getElementById('image');
 
                 productNameInput.addEventListener('input', validateProductName);
                 productDescInput.addEventListener('input', validateProductDesc);
                 priceInput.addEventListener('input', validatePrice);
                 stockInput.addEventListener('input', validateStock);
+                hcapInput.addEventListener('input', validateHourlyCapacity); // Add event listener for hourly capacity
                 imageInput.addEventListener('change', validateImage);
 
                 function setError(input, message) {
@@ -256,6 +264,21 @@ $FOOD_ID = $_GET['FOOD_ID'];
                     }
                 }
 
+                // Function to validate hourly capacity
+                function validateHourlyCapacity() {
+                    const hcapValue = hcapInput.value.trim();
+
+                    if (hcapValue === '') {
+                        setError(hcapInput, 'Please enter the hourly capacity');
+                    } else if (isNaN(parseInt(hcapValue))) {
+                        setError(hcapInput, 'Hourly capacity must be a number');
+                    } else if (parseInt(hcapValue) < 0) {
+                        setError(hcapInput, 'Hourly capacity cannot be negative');
+                    } else {
+                        clearError(hcapInput);
+                    }
+                }
+
                 function validateImage() {
                     const imageValue = imageInput.value.trim();
 
@@ -282,6 +305,7 @@ $FOOD_ID = $_GET['FOOD_ID'];
                     validateProductDesc();
                     validatePrice();
                     validateStock();
+                    validateHourlyCapacity(); // Validate hourly capacity
                     validateImage();
 
                     // Check if any error exists
@@ -292,6 +316,7 @@ $FOOD_ID = $_GET['FOOD_ID'];
                     return true; // Allow form submission
                 }
             </script>
+
 
         </section>
     </main>
@@ -306,6 +331,7 @@ if (isset($_POST['submit'])) {
     $FOOD_DESC = mysqli_real_escape_string($conn, $_POST['product-desc']);
     $FOOD_PRICE =  $_POST['price'];
     $FOOD_STOCK = $_POST['stock'];
+    $HOURLY_CAP = $_POST['hcap'];
     $FOOD_ACTIVE = $_POST['active'];
     $FOOD_TYPE = $_POST['type'];
     $current_image = $FOOD_IMAGE;
@@ -362,6 +388,7 @@ if (isset($_POST['submit'])) {
             FOOD_IMG = '$FOOD_IMG',
             FOOD_PRICE = '$FOOD_PRICE',
             FOOD_STOCK = '$FOOD_STOCK',
+            HOURLY_CAP = '$HOURLY_CAP',
             FOOD_ACTIVE = '$FOOD_ACTIVE',
             FOOD_TYPE = '$FOOD_TYPE'
         WHERE FOOD_ID = '$FOOD_ID'";

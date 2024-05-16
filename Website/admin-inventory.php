@@ -48,7 +48,7 @@ $food_type = isset($_GET['type']) ? $_GET['type'] : 'all';
             </label>
             <ul class='menubar'>
                 <li><a href="<?php echo SITEURL; ?>admin-home.php">Home</a></li>
-                <li><a href="<?php echo SITEURL; ?>admin-edit-menu.php">Menu</a></li>
+                <li><a href="<?php echo SITEURL; ?>admin-inventory.php">Menu</a></li>
                 <li><a href="<?php echo SITEURL; ?>admin-new-orders.php">Orders</a></li>
                 <!-- Text below should change to 'Logout'once user logged in-->
                 <?php
@@ -92,6 +92,7 @@ $food_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                     <th class="header">Product Name</th>
                                     <th class="header">Price</th>
                                     <th class="header">Stock</th>
+                                    <th class="header">Hourly Capacity</th>
                                     <th class="header">Type</th>
                                     <th class="header">Action</th>
                                     <th class="header"></th>
@@ -119,6 +120,7 @@ $food_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                         $FOOD_STOCK = $row['FOOD_STOCK'];
                                         $FOOD_ACTIVE = $row['FOOD_ACTIVE'];
                                         $FOOD_TYPE = $row['FOOD_TYPE'];
+                                        $HOURLY_CAP = $row['HOURLY_CAP'];
                                 ?>
                                         <tr>
                                             <td data-cell="Image">
@@ -131,10 +133,10 @@ $food_type = isset($_GET['type']) ? $_GET['type'] : 'all';
                                                     <p><?php echo $FOOD_STOCK ?></p>
                                                 </span>
                                             </td>
+                                            <td data-cell="Hourly Capacity"><?php echo $HOURLY_CAP ?></td>
                                             <td data-cell="Price"><?php echo $FOOD_TYPE ?></td>
                                             <td data-cell="Action">
                                                 <a href="<?php echo SITEURL; ?>admin-edit-product.php?FOOD_ID=<?php echo $FOOD_ID ?>" class="edit">Edit</a>
-                                                <a href="<?php echo SITEURL; ?>admin-add-menu.php?FOOD_ID=<?php echo $FOOD_ID ?>" class="edit">Display</a>
                                             </td>
                                             <td data-cell="Action"><a href="#" onclick="confirmDelete(<?php echo $FOOD_ID; ?>)" class="bx bxs-trash-alt trash"></a></td>
                                             <script>

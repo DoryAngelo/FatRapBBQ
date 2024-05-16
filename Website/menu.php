@@ -26,6 +26,8 @@ if (isset($_SESSION['prsn_id'])) {
 
 $PRSN_ROLE = $_SESSION['prsn_role'];
 
+$selectedDateTime = isset($_GET['datetime']) ? $_GET['datetime'] : '';
+$_SESSION['selectedDateTime'] = $selectedDateTime;
 ?>
 
 <!DOCTYPE html>
@@ -99,28 +101,55 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
         <section class="section menu">
             <div class="container">
                 <div class="section-heading">
-
                     <h2>Menu</h2>
+
+                    <label for="delivery-date">Delivery Date:</label>
+                    <input type="date" id="delivery-date" name="delivery-date" value="<?php echo isset($_GET['datetime']) ? date('Y-m-d', strtotime($_GET['datetime'])) : ''; ?>">
+
+                    <label for="delivery-time">Delivery Time:</label>
+                    <input type="time" id="delivery-time" name="delivery-time" value="<?php echo isset($_GET['datetime']) ? date('H:i', strtotime($_GET['datetime'])) : ''; ?>">
+                    <script>
+                        function redirectToFilteredOrders(event) {
+                            event.preventDefault();
+
+                            var deliveryDate = document.getElementById('delivery-date').value;
+                            var deliveryTime = document.getElementById('delivery-time').value;
+
+                            if (deliveryDate && deliveryTime) {
+                                // Format date as YYYY-MM-DD
+                                var formattedDate = deliveryDate;
+
+                                // Format time as hh:mm AM/PM
+                                var hours = parseInt(deliveryTime.substring(0, 2));
+                                var minutes = deliveryTime.substring(3);
+                                var ampm = hours >= 12 ? 'PM' : 'AM';
+                                hours = hours % 12;
+                                hours = hours ? hours : 12; // the hour '0' should be '12'
+                                var formattedTime = hours + ':' + minutes + ' ' + ampm;
+
+                                // Construct selected date and time
+                                var selectedDateTime = formattedDate + ' ' + formattedTime;
+
+                                var baseUrl = window.location.href.split('?')[0];
+                                var queryParams = new URLSearchParams(window.location.search);
+                                queryParams.set('datetime', selectedDateTime);
+                                window.location.href = baseUrl + '?' + queryParams.toString();
+                            } else {
+                                // alert("Please select both delivery date and time.");
+                            }
+                        }
+
+                        document.getElementById('delivery-date').addEventListener('change', redirectToFilteredOrders);
+                        document.getElementById('delivery-time').addEventListener('change', redirectToFilteredOrders);
+                    </script>
+
+
                 </div>
                 <section class="section-body">
                     <?php
                     if ($PRSN_ROLE === 'Admin') {
-                        //             $sql = "SELECT DISTINCT f.*, MIN(STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p')) AS min_start, MAX(STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')) AS max_end
-                        // FROM menu m
-                        // JOIN food f ON m.food_id = f.food_id
-                        // WHERE f.food_active = 'Yes' 
-                        // AND m.menu_stock > 0
-                        // GROUP BY f.food_id";
                         $sql = "SELECT * FROM food WHERE FOOD_ACTIVE = 'Yes'";
                     } else {
-                        //         $sql = "SELECT DISTINCT f.*, MIN(STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p')) AS min_start, MAX(STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')) AS max_end
-                        // FROM menu m
-                        // JOIN food f ON m.food_id = f.food_id
-                        // WHERE f.food_active = 'Yes' 
-                        // AND f.food_type = '$PRSN_ROLE'
-                        // AND NOW() BETWEEN STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p') AND STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')
-                        // AND m.menu_stock > 0
-                        // GROUP BY f.food_id";
                         $sql = "SELECT * FROM food WHERE FOOD_ACTIVE = 'Yes' AND FOOD_TYPE = '$PRSN_ROLE'";
                     }
                     $res = mysqli_query($conn, $sql);
@@ -130,6 +159,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                             $FOOD_ID = $row['FOOD_ID'];
                             $FOOD_NAME = $row['FOOD_NAME'];
                             $FOOD_IMG = $row['FOOD_IMG'];
+                            $FOOD_STOCK = $row['FOOD_STOCK'];
                             $FOOD_PRICE = $row['FOOD_PRICE'];
                     ?>
                             <a class="menu-item" href="<?php echo SITEURL; ?>product-info.php?FOOD_ID=<?php echo $FOOD_ID ?>">
@@ -138,6 +168,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                                     <p class="name"><?php echo $FOOD_NAME ?></p>
                                     <div class="inline">
                                         <h2>₱<?php echo $FOOD_PRICE ?></h2>
+                                        <p><?php echo $FOOD_STOCK ?> sticks remaining</p>
                                         <p id="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'stick-hidden' : ''; ?>">1 stick</p>
                                     </div>
                                 </div>
