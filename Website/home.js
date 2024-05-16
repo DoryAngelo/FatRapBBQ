@@ -42,11 +42,11 @@ const updateCalendar = () => {
     for (let i = 1; i <= totalDays; i++) {
         const date = new Date(currentYear, currentMonth, i);
         if (date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth() && date.getDate() === today.getDate()) {
-            datesHTML += `<div id="${getMonthName(currentDate.getMonth())} ${i} ${currentDate.getFullYear()}" class="date active ">${i}</div>`;
+            datesHTML += `<div id="${getMonthName(currentDate.getMonth())} ${i} ${currentDate.getFullYear()}" class="date active available">${i}</div>`;
         } else if (date <= today || date > resultDate || (date < today && today.getHours() > -1)) {
             datesHTML += `<div class="date inactive ${currentDate.getMonth()} ${i}">${i}</div>`;
         } else {
-            datesHTML += `<div id="${getMonthName(currentDate.getMonth())} ${i} ${currentDate.getFullYear()}" class="date active ">${i}</div>`;
+            datesHTML += `<div id="${getMonthName(currentDate.getMonth())} ${i} ${currentDate.getFullYear()}" class="date active available">${i}</div>`;
         }
     }
 
@@ -84,12 +84,13 @@ const updateCalendar = () => {
         if (month[0] == getMonthName(currentDate.getMonth())) {
             settingDate = document.getElementById(databasedate.CALENDAR_DATE);
             console.log(settingDate)
-            if (databasedate.DATE_STATUS == "available") {
-                settingDate.classList.add("available");
-                settingDate.classList.remove("fullybooked");
-                settingDate.classList.remove("closed");
-            }
-            else if (databasedate.DATE_STATUS == "fullybooked") {
+            // if (databasedate.DATE_STATUS == "available") {
+            //     settingDate.classList.add("available");
+            //     settingDate.classList.remove("fullybooked");
+            //     settingDate.classList.remove("closed");
+            // }
+            // else 
+            if (databasedate.DATE_STATUS == "fullybooked") {
                 settingDate.classList.remove("available");
                 settingDate.classList.add("fullybooked");
                 settingDate.classList.remove("closed");

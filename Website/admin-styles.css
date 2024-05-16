@@ -130,9 +130,9 @@ main {
     min-width: 5rem;
 }
 
-#orders-page .main-section {
-    /* overflow-x: scroll; */
-}
+/* #orders-page .main-section {
+    /* overflow-x: scroll; 
+} */
 
 .column {
     display: flex;
