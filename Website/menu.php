@@ -192,15 +192,20 @@ $SELECTED_DATE =  $_SESSION['DATE_SELECTED'] . " " .  $_SESSION['TIME_SELECTED']
                                 $avail = min($remaining_stock, $HOURLY_CAP);
                             }
                     ?>
-                            <a class="menu-item" href="<?php echo SITEURL; ?>product-info.php?FOOD_ID=<?php echo $FOOD_ID ?>">
+                            <a class="menu-item position disable-click" href="<?php echo SITEURL; ?>product-info.php?FOOD_ID=<?php echo $FOOD_ID ?>"><!--insert "disable-click" to class="menu-item position" if out of stock to disable clicking-->
                                 <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
                                 <div class="text">
                                     <p class="name"><?php echo $FOOD_NAME ?></p>
                                     <div class="inline">
                                         <h2>₱<?php echo $FOOD_PRICE ?></h2>
-                                        <p><?php echo $avail ?> sticks remaining</p>
+                                        <p><?php echo $avail ?> sticks remaining</p> <!--do not display this line if out of stock-->
                                         <p id="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'stick-hidden' : ''; ?>">1 stick</p>
                                     </div>
+                                </div>
+                                <!--if out of stock, show this part-->
+                                <div class="unavailable">
+                                    <p>Product limit reached at this time slot. Please choose another time slot.</p>
+                                    <button class="button">Select another date and time</button><!--add link to cus home page's calendar--> <!--this can be removed if di okay-->
                                 </div>
                             </a>
                     <?php
