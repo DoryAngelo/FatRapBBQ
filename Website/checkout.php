@@ -267,13 +267,27 @@ if (isset($_POST['submit'])) {
                                             </thead>
                                             <tbody>
                                                 <?php
+
                                                 if (isset($_SESSION['prsn_id'])) {
-                                                    $CUS_ID = $_SESSION['prsn_id'];
-                                                    $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, FOOD_STOCK, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
-                                        FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND PRSN_ID = $PRSN_ID AND PLACED_ORDER_ID IS NULL";
+                                                    $sql = "SELECT io.IN_ORDER_ID, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, f.FOOD_STOCK, SUM(m.menu_stock) AS total_menu_stock, io.PRSN_ID, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
+        FROM in_order io
+        LEFT JOIN placed_order po ON io.placed_order_id = po.placed_order_id
+        JOIN food f ON io.FOOD_ID = f.FOOD_ID
+        LEFT JOIN menu m ON f.FOOD_ID = m.food_id
+        WHERE io.IN_ORDER_STATUS != 'Delivered' 
+        AND io.PRSN_ID = '$PRSN_ID'
+        AND po.placed_order_id IS NULL
+        GROUP BY f.FOOD_ID";
                                                 } else {
-                                                    $sql = "SELECT IN_ORDER_ID, FOOD_NAME, FOOD_IMG, FOOD_PRICE, FOOD_STOCK, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL 
-                                        FROM food, in_order WHERE food.FOOD_ID = in_order.FOOD_ID AND IN_ORDER_STATUS != 'Delivered' AND GUEST_ORDER_IDENTIFIER = '$GUEST_ID' AND PLACED_ORDER_ID IS NULL";
+                                                    $sql = "SELECT io.IN_ORDER_ID, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, f.FOOD_STOCK, SUM(m.menu_stock) AS total_menu_stock, io.PRSN_ID, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
+        FROM in_order io
+        LEFT JOIN placed_order po ON io.placed_order_id = po.placed_order_id
+        JOIN food f ON io.FOOD_ID = f.FOOD_ID
+        LEFT JOIN menu m ON f.FOOD_ID = m.food_id
+        WHERE io.IN_ORDER_STATUS != 'Delivered' 
+        AND io.GUEST_ORDER_IDENTIFIER = '$GUEST_ID'
+        AND po.placed_order_id IS NULL
+        GROUP BY f.FOOD_ID";
                                                 }
                                                 $res = mysqli_query($conn, $sql);
                                                 $count = mysqli_num_rows($res);

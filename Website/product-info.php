@@ -54,7 +54,7 @@ if (isset($_SESSION['prsn_id'])) {
         WHERE f.FOOD_ID = '$FOOD_ID'
         AND io.GUEST_ORDER_IDENTIFIER = '$GUEST_ID'";
 }
-$IN_ORDER_QUANTITY = 1;
+$IN_ORDER_QUANTITY = 0;
 
 $res9 = mysqli_query($conn, $sql9);
 $count9 = mysqli_num_rows($res9);
@@ -91,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         }
     } else {
         $quantity = isset($_POST['quantity']) ? $_POST['quantity'] : 1;
-        $IN_ORDER_TOTAL = (double)$quantity * (double)$FOOD_PRICE;
+        $IN_ORDER_TOTAL = (float)$quantity * (float)$FOOD_PRICE;
         if (isset($_SESSION['prsn_id'])) {
             $sql2 = "INSERT INTO in_order (FOOD_ID, MENU_ID, PRSN_ID, IN_ORDER_QUANTITY, IN_ORDER_TOTAL, IN_ORDER_STATUS)
             VALUES ('$FOOD_ID', '$MENU_ID','$PRSN_ID', '$quantity', '$IN_ORDER_TOTAL', 'Ordered')";
@@ -260,6 +260,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             const stock = parseInt(plus.dataset.stock);
             const quantityData = <?php echo isset($IN_ORDER_QUANTITY) ? $IN_ORDER_QUANTITY : 0; ?>;
 
+
             updateButtonState(); // Call the function initially to set the button state
 
             plus.addEventListener("click", () => {
@@ -289,10 +290,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
             }
 
             function updateButtonState() {
-                addButton.disabled = (stock <= 0 || parseInt(num.innerText) + quantityData > stock);
+                if (stock === 1) {
+                    console.log("Stock is 1. Quantity Data:", quantityData);
+                    addButton.disabled = (quantityData >= 1);
+                } else {
+                    addButton.disabled = (stock <= 0 || parseInt(num.innerText) + quantityData > stock);
+                }
             }
         });
     </script>
+
 </body>
 
 </html>
