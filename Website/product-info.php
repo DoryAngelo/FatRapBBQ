@@ -195,6 +195,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                         <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> sticks available</p>
                                     <?php } ?>
                                 </div>
+<<<<<<< HEAD
+=======
                                 <!-- <div class="date-grp">
                                     <p>Date</p>
                                     <input type="date">
@@ -253,6 +255,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                         <button class="tile">5:00PM</button>
                                     </div>
                                 </div> -->
+>>>>>>> 155564f5b0c0a8f4f1ca5fbb8daf28dc0630f219
                                 <input type="hidden" id="quantity" name="quantity" value="1">
                                 <input type="hidden" name="price" value="<?php echo $FOOD_PRICE ?>">
                                 <button name="order" type="submit" <?php echo ($FOOD_STOCK <= 0 || (isset($_POST['quantity']) && ($IN_ORDER_QUANTITY + intval($_POST['quantity']) > $FOOD_STOCK))) ? 'disabled' : ''; ?>>Add to Cart</button>
