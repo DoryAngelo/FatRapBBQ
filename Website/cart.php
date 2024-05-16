@@ -107,26 +107,25 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                                     <tbody>
                                         <?php
                                         if (isset($_SESSION['prsn_id'])) {
-                                            $sql = "SELECT io.IN_ORDER_ID, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, f.FOOD_STOCK, SUM(m.menu_stock) AS total_menu_stock, io.PRSN_ID, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
+                                            $sql = "SELECT io.IN_ORDER_ID, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, f.FOOD_STOCK, io.PRSN_ID, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
             FROM in_order io
             LEFT JOIN placed_order po ON io.placed_order_id = po.placed_order_id
             JOIN food f ON io.FOOD_ID = f.FOOD_ID
-            LEFT JOIN menu m ON f.FOOD_ID = m.food_id
             WHERE io.IN_ORDER_STATUS != 'Delivered' 
             AND io.PRSN_ID = '$PRSN_ID'
             AND po.placed_order_id IS NULL
             GROUP BY f.FOOD_ID";
                                         } else {
-                                            $sql = "SELECT io.IN_ORDER_ID, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, f.FOOD_STOCK, SUM(m.menu_stock) AS total_menu_stock, io.PRSN_ID, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
+                                            $sql = "SELECT io.IN_ORDER_ID, f.FOOD_NAME, f.FOOD_IMG, f.FOOD_PRICE, f.FOOD_STOCK, io.PRSN_ID, io.IN_ORDER_QUANTITY, io.IN_ORDER_TOTAL 
             FROM in_order io
             LEFT JOIN placed_order po ON io.placed_order_id = po.placed_order_id
             JOIN food f ON io.FOOD_ID = f.FOOD_ID
-            LEFT JOIN menu m ON f.FOOD_ID = m.food_id
             WHERE io.IN_ORDER_STATUS != 'Delivered' 
             AND io.GUEST_ORDER_IDENTIFIER = '$GUEST_ID'
             AND po.placed_order_id IS NULL
             GROUP BY f.FOOD_ID";
                                         }
+
 
                                         $res = mysqli_query($conn, $sql);
                                         $count = mysqli_num_rows($res);
@@ -139,12 +138,12 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                                                 $FOOD_NAME = $row['FOOD_NAME'];
                                                 $FOOD_PRICE = $row['FOOD_PRICE'];
                                                 $FOOD_IMG = $row['FOOD_IMG'];
-                                                $MENU_STOCK = $row['total_menu_stock'];
+                                                $FOOD_STOCK = $row['FOOD_STOCK'];
                                                 $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
                                                 $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
-                                                $stockValues[$FOOD_NAME] = $MENU_STOCK;
+                                                $stockValues[$FOOD_NAME] = $FOOD_STOCK;
 
-                                                if ($IN_ORDER_QUANTITY > $MENU_STOCK) {
+                                                if ($IN_ORDER_QUANTITY > $FOOD_STOCK) {
                                                     $quantityExceedsStock = true;
                                                     $flagValues[$FOOD_NAME] = $quantityExceedsStock;
                                                 } else {
@@ -161,9 +160,9 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                                                     <td class="narrow-col quantity-col">
                                                         <div class="with-remaining">
                                                             <div class="quantity-grp">
-                                                                <input type="number" class="quantity-input" data-in-order-id="<?php echo $IN_ORDER_ID; ?>" data-stock="<?php echo $MENU_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>" data-food-name="<?php echo $FOOD_NAME; ?>" value="<?php echo $IN_ORDER_QUANTITY; ?>" min="1" max="<?php echo $MENU_STOCK; ?>">
+                                                                <input type="number" class="quantity-input" data-in-order-id="<?php echo $IN_ORDER_ID; ?>" data-stock="<?php echo $FOOD_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>" data-food-name="<?php echo $FOOD_NAME; ?>" value="<?php echo $IN_ORDER_QUANTITY; ?>" min="1" max="<?php echo $FOOD_STOCK; ?>">
                                                             </div>
-                                                            <p class="remaining"><?php echo ($MENU_STOCK < 0) ? 0 : $MENU_STOCK; ?> sticks remaining</p>
+                                                            <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> sticks remaining</p>
                                                         </div>
                                                     </td>
                                                     <td class="narrow-col price-col">
@@ -275,72 +274,74 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
     </footer>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-    const quantityInputs = document.querySelectorAll(".quantity-input");
+            const quantityInputs = document.querySelectorAll(".quantity-input");
 
-    quantityInputs.forEach((input) => {
-        input.addEventListener("change", () => {
-            const stock = parseInt(input.dataset.stock);
-            const newQuantity = parseInt(input.value);
-            const foodName = input.dataset.foodName;
-            const foodPrice = parseFloat(input.dataset.price);
+            quantityInputs.forEach((input) => {
+                input.addEventListener("change", () => {
+                    const stock = parseInt(input.dataset.stock);
+                    const newQuantity = parseInt(input.value);
+                    const foodName = input.dataset.foodName;
+                    const foodPrice = parseFloat(input.dataset.price);
 
-            if (newQuantity < 1 || newQuantity > stock) {
-                alert(`Quantity for ${foodName} must be between 1 and ${stock}.`);
-                input.value = Math.min(Math.max(newQuantity, 1), stock); // Reset to valid range
-                input.classList.add('invalid-quantity'); // Mark as invalid
-            } else {
-                input.classList.remove('invalid-quantity'); // Mark as valid
-                const IN_ORDER_ID = input.dataset.inOrderId;
-                updateQuantity(IN_ORDER_ID, newQuantity, foodPrice);
-                updateItemTotal(input, newQuantity, foodPrice);
-                updateCartTotal();
+                    if (newQuantity < 1 || newQuantity > stock) {
+                        alert(`Quantity for ${foodName} must be between 1 and ${stock}.`);
+                        input.value = Math.min(Math.max(newQuantity, 1), stock); // Reset to valid range
+                        input.classList.add('invalid-quantity'); // Mark as invalid
+                    } else {
+                        input.classList.remove('invalid-quantity'); // Mark as valid
+                        const IN_ORDER_ID = input.dataset.inOrderId;
+                        updateQuantity(IN_ORDER_ID, newQuantity, foodPrice);
+                        updateItemTotal(input, newQuantity, foodPrice);
+                        updateCartTotal();
+                    }
+                });
+            });
+
+            function updateQuantity(IN_ORDER_ID, newQuantity, foodPrice) {
+                const formData = new FormData();
+                formData.append("IN_ORDER_ID", IN_ORDER_ID);
+                formData.append("IN_ORDER_QUANTITY", newQuantity);
+                formData.append("FOOD_PRICE", foodPrice);
+
+                fetch("update_quantity.php", {
+                        method: "POST",
+                        body: formData
+                    })
+                    .then(response => response.text())
+                    .then(data => {
+                        console.log('Quantity updated:', data);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
             }
+
+            function updateItemTotal(input, newQuantity, foodPrice) {
+                const itemTotalElement = input.closest('tr').querySelector('.price-col p');
+                const newTotal = newQuantity * foodPrice;
+                itemTotalElement.textContent = `₱${newTotal.toFixed(2)}`;
+            }
+
+            function updateCartTotal() {
+                let cartTotal = 0;
+                document.querySelectorAll('.quantity-input').forEach(input => {
+                    const newQuantity = parseInt(input.value);
+                    const foodPrice = parseFloat(input.dataset.price);
+                    cartTotal += newQuantity * foodPrice;
+                });
+                document.querySelector('.payment .text h3:last-child').textContent = `₱${cartTotal.toFixed(2)}`;
+            }
+
+            document.querySelector('form').addEventListener('submit', function(event) {
+                const invalidInputs = document.querySelectorAll('.invalid-quantity');
+                if (invalidInputs.length > 0) {
+                    alert('Please correct the invalid quantities before submitting the form.');
+                    event.preventDefault(); // Prevent form submission
+                }
+            });
         });
-    });
-
-    function updateQuantity(IN_ORDER_ID, newQuantity, foodPrice) {
-        const formData = new FormData();
-        formData.append("IN_ORDER_ID", IN_ORDER_ID);
-        formData.append("IN_ORDER_QUANTITY", newQuantity);
-        formData.append("FOOD_PRICE", foodPrice);
-
-        fetch("update_quantity.php", {
-            method: "POST",
-            body: formData
-        })
-        .then(response => response.text())
-        .then(data => {
-            console.log('Quantity updated:', data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-
-    function updateItemTotal(input, newQuantity, foodPrice) {
-        const itemTotalElement = input.closest('tr').querySelector('.price-col p');
-        const newTotal = newQuantity * foodPrice;
-        itemTotalElement.textContent = `₱${newTotal.toFixed(2)}`;
-    }
-
-    function updateCartTotal() {
-        let cartTotal = 0;
-        document.querySelectorAll('.quantity-input').forEach(input => {
-            const newQuantity = parseInt(input.value);
-            const foodPrice = parseFloat(input.dataset.price);
-            cartTotal += newQuantity * foodPrice;
-        });
-        document.querySelector('.payment .text h3:last-child').textContent = `₱${cartTotal.toFixed(2)}`;
-    }
-
-    document.querySelector('form').addEventListener('submit', function(event) {
-        const invalidInputs = document.querySelectorAll('.invalid-quantity');
-        if (invalidInputs.length > 0) {
-            event.preventDefault(); // Prevent form submission
-        }
-    });
-});
     </script>
+
 </body>
 
 </html>
