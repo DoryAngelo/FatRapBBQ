@@ -161,14 +161,11 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                                                     <td class="narrow-col quantity-col">
                                                         <div class="with-remaining">
                                                             <div class="quantity-grp">
-                                                                <i class='bx bxs-minus-circle js-minus' data-in-order-id="<?php echo $IN_ORDER_ID; ?>" data-stock="<?php echo $MENU_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
-                                                                <p class="amount js-num"><?php echo $IN_ORDER_QUANTITY ?></p>
-                                                                <i class='bx bxs-plus-circle js-plus' data-in-order-id="<?php echo $IN_ORDER_ID; ?>" data-stock="<?php echo $MENU_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>"></i>
+                                                                <input type="number" class="quantity-input" data-in-order-id="<?php echo $IN_ORDER_ID; ?>" data-stock="<?php echo $MENU_STOCK; ?>" data-price="<?php echo $FOOD_PRICE; ?>" data-food-name="<?php echo $FOOD_NAME; ?>" value="<?php echo $IN_ORDER_QUANTITY; ?>" min="1" max="<?php echo $MENU_STOCK; ?>">
                                                             </div>
-                                                            <p class="remaining"><?php echo ($MENU_STOCK < 0) ? 0 : $MENU_STOCK; ?>
-                                                                sticks remaining</p>
+                                                            <p class="remaining"><?php echo ($MENU_STOCK < 0) ? 0 : $MENU_STOCK; ?> sticks remaining</p>
                                                         </div>
-                                                    </td> <!--Quantity-->
+                                                    </td>
                                                     <td class="narrow-col price-col">
                                                         <p>₱<?php echo $IN_ORDER_TOTAL ?></p>
                                                     </td><!--Price-->
@@ -278,58 +275,71 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
     </footer>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const plusButtons = document.querySelectorAll(".js-plus");
-            const minusButtons = document.querySelectorAll(".js-minus");
-            const quantityDisplays = document.querySelectorAll(".js-num");
+    const quantityInputs = document.querySelectorAll(".quantity-input");
 
-            plusButtons.forEach((button, index) => {
-                button.addEventListener("click", () => {
-                    const stock = parseInt(button.dataset.stock);
-                    const IN_ORDER_ID = button.dataset.inOrderId;
-                    const currentQuantity = parseInt(quantityDisplays[index].innerText);
-                    const newQuantity = currentQuantity + 1;
-                    const foodPrice = parseFloat(button.dataset.price);
+    quantityInputs.forEach((input) => {
+        input.addEventListener("change", () => {
+            const stock = parseInt(input.dataset.stock);
+            const newQuantity = parseInt(input.value);
+            const foodName = input.dataset.foodName;
+            const foodPrice = parseFloat(input.dataset.price);
 
-                    if (newQuantity <= stock) {
-                        updateQuantity(IN_ORDER_ID, newQuantity, foodPrice, index);
-                    } else {
-                        alert("Cannot exceed food stock!");
-                    }
-                });
-            });
-
-            minusButtons.forEach((button, index) => {
-                button.addEventListener("click", () => {
-                    const IN_ORDER_ID = button.dataset.inOrderId;
-                    const currentQuantity = parseInt(quantityDisplays[index].innerText);
-                    const newQuantity = currentQuantity - 1;
-                    const foodPrice = parseFloat(button.dataset.price);
-
-                    if (newQuantity >= 1) {
-                        updateQuantity(IN_ORDER_ID, newQuantity, foodPrice, index);
-                    }
-                });
-            });
-
-            function updateQuantity(IN_ORDER_ID, newQuantity, foodPrice, displayIndex) {
-                const formData = new FormData();
-                formData.append("IN_ORDER_ID", IN_ORDER_ID);
-                formData.append("IN_ORDER_QUANTITY", newQuantity);
-                formData.append("FOOD_PRICE", foodPrice);
-
-                fetch("update_quantity.php", {
-                        method: "POST",
-                        body: formData
-                    })
-                    .then(response => response.text())
-                    .then(data => {
-                        quantityDisplays[displayIndex].innerText = newQuantity;
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
+            if (newQuantity < 1 || newQuantity > stock) {
+                alert(`Quantity for ${foodName} must be between 1 and ${stock}.`);
+                input.value = Math.min(Math.max(newQuantity, 1), stock); // Reset to valid range
+                input.classList.add('invalid-quantity'); // Mark as invalid
+            } else {
+                input.classList.remove('invalid-quantity'); // Mark as valid
+                const IN_ORDER_ID = input.dataset.inOrderId;
+                updateQuantity(IN_ORDER_ID, newQuantity, foodPrice);
+                updateItemTotal(input, newQuantity, foodPrice);
+                updateCartTotal();
             }
         });
+    });
+
+    function updateQuantity(IN_ORDER_ID, newQuantity, foodPrice) {
+        const formData = new FormData();
+        formData.append("IN_ORDER_ID", IN_ORDER_ID);
+        formData.append("IN_ORDER_QUANTITY", newQuantity);
+        formData.append("FOOD_PRICE", foodPrice);
+
+        fetch("update_quantity.php", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log('Quantity updated:', data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    function updateItemTotal(input, newQuantity, foodPrice) {
+        const itemTotalElement = input.closest('tr').querySelector('.price-col p');
+        const newTotal = newQuantity * foodPrice;
+        itemTotalElement.textContent = `₱${newTotal.toFixed(2)}`;
+    }
+
+    function updateCartTotal() {
+        let cartTotal = 0;
+        document.querySelectorAll('.quantity-input').forEach(input => {
+            const newQuantity = parseInt(input.value);
+            const foodPrice = parseFloat(input.dataset.price);
+            cartTotal += newQuantity * foodPrice;
+        });
+        document.querySelector('.payment .text h3:last-child').textContent = `₱${cartTotal.toFixed(2)}`;
+    }
+
+    document.querySelector('form').addEventListener('submit', function(event) {
+        const invalidInputs = document.querySelectorAll('.invalid-quantity');
+        if (invalidInputs.length > 0) {
+            event.preventDefault(); // Prevent form submission
+        }
+    });
+});
     </script>
 </body>
 
