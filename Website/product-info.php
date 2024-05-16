@@ -195,7 +195,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                         <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> sticks available</p>
                                     <?php } ?>
                                 </div>
-                                <div class="date-grp">
+                                <!-- <div class="date-grp">
                                     <p>Date</p>
                                     <input type="date">
                                 </div>
@@ -234,13 +234,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                                 }
                                         ?>
 
-                                        <!-- Wrap each tile in an button tag -->
-                                        <!-- <a href="<?php echo $tileLink; ?>" class="tile <?php echo ($tileAvailable) ? 'available' : 'unavailable'; ?>">
+                                        Wrap each tile in an button tag
+                                        <a href="<?php echo $tileLink; ?>" class="tile <?php echo ($tileAvailable) ? 'available' : 'unavailable'; ?>">
                                             <p><?php echo $displayHour; ?>:00 <?php echo $period; ?></p>
                                             <?php if ($tileAvailable) : ?>
                                                 <p><?php echo min($FOOD_STOCK, $HOURLY_CAP); ?> available</p>
                                             <?php endif; ?>
-                                        </a> -->
+                                        </a>
                                         <?php } ?>
                                         
                                         <button class="tile">10:00AM</button>
@@ -252,7 +252,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                         <button class="tile">4:00PM</button>
                                         <button class="tile">5:00PM</button>
                                     </div>
-                                </div>
+                                </div> -->
                                 <input type="hidden" id="quantity" name="quantity" value="1">
                                 <input type="hidden" name="price" value="<?php echo $FOOD_PRICE ?>">
                                 <button name="order" type="submit" <?php echo ($FOOD_STOCK <= 0 || (isset($_POST['quantity']) && ($IN_ORDER_QUANTITY + intval($_POST['quantity']) > $FOOD_STOCK))) ? 'disabled' : ''; ?>>Add to Cart</button>
