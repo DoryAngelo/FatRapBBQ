@@ -31,6 +31,7 @@ if (isset($_GET['datetime'])) {
 }
 
 $selectedDateTime = isset($_SESSION['selectedDateTime']) ? $_SESSION['selectedDateTime'] : '';
+$selectedDate = $selectedDateTime ? date('Y-m-d', strtotime($selectedDateTime)) : '';
 $selectedTime = $selectedDateTime ? date('H:i', strtotime($selectedDateTime)) : '';
 
 ?>
@@ -107,7 +108,7 @@ $selectedTime = $selectedDateTime ? date('H:i', strtotime($selectedDateTime)) : 
             <div class="container">
                 <div class="section-heading">
                     <h2>Menu</h2>
-                    <h2><?php echo $_SESSION['selectedDateTime'] ?></h2>
+                    <!-- <h2><?php echo $_SESSION['selectedDateTime'] ?></h2>
                     <h3>When do you want your order to be delivered?</h3>
                     <?php
                     $sql = "SELECT CALENDAR_DATE, DATE_STATUS FROM calendar";
@@ -131,7 +132,7 @@ $selectedTime = $selectedDateTime ? date('H:i', strtotime($selectedDateTime)) : 
                     $oneMonthFromNow = date("Y-m-d", strtotime("+1 month"));
                     ?>
                     <label for="delivery-date">Delivery Date:</label>
-                    <input min="<?php echo $today ?>" max="<?php echo $oneMonthFromNow ?>" oninput="validateDate(this)" type="date" id="delivery-date" name="delivery-date" value="<?php echo $selectedDateTime ? date('Y-m-d', strtotime($selectedDateTime)) : ''; ?>">
+                    <input min="<?php echo $today ?>" max="<?php echo $oneMonthFromNow ?>" oninput="validateDate(this)" type="date" id="delivery-date" name="delivery-date" value="<?php echo $selectedDate; ?>">
                     <div class="error-date error-text" style="display: none;">Date not available.</div>
 
                     <label for="delivery-time">Delivery Time:</label>
@@ -191,13 +192,14 @@ $selectedTime = $selectedDateTime ? date('H:i', strtotime($selectedDateTime)) : 
                                 return;
                             }
 
-                            // Check if selected time is within 30 minutes of current time
+                            // Check if selected time is within 1 hour of current time
                             var timeDiff = new Date("1970-01-01 " + selectedTime) - new Date("1970-01-01 " + currentTime);
                             var minutesDiff = Math.abs(timeDiff / 60000);
-                            if (minutesDiff < 30) {
+                            if (minutesDiff < 60) {
                                 timeError.style.display = 'block';
                                 return;
                             }
+
 
                             // Check if selected time is past the current day
                             if (selectedDate < currentDate && selectedTime < currentTime) {
@@ -258,8 +260,7 @@ $selectedTime = $selectedDateTime ? date('H:i', strtotime($selectedDateTime)) : 
                             validateTime(this);
                             redirectToFilteredOrders(event);
                         });
-                        
-                    </script>
+                    </script> -->
                 </div>
                 <section class="section-body">
                     <?php
