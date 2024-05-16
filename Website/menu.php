@@ -11,6 +11,17 @@
 //     $selectedTime = $_SESSION['TIME_SELECTED'];
 // }
 
+if (isset($_GET['DATE_SELECTED'])) {
+
+    $_SESSION['DATE_SELECTED'] = $_GET['DATE_SELECTED'];
+}
+
+if (isset($_GET['TIME_SELECTED'])) {
+
+    $_SESSION['TIME_SELECTED'] = $_GET['TIME_SELECTED'];
+}
+
+
 if (isset($_SESSION['prsn_id'])) {
     $PRSN_ID = $_SESSION['prsn_id'];
 } else if (isset($_SESSION['guest_id'])) {
@@ -116,6 +127,16 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
             <div class="container">
                 <div class="section-heading">
                     <h2>Menu</h2>
+                    <?php if (isset($_SESSION['DATE_SELECTED'])) : ?>
+                        <p>Selected Date: <?php echo $_SESSION['DATE_SELECTED']; ?></p>
+                    <?php else : ?>
+                        <p>No date selected.</p>
+                    <?php endif; ?>
+                    <?php if (isset($_SESSION['TIME_SELECTED'])) : ?>
+                        <p>Selected Time: <?php echo $_SESSION['TIME_SELECTED']; ?></p>
+                    <?php else : ?>
+                        <p>No time selected.</p>
+                    <?php endif; ?>
                 </div>
                 <section class="section-body">
                     <?php
