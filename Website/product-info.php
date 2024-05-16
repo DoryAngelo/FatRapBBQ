@@ -26,13 +26,12 @@ $FOOD_ID = $_GET['FOOD_ID'];
 //         AND m.MENU_STOCK != 0
 //         GROUP BY f.FOOD_ID";
 
-$sql = "SELECT * FROM food";
+$sql = "SELECT * FROM food WHERE FOOD_ID = '$FOOD_ID'";
 
 $res = mysqli_query($conn, $sql);
 $count = mysqli_num_rows($res);
 if ($count > 0) {
     while ($row = mysqli_fetch_assoc($res)) {
-
         $FOOD_NAME = $row['FOOD_NAME'];
         $FOOD_DESC = $row['FOOD_DESC'];
         $FOOD_IMG = $row['FOOD_IMG'];

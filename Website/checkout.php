@@ -81,9 +81,7 @@ if (isset($_POST['submit'])) {
         $DELIVERY_ADDRESS = $Region . ", " . $Province . ", " . $City . ", " . $Barangay . ", " . $Street;
 
 
-        $date = $_POST['date'];
-        $time = $_POST['time'];
-        $DELIVERY_DATE = $date . " " . date("h:i A", strtotime($time));
+        $DELIVERY_DATE = $_SESSION['selectedDateTime'];
         $PLACED_ORDER_STATUS = "Placed";
         $random = random_bytes(8);
         $PLACED_ORDER_TRACKER = bin2hex($random);
@@ -403,7 +401,7 @@ if (isset($_POST['submit'])) {
 
 
                         </section>
-                        <!-- delivery info block-->
+                        <!-- delivery info block
                         <section class="red-theme" id="delivery-block">
                             <div class="left-side">
                                 <h3 class="block-heading">When do you want your order to be delivered?</h3>
@@ -430,21 +428,21 @@ if (isset($_POST['submit'])) {
                                     $today = date("Y-m-d");
                                     $oneMonthFromNow = date("Y-m-d", strtotime("+1 month"));
                                     ?>
-                                    <input class="date" type="date" name="date" min="<?php echo $today ?>" max="<?php echo $oneMonthFromNow ?>" oninput="validateDateTime(this)" required>
+                                    <input class="date" type="date" name="date" min="<?php echo $today ?>" max="<?php echo $oneMonthFromNow ?>" oninput="validateDate(this)" required>
                                     <div class="error-date error-text" style="display: none;">Date not available.</div>
                                 </div>
                             </div>
                             <div class="block time-slot">
                                 <h3 class="block-heading">Time Slot</h3>
                                 <div class="block-body">
-                                    <input type="time" name="time" min="09:00:00" max="17:00:00" required>
+                                    <input type="time" name="time" min="09:00:00" max="17:00:00"  oninput="validateTime(this)" required>
                                     <div class="error-time error-text" style="display: none;">Time not available.</div>
                                 </div>
                             </div>
                         </section>
 
                         <script>
-                            function validateDateTime(input) {
+                            function validateDate(input) {
                                 var selectedDate = new Date(input.value);
                                 var currentDate = new Date();
                                 currentDate.setHours(0, 0, 0, 0);
@@ -475,13 +473,13 @@ if (isset($_POST['submit'])) {
                             const timeInput = document.getElementsByName('time')[0];
 
                             dateInput.addEventListener('input', function() {
-                                validateDateTime(this);
+                                validateDate(this);
                             });
 
                             timeInput.addEventListener('input', function() {
-                                validateDateTime(this);
+                                validateTime(this);
                             });
-                        </script>
+                        </script> -->
 
 
                         <!-- customer note block-->
