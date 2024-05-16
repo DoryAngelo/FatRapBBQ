@@ -206,7 +206,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                     <h1>See our available dates</h1>
                     <p>Select the date you want your order to be delivered and choose a time slot</p>
                     <div class="legend">
-                        <button class="button available-tag">Available</button> 
+                        <button class="button available-tag">Available</button>
                         <button class="button fully-booked-tag">Fully Booked</button>
                         <button class="button closed-tag">Closed</button>
                     </div>
@@ -319,12 +319,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
 
         <!-- section 3 -->
         <!-- <?php
-        // Check if the person role is not a wholesaler
-        if ($PRSN_ROLE !== 'Wholesaler') {
-            // Check if there are items with 'Barbeque' as the food name
-            if ($count8 > 0) {
-                // Fetch information for the product 'Barbeque'
-                $sql = "SELECT f.*, io.in_order_quantity, m.menu_stock,  m.menu_id
+                // Check if the person role is not a wholesaler
+                if ($PRSN_ROLE !== 'Wholesaler') {
+                    // Check if there are items with 'Barbeque' as the food name
+                    if ($count8 > 0) {
+                        // Fetch information for the product 'Barbeque'
+                        $sql = "SELECT f.*, io.in_order_quantity, m.menu_stock,  m.menu_id
                 FROM food f 
                 LEFT JOIN in_order io ON f.FOOD_ID = io.food_id AND io.placed_order_id IS NULL
                 LEFT JOIN menu m ON f.FOOD_ID = m.food_id
@@ -332,17 +332,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                 AND NOW() BETWEEN STR_TO_DATE(m.menu_start, '%M %d, %Y %h:%i:%s %p') AND STR_TO_DATE(m.menu_end, '%M %d, %Y %h:%i:%s %p')
                 GROUP BY f.FOOD_ID";
 
-                $res = mysqli_query($conn, $sql);
-                $count = mysqli_num_rows($res);
+                        $res = mysqli_query($conn, $sql);
+                        $count = mysqli_num_rows($res);
 
-                // Display section if product found and menu is within time range
-                if ($count > 0) {
-                    while ($row = mysqli_fetch_assoc($res)) {
-                        $IN_ORDER_QUANTITY = $row['in_order_quantity'];
-                        $FOOD_PRICE = $row['FOOD_PRICE']; 
-                        $MENU_ID = $row['menu_id']; 
-                        $FOOD_STOCK = $row['FOOD_STOCK']; 
-        ?>
+                        // Display section if product found and menu is within time range
+                        if ($count > 0) {
+                            while ($row = mysqli_fetch_assoc($res)) {
+                                $IN_ORDER_QUANTITY = $row['in_order_quantity'];
+                                $FOOD_PRICE = $row['FOOD_PRICE'];
+                                $MENU_ID = $row['menu_id'];
+                                $FOOD_STOCK = $row['FOOD_STOCK'];
+                ?>
                         <section class="section" id="product-section">
                             <div class="container responsive">
                                 <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="picture of a pork bbq">
@@ -364,143 +364,143 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                             <div class="quantity-group">
                                                 <i class='bx bxs-minus-circle js-minus circle' data-stock="<?php echo $TOTAL_MENU_STOCK; ?>"></i>
                                                 <p class="amount js-num">1</p>
-                                                <!-- <input type="text" class="amount js-num" value="1"> textfield--> 
-                                                <i class='bx bxs-plus-circle js-plus circle' data-stock="<?php echo $TOTAL_MENU_STOCK; ?>"></i>
-                                            </div>
-                                            <p class="remaining"><?php echo ($TOTAL_MENU_STOCK < 0) ? 0 : $TOTAL_MENU_STOCK; ?> sticks remaining</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-        <?php
-                    }
-                }
-            }
-        }
-        ?>
-
-
-        <script>
-            var quantityData = <?php echo isset($IN_ORDER_QUANTITY) ? $IN_ORDER_QUANTITY : 0; ?>;
-            document.addEventListener("DOMContentLoaded", function() {
-                const plus = document.querySelector(".js-plus");
-                const minus = document.querySelector(".js-minus");
-                const num = document.querySelector(".js-num");
-                const quantityInput = document.getElementById("quantity");
-                const addButton = document.querySelector('[name="order"]');
-                const stock = parseInt(plus.dataset.stock);
-
-                updateButtonState(); // Call the function initially to set the button state
-
-                plus.addEventListener("click", () => {
-                    updateQuantity(1);
-                });
-
-                minus.addEventListener("click", () => {
-                    updateQuantity(-1);
-                });
-
-                function updateQuantity(change) {
-                    let newQuantity = parseInt(num.innerText) + change;
-
-                    if (newQuantity < 1) {
-                        return; // Prevent negative quantity
-                    }
-
-                    if (newQuantity + quantityData > stock) {
-                        alert("Quantity selected exceeds available stock!");
-                        return; // Prevent updating the quantity if it exceeds stock
-                    }
-
-                    num.innerText = newQuantity;
-                    quantityInput.value = newQuantity;
-
-                    updateButtonState();
-                }
-
-                function updateButtonState() {
-                    addButton.disabled = (stock <= 0 || parseInt(num.innerText) + parseInt('<?php echo $IN_ORDER_QUANTITY; ?>') > stock);
-                }
-            });
-        </script> -->
-        <!-- section 4 -->
-        <section class="section" id="track-order-section">
-            <div class="container responsive">
-                <div class="text">
-                    <h1>Want to see your order status?</h1>
-                    <p>Enter your order tracking number to see the status of your order</p>
-                </div>
-                <style>
-                    .error {
-                        color: red;
-                    }
-                </style>
-                <form class="form" method="post" onsubmit="return validateForm()">
-                    <div class="top input-control">
-                        <h2>Order Number</h2>
-                        <hr>
-                        <input name="track-order" id="order-number" type="text" placeholder="0123456789">
-                        <div class="error" id="error-message">
-                            <?php
-                            if (isset($_POST['submit'])) {
-                                $PLACED_ORDER_TRACKER = mysqli_real_escape_string($conn, $_POST['track-order']);
-                                if (isset($_SESSION['prsn_id'])) {
-                                    $select = "SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER' AND PRSN_ID = '$PRSN_ID'";
-                                } else if (isset($_SESSION['guest_id'])) {
-                                    $select = "SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER' AND PRSN_ID = '0'";
-                                }
-                                $res = mysqli_query($conn, $select);
-                                $count = mysqli_num_rows($res);
-                                if ($count > 0) {
-                                    // If order is found, perform JavaScript redirection
-                                    $_SESSION['tracker'] = $_POST['track-order'];
-                                    echo '<script>window.location.href = "track-order.php";</script>';
-                                    exit(); // Ensure no further PHP execution after redirection
-                                } else {
-                                    echo 'Order number does not exist.';
-                                }
+                                                <!-- <input type="text" class="amount js-num" value="1"> textfield-->
+        <i class='bx bxs-plus-circle js-plus circle' data-stock="<?php echo $TOTAL_MENU_STOCK; ?>"></i>
+        </div>
+        <p class="remaining"><?php echo ($TOTAL_MENU_STOCK < 0) ? 0 : $TOTAL_MENU_STOCK; ?> sticks remaining</p>
+        </div>
+        </div>
+        </div>
+        </div>
+        </section>
+<?php
                             }
-                            ?>
-                        </div>
-                    </div>
-                    <button name="submit" type="submit" class="button">Track Order</button>
-                </form>
-                <script>
-                    function validateForm() {
-                        var orderNumber = document.getElementById('order-number').value.trim();
-                        var errorMessage = document.getElementById('error-message');
-
-                        // Regular expression to match the correct format
-                        var regex = /^[0-9a-fA-F]{16}$/;
-
-                        if (orderNumber === "") {
-                            errorMessage.innerText = "Please enter an order number.";
-                            return false;
-                        } else if (!regex.test(orderNumber)) {
-                            errorMessage.innerText = "Invalid order number format.";
-                            return false;
-                        } else {
-                            errorMessage.innerText = ""; // Clear error message
-                            return true;
                         }
                     }
-                </script>
-            </div>
-            </div>
-        </section>
-        <!-- section 5 -->
-        <section class="section" id="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'wholesale-section-hidden' : 'wholesale-section'; ?>">
-            <div class="container responsive">
-                <div class="text">
-                    <h1>Looking for wholesale deals?</h1>
-                    <!-- <a href=">wc-register.php" class="button">Sign up as a Wholesale Customer</a> -->
-                    <p>For wholesale inquiries, contact 09178073760 or 09190873861</p>
+                }
+?>
+
+
+<script>
+    var quantityData = <?php echo isset($IN_ORDER_QUANTITY) ? $IN_ORDER_QUANTITY : 0; ?>;
+    document.addEventListener("DOMContentLoaded", function() {
+        const plus = document.querySelector(".js-plus");
+        const minus = document.querySelector(".js-minus");
+        const num = document.querySelector(".js-num");
+        const quantityInput = document.getElementById("quantity");
+        const addButton = document.querySelector('[name="order"]');
+        const stock = parseInt(plus.dataset.stock);
+
+        updateButtonState(); // Call the function initially to set the button state
+
+        plus.addEventListener("click", () => {
+            updateQuantity(1);
+        });
+
+        minus.addEventListener("click", () => {
+            updateQuantity(-1);
+        });
+
+        function updateQuantity(change) {
+            let newQuantity = parseInt(num.innerText) + change;
+
+            if (newQuantity < 1) {
+                return; // Prevent negative quantity
+            }
+
+            if (newQuantity + quantityData > stock) {
+                alert("Quantity selected exceeds available stock!");
+                return; // Prevent updating the quantity if it exceeds stock
+            }
+
+            num.innerText = newQuantity;
+            quantityInput.value = newQuantity;
+
+            updateButtonState();
+        }
+
+        function updateButtonState() {
+            addButton.disabled = (stock <= 0 || parseInt(num.innerText) + parseInt('<?php echo $IN_ORDER_QUANTITY; ?>') > stock);
+        }
+    });
+</script> -->
+<!-- section 4 -->
+<section class="section" id="track-order-section">
+    <div class="container responsive">
+        <div class="text">
+            <h1>Want to see your order status?</h1>
+            <p>Enter your order tracking number to see the status of your order</p>
+        </div>
+        <style>
+            .error {
+                color: red;
+            }
+        </style>
+        <form class="form" method="post" onsubmit="return validateForm()">
+            <div class="top input-control">
+                <h2>Order Number</h2>
+                <hr>
+                <input name="track-order" id="order-number" type="text" placeholder="0123456789">
+                <div class="error" id="error-message">
+                    <?php
+                    if (isset($_POST['submit'])) {
+                        $PLACED_ORDER_TRACKER = mysqli_real_escape_string($conn, $_POST['track-order']);
+                        if (isset($_SESSION['prsn_id'])) {
+                            $select = "SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER' AND PRSN_ID = '$PRSN_ID'";
+                        } else if (isset($_SESSION['guest_id'])) {
+                            $select = "SELECT * FROM `placed_order` WHERE PLACED_ORDER_TRACKER = '$PLACED_ORDER_TRACKER' AND PRSN_ID = '0'";
+                        }
+                        $res = mysqli_query($conn, $select);
+                        $count = mysqli_num_rows($res);
+                        if ($count > 0) {
+                            // If order is found, perform JavaScript redirection with tracker in URL
+                            echo '<script>window.location.href = "track-order.php?tracker=' . urlencode($PLACED_ORDER_TRACKER) . '";</script>';
+                            exit(); // Ensure no further PHP execution after redirection
+                        } else {
+                            echo 'Order number does not exist.';
+                        }
+                    }
+                    ?>
+
                 </div>
             </div>
-        </section>
-        <!-- floating button -->
-        <a href="<?php echo SITEURL; ?>cart.php" class="material-icons floating-btn" style="font-size: 45px;">shopping_cart</a>
+            <button name="submit" type="submit" class="button">Track Order</button>
+        </form>
+        <script>
+            function validateForm() {
+                var orderNumber = document.getElementById('order-number').value.trim();
+                var errorMessage = document.getElementById('error-message');
+
+                // Regular expression to match the correct format
+                var regex = /^[0-9a-fA-F]{16}$/;
+
+                if (orderNumber === "") {
+                    errorMessage.innerText = "Please enter an order number.";
+                    return false;
+                } else if (!regex.test(orderNumber)) {
+                    errorMessage.innerText = "Invalid order number format.";
+                    return false;
+                } else {
+                    errorMessage.innerText = ""; // Clear error message
+                    return true;
+                }
+            }
+        </script>
+    </div>
+    </div>
+</section>
+<!-- section 5 -->
+<section class="section" id="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'wholesale-section-hidden' : 'wholesale-section'; ?>">
+    <div class="container responsive">
+        <div class="text">
+            <h1>Looking for wholesale deals?</h1>
+            <!-- <a href=">wc-register.php" class="button">Sign up as a Wholesale Customer</a> -->
+            <p>For wholesale inquiries, contact 09178073760 or 09190873861</p>
+        </div>
+    </div>
+</section>
+<!-- floating button -->
+<a href="<?php echo SITEURL; ?>cart.php" class="material-icons floating-btn" style="font-size: 45px;">shopping_cart</a>
     </main>
     <footer>
         <div class="footer-container">
