@@ -130,9 +130,9 @@ main {
     min-width: 5rem;
 }
 
-#orders-page .main-section {
-    /* overflow-x: scroll; */
-}
+/* #orders-page .main-section {
+    /* overflow-x: scroll; 
+} */
 
 .column {
     display: flex;
@@ -828,11 +828,11 @@ a.back {
     background-color: var(--light-blue);
 }
 
-/* .date:hover,
+ .date:hover,
 .date.active {
     background: var(--db-highlight-blue);
     color: white;
-} */
+} 
 
 
 .available{

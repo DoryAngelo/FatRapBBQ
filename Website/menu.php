@@ -26,8 +26,14 @@ if (isset($_SESSION['prsn_id'])) {
 
 $PRSN_ROLE = $_SESSION['prsn_role'];
 
-$selectedDateTime = isset($_GET['datetime']) ? $_GET['datetime'] : '';
-$_SESSION['selectedDateTime'] = $selectedDateTime;
+// if (isset($_GET['datetime'])) {
+//     $_SESSION['selectedDateTime'] = $_GET['datetime'];
+// }
+
+// $selectedDateTime = isset($_SESSION['selectedDateTime']) ? $_SESSION['selectedDateTime'] : '';
+// $selectedDate = $selectedDateTime ? date('Y-m-d', strtotime($selectedDateTime)) : '';
+// $selectedTime = $selectedDateTime ? date('H:i', strtotime($selectedDateTime)) : '';
+
 ?>
 
 <!DOCTYPE html>
@@ -44,9 +50,11 @@ $_SESSION['selectedDateTime'] = $selectedDateTime;
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="app.js" defer></script>
     <!-- add the code below to load the icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body class="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'wholesaler' : ''; ?>">
@@ -89,7 +97,22 @@ $_SESSION['selectedDateTime'] = $selectedDateTime;
         </div>
     </header>
     <main>
+        <?php if(isset($_SESSION['fromProdInfo']) && $_SESSION['fromProdInfo'] == 'yes')
+        {?>
+        <script>
+        Swal.fire({
+            title: 'Success!',
+            text: 'Your order has been added to the cart.',
+            icon: 'success',
+            iconColor: '#edcb1c',
+            confirmButtonText: '<font color="#3a001e">Continue</font>',
+            confirmButtonColor: '#edcb1c',
+            color: 'white',
+            background: '#539b3b',
+        });
+        </script>
         <?php
+        unset($_SESSION['fromProdInfo']);}
         if ($PRSN_ROLE == "Wholesaler") {
         ?>
             <div class="wholesaler-menu-banner">
@@ -160,7 +183,14 @@ $_SESSION['selectedDateTime'] = $selectedDateTime;
                             $FOOD_NAME = $row['FOOD_NAME'];
                             $FOOD_IMG = $row['FOOD_IMG'];
                             $FOOD_STOCK = $row['FOOD_STOCK'];
+                            $HOURLY_CAP = $row['HOURLY_CAP'];
                             $FOOD_PRICE = $row['FOOD_PRICE'];
+                            $avail;
+                            if ($FOOD_STOCK <= $HOURLY_CAP) {
+                                $avail = $FOOD_STOCK;
+                            } else {
+                                $avail = $HOURLY_CAP;
+                            }
                     ?>
                             <a class="menu-item" href="<?php echo SITEURL; ?>product-info.php?FOOD_ID=<?php echo $FOOD_ID ?>">
                                 <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
@@ -168,7 +198,7 @@ $_SESSION['selectedDateTime'] = $selectedDateTime;
                                     <p class="name"><?php echo $FOOD_NAME ?></p>
                                     <div class="inline">
                                         <h2>₱<?php echo $FOOD_PRICE ?></h2>
-                                        <p><?php echo $FOOD_STOCK ?> sticks remaining</p>
+                                        <p><?php echo $avail ?> sticks remaining</p>
                                         <p id="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'stick-hidden' : ''; ?>">1 stick</p>
                                     </div>
                                 </div>
@@ -180,6 +210,8 @@ $_SESSION['selectedDateTime'] = $selectedDateTime;
                 </section>
             </div>
         </section>
+        <!-- floating button -->
+        <a href="<?php echo SITEURL; ?>cart.php" class="material-icons floating-btn" style="font-size: 45px;">shopping_cart</a>
     </main>
     <footer>
         <div class="footer-container">

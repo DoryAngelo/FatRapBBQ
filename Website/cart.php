@@ -24,6 +24,7 @@ if (isset($_SESSION['prsn_id'])) {
 }
 $PRSN_ROLE = $_SESSION['prsn_role'];
 
+
 ?>
 
 <!DOCTYPE html>
@@ -96,7 +97,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                         <input type="time" id="time" class="input">
                     </div> -->
                 </div>
-                <form class="section-body" action="checkout.php" method="post" onsubmit="return validateForm()">
+                <form id="checkout-form" class="section-body" method="post">
                     <section class="block">
                         <div class="block-body">
                             <div class="table-wrap">

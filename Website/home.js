@@ -42,11 +42,11 @@ const updateCalendar = () => {
     for (let i = 1; i <= totalDays; i++) {
         const date = new Date(currentYear, currentMonth, i);
         if (date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth() && date.getDate() === today.getDate()) {
-            datesHTML += `<div id="${getMonthName(currentDate.getMonth())} ${i} ${currentDate.getFullYear()}" class="date active ">${i}</div>`;
+            datesHTML += `<button id="${getMonthName(currentDate.getMonth())} ${i} ${currentDate.getFullYear()}" class="date active available">${i}</button>`;
         } else if (date <= today || date > resultDate || (date < today && today.getHours() > -1)) {
             datesHTML += `<div class="date inactive ${currentDate.getMonth()} ${i}">${i}</div>`;
         } else {
-            datesHTML += `<div id="${getMonthName(currentDate.getMonth())} ${i} ${currentDate.getFullYear()}" class="date active ">${i}</div>`;
+            datesHTML += `<button id="${getMonthName(currentDate.getMonth())} ${i} ${currentDate.getFullYear()}" class="date active available">${i}</button>`;
         }
     }
 
@@ -76,7 +76,8 @@ const updateCalendar = () => {
     else {
         nextBtn.classList.remove("disabled");
     }
-
+    
+    
     calendarData.forEach(function (databasedate) {
         var month = databasedate.CALENDAR_DATE.split(' ');
         console.log(month);
@@ -84,12 +85,13 @@ const updateCalendar = () => {
         if (month[0] == getMonthName(currentDate.getMonth())) {
             settingDate = document.getElementById(databasedate.CALENDAR_DATE);
             console.log(settingDate)
-            if (databasedate.DATE_STATUS == "available") {
-                settingDate.classList.add("available");
-                settingDate.classList.remove("fullybooked");
-                settingDate.classList.remove("closed");
-            }
-            else if (databasedate.DATE_STATUS == "fullybooked") {
+            // if (databasedate.DATE_STATUS == "available") {
+            //     settingDate.classList.add("available");
+            //     settingDate.classList.remove("fullybooked");
+            //     settingDate.classList.remove("closed");
+            // }
+            // else 
+            if (databasedate.DATE_STATUS == "fullybooked") {
                 settingDate.classList.remove("available");
                 settingDate.classList.add("fullybooked");
                 settingDate.classList.remove("closed");
@@ -101,6 +103,45 @@ const updateCalendar = () => {
             }
         }
     });
+
+    var availableDates = document.querySelectorAll('.available');
+    for (var x = 0, availableDatesLength = availableDates.length; x < availableDatesLength; x++) {
+        //console.log(sampleDivs[x]);
+        availableDates[x].addEventListener("click", function () {
+             const selectedDateString = getMonthName(currentDate.getMonth()) + ' ' + this.innerHTML + ' ' + currentDate.getFullYear();
+             console.log(selectedDateString);
+            // selectedDate = selectedDateString;
+            // selectedString = selectedDateString;
+            // selectedDateElement.innerHTML = '<h3>' + selectedString + '</h3>';
+            // updateNumbers();
+            document.location.href = 'menu.php?DATE_SELECTED='+ selectedDateString;
+        });
+    }
+
+    var fbDates = document.querySelectorAll('.fullybooked');
+    for (var x = 0, fbDatesLength = fbDates.length; x < fbDatesLength; x++) {
+        //console.log(sampleDivs[x]);
+        fbDates[x].addEventListener("click", function () {
+            // const selectedDateString = getMonthName(currentDate.getMonth()) + ' ' + this.innerHTML + ' ' + currentDate.getFullYear();
+            // selectedDate = selectedDateString;
+            // selectedString = selectedDateString;
+            // selectedDateElement.innerHTML = '<h3>' + selectedString + '</h3>';
+            // updateNumbers();
+            alert('Date is Fully Booked');
+        });
+    }
+    var closedDates = document.querySelectorAll('.closed');
+    for (var x = 0, closedDatesLength = closedDates.length; x < closedDatesLength; x++) {
+        //console.log(sampleDivs[x]);
+        closedDates[x].addEventListener("click", function () {
+            // const selectedDateString = getMonthName(currentDate.getMonth()) + ' ' + this.innerHTML + ' ' + currentDate.getFullYear();
+            // selectedDate = selectedDateString;
+            // selectedString = selectedDateString;
+            // selectedDateElement.innerHTML = '<h3>' + selectedString + '</h3>';
+            // updateNumbers();
+            alert('Date is Closed');
+        });
+    }
     //updateNumbers();
 }
 

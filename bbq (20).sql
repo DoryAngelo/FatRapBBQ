@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2024 at 03:43 PM
+-- Generation Time: May 16, 2024 at 06:34 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,7 +38,7 @@ CREATE TABLE `calendar` (
 --
 
 INSERT INTO `calendar` (`CALENDAR_ID`, `CALENDAR_DATE`, `DATE_STATUS`) VALUES
-(80, 'May 29 2024', 'closed');
+(81, 'May 29 2024', 'fullybooked');
 
 -- --------------------------------------------------------
 
@@ -99,7 +99,8 @@ INSERT INTO `employee` (`EMP_ID`, `PRSN_ID`, `EMP_FNAME`, `EMP_LNAME`, `EMP_IMAG
 (18, 52, 'NewUpdate', 'NewUpdate', 'EMP_IMAGE_NewUpdate.png', 'NewUpdate', ''),
 (24, 83, 'Admin', 'Two', 'EMP_IMAGE_Admin Two_6620a0b1034dd.jpg', 'AdminTwo', 'Active'),
 (25, 84, 'Employee', 'Employee', 'EMP_IMAGE_Hi Hello_6620a0d64df55.jpg', 'Employee', 'Active'),
-(999, 16, '', 'Admin', '', '85686', 'Active');
+(999, 16, '', 'Admin', '', '85686', 'Active'),
+(1000, 92, 'Dummy', 'Dummy', 'EMP_IMAGE_Dummy.jpg', 'Dummy2', 'Active');
 
 -- --------------------------------------------------------
 
@@ -116,16 +117,16 @@ CREATE TABLE `food` (
   `FOOD_IMG` varchar(255) NOT NULL,
   `FOOD_STOCK` int(20) NOT NULL,
   `FOOD_ACTIVE` varchar(10) NOT NULL,
-  `FOOD_TYPE` varchar(16) NOT NULL
+  `FOOD_TYPE` varchar(16) NOT NULL,
+  `HOURLY_CAP` int(18) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `food`
 --
 
-INSERT INTO `food` (`FOOD_ID`, `CTGY_ID`, `FOOD_NAME`, `FOOD_PRICE`, `FOOD_DESC`, `FOOD_IMG`, `FOOD_STOCK`, `FOOD_ACTIVE`, `FOOD_TYPE`) VALUES
-(60, 0, 'Barbeque', 25.50, 'BBQ', 'FOOD_IMAGE_Barbeque.jpg', 150, 'Yes', 'Customer'),
-(61, 0, 'Isaw', 5.00, 'Isaw ng manok', 'FOOD_IMAGE_Isaw.jpg', 100, 'Yes', 'Customer');
+INSERT INTO `food` (`FOOD_ID`, `CTGY_ID`, `FOOD_NAME`, `FOOD_PRICE`, `FOOD_DESC`, `FOOD_IMG`, `FOOD_STOCK`, `FOOD_ACTIVE`, `FOOD_TYPE`, `HOURLY_CAP`) VALUES
+(60, 0, 'Barbeque', 25.50, 'BBQ', 'FOOD_IMAGE_Barbeque.jpg', 15000, 'Yes', 'Customer', 50);
 
 -- --------------------------------------------------------
 
@@ -150,34 +151,10 @@ CREATE TABLE `in_order` (
 --
 
 INSERT INTO `in_order` (`IN_ORDER_ID`, `FOOD_ID`, `MENU_ID`, `PRSN_ID`, `IN_ORDER_QUANTITY`, `IN_ORDER_TOTAL`, `IN_ORDER_STATUS`, `PLACED_ORDER_ID`, `GUEST_ORDER_IDENTIFIER`) VALUES
-(182, 60, 0, 15, 10, 255.00, 'Ordered', 89, ''),
-(183, 60, 0, 15, 15, 375.00, 'Ordered', 90, ''),
-(186, 60, 11, 15, 3, 75.00, 'Ordered', 91, ''),
-(187, 60, 11, 15, 1, 25.50, 'Ordered', 92, ''),
-(189, 60, 13, 15, 10, 255.00, 'Ordered', 93, ''),
-(190, 61, 12, 15, 10, 50.00, 'Ordered', 93, '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `menu`
---
-
-CREATE TABLE `menu` (
-  `MENU_ID` int(18) NOT NULL,
-  `FOOD_ID` int(18) NOT NULL,
-  `MENU_STOCK` int(18) NOT NULL,
-  `MENU_START` varchar(50) NOT NULL,
-  `MENU_END` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `menu`
---
-
-INSERT INTO `menu` (`MENU_ID`, `FOOD_ID`, `MENU_STOCK`, `MENU_START`, `MENU_END`) VALUES
-(12, 61, 90, 'May 05, 2024 07:07:00 pm', 'May 10, 2024 07:08:00 pm'),
-(13, 60, 40, 'May 05, 2024 07:16:00 pm', 'May 08, 2024 07:16:00 pm');
+(309, 61, 0, 15, 2, 10.00, 'Ordered', 137, ''),
+(310, 61, 0, 15, 5, 25.00, 'Ordered', 138, ''),
+(311, 61, 0, 15, 1, 5.00, 'Ordered', 139, ''),
+(312, 60, 0, 15, 13, 325.00, 'Ordered', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -203,11 +180,15 @@ INSERT INTO `person` (`PRSN_ID`, `PRSN_NAME`, `PRSN_EMAIL`, `PRSN_PASSWORD`, `PR
 (16, 'Admin', 'Test', '2cdcf3ae8d662d2141f8f4b0d5f0465c', '09123456789', 'Admin'),
 (48, 'New', 'new@gmail.com', '70efb8810172bcaceb5b475652600ed0', '09123456789', 'Customer'),
 (54, 'Number', 'number@gmail.com', 'a7f9f337591ea4d7acbd0073e1ca35d8', '09123456789', 'Customer'),
-(83, 'Admin Two', 'Admin2', 'd41d8cd98f00b204e9800998ecf8427e', '09123456789', 'Employee'),
+(83, 'Admin Two', 'Admin2', 'd41d8cd98f00b204e9800998ecf8427e', '09123649997', 'Employee'),
 (84, 'Employee Employee', 'Employee', 'd3d73db423372e0bea89ca659ea9d115', '09123456789', 'Employee'),
 (85, 'WhNew WhNew', 'WhNew', '7503d4ae5f2684f8d09e30657bfc5809', '09123456789', 'Wholesaler'),
 (86, 'Wholesaler Wholesale', 'Wholesaler', '4ff918a8bde60d5bda668f617164af08', '09123456789', 'Wholesaler'),
-(90, 'dsd', 'asfdsf@gmail.com', '046c8fbd148b6243fc629390ee3aa349', '09123456789', 'Customer');
+(90, 'dsd', 'asfdsf@gmail.com', '046c8fbd148b6243fc629390ee3aa349', '09123456789', 'Customer'),
+(91, 'Fname Lname', 'TestUsername', '6b37efdb7b7992b81e0874158e6c02fe', '09999990999', 'Wholesaler'),
+(92, 'Dummy Dummy', 'Dummy2', 'f21844a3568173d5d628868e9dc51751', '09173456789', 'Employee'),
+(93, 'Dummy2Dummy2 ', '', 'd41d8cd98f00b204e9800998ecf8427e', '', 'Wholesaler'),
+(94, 'TestNew TestNew', 'TestNew', '12f3716656a41d874e63bd71382d58d0', '09823456789', 'Wholesaler');
 
 -- --------------------------------------------------------
 
@@ -238,11 +219,10 @@ CREATE TABLE `placed_order` (
 --
 
 INSERT INTO `placed_order` (`PLACED_ORDER_ID`, `PRSN_ID`, `CUS_NAME`, `CUS_NUMBER`, `CUS_EMAIL`, `PLACED_ORDER_DATE`, `PLACED_ORDER_TOTAL`, `DELIVERY_ADDRESS`, `DELIVERY_DATE`, `PLACED_ORDER_STATUS`, `PLACED_ORDER_CONFIRMATION`, `PLACED_ORDER_TRACKER`, `PLACED_ORDER_NOTE`, `REFERENCE_NUMBER`, `GUEST_ORDER_IDENTIFIER`) VALUES
-(89, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-05-01 02:58:23pm', 255.00, 'National Capital Region (NCR), City Of Manila, Binondo, Barangay 288, StreetTest', '2024-05-30 14:58', 'Currently Preparing', 'Confirmed', 'e466b452178783d4', '', '1232132132324', ''),
-(90, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-05-05 05:17:31pm', 375.00, 'National Capital Region (NCR), City Of Manila, Binondo, Barangay 287, StreetTest', '2024-05-06 13:17', 'Currently Preparing', '', '0b83d74f86c293bf', '', '', ''),
-(91, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-05-05 06:11:28pm', 75.00, 'National Capital Region (NCR), City Of Manila, Binondo, Barangay 287, StreetTest', '2024-05-06 14:11', 'Placed', '', 'f045d8a2b76b9abe', '', '', ''),
-(92, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-05-05 06:25:15pm', 25.50, 'National Capital Region (NCR), City Of Manila, Binondo, Barangay 291, StreetTest', '2024-05-06 14:25', 'Placed', '', '0fa5232641a4fe56', '', '', ''),
-(93, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-05-05 07:17:57pm', 305.00, 'National Capital Region (NCR), City Of Manila, Binondo, Barangay 287, StreetTest', '2024-05-06 15:17', 'Placed', '', '6a4f1cf108cd2e7a', '', '', '');
+(136, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-05-12 11:35:18pm', 25.50, 'National Capital Region (NCR), Ncr, Fourth District, City Of Muntinlupa, Buli, StreetTest', '2024-05-16 11:35 AM', 'Cancelled', '', 'cc3e857155474103', '', '', ''),
+(137, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-05-16 07:42:43pm', 10.00, ', , , , StreetTest', '2024-05-18 02:42 PM', 'Placed', '', 'd1cbc8b20a73a62d', '', '', ''),
+(138, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-05-16 07:44:39pm', 25.00, ', , , , StreetTest', '2024-05-18 02:44 PM', 'Placed', '', '54fda1bad78d429c', '', '', ''),
+(139, 15, 'Fname Lname', '09123456789', 'user@gmail.com', '2024-05-16 10:00:21pm', 5.00, ', , , , StreetTest', '2024-05-18 9:56 AM', 'Placed', '', '1fb66e40fddd32e4', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -264,8 +244,9 @@ CREATE TABLE `wholesaler` (
 --
 
 INSERT INTO `wholesaler` (`WHL_ID`, `PRSN_ID`, `WHL_FNAME`, `WHL_LNAME`, `WHL_IMAGE`, `WHL_STATUS`) VALUES
-(17, 85, 'WhNew', 'WhNew', 'WHL_IMAGE_WhNew.jpg', 'Inactive'),
-(18, 86, 'Wholesaler', 'Wholesaler', 'WHL_IMAGE_Wholesaler.jpg', 'Active');
+(19, 91, 'Fname', 'Lname', 'WHL_IMAGE_Lname.jpg', 'Active'),
+(20, 93, 'Dummy2Dummy2', '', '', 'Active'),
+(21, 94, 'TestNew', 'TestNew', 'WHL_IMAGE_TestNew.jpg', 'Active');
 
 --
 -- Indexes for dumped tables
@@ -308,12 +289,6 @@ ALTER TABLE `in_order`
   ADD PRIMARY KEY (`IN_ORDER_ID`);
 
 --
--- Indexes for table `menu`
---
-ALTER TABLE `menu`
-  ADD PRIMARY KEY (`MENU_ID`);
-
---
 -- Indexes for table `person`
 --
 ALTER TABLE `person`
@@ -339,7 +314,7 @@ ALTER TABLE `wholesaler`
 -- AUTO_INCREMENT for table `calendar`
 --
 ALTER TABLE `calendar`
-  MODIFY `CALENDAR_ID` int(16) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `CALENDAR_ID` int(16) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -357,43 +332,37 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `EMP_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1000;
+  MODIFY `EMP_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1001;
 
 --
 -- AUTO_INCREMENT for table `food`
 --
 ALTER TABLE `food`
-  MODIFY `FOOD_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `FOOD_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `in_order`
 --
 ALTER TABLE `in_order`
-  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=191;
-
---
--- AUTO_INCREMENT for table `menu`
---
-ALTER TABLE `menu`
-  MODIFY `MENU_ID` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `IN_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=313;
 
 --
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `PRSN_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `PRSN_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT for table `placed_order`
 --
 ALTER TABLE `placed_order`
-  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `PLACED_ORDER_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
 
 --
 -- AUTO_INCREMENT for table `wholesaler`
 --
 ALTER TABLE `wholesaler`
-  MODIFY `WHL_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `WHL_ID` int(18) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
