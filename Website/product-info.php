@@ -192,7 +192,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                         <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> sticks available</p>
                                     <?php } ?>
                                 </div>
-
+                                <div class="date-grp">
+                                    <p>Date</p>
+                                    <input type="date">
+                                </div>
+                                <div class="time-slots">
+                                    <p>Time</p>
+                                    <div class="tile-wrapper">
+                                        <button class="tile">10:00AM</button>
+                                        <button class="tile">11:00AM</button>
+                                        <button class="tile">12:00AM</button>
+                                        <button class="tile">1:00PM</button>
+                                        <button class="tile">2:00PM</button>
+                                        <button class="tile">3:00PM</button>
+                                        <button class="tile">4:00PM</button>
+                                        <button class="tile">5:00PM</button>
+                                    </div>
+                                </div>
                                 <input type="hidden" id="quantity" name="quantity" value="1">
                                 <input type="hidden" name="price" value="<?php echo $FOOD_PRICE ?>">
                                 <button name="order" type="submit" <?php echo ($FOOD_STOCK <= 0 || (isset($_POST['quantity']) && ($IN_ORDER_QUANTITY + intval($_POST['quantity']) > $FOOD_STOCK))) ? 'disabled' : ''; ?>>Add to Cart</button>

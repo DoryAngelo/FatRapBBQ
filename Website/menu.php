@@ -103,7 +103,7 @@ $_SESSION['selectedDateTime'] = $selectedDateTime;
                 <div class="section-heading">
                     <h2>Menu</h2>
 
-                    <label for="delivery-date">Delivery Date:</label>
+                    <!-- <label for="delivery-date">Delivery Date:</label>
                     <input type="date" id="delivery-date" name="delivery-date" value="<?php echo isset($_GET['datetime']) ? date('Y-m-d', strtotime($_GET['datetime'])) : ''; ?>">
 
                     <label for="delivery-time">Delivery Time:</label>
@@ -141,7 +141,7 @@ $_SESSION['selectedDateTime'] = $selectedDateTime;
 
                         document.getElementById('delivery-date').addEventListener('change', redirectToFilteredOrders);
                         document.getElementById('delivery-time').addEventListener('change', redirectToFilteredOrders);
-                    </script>
+                    </script> -->
 
 
                 </div>
