@@ -49,6 +49,7 @@ $selectedTime = $selectedDateTime ? date('H:i', strtotime($selectedDateTime)) : 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="app.js" defer></script>
     <!-- add the code below to load the icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -94,7 +95,22 @@ $selectedTime = $selectedDateTime ? date('H:i', strtotime($selectedDateTime)) : 
         </div>
     </header>
     <main>
+        <?php if(isset($_SESSION['fromProdInfo']) && $_SESSION['fromProdInfo'] == 'yes')
+        {?>
+        <script>
+        Swal.fire({
+            title: 'Success!',
+            text: 'Your order has been added to the cart.',
+            icon: 'success',
+            iconColor: '#edcb1c',
+            confirmButtonText: '<font color="#3a001e">Continue</font>',
+            confirmButtonColor: '#edcb1c',
+            color: 'white',
+            background: '#539b3b',
+        });
+        </script>
         <?php
+        unset($_SESSION['fromProdInfo']);}
         if ($PRSN_ROLE == "Wholesaler") {
         ?>
             <div class="wholesaler-menu-banner">

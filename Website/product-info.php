@@ -103,6 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
         $res2 = mysqli_query($conn, $sql2);
     }
     // Redirect to the home page after processing
+    $_SESSION['fromProdInfo'] = 'yes'; 
     header('location:menu.php');
 }
 ?>
