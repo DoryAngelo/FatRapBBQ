@@ -188,9 +188,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                         <input type="number" class="amount js-num" value="1" min="1" max="<?php echo $FOOD_STOCK; ?>">
                                     </div>
                                     <?php if ($PRSN_ROLE === "Wholesaler") { ?>
-                                        <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> available</p>
+                                        <p class="remaining">10:00 am - 11:00 am<?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> available</p>
                                     <?php } else { ?>
-                                        <p class="remaining"><?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> sticks available</p>
+                                        <p></p>
+                                        <p class="remaining">10:00 am - 11:00 am <?php echo ($FOOD_STOCK < 0) ? 0 : $FOOD_STOCK; ?> sticks available</p>
                                     <?php } ?>
                                 </div>
 

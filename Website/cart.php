@@ -29,7 +29,27 @@ if (isset($_GET['datetime'])) {
 }
 
 $selectedDateTime = isset($_SESSION['selectedDateTime']) ? $_SESSION['selectedDateTime'] : '';
+$selectedDate = $selectedDateTime ? date('Y-m-d', strtotime($selectedDateTime)) : '';
 $selectedTime = $selectedDateTime ? date('H:i', strtotime($selectedDateTime)) : '';
+
+if (isset($_POST['checkout'])) {
+
+    // $selectedDate = $selectedDateTime ? date('F j Y', strtotime($selectedDateTime)) : '';
+    // echo "<script>alert('Selected date: $selectedDate');</script>";
+    // $sql = "SELECT * FROM calendar WHERE calendar_date = '$selectedDate'";
+    // $res = mysqli_query($conn, $sql);
+    // $count = mysqli_num_rows($res);
+    // if ($count > 0) {
+    //     $selectedDate = $selectedDateTime ? date('Y-m-d', strtotime($selectedDateTime)) : '';
+    //     echo "<script>alert('This date is not available.');</script>";
+    // } else {
+    //     $selectedDate = $selectedDateTime ? date('Y-m-d', strtotime($selectedDateTime)) : '';
+    //     header("location:checkout.php");
+    // }
+    header("location:checkout.php");
+    exit();
+}
+
 
 ?>
 
@@ -121,7 +141,7 @@ $selectedTime = $selectedDateTime ? date('H:i', strtotime($selectedDateTime)) : 
                         $oneMonthFromNow = date("Y-m-d", strtotime("+1 month"));
                         ?>
                         <label for="delivery-date">Delivery Date:</label>
-                        <input min="<?php echo $today ?>" max="<?php echo $oneMonthFromNow ?>" oninput="validateDate(this)" type="date" id="delivery-date" name="delivery-date" value="<?php echo $selectedDateTime ? date('Y-m-d', strtotime($selectedDateTime)) : ''; ?>">
+                        <input min="<?php echo $today ?>" max="<?php echo $oneMonthFromNow ?>" oninput="validateDate(this)" type="date" id="delivery-date" name="delivery-date" value="<?php echo $selectedDate; ?>">
                         <div class="error-date error-text" style="display: none;">Date not available.</div>
 
                         <label for="delivery-time">Delivery Time:</label>
@@ -181,13 +201,14 @@ $selectedTime = $selectedDateTime ? date('H:i', strtotime($selectedDateTime)) : 
                                     return;
                                 }
 
-                                // Check if selected time is within 30 minutes of current time
+                                // Check if selected time is within 1 hour of current time
                                 var timeDiff = new Date("1970-01-01 " + selectedTime) - new Date("1970-01-01 " + currentTime);
                                 var minutesDiff = Math.abs(timeDiff / 60000);
-                                if (minutesDiff < 30) {
+                                if (minutesDiff < 60) {
                                     timeError.style.display = 'block';
                                     return;
                                 }
+
 
                                 // Check if selected time is past the current day
                                 if (selectedDate < currentDate && selectedTime < currentTime) {
@@ -206,6 +227,7 @@ $selectedTime = $selectedDateTime ? date('H:i', strtotime($selectedDateTime)) : 
 
                                 // Check if there are any error messages displayed
                                 if (dateError.style.display === 'block' || timeError.style.display === 'block') {
+                                    alert("Please correct the errors before submitting the form.");
                                     return; // Exit function if there are errors
                                 }
 
@@ -249,9 +271,33 @@ $selectedTime = $selectedDateTime ? date('H:i', strtotime($selectedDateTime)) : 
                                 redirectToFilteredOrders(event);
                             });
                         </script>
+                        <script>
+                            function validateForm() {
+                                var dateError = document.querySelector('.error-date');
+                                var timeError = document.querySelector('.error-time');
+
+                                // Check if there are any error messages displayed
+                                if (dateError.style.display === 'block' || timeError.style.display === 'block') {
+                                    alert("Please correct the errors before submitting the form.");
+                                    return false; // Prevent form submission
+                                }
+                                return true; // Allow form submission if no errors
+                            }
+
+                            document.addEventListener("DOMContentLoaded", function() {
+                                const form = document.getElementById('checkout-form');
+
+                                form.addEventListener('submit', function(event) {
+                                    // Validate the form before submission
+                                    if (!validateForm()) {
+                                        event.preventDefault(); // Prevent form submission if validation fails
+                                    }
+                                });
+                            });
+                        </script>
                     </div>
                 </div>
-                <form class="section-body" action="checkout.php" method="post" onsubmit="return validateForm()">
+                <form id="checkout-form" class="section-body" method="post">
                     <section class="block">
                         <div class="block-body">
                             <div class="table-wrap">
