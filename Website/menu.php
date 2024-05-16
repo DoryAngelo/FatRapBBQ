@@ -53,6 +53,7 @@ $selectedTime = $selectedDateTime ? date('H:i', strtotime($selectedDateTime)) : 
     <script src="app.js" defer></script>
     <!-- add the code below to load the icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body class="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'wholesaler' : ''; ?>">
@@ -319,6 +320,8 @@ $selectedTime = $selectedDateTime ? date('H:i', strtotime($selectedDateTime)) : 
                 </section>
             </div>
         </section>
+        <!-- floating button -->
+        <a href="<?php echo SITEURL; ?>cart.php" class="material-icons floating-btn" style="font-size: 45px;">shopping_cart</a>
     </main>
     <footer>
         <div class="footer-container">
