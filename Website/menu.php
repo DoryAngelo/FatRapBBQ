@@ -199,7 +199,38 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
     </main>
     <footer>
         <div class="footer-container">
-            <p>&copy; 2023 Fat Rap's Barbeque. All Rights Reserved.</p>
+            <div class="left-container">
+                <h2>Fat Rap's Barbeque</h2>
+                <div class="list">
+                    <ul>
+                        <li><a href="<?php echo SITEURL; ?>cus-home-page.php">Home</a></li>
+                        <li><a href="<?php echo SITEURL; ?>menu.php">Menu</a></li>
+                        <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
+                        <li><a href="cus-home-page.php#track-order-section">Track order</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="right-container">
+                <div class="icons-block">
+                    <a href="https://www.facebook.com/profile.php?id=100077565231475">
+                        <i class='bx bxl-facebook-circle'></i>
+                    </a>
+                </div>
+                <div class="list">
+                    <!-- <div class="list-items">
+                        <i class='bx bxs-envelope'></i>
+                        <p>email@gmail.com</p>
+                    </div> -->
+                    <div class="list-items">
+                        <i class='bx bxs-phone'></i>
+                        <p>09178073760 | 09190873861</p>
+                    </div>
+                    <div class="list-items">
+                        <i class='bx bxs-map'></i>
+                        <p>Sta. Ignaciana, Brgy. Kalusugan, Quezon City, Metro Manila, Philippines</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
 </body>
