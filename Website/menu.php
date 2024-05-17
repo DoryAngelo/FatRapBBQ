@@ -175,10 +175,11 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                                     <p class="name"><?php echo $FOOD_NAME ?></p>
                                     <div class="inline">
                                         <h2>₱<?php echo $FOOD_PRICE ?></h2>
+                                        <p id="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'stick-hidden' : ''; ?>">per stick</p>
                                         <?php if ($avail > 0) : ?>
                                             <p><?php echo $avail ?> sticks remaining</p>
                                         <?php endif; ?>
-                                        <p id="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'stick-hidden' : ''; ?>">1 stick</p>
+                                        
                                     </div>
                                 </div>
                                 <?php if ($avail <= 0) : ?>
