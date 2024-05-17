@@ -184,6 +184,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                                 <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
                                 <div class="inline">
                                     <h1>₱<?php echo $FOOD_PRICE ?></h1>
+                                    <p id="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'stick-hidden' : ''; ?>">per stick</p>
                                     <div class="quantity-grp">
                                         <input type="number" class="amount js-num" value="1" min="1" max="<?php echo $avail; ?>">
                                     </div>

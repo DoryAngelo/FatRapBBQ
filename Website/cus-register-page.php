@@ -28,7 +28,7 @@ if (isset($_POST['submit'])) {
         $insert = "INSERT INTO person(PRSN_NAME, PRSN_EMAIL, PRSN_PASSWORD, PRSN_PHONE, PRSN_ROLE) 
             VALUES('$PRSN_NAME', '$PRSN_EMAIL', '$PRSN_PASSWORD', '$PRSN_PHONE', '$PRSN_ROLE')";
         mysqli_query($conn, $insert);
-        header('Location: login-page.php');
+        header('Location: registration-success.php');
         exit();
     }
 }
@@ -72,7 +72,7 @@ if (isset($_POST['submit'])) {
                         font-size: 12px;
                     }
                 </style>
-                <form action="registration-success.php" class="form reg-form" method="post" onsubmit="return validateInputs()">
+                <form action="" class="form reg-form" method="post" onsubmit="return validateInputs()">
                     <div class="form-title">
                         <h1>Register</h1>
                         <?php

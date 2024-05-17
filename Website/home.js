@@ -122,7 +122,7 @@ const updateCalendar = () => {
             const selectedDateString = getMonthName(currentDate.getMonth()) + ' ' + this.innerHTML + ' ' + currentDate.getFullYear();
 
             Swal.fire({
-                title: 'Select Time',
+                title: 'Select Pick up Time',
                 html: '<input type="time" id="time" min="10:00" max="17:00">',
                 showCancelButton: true,
                 confirmButtonText: 'Submit',
