@@ -20,7 +20,7 @@ if (isset($_SESSION['prsn_id'])) {
     $random = random_bytes(16);
     $GUEST_ID = bin2hex($random);
     $_SESSION['prsn_role'] = "Customer";
-    $_SESSION['guest_id'] =   $GUEST_ID;
+    $_SESSION['guest_id'] = $GUEST_ID;
 }
 
 $PRSN_ROLE = $_SESSION['prsn_role'];
@@ -50,7 +50,8 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
     <link rel="stylesheet" href="customer-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <script src="order-status-progress-bar.js" defer></script>
     <!-- add the code below to load the icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> <!-- from boxicons.com -->
@@ -65,9 +66,9 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                     <h1>Fat Rap's Barbeque</h1>
                     <?php
                     if ($PRSN_ROLE == "Wholesaler") {
-                    ?>
+                        ?>
                         <p>WHOLESALE</p>
-                    <?php
+                        <?php
                     }
                     ?>
                 </div>
@@ -82,14 +83,14 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                 <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
                 <?php
                 if (isset($_SESSION['prsn_id'])) {
-                ?>
+                    ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
                     </li>
-                <?php
+                    <?php
                 } else {
-                ?>
+                    ?>
                     <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                <?php
+                    <?php
                 }
                 ?>
             </ul>
@@ -106,6 +107,16 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                         <div class="left-side">
                             <h3 class="block-heading">Order number: <?php echo $PLACED_ORDER_ID ?></h3>
                             <div class="block-body">
+                                <?php
+
+                                $SELECTED_DATE = isset($_SESSION['DATE_SELECTED']) ? $_SESSION['DATE_SELECTED'] : date('M j Y');
+                                $SELECTED_TIME = isset($_SESSION['TIME_SELECTED']) ? $_SESSION['TIME_SELECTED'] : date('g:i a');
+                                $selected_datetime = $SELECTED_DATE . " " . $SELECTED_TIME;
+
+                                ?>
+                                <script>
+                                    // var calendarData = ;
+                                </script>
                                 <p>Order Tracker: <?php echo $PLACED_ORDER_TRACKER ?></p>
                                 <div class="container" id="stepsContainer"> <!-- hidden when order status is canceled-->
                                     <div class="steps">
@@ -124,46 +135,51 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                             $GUEST_ORDER_IDENTIFIER = $row2['GUEST_ORDER_IDENTIFIER'];
                                             $REFERENCE_NUMBER = $row2['REFERENCE_NUMBER'];
 
+                                            $dDate_json = json_encode($DELIVERY_DATE);
+
 
                                             switch ($PLACED_ORDER_STATUS) {
                                                 case "Placed": //PLACED
-                                        ?>
+                                                    ?>
                                                     <p id="status">Placed</p>
-                                                <?php
+                                                    <?php
                                                     break;
                                                 case "Awaiting Payment": //APPROVED
-                                                ?>
+                                                    ?>
                                                     <p id="status">Awaiting Payment</p>
-                                                <?php
+                                                    <?php
                                                     break;
                                                 case "To Prepare": //PAID
-                                                ?>
+                                                    ?>
                                                     <p id="status">To Prepare</p>
-                                                <?php
+                                                    <?php
                                                     break;
                                                 case "Currently Preparing":
-                                                ?>
+                                                    ?>
                                                     <p id="status">Currently Preparing</p>
-                                                <?php
+                                                    <?php
                                                     break;
                                                 case "Packed": //SHIPPED
-                                                ?>
+                                                    ?>
                                                     <p id="status">Packed</p>
-                                                <?php
+                                                    <?php
                                                     break;
                                                 case "Completed": //DELIVERED
-                                                ?>
+                                                    ?>
                                                     <p id="status">Completed</p>
-                                                <?php
+                                                    <?php
                                                     break;
                                                 case "Cancelled":
-                                                ?>
+                                                    ?>
                                                     <p id="status">Cancelled</p>
-                                        <?php
+                                                    <?php
                                                     break;
                                             }
                                         }
                                         ?>
+                                        <script>
+                                            var dDate = <?php echo $dDate_json ?>;
+                                        </script>
                                         <!-- if status = placed -->
                                         <div class="step">
                                             <span class="circle active">
@@ -199,22 +215,25 @@ $PLACED_ORDER_ID = $row2['PLACED_ORDER_ID'];
                                 </style>
                                 <div class="order-status-desc">
                                     <div>
-                                        <h3 class="block-heading order-status" id="order-status-title">Your order has been approved</h2>
-                                            <p class="order-status-desc" id="order-status-desc">Lorem ipsum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit amet</p>
+                                        <h3 class="block-heading order-status" id="order-status-title">Your order has
+                                            been approved</h2>
+                                            <p class="order-status-desc" id="order-status-desc">Lorem ipsum dolor sit
+                                                amet, consectetur adipiscing Lorem ipsum dolor sit amet</p>
                                     </div>
                                     <form action="generate_receipt.php" method="GET" id="generate-receipt-form">
                                         <input type="hidden" name="id" value="<?php echo $PLACED_ORDER_ID ?>">
-                                        <button type="submit" class="button" id="generate-receipt-btn" name="receipt">Generate Receipt</button>
+                                        <button type="submit" class="button" id="generate-receipt-btn"
+                                            name="receipt">Generate Receipt</button>
                                     </form>
                                     <script>
-                                        document.getElementById('generate-receipt-form').addEventListener('submit', function(event) {
+                                        document.getElementById('generate-receipt-form').addEventListener('submit', function (event) {
                                             event.preventDefault(); // Prevent the form from submitting normally
 
                                             // Submit the form via AJAX
                                             var xhr = new XMLHttpRequest();
                                             xhr.open('GET', 'generate-receipt.php?id=<?php echo $PLACED_ORDER_ID ?>', true);
                                             xhr.responseType = 'blob'; // Set the response type to Blob
-                                            xhr.onload = function() {
+                                            xhr.onload = function () {
                                                 if (this.status === 200) {
                                                     var blob = new Blob([this.response], {
                                                         type: 'application/pdf'
@@ -251,16 +270,16 @@ WHERE date_status IN ('fully booked', 'closed')";
                             $not_available_dates[] = $row['calendar_date'];
                         }
 
-                        
-                        $nearest_available_date = null;
-                        $current_date = date('M d Y'); 
 
-                        
-                        for ($i = 1; $i <= 365; $i++) { 
+                        $nearest_available_date = null;
+                        $current_date = date('M d Y');
+
+
+                        for ($i = 1; $i <= 365; $i++) {
                             $next_date = date('M d Y', strtotime($current_date . " +$i days"));
                             if (!in_array($next_date, $not_available_dates)) {
                                 $nearest_available_date = $next_date;
-                                break; 
+                                break;
                             }
                         }
 
@@ -288,6 +307,9 @@ WHERE date_status IN ('fully booked', 'closed')";
 
                     <section class="block">
                         <h3 class="block-heading">Order Summary</h2>
+                            <br><p><b>Pickup date: <?php echo $DELIVERY_DATE?> </p><br>
+                            </b>
+
                             <div class="block-body">
                                 <div class="table-wrap">
                                     <table class="order">
@@ -324,11 +346,12 @@ WHERE date_status IN ('fully booked', 'closed')";
                                                     $FOOD_IMG = $row['FOOD_IMG'];
                                                     $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
                                                     $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
-                                            ?>
+                                                    ?>
                                                     <tr>
                                                         <td data-cell="customer" class="first-col">
                                                             <div class="pic-grp">
-                                                                <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
+                                                                <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>"
+                                                                    alt="">
                                                                 <p><?php echo $FOOD_NAME ?></p>
                                                             </div>
                                                         </td> <!--Pic and Name-->
@@ -342,7 +365,7 @@ WHERE date_status IN ('fully booked', 'closed')";
                                                             <p>₱<?php echo $IN_ORDER_TOTAL ?></p>
                                                         </td><!--Sub Total-->
                                                     </tr>
-                                            <?php
+                                                    <?php
                                                 }
                                             }
                                             if (isset($_SESSION['prsn_id'])) {
@@ -386,12 +409,14 @@ WHERE date_status IN ('fully booked', 'closed')";
                                     <div class="error"></div>
                                     <?php
                                     if ($REFERENCE_NUMBER !== '') {
-                                    ?>
-                                        <p class="success-message">Thanks for submitting! Your order will now be prepared!</p>
-                                    <?php
+                                        ?>
+                                        <p class="success-message">Thanks for submitting! Your order will now be prepared!
+                                        </p>
+                                        <?php
                                     }
                                     ?>
-                                    <button id="submit-button" name="submit" <?php if ($REFERENCE_NUMBER !== '') echo 'disabled'; ?>>Submit</button>
+                                    <button id="submit-button" name="submit" <?php if ($REFERENCE_NUMBER !== '')
+                                        echo 'disabled'; ?>>Submit</button>
                                 </div>
                             </div>
                         </form>
@@ -433,7 +458,7 @@ WHERE date_status IN ('fully booked', 'closed')";
 
 
                             const referenceNumberInput = document.getElementById("reference-number");
-                            referenceNumberInput.addEventListener('click', function() {
+                            referenceNumberInput.addEventListener('click', function () {
                                 validateForm();
                             });
                         </script>
@@ -480,7 +505,35 @@ WHERE date_status IN ('fully booked', 'closed')";
         </div>
     </footer>
 </body>
+<!-- <script type="text/javascript">
+    document.ready(function() { 
+          
+          /* Increment the idle time 
+              counter every second */ 
+          let idleInterval = 
+              setInterval(timerIncrement, 1000); 
+        
+          /* Zero the idle timer 
+              on mouse movement */ 
+          (this).mousemove(resetTimer); 
+          (this).keypress(resetTimer); 
+      }); 
+        
+      function resetTimer() { 
+        
+          /* Hide the timer text */ 
+          document.querySelector(".timertext") 
+              .style.display = 'none'; 
+            
+          currSeconds = 0; 
+      }
 
+      if (currSeconds==10000){
+        setTimeout(function(){
+        location = 'track-order.php?tracker=<?php echo $PLACED_ORDER_TRACKER?>'},0)
+      }
+      console.log(currSeconds);
+</script> -->
 </html>
 
 <?php

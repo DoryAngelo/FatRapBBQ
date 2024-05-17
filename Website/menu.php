@@ -46,7 +46,8 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
     <link rel="stylesheet" href="customer-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="app.js" defer></script>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -95,11 +96,11 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                     background: '#539b3b',
                 });
             </script>
-        <?php
+            <?php
             unset($_SESSION['fromProdInfo']);
         }
         if ($PRSN_ROLE == "Wholesaler") {
-        ?>
+            ?>
             <div class="wholesaler-menu-banner">
                 <h1>WHOLESALE DEALS!!!</h1>
             </div>
@@ -108,15 +109,15 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
             <div class="container">
                 <div class="section-heading">
                     <h2>Menu</h2>
-                    <?php if (isset($_SESSION['DATE_SELECTED'])) : ?>
+                    <?php if (isset($_SESSION['DATE_SELECTED'])): ?>
                         <p>Selected Pick up Date: <?php echo $_SESSION['DATE_SELECTED']; ?></p>
-                    <?php else : ?>
-                        <p>No date selected.</p>
+                    <?php else: ?>
+                        
                     <?php endif; ?>
-                    <?php if (isset($_SESSION['TIME_SELECTED'])) : ?>
+                    <?php if (isset($_SESSION['TIME_SELECTED'])): ?>
                         <p>Selected Pick up Time: <?php echo $_SESSION['TIME_SELECTED']; ?></p>
-                    <?php else : ?>
-                        <p>No time selected.</p>
+                    <?php else: ?>
+                        
                     <?php endif; ?>
                 </div>
                 <section class="section-body">
@@ -168,35 +169,66 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                             }
 
                             $disabledClass = ($avail <= 0) ? 'disable-click' : '';
-                    ?>
-                            <a class="menu-item position <?php echo $disabledClass; ?>" href="<?php echo ($avail <= 0) ? '#' : SITEURL . 'product-info.php?FOOD_ID=' . $FOOD_ID; ?>">
-                                <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
-                                <div class="text">
-                                    <p class="name"><?php echo $FOOD_NAME ?></p>
-                                    <div class="inline">
-                                        <h2>₱<?php echo $FOOD_PRICE ?></h2>
-                                        <p id="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'stick-hidden' : ''; ?>">per stick</p>
-                                        <?php if ($avail > 0) : ?>
-                                            <p><?php echo $avail ?> sticks remaining</p>
-                                        <?php endif; ?>
-                                        
+                            ?>
+                            <div class="menu-item position">
+                                <a class=" <?php echo $disabledClass; ?>"
+                                    href="<?php echo ($avail <= 0) ? '#' : SITEURL . 'product-info.php?FOOD_ID=' . $FOOD_ID; ?>">
+                                    <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
+                                    <div class="text">
+                                        <p class="name"><?php echo $FOOD_NAME ?></p>
+                                        <div class="inline">
+                                            <h2>₱<?php echo $FOOD_PRICE ?></h2>
+                                            <p id="<?php echo ($PRSN_ROLE === 'Wholesaler') ? 'stick-hidden' : ''; ?>">per stick
+                                            </p>
+                                            <?php if ($avail > 0): ?>
+                                                <p><?php echo $avail ?> sticks remaining</p>
+                                            <?php endif; ?>
+
+                                        </div>
                                     </div>
-                                </div>
-                                <?php if ($avail <= 0) : ?>
-                                    <div class="unavailable">
-                                        <p>Product limit reached at this time slot. Please choose another time slot.</p>
-                                        <button class="button">Select another date and time</button>
-                                    </div>
+                                </a>
+                                <?php if ($avail <= 0): ?>
+                                    <form action="cus-home-page.php">
+                                        <div class="unavailable">
+                                            <p>Product limit reached at this time slot. Please choose another time slot.</p>
+                                            <button class="button" type="submit">Select another date and time</button>
+                                        </div>
+                                    </form>
                                 <?php endif; ?>
-                            </a>
-                    <?php
+                                <?php if (isset($_SESSION['DATE_SELECTED']) || (isset($_SESSION['TIME_SELECTED']))): ?>
+                                <?php else: ?>  
+                                    <form action="cus-home-page.php">
+                                        <div class="unavailable" style="text-align:center;">
+                                            <p>No pickup date selected.</p>
+                                            <button class="button" type="submit">Select date and time</button>
+                                        </div>
+                                    </form>
+                                <?php endif; ?>
+                                <!-- <?php if (isset($_SESSION['TIME_SELECTED'])): ?>
+                                    
+                                <?php else: ?>
+                                    <form action="cus-home-page.php">
+                                        <div class="unavailable" style="text-align:center;">
+                                            <p >No pickup date selected.</p>
+                                            <button class="button" type="submit">Select date and time</button>
+                                        </div>
+                                    </form>
+                                <?php endif; ?>
+                            </div> -->
+
+
+                                <?php
                         }
                     }
                     ?>
+            
                 </section>
             </div>
+            
         </section>
-        <a href="<?php echo SITEURL; ?>cart.php" class="material-icons floating-btn" style="font-size: 45px;">shopping_cart</a>
+        
+        <a href="<?php echo SITEURL; ?>cart.php" class="material-icons floating-btn"
+            style="font-size: 45px;">shopping_cart</a>
     </main>
     <footer>
         <div class="footer-container">

@@ -24,8 +24,16 @@ const updateSteps = (e) => {
   switch (pstatus) {
     case "Placed":
       currentStep = 1;
-      statusTitle.textContent = "Your order has been placed";
-      statusDesc.textContent = "Please allot 5 to 10 minutes of waiting time for the confirmation of your order.";
+      // statusTitle.textContent = "Your order has been placed";
+      // console.log(dDate);
+      // var today = new Date();
+      // console.log(today);
+      // if (dDate < today) {
+      //   statusDesc.textContent = "Test";
+      // } else {
+      //   statusDesc.textContent = "Testttttt";
+      // }
+      statusDesc.textContent = "Please allot 5 to 10 minutes of waiting time for the confirmation of your order.\nOrders placed outside business hours will be checked when our operations resume.";
       break;
     case "Awaiting Payment":
       currentStep = 2;
@@ -34,18 +42,18 @@ const updateSteps = (e) => {
       break;
     case "To Prepare":
       currentStep = 2;
-      statusTitle.textContent = "Your order is being prepared";
-      statusDesc.textContent = "Estimated time to prepare your order is at least 30 minutes. Note that preparation time depends on the quantity you have purchased.";
+      statusTitle.textContent = "Your order is confirmed.";
+      statusDesc.textContent = "Order will be prepared before your specified pickup date and time.";
       break;
     case "Currently Preparing":
       currentStep = 2;
-      statusTitle.textContent = "Your order is packed and is ready to be shipped";
-      statusDesc.textContent = "We will book your order for delivery. Please note that the waiting time for delivery depends on your location.";
+      statusTitle.textContent = "Your order is currently being prepared";
+      statusDesc.textContent = "Regularly refresh this page to be notified when your order is ready to be picked up. \nEstimated waiting time for same-day orders is 30 minutes.";
       break;
     case "Packed":
       currentStep = 3;
-      statusTitle.textContent = "Your order is shipped";
-      statusDesc.textContent = "Your delivery is on the way. Please make sure to receive your order when it arrives.";
+      statusTitle.textContent = "Your order is ready to be picked up";
+      statusDesc.textContent = "Please pick up your order at this address: \nSta. Ignaciana, Brgy. Kalusugan, Quezon City, Metro Manila, Philippines\n or book a third-party courier to pick up your order. (ex: Lalamove, Grab)";
       break;
     case "Completed":
       currentStep = 3;

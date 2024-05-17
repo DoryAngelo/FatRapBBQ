@@ -84,7 +84,9 @@ foreach ($food_quantities as $food_id => $total_quantity) {
                     <div class="success-title">
                         <h1>Success!</h1>
                         <p class="title-desc">
-                            Your order tracker is:
+                        Please keep this tracking number to check your order status in the future. 
+
+                            <br><br>Your order tracker is:
                             <a href="track-order.php?tracker=<?php echo urlencode($PLACED_ORDER_TRACKER); ?>">
                                 <?php echo htmlspecialchars($PLACED_ORDER_TRACKER); ?>
                             </a>

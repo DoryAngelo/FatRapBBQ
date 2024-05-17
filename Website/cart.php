@@ -20,7 +20,7 @@ if (isset($_SESSION['prsn_id'])) {
     $random = random_bytes(16);
     $GUEST_ID = bin2hex($random);
     $_SESSION['prsn_role'] = "Customer";
-    $_SESSION['guest_id'] =   $GUEST_ID;
+    $_SESSION['guest_id'] = $GUEST_ID;
 }
 $PRSN_ROLE = $_SESSION['prsn_role'];
 
@@ -40,7 +40,8 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
     <link rel="stylesheet" href="customer-styles.css"><!--change css file-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <!-- <script src="app.js" defer></script> -->
     <!-- add the code below to load the icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -56,9 +57,9 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                     <h1>Fat Rap's Barbeque</h1>
                     <?php
                     if ($PRSN_ROLE == "Wholesaler") {
-                    ?>
+                        ?>
                         <p>WHOLESALE</p>
-                    <?php
+                        <?php
                     }
                     ?>
                 </div>
@@ -73,14 +74,14 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                 <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
                 <?php
                 if (isset($_SESSION['prsn_id'])) {
-                ?>
+                    ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
                     </li>
-                <?php
+                    <?php
                 } else {
-                ?>
+                    ?>
                     <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                <?php
+                    <?php
                 }
                 ?>
             </ul>
@@ -91,11 +92,14 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
             <div class="container">
                 <div class="section-heading">
                     <h2>Cart</h2>
-                    <!-- <div>
-                        <p>Delivery date and time: </p>
-                        <input type="date" id="date" class="input">
-                        <input type="time" id="time" class="input">
-                    </div> -->
+                    <div>
+                        <p><b>Your pickup date for your order is set to: </p>
+                        <?php $SELECTED_DATE = isset($_SESSION['DATE_SELECTED']) ? $_SESSION['DATE_SELECTED'] : date('M j Y');
+                        $SELECTED_TIME = isset($_SESSION['TIME_SELECTED']) ? $_SESSION['TIME_SELECTED'] : date('g:i a');
+                        $selected_datetime = $SELECTED_DATE . " " . $SELECTED_TIME; ?>
+                        <p><?php echo $selected_datetime?> </p>
+                        </b>
+                    </div>
                 </div>
                 <form id="checkout-form" action="checkout.php" class="section-body" method="post">
                     <section class="block">
@@ -185,38 +189,47 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                                                 // } else {
                                                 //     $flagValues[$FOOD_NAME] = false;
                                                 // }
-                                        ?>
+                                                ?>
                                                 <tr> <!-- one row for a product-->
                                                     <td data-cell="customer" class="first-col">
                                                         <div class="pic-grp">
-                                                            <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
+                                                            <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>"
+                                                                alt="">
                                                             <p><?php echo $FOOD_NAME ?></p>
                                                         </div>
                                                     </td> <!--Pic and Name-->
                                                     <td class="narrow-col quantity-col">
                                                         <div class="with-remaining">
                                                             <div class="quantity-grp">
-                                                                <input type="number" class="quantity-input" data-in-order-id="<?php echo $IN_ORDER_ID; ?>" data-stock="<?php echo $avail; ?>" data-price="<?php echo $FOOD_PRICE; ?>" data-food-name="<?php echo $FOOD_NAME; ?>" value="<?php echo $IN_ORDER_QUANTITY; ?>" min="1" max="<?php echo $avail; ?>">
+                                                                <input type="number" class="quantity-input"
+                                                                    data-in-order-id="<?php echo $IN_ORDER_ID; ?>"
+                                                                    data-stock="<?php echo $avail; ?>"
+                                                                    data-price="<?php echo $FOOD_PRICE; ?>"
+                                                                    data-food-name="<?php echo $FOOD_NAME; ?>"
+                                                                    value="<?php echo $IN_ORDER_QUANTITY; ?>" min="1"
+                                                                    max="<?php echo $avail; ?>">
                                                             </div>
-                                                            <p class="remaining"><?php echo ($avail < 0) ? 0 : $avail; ?> sticks remaining</p>
+                                                            <p class="remaining"><?php echo ($avail < 0) ? 0 : $avail; ?> sticks
+                                                                remaining</p>
                                                         </div>
                                                     </td>
                                                     <td class="narrow-col price-col">
                                                         <p>₱<?php echo $IN_ORDER_TOTAL ?></p>
                                                     </td><!--Price-->
                                                     <td class="narrow-col">
-                                                        <p><a href="delete_in_order.php?IN_ORDER_ID=<?php echo $IN_ORDER_ID; ?>" class="bx bxs-trash-alt trash"></a>
+                                                        <p><a href="delete_in_order.php?IN_ORDER_ID=<?php echo $IN_ORDER_ID; ?>"
+                                                                class="bx bxs-trash-alt trash"></a>
                                                         <p><!-- pa remove na lang ng underline sa link -->
                                                     </td><!--Action-->
                                                 </tr>
-                                            <?php
+                                                <?php
                                             }
                                         } else {
                                             ?>
                                             <tr>
                                                 <td colspan="5" class="error">Cart is empty</td>
                                             </tr>
-                                        <?php
+                                            <?php
                                         }
                                         if ($count >= 0) {
                                             if (isset($_SESSION['prsn_id'])) {
@@ -247,21 +260,21 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                     <!-- <a href="checkout.php" class="page-button center">Checkout</a> -->
                     <?php
                     if ($count <= 0) {
-                    ?>
+                        ?>
                         <button class="page-button center" disabled>Checkout</button>
-                    <?php
+                        <?php
                     } else {
-                    ?>
+                        ?>
                         <button name="checkout" type="submit" class="page-button center">Checkout</button>
-                    <?php
+                        <?php
                     }
                     ?>
                     <script>
                         function validateForm() {
-                            <?php if ($count <= 0) : ?>
+                            <?php if ($count <= 0): ?>
                                 alert("Cannot proceed with checkout. Please review your order.");
                                 return false;
-                            <?php else : ?>
+                            <?php else: ?>
                                 return true;
                             <?php endif; ?>
                         }
@@ -309,7 +322,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
         </div>
     </footer>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             const quantityInputs = document.querySelectorAll(".quantity-input");
 
             quantityInputs.forEach((input) => {
@@ -344,9 +357,9 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                 formData.append("FOOD_PRICE", foodPrice);
 
                 fetch("update_quantity.php", {
-                        method: "POST",
-                        body: formData
-                    })
+                    method: "POST",
+                    body: formData
+                })
                     .then(response => response.text())
                     .then(data => {
                         console.log('Quantity updated:', data);
@@ -372,7 +385,7 @@ $PRSN_ROLE = $_SESSION['prsn_role'];
                 document.querySelector('.payment .text h3:last-child').textContent = `₱${cartTotal.toFixed(2)}`;
             }
 
-            document.querySelector('form').addEventListener('submit', function(event) {
+            document.querySelector('form').addEventListener('submit', function (event) {
                 const invalidInputs = document.querySelectorAll('.invalid-quantity');
                 if (invalidInputs.length > 0) {
                     alert('Please correct the invalid quantities before submitting the form.');

@@ -176,7 +176,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order'])) {
                 <div class="text">
                     <h1>Order our best-selling BBQ</h1>
                     <p>Indulge in the ultimate barbeque experience and place your order today!</p>
-                    <a href="menu.php" class="button">Order Now</a>
+                    <a href="#calendar-section" class="button">Order Now</a>
                 </div>
                 <img src="https://urbanblisslife.com/wp-content/uploads/2021/06/Filipino-Pork-BBQ-FEATURE.jpg" alt="picture of a pork bbq">
                 <!-- <img src="images/pork-bbq.jpg" alt="picture of 3 pork bbq sticks"> -->

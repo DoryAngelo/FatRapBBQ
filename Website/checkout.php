@@ -17,7 +17,7 @@ if (isset($_SESSION['prsn_id'])) {
     $random = random_bytes(16);
     $GUEST_ID = bin2hex($random);
     $_SESSION['prsn_role'] = "Customer";
-    $_SESSION['guest_id'] =   $GUEST_ID;
+    $_SESSION['guest_id'] = $GUEST_ID;
 }
 
 $PRSN_ROLE = $_SESSION['prsn_role'];
@@ -100,7 +100,7 @@ if (isset($_POST['submit'])) {
             $result = mysqli_query($conn, $select);
         }
 
-        $_SESSION['PLACED_ORDER_TRACKER'] =  $PLACED_ORDER_TRACKER;
+        $_SESSION['PLACED_ORDER_TRACKER'] = $PLACED_ORDER_TRACKER;
 
         if (isset($_SESSION['prsn_id'])) {
             $sql3 = "INSERT INTO placed_order SET
@@ -181,7 +181,8 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="customer-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <script src="app.js" defer></script>
     <script src="ph-address-selector.js" defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -199,9 +200,9 @@ if (isset($_POST['submit'])) {
                     <h1>Fat Rap's Barbeque</h1>
                     <?php
                     if ($PRSN_ROLE == "Wholesaler") {
-                    ?>
+                        ?>
                         <p>WHOLESALE</p>
-                    <?php
+                        <?php
                     }
                     ?>
                 </div>
@@ -216,14 +217,14 @@ if (isset($_POST['submit'])) {
                 <li><a href="<?php echo SITEURL; ?>cart.php">Cart</a></li>
                 <?php
                 if (isset($_SESSION['prsn_id'])) {
-                ?>
+                    ?>
                     <li><a href="<?php echo SITEURL; ?>logout.php">Logout</a>
                     </li>
-                <?php
+                    <?php
                 } else {
-                ?>
+                    ?>
                     <li><a href="<?php echo SITEURL; ?>login-page.php">Login</a></li>
-                <?php
+                    <?php
                 }
                 ?>
             </ul>
@@ -247,6 +248,12 @@ if (isset($_POST['submit'])) {
                         <!--order summary block-->
                         <section class="block">
                             <h3 class="block-heading">Order Summary</h2>
+                                <p><b>Pickup date: </p>
+                                <?php $SELECTED_DATE = isset($_SESSION['DATE_SELECTED']) ? $_SESSION['DATE_SELECTED'] : date('M j Y');
+                                $SELECTED_TIME = isset($_SESSION['TIME_SELECTED']) ? $_SESSION['TIME_SELECTED'] : date('g:i a');
+                                $selected_datetime = $SELECTED_DATE . " " . $SELECTED_TIME; ?>
+                                <p><?php echo $selected_datetime ?> </p>
+                                </b><br>
                                 <div class="block-body">
                                     <div class="table-wrap">
                                         <table class="order">
@@ -297,11 +304,12 @@ if (isset($_POST['submit'])) {
                                                         $FOOD_STOCK = $row['FOOD_STOCK'];
                                                         $IN_ORDER_QUANTITY = $row['IN_ORDER_QUANTITY'];
                                                         $IN_ORDER_TOTAL = $row['IN_ORDER_TOTAL'];
-                                                ?>
+                                                        ?>
                                                         <tr>
                                                             <td data-cell="customer" class="first-col">
                                                                 <div class="pic-grp">
-                                                                    <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>" alt="">
+                                                                    <img src="<?php echo SITEURL; ?>images/<?php echo $FOOD_IMG; ?>"
+                                                                        alt="">
                                                                     <p><?php echo $FOOD_NAME; ?></p>
                                                                 </div>
                                                             </td> <!--Pic and Name-->
@@ -314,9 +322,11 @@ if (isset($_POST['submit'])) {
                                                             <td>
                                                                 <p>₱<?php echo $IN_ORDER_TOTAL; ?></p>
                                                             </td><!--Sub Total-->
-                                                            <input type="hidden" name="cart[<?php echo $IN_ORDER_ID; ?>][IN_ORDER_ID]" value="<?php echo $IN_ORDER_ID; ?>">
+                                                            <input type="hidden"
+                                                                name="cart[<?php echo $IN_ORDER_ID; ?>][IN_ORDER_ID]"
+                                                                value="<?php echo $IN_ORDER_ID; ?>">
                                                         </tr>
-                                                <?php
+                                                        <?php
                                                     }
                                                 }
                                                 ?>
@@ -382,19 +392,24 @@ if (isset($_POST['submit'])) {
                                     <div class="form-field">
                                         <div class="input-grp">
                                             <p>City/Municipality</p>
-                                            <select name="city" class="form-control form-control-md input" id="city" required></select>
-                                            <input type="hidden" class="form-control form-control-md" name="city" id="city-text">
+                                            <select name="city" class="form-control form-control-md input" id="city"
+                                                required></select>
+                                            <input type="hidden" class="form-control form-control-md" name="city"
+                                                id="city-text">
                                             <div class="error"></div>
                                         </div>
                                         <div class="input-grp">
                                             <p>Barangay</p>
-                                            <select name="barangay" class="form-control form-control-md input" id="barangay" required></select>
-                                            <input type="hidden" class="form-control form-control-md" name="barangay" id="barangay-text">
+                                            <select name="barangay" class="form-control form-control-md input"
+                                                id="barangay" required></select>
+                                            <input type="hidden" class="form-control form-control-md" name="barangay"
+                                                id="barangay-text">
                                             <div class="error"></div>
                                         </div>
                                         <div class="input-grp">
                                             <p>House no./Bldg./Street</p>
-                                            <input type="text" class="form-control form-control-md input" name="street" id="street-text" required>
+                                            <input type="text" class="form-control form-control-md input" name="street"
+                                                id="street-text" required>
                                             <div class="error"></div>
                                         </div>
                                     </div>
@@ -488,12 +503,14 @@ if (isset($_POST['submit'])) {
                             <h3 class="block-heading">Additional Notes</h2>
                                 <div class="block-body">
                                     <label for="customer-note"></label>
-                                    <textarea id="customer-note" class="customer-note" name="customer-note" rows="4" placeholder="You may send an additional note such as extra spoon and fork, extra sauce, etc."></textarea>
+                                    <textarea id="customer-note" class="customer-note" name="customer-note" rows="4"
+                                        placeholder="You may send an additional note such as extra spoon and fork, extra sauce, etc."></textarea>
                                 </div>
                         </section>
                         <!-- note block-->
                         <div class="block note">
-                            <p>Note: Orders can only be picked up from 10AM to 5PM. Moreover, mode for picking up orders will be shouldered by customers</p>
+                            <p>Note: Orders can only be picked up from 10AM to 5PM. Moreover, mode for picking up orders
+                                will be shouldered by customers</p>
                         </div>
                         <div class="btn-container center">
                             <a href="<?php echo SITEURL; ?>cart.php" class="page-button clear-bg">Back</a>
