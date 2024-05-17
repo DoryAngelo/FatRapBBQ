@@ -230,9 +230,15 @@ const updateCalendar = () => {
                 icon: "error",
                 title: "Date is Fully Booked!",
                 text: "Please choose another available date.",
+                iconColor: 'yellow',
+                    confirmButtonText: '<font color="3A001E">OK</font>',
+                    confirmButtonColor: '#F5D636',
+                    color: 'white',
+                    background: '#C13B24',
               });
         });
     }
+
     var closedDates = document.querySelectorAll('.closed');
     for (var x = 0, closedDatesLength = closedDates.length; x < closedDatesLength; x++) {
         //console.log(sampleDivs[x]);
