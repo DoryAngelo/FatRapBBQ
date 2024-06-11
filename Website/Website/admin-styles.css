@@ -1,0 +1,1105 @@
+*, *::before, *::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+:root{
+    --bg:#EDE9D0;
+    --primary:#F5D636;
+    --active-primary:#EDCB1C;
+    --input-bg:#F7F3DC;
+    --form-bg: #FFFDEF;
+    --available:#A8D991;
+    --available-text:#304D23;
+    --fully-booked:#C13B24;
+    --fully-booked-text:var(--text);
+    --closed:#3B3B3B;
+    --closed-text:#A9A9A9;
+    --product-info-bg: #C13B24;
+    --light-text: #FEFBEA;
+
+    --text:#3A3F42;
+    --light-blue: #DEECF9;
+    --darker-row: #deecf94f;
+    --sidemenu-blue: #6EA4E4;
+    --sidemenu-blue-hover: #5790D5;
+    --sidemenu-blue-text: #163860;
+    --db-highlight-blue: #93CBFF;
+    --gray: #878F94; /*used in application detail's section heading p*/
+    --accept-green: #78D35A;
+    --reject-red: #DA523B;
+}
+
+html {
+    color: var(--text);
+}
+
+body{
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    min-height: 100vh;
+    color: #3A3F42;
+    background-color: #FBFEFF;
+}
+
+main {
+    padding-top: 8rem;
+}
+
+.section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    max-width: 1200px;
+    width: 90%;
+    margin: clamp(1rem, 5vw, 3rem) auto;
+    margin-bottom: 5rem;
+}
+
+.section-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.8rem;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#admin-calendar .row {
+    align-items: flex-start;
+    gap: 3rem;
+}
+
+.back {
+    justify-content: space-between;
+}
+
+.back a {
+    margin-right: 2rem;
+    color: var(--text);
+    font-weight: 500;
+}
+
+.row p {
+    margin-left: 1rem;
+    color: var(--gray);
+}
+
+.section-heading h2 {
+    font-size: 2.0625rem;
+}
+
+.inline {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.dropdown {
+    background-color: #ECEFEF;
+    color: var(--text);
+    padding: 4px 8px;
+    min-width: 7.25rem;
+    border-radius: 3px;
+    border: none;
+    margin-left: 1.5rem;
+}
+
+.inline .dropdown {
+    margin-left: 0;
+}
+
+.with-side-menu{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 2.5rem;
+}
+
+.main-section {
+    min-width: 5rem;
+}
+
+/* #orders-page .main-section {
+    /* overflow-x: scroll; 
+} */
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+p.bold-font, .app-det-tbl .bold-font {
+    font-weight: bold;
+}
+
+.app-det-tbl td.bold-font {
+    width: 10%;
+    padding-left: 1.5rem;
+}
+
+.app-det-tbl td.top {
+    padding-top: 1.25rem;
+    padding-bottom: 5px;
+}
+
+.app-det-tbl td.bottom {
+    padding-bottom: 1.25rem;
+}
+
+.table-wrapper {
+    width: 100%;
+    background-color: var(--light-blue);
+    border-radius: 1rem;
+    padding: 1px;
+    height: max-content;
+    overflow-x: auto;
+    flex: 1;
+}
+
+table {
+    background: white;
+    border-radius: 1rem;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table .link {
+    color: var(--text);
+    font-weight: 500;
+}
+
+table .link:hover {
+    color: var(--sidemenu-blue-hover);
+}
+
+table .error {
+    color: var(--gray);
+    text-align: center;
+    font-style: italic;
+    padding: 1.5rem 0;
+}
+
+table .edit, table .trash {
+    color: var(--sidemenu-blue-text);
+    font-weight: bold;
+}
+
+table .trash {
+    text-decoration: none;
+}
+
+.app-det-tbl {
+    background: var(--light-blue);
+}
+
+table th.header, .app-det-tbl table td.header {
+    padding: 1.5rem 1rem 0.5rem 1rem ;
+    background: var(--light-blue);
+}
+
+table th.header:first-of-type {
+    border-top-left-radius: 1rem;
+}
+
+table th.header:last-of-type {
+    border-top-right-radius: 1rem;
+}
+
+td,th {
+    text-align: left;
+    text-wrap: nowrap;
+}
+
+td {
+    padding: 0.8rem;
+    padding-left: 1rem;
+}
+
+.alternating tr:nth-last-of-type(2n) {
+    background: var(--darker-row);
+}
+
+table img {
+    width: 3.3rem;
+    height: 3.3rem;
+    border-radius: 5px;
+}
+
+.btn-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 0.6rem 1rem;
+}
+
+button {
+    display: inline-block;
+    border: none;
+    outline: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+table button {
+    font-size: 1.6rem;
+    clip-path: circle();
+    shape-outside: circle();
+}
+
+.btn-check i {
+    color: #78D35A;
+}
+
+.btn-cross i {
+    color: var(--reject-red);
+}
+
+.valid-id {
+    margin-top: 2rem;
+    gap: 1rem;
+}
+
+.valid-id img {
+    width: 60%;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.grid-container .box {
+    height: 200px;
+    background-color: var(--light-blue);
+    border-radius: 1rem;
+    text-decoration: none;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    position: relative;
+    color: var(--text);
+    /* box-shadow: var(--db-highlight-blue) 0px 3px 4px 0px; pick a better color db-higlight0blue as shadow is good for lightblue but not for the same color */
+}
+
+.grid-container .blue {
+    background-color: var(--db-highlight-blue);
+}
+
+.grid-container .box:hover {
+    cursor: pointer;
+    box-shadow: #cfd9e3 0px 2px 4px 0px;
+}
+
+.grid-container .box p {
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #7e95ac;
+}
+
+.grid-container .box h1 {
+    font-size: 3rem;
+    color: var(--sidemenu-blue-text);
+}
+
+#dashboard .grid-container .box {
+    gap: 1.5rem;
+}
+
+/* #dashboard .grid-container .box p {
+    position: absolute;
+    top: 1rem;
+} */
+
+#admin-calendar .grid-container {
+    width: 100%;
+    margin-top: 1rem;
+    grid-template-columns: repeat(3,1fr);
+}
+
+#admin-calendar .grid-container .box {
+    height: 8rem;
+    /* gap: 1rem; */
+    background-color: #fff;
+    box-shadow: #cfd9e3 0px 2px 4px 0px;
+}
+
+#admin-calendar .grid-container .box:hover {
+    cursor: default;
+}
+
+#admin-calendar .grid-container .green {
+    color: #90BD7A;
+}
+
+#admin-calendar .grid-container .red {
+    color: var(--reject-red);
+}
+
+#admin-calendar .grid-container p {
+    font-weight: normal;
+    font-size: 0.9rem;
+    margin-left: 0;
+}
+
+.side-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.side-menu h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.6rem;
+}
+
+.side-menu .inventory-box, .view, .big-btn{
+    display: block;
+    background-color: var(--sidemenu-blue);
+    padding: 0.9rem 1.1rem;
+    font-size: 1rem;
+    color: var(--sidemenu-blue-text);
+}
+
+.side-menu .view:hover {
+    background-color: var(--db-highlight-blue);
+}
+
+.side-menu .inventory-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    border-radius: 1rem;
+    background-color: rgb(242, 150, 150);
+    color: rgb(119, 45, 45);
+}
+
+.side-menu .inventory-box a.edit {
+    font-size: 1rem;
+    padding: 0;
+    border-radius: 0;
+    margin: 0;
+    width: max-content;
+    color: rgb(119, 45, 45);
+}
+
+.side-menu .blue {
+    background-color: var(--sidemenu-blue);
+    color: var(--sidemenu-blue-text);
+}
+
+.side-menu .blue a.edit, .side-menu .blue .red-text {
+    color: var(--sidemenu-blue-text);
+}
+
+.side-menu a {
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--sidemenu-blue-text);
+    border-radius: 1.2rem;
+}
+
+.side-menu .inventory-box a.edit:hover {
+    text-decoration: underline;
+}
+
+.side-menu .inline {
+    justify-content: space-between;
+}
+
+#orders-page .side-menu .group:last-of-type {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+a.big-font {
+    font-size: 1.25rem;
+    padding: 0.6rem 1.1rem;
+    border-radius: 2rem;
+}
+
+.position-notif {
+    position: relative;
+}
+
+.position-notif .view {
+    z-index: 0;
+}
+
+.position-notif .notif {
+    position: absolute;
+    right: 1rem;
+    top: 20%;
+    width: max-content;
+    min-width: 1.8rem;
+    height: max-content;
+    min-height: 1.8rem;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: bold;
+    background-color: red;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+button.view {
+    width: 100%;
+    text-align: left;
+    font-weight: bold;
+    border-radius: 1.2rem;
+}
+
+.accept {
+    background-color: var(--accept-green);
+    color: black;
+}
+
+button.accept:hover {
+    background-color: #78D35A;
+}
+
+.reject {
+    background-color: var(--reject-red);
+    color: black;
+}
+
+button.reject:hover {
+    background-color: #78D35A;
+}
+
+.big-btn {
+    border-radius: 1.2rem;
+    width: max-content;
+    min-width: 17rem;
+    margin: 0 auto;
+    font-weight: bold;
+    font-size: 1.25rem;
+    margin-top: 2.25rem;
+    text-decoration: none;
+    text-align: center;
+}
+
+.big-btn:hover {
+    background-color: var(--sidemenu-blue-hover);
+}
+
+.page-btn {
+    text-decoration: none;
+    width: max-content;
+    margin-inline: auto;
+}
+
+.block {
+    background-color: var(--light-blue);
+    border-radius: 1rem;
+    padding: 1.5rem;
+}
+
+.form {
+    display: flex;
+    gap: 1rem;
+}
+
+.form section {
+    width: 50%;
+}
+
+.form-title{
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.form-title h1{
+    color: var(--text);
+    font-size: 1.25rem;
+}
+
+.form-field{
+    display: grid;
+    gap: 1.5rem;
+}
+
+.form-field-input{
+    position: relative;
+}
+
+form input {
+    border-radius: 5px;
+    border: 2px solid transparent;
+    outline: none;
+    transition: .3s ease;
+}
+
+.form-field-input input:not(.image) {
+    width: 100%;
+    padding: 5px 13px;
+    background: #BAD6EF;
+    font-size: 1rem;
+    margin-top: 8px;
+}
+
+input.image {
+    width: 100%;
+}
+
+.form-field-input p {
+    font-style: italic;
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 3px;
+    margin-bottom: 8px;
+}
+
+.form-field-input label{
+    color: var(--text);
+}
+
+.form-field-input input:focus{
+    border: 2px solid var(--sidemenu-blue);
+}
+
+.form-field-input .with-desc {
+    display: flex;
+    flex-direction: column;
+}
+
+/* .hidepass, .showpass{
+    position: absolute;
+    right: 15px;
+    top: 34px;
+    font-size: 1.2rem;
+    color: #8191c2;
+    cursor: pointer;
+} */
+.input-container {
+    position: relative;
+}
+
+.input-container .showpass, .input-container .hidepass {
+    color: #8191c2;
+    position: absolute;
+    font-size: 1.2rem;
+    right: 10px; /* Adjust this value to adjust the position of the icon */
+    top: 35%; /* Adjust this value to vertically center the icon */
+    cursor: pointer;
+}
+
+.input-control {
+    position: relative;
+}
+
+.input-control.error input {
+    border-color: var(--text2);
+}
+
+.input-control .error {
+    position: absolute;
+    top: 100%; /* Position it just below the input */
+    color: var(--text2);
+    font-size: 0.7rem;
+    margin-top: 2px;
+}
+
+.calendar {
+    width: 100%;
+    min-height: 30rem;
+}
+
+.right-side {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.right-side h3{
+    font-size: 1.625rem;
+}
+
+.right-side .block {
+    height: 100%;
+    max-height: 55rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: #cfd9e3 0px 2px 4px 0px;
+    gap: 2rem;
+}
+
+.right-side hr {
+    margin-top: 0.25rem;
+    margin-bottom: 1.25rem;
+    border: 0.5px solid #7297BD;
+}
+
+.right-side button {
+    padding: 0.6rem 1.25rem;
+    border-radius: 1.5rem;
+}
+
+.right-side .button {
+    width: max-content;
+    font-size: 1rem;
+    color: black;
+}
+
+.right-side .green {
+    background-color: var(--available);
+}
+
+.right-side .red {
+    background-color: var(--reject-red);
+}
+
+.right-side .black {
+    background-color: #000;
+    color: white;
+}
+
+.save-btn {
+    width: 100%;
+    max-width: 10rem;
+    min-width: max-content;
+    font-size: 1.25rem;
+    font-weight: bold;
+    background-color: #5FA9FF;
+}
+
+.order-details {
+    width: 40%;
+    margin: 0 auto;
+    padding-right: 0.5rem;
+}
+
+.order-details .scroll {
+    height: max-content;
+    max-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow: auto;
+    overflow-x: hidden;
+    padding-right: 1rem;
+}
+
+a.back {
+    width: 40%;
+    margin: 0 auto;
+    margin-bottom: 0.75rem;
+}
+
+.order-details table {
+    border-radius: 0;
+    border-top: 1px solid #B4CFE8;
+    border-bottom: 1px solid #B4CFE8;
+    background-color: var(--light-blue);
+}
+
+.order-details td, .order-details th {
+    padding: 0.5rem 0;
+    text-align: left;
+}
+
+.order-details table.contact-info td {
+    text-align: right;
+}
+
+.order-details .delivery-grp {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.order-details .text-grp h3{
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.order-details table .item-col {
+    width: 65%;
+}
+
+.order-details table .subtotal-col {
+    text-align: right;
+}
+
+.order-details .payment {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.order-details .payment h3:first-of-type{
+    margin-right: 1rem;
+    font-weight: normal;
+}
+
+.calendar-block {
+    background-color: var(--light-blue);
+    height: auto;
+    border-radius: 1.383rem;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    /* box-shadow: 0 0 10px rgba(0,0,0,0.3); */
+    box-shadow: #cfd9e3 0px 2px 4px 0px;
+}
+
+.monthYear {
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.8rem;
+}
+
+.calendar-block .header {
+    height: 6.5rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+.calendar-block .header button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 1.625rem;
+    height: 1.625rem;
+    font-size: 1.625rem;
+    font-weight: bold;
+    background-color: var(--light-blue);
+    color: var(--text);
+}
+
+.calendar-block .header button:hover {
+    background-color: var(--db-highlight-blue);
+}
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+}
+
+.day {
+    text-align: center;
+    padding: 5px;
+    color: black;
+    font-weight: 500;
+}
+
+.dates {
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+}
+
+.date {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    /* cursor: pointer; */
+    font-weight: 600;
+    /* border-radius: 50%; */
+    width: 100%;
+    height: 5rem;
+    transition: 0.2s;
+    font-size: 1.625rem;
+    background-color: var(--light-blue);
+}
+
+ .date:hover,
+.date.active {
+    background: var(--db-highlight-blue);
+    color: white;
+} 
+
+
+.available{
+    background: var(--available);
+    color: white;
+}
+.fullybooked{
+    background: var(--fully-booked);
+    color: white;
+}
+ .closed{
+    background: var(--closed);
+    color: white;
+} 
+
+.button.clear{
+    background: transparent;
+    color: #517ca7;
+    border: 2px solid #517ca7;
+    font-weight: 600;
+} 
+
+.date.available{
+    background: var(--available);
+    color: white;
+}
+.date.fullybooked{
+    background: var(--fully-booked);
+    color: white;
+}
+ .date.closed{
+    background: var(--closed);
+    color: white;
+} 
+.date.active:focus-within{
+    background: var(--active-primary);
+    color: black;
+} 
+
+
+.date.inactive {
+    color: #7297BD;
+}
+
+.date.inactive:hover {
+    color: white;
+}
+
+/* for admin inventory*/
+span.warning {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+span.warning p {
+    width: max-content;
+    background-color: #f42121;
+    padding: 4px 12px;
+    border-radius: 1rem;
+    color: white;
+}
+
+span.warning i {
+    font-size: 1.33rem;
+    color: #f42121;
+}
+
+.green-block {
+    width: 50%;
+    background: var(--block);
+    border-radius: 25px;
+    z-index: 0;
+    box-shadow: rgba(175, 255, 173, 1) 0px 0px 80px 0px;
+}
+
+.section-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.block{
+    width: 100%;
+    padding: 1.5rem 2rem;
+}
+
+.add-edit-menu .big-btn {
+    width: 35%;
+}
+
+.admin-profile .block{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.admin-profile .image-group {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.admin-profile .image-group img {
+    width: 6rem;
+    height: 6rem;
+}
+
+.admin-profile .image-group p {
+    font-size: 1.25rem;
+}
+
+.admin-profile table {
+    background-color: var(--light-blue);
+}
+
+.admin-profile table th, .admin-profile table td {
+    /* border-bottom: 1px solid var(--text); */
+    padding: 8px;
+}
+
+.admin-profile table th {
+    width: 25%;
+}
+
+.admin-profile table input {
+    background-color: var(--light-blue);
+}
+
+/* for the page button of the table */
+.parent {
+    position: relative;
+    padding-bottom: 2.5rem;
+}
+
+.buttons {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0 5px;
+    background-color: #ECEFEF;
+    border-radius: 3px;
+    color: var(--text);
+}
+
+.buttons p{
+    font-size: 0.9rem;
+    width: 4rem;
+    text-align: center;
+}
+
+.buttons i{
+    font-size: 1.33rem;
+    color: #92989e;
+}
+
+/*previous button in admin calendar*/
+.disabled:hover {
+    background-color: red;
+}
+
+.red-text {
+    font-weight: bold;
+    color: rgb(243, 57, 57);
+}
+
+.inventory-box .red-text {
+    color: rgb(255, 230, 230);
+}
+
+.layout {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+.layout section, a.back {
+    width: 100%;
+}
+
+.button.green:focus {
+    background-color: var(--active-primary);
+}
+.button.red:focus {
+    background-color: var(--active-primary);
+}
+.button.black:focus {
+    background-color: var(--active-primary);
+    color: black;
+}
+
+@media only screen and (width <= 1060px) {
+    #orders-page .with-side-menu {
+        grid-template-columns: 1fr;
+    } 
+
+    #orders-page .side-menu {
+        max-width: 20rem;
+    }
+}
+
+@media only screen and (width <= 950px) {
+    #admin-calendar .row {
+        flex-direction: column;
+    }
+}
+
+@media only screen and (width <= 860px) {
+    main {
+        padding-top: 4rem;
+    }
+
+    .container {
+        height: 90%;
+        margin-bottom: 10%;
+    }
+}
+
+@media only screen and (width <= 690px) {
+    .grid-container {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .grid-container .box {
+        height: 180px;
+    }
+    
+    #dashboard .with-side-menu {
+        grid-template-columns: 1fr;
+    } 
+
+    /* #orders-page .side-menu {
+        min-width: 100%;
+    } */
+    
+    .grid-container {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .layout {
+        flex-direction: column;
+    }
+    
+    .section-heading h2 {
+        font-size: clamp(1.25rem, 5vw, 2rem);
+    }
+
+    .back a {
+        margin-right: clamp(1vw, 4vw, 2rem);
+        font-size: 0.8rem;
+    }
+
+    td {
+        padding: clamp(5px,0.8vw,0.8rem) 1rem;
+    }
+
+    table {
+        font-size: 0.8rem;
+    }
+}
+
+@media only screen and (width <= 500px) {
+    #orders-page .side-menu {
+        min-width: 100%;
+    }
+}

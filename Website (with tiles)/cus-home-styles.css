@@ -1,0 +1,570 @@
+@media (prefers-reduced-motion: no-preference) {
+    * {
+      scroll-behavior: smooth;
+    }
+  }
+
+*, *::before, *::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+:root{
+    --bg:#EDE9D0;
+    --primary:#F5D636;
+    --active-primary:#EDCB1C;
+    --text:#3A001E;
+    --input-bg:#F7F3DC;
+    --form-bg: #FFFDEF;
+    --available:#A8D991;
+    --available-text:#304D23;
+    --fully-booked:#C13B24;
+    --fully-booked-text:var(--text);
+    --closed:#3B3B3B;
+    --closed-text:#A9A9A9;
+    --product-info-bg: #C13B24;
+    --light-text: #FEFBEA;
+
+
+}
+
+/* @media only screen and (min-width: 700px) {
+    .product-landing {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 3rem;
+    }
+    .PL-text {
+        width: 60%;
+    }
+    .button {
+        width: max(50%, 200px);
+    }
+
+    .product-landing h1 {
+        text-align: left;
+        font-size: 6rem;
+    }
+
+    .product-landing img {
+        width: min(30%, 300px);
+    }
+} */
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
+}
+
+body{
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    min-height: 100vh;
+}
+
+main {
+    width: 100%;
+    padding-top: 130px;
+    background-color: var(--bg);
+}
+
+button {
+    border: none;
+}
+
+.section {
+    /* padding: 0 15%; */
+    /* padding: clamp(1.4rem,5%,20%) clamp(1rem,5%,20%); doesn't work yet*/
+}
+
+.container {
+    width: 80%;
+    max-width: 90%;
+    margin: 0 auto;
+    border: 1px solid blue;
+}
+
+ul {
+    list-style-type: none;
+}
+
+/*section 1 - product landing*/
+.product-landing {
+    padding-top: 4%;
+    padding-bottom: 7%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    align-items: center;
+    gap: 3rem;
+}
+
+.PL-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 600px;
+    min-width: 26rem;
+    border: 1px solid red;
+    color: var(--text);
+}
+
+.product-landing h1 {
+    font-size: 4.5rem;
+    text-align: left;
+    margin-bottom: -10px;
+}
+
+.product-landing p {
+    font-size: 1.5rem;
+    line-height: 1.5;
+}
+
+.product-landing .button {
+    width: 200px;
+    display: block;
+    text-align: center;
+    padding: 9px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 20px;
+    background-color: var(--primary);
+    text-decoration: none;
+    color: var(--text);
+}
+
+.product-landing .button:hover {
+    background-color: var(--active-primary);
+    color: var(--text);
+    cursor: pointer;
+}
+
+.product-landing .featured-pic {
+    width: 350px;
+    height: 400px;
+    background-color: grey;
+    border-radius: 27px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 4px 4px 0px;
+}
+
+
+
+
+/*section 2 - product landing*/
+.calendar {
+    background-color: #549B3D;
+    position: relative;
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+
+.left-margin {
+    margin-left: clamp(1rem,5%,20%);
+}
+
+.back{
+    z-index: 0;
+    position: absolute;
+}
+
+.green-block {
+    width: 70%;
+    height: 100px;
+    background-color: blue;
+}
+
+.cream-block {
+    width: 30%;
+    height: auto;
+    background-color: pink;
+}
+
+.front {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
+.calendar .front .left-text {
+    width: 40%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+h1.section-heading {
+    font-size: 4.5rem;
+    margin-bottom: 6.625rem;
+    line-height: 4.5rem;
+}
+
+.calendar .left-text .section-heading {
+    color: white;
+}
+
+.legend ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.calendar .left-text .button {
+    font-size: 1.5rem; /* 1.965rem; */
+    width: max-content;
+    padding: 0.625rem 1.4rem;
+    border-radius: 2rem;
+    font-weight: bold;
+}
+
+ .available {
+    background-color: var(--available);
+    color: var(--available-text);
+}
+
+.fully-booked {
+    background-color: var(--fully-booked);
+    color: var(--fully-booked-text);
+}
+
+.closed {
+    background-color: var(--closed);
+    color: var(--closed-text);
+}
+
+.calendar-block {
+    background-color: #FEFBEA;
+    width: 60%;
+    height: auto;
+    border-radius: 1.383rem;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    color: #304D23;
+}
+
+.monthYear {
+    text-align: center;
+    font-weight: 600;
+    font-size: 2.3rem;
+}
+
+.calendar-block .header {
+    height: 6.5rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+.calendar-block .header button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 1.625rem;
+    height: 1.625rem;
+    font-size: 1.625rem;
+    font-weight: bold;
+    background-color: var(--light-blue);
+    color: var(--text);
+}
+
+.calendar-block .header button:hover {
+    background-color: var(--db-highlight-blue);
+}
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+}
+
+.day {
+    text-align: center;
+    padding: 5px;
+    color: black;
+    font-weight: 500;
+}
+
+.dates {
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+}
+
+.date {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    /* cursor: pointer; */
+    font-weight: 600;
+    /* border-radius: 50%; */
+    width: 100%;
+    height: 5rem;
+    transition: 0.2s;
+    font-size: 1.625rem;
+    background-color: var(--light-blue);
+}
+
+/* .date:hover,
+.date.active {
+    background: var(--db-highlight-blue);
+    color: white;
+} */
+
+
+.available{
+    background: var(--available);
+    color: white;
+}
+.fullybooked{
+    background: var(--fully-booked);
+    color: white;
+}
+ .closed{
+    background: var(--closed);
+    color: white;
+} 
+
+/* .date:hover,
+.date.active {
+    background: red;
+    color: white;
+} */
+
+
+.date.inactive {
+    color: var(--bg);
+}
+
+
+/* .date.inactive:hover {
+    color: white;
+} */
+
+.calendar .front .month-heading p {
+    font-size: 1rem;
+} 
+
+.calendar .front .month-heading h2 {
+    font-size: 4.29rem;
+} 
+
+.calendar .front .week-container ul {
+    display: flex;
+    justify-content: space-evenly;
+}
+.calendar .front .week-container .weekday {
+    font-size:  1.173rem;
+    background-color: pink;
+    width: 100%;
+}
+
+
+
+/*product info section*/
+.product-landing h1.other-sections {
+    font-size: 3.5rem;
+}
+
+
+.info {
+    display: flex;
+    align-items: start;
+    background-color: var(--product-info-bg);
+}
+
+.info .product-landing {
+    background-color: var(--product-info-bg);
+}
+
+.info .PL-text {
+    gap: 1rem;
+    color: var(--light-text);
+    height: 100%;
+}
+h1.product-name {
+    font-size: 3rem;
+}
+p.product {
+    font-size: 1.3rem;
+    margin: 0;
+}
+.button-group {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1.5rem;
+}
+
+p.remaining {
+    font-size: 0.8rem;
+    font-style: italic;
+    margin-top: 3px;
+}
+
+.quantity-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.7rem;
+    margin: 0 auto;
+    }
+
+p.amount {
+    color: black;
+    background-color: white;
+    width: 2.7rem;
+    height: max-content;
+    border-radius: 3px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.circle {
+    font-size: 20px;
+    color: #F67761;
+}
+
+.circle:hover {
+    cursor: pointer;
+    color: #eb5c43;
+}
+
+.circle:active {
+    background-color: #D75039;
+}
+
+@media (width <= 700px) {
+    .product-landing, .calendar .front  {
+        flex-wrap: wrap;
+    }
+
+    .product-landing .button, .calendar-block, .calendar .front .left-text {
+        width: 100%;
+    }
+
+    .product-landing .featured-pic {
+        width: 100%;
+        height: 100%;
+    }
+
+    section h1, h1.section-heading { 
+        text-align: center;
+    }
+
+    h1.section-heading {
+        margin-bottom: 2rem;
+    }
+
+    .legend ul {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+}
+/*Order tracking section*/
+.order-track{
+    padding-top: 6%;
+    padding-bottom: 6%;
+    align-items: start;
+    gap: 5rem;
+    background-color: #F5D636;
+}
+
+.order-track > .PL-text {
+    width: 60%;
+}
+
+.order-track .PL-text h1, .order-track .PL-text p {
+    margin: 0;
+}
+
+.order-track h1.other-sections {
+    font-size: 4rem;
+    line-height: 4.4rem;
+}
+
+.order-track .featured-pic {
+    width: 60%;
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #EDE9D0;
+}
+
+.order-track .featured-pic h2 {
+    font-size: 2rem;
+    color: var(--text);
+}
+
+.order-track hr {
+    margin: 0.5rem 0;
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 2px solid #D8D3B5;
+    padding: 0;
+}
+
+.order-track .featured-pic input {
+    font-size: 1.1rem;
+    padding: 0.5rem;
+    background-color: #D8D3B5;
+    border-radius: 0.25rem;
+    width: 100%;
+    border: none;
+}
+
+.input-control {
+    position: relative;
+}
+
+.input-control.error input {
+    border-color: var(--text2);
+}
+
+.input-control .error {
+    position: absolute;
+    top: 100%; /* Position it just below the input */
+    color: var(--text2);
+    font-size: 0.7rem;
+    margin-top: 2px;
+}
+
+.order-track .button {
+    margin: 0 auto;
+    border: none;
+}
+
+/*wholesale section*/
+.wholesale {
+    padding-top: 9%;
+    padding-bottom: 9%;
+    flex-direction: column;
+    background-color: #549B3D;
+}
+
+.wholesale h1 {
+    text-align: center;
+    color: #fff;
+}
+
+.wholesale .button {
+    width: max-content;
+    height: max-content;
+    padding: 0.7rem 1.3rem;
+    border-radius: 50px;
+}
+

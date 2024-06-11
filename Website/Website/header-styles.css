@@ -1,0 +1,390 @@
+
+*, *::before, *::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+:root{
+    --bg:#F2FFE1;
+    --primary:#f3d95c;
+    --text:#3A001E;
+    --text2: #FA3F1F;
+    --input-bg:#F7F3DC;
+    --eye-icon:#CEC699;
+    --block: #4ADE5D;
+    --block-p:#277B32;
+    --block-h1: #0F4C17;
+    --form-bg: #FFFDEF;
+    --header-text: #3A001E;
+
+}
+
+body{
+    font-family: 'Inter', sans-serif;
+}
+
+header, footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*header*/
+header {
+    height: 8rem;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    color: var(--header-text);
+    background-color: var(--bg);
+}
+
+header.backend {
+    color: #3A3F42;
+    background-color: #FBFEFF;
+}
+
+header.wholesaler {
+  background-color: #F2FFE1;
+}
+
+.header-container, .footer-container {
+    margin-inline: auto;
+    margin-top: 2rem;
+    margin-bottom: 0.9rem;
+    width: 90%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.website-title {
+    display: flex;
+    align-items: center;
+}
+
+header img {
+    width: 80px;
+    position: relative;
+}
+
+header .text {
+    margin-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+header h1 {
+    white-space: nowrap;
+    font-size: 1.5rem;
+    /* font-size: clamp(1rem, 1.5vw, 1.5rem); */
+}
+
+header .text p, footer .right-container p {
+    font-size: 0.8rem;
+}
+
+nav {
+    width: 50%;
+    max-width: 300px;
+    height: 50px;
+}
+
+nav > ul {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-inline-start: 0;
+    margin-block: 0;
+    height: 100%;
+}
+
+nav > ul > li {
+    color: var(--text);
+    margin: 0 0.2rem;
+    padding: 0.2rem;
+    display: block;
+    font-weight: bold;
+}
+
+nav > ul > li:hover {
+    color: var(--primary);
+    cursor: pointer;
+}
+
+header.backend nav > ul > li:hover {
+    color: #6EA4E4;
+    cursor: pointer;
+}
+li > a {
+    color: inherit;
+    text-decoration: none;
+}
+/*end of header*/
+
+/*footer*/
+footer {
+    background-color: #000;
+    color: #fff;
+    min-height: 20rem;
+}
+
+.footer-container {
+    width: 90%;
+    max-width: 800px;
+    margin: clamp(1rem, 6vw, 4.5rem) auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-container h2 {
+    margin-bottom: 1.2rem;
+}
+
+.icons-block {
+    margin-bottom: 1rem;
+}
+
+.list > ul {
+    padding-inline-start: 0;
+    margin-block: 0;
+    height: 100%;
+}
+
+.list > ul, .list {
+    display: grid;
+    gap: 0.8rem;
+}
+
+.list > ul > li {
+    color: #fff;
+    display: block;
+}
+
+.list > ul > li > a:hover {
+    color: var(--primary);
+    cursor: pointer;
+}
+
+.icons-block {
+    display: flex;
+    gap: 1rem;
+}
+
+.icons-block a {
+    color: #fff;
+}
+
+.icons-block a:hover {
+    cursor: pointer;
+}
+
+.icons-block i{
+    font-size: 2rem;
+}
+
+.list-items {
+    display: flex;
+    gap: 10px;
+}
+
+/* hamburger menu - responsive */  
+  
+.menubar {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .menubar > li {
+    font-weight: bold;
+    margin: 0 1rem;
+    overflow: hidden;
+  }
+
+  .menubar > li > a:hover {
+    color: var(--primary);
+    cursor: pointer;
+  }
+
+  header.backend .menubar > li > a:hover {
+    color: #6EA4E4;
+  }
+  
+  .menu-button-container {
+    display: none;
+    height: 100%;
+    width: 30px;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #menu-toggle {
+    display: none;
+  }
+  
+  .menu-button,
+  .menu-button::before,
+  .menu-button::after {
+    display: block;
+    background-color: var(--text);
+    position: absolute;
+    height: 4px;
+    width: 30px;
+    transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1);
+    border-radius: 2px;
+  }
+  
+  .menu-button::before {
+    content: '';
+    margin-top: -8px;
+  }
+  
+  .menu-button::after {
+    content: '';
+    margin-top: 8px;
+  }
+  
+  #menu-toggle:checked + .menu-button-container .menu-button::before {
+    margin-top: 0px;
+    transform: rotate(405deg);
+  }
+  
+  #menu-toggle:checked + .menu-button-container .menu-button {
+    background: rgba(255, 255, 255, 0);
+  }
+  
+  #menu-toggle:checked + .menu-button-container .menu-button::after {
+    margin-top: 0px;
+    transform: rotate(-405deg);
+  }
+  
+  @media (max-width: 1000px) {
+    .menu-button-container {
+      display: flex;
+    }
+    .menubar {
+      position: absolute;
+      top: 0;
+      margin-top: 8rem;
+      left: 0;
+      flex-direction: column;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+    }
+    #menu-toggle ~ .menubar li {
+      height: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      transition: height 400ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    #menu-toggle:checked ~ .menubar li {
+      border: 0.5px solid white;
+      height: 2.5em;
+      padding: 0.5em;
+      transition: height 400ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .menubar > li {
+      display: flex;
+      justify-content: center;
+      margin: 0;
+      padding: 0.5em 0;
+      width: 100%;
+      font-weight: bold;
+      color: #3A3F42;
+      background-color: var(--primary) ;
+    }
+
+    .menubar > li > a{
+      width: 100%;
+      height: 100%;
+      text-align: center;
+    }
+
+    .menubar > li:hover, .menubar > li:active {
+      color: white;
+      background-color: #f4c44b;
+      cursor: pointer;
+    }
+
+    .menubar > li:not(:last-child) {
+      border-bottom: 1px solid white;
+    }
+
+    header.backend .menubar > li {
+      background-color: #6EA4E4;
+    }
+
+    header.backend .menubar > li:hover, header.backend .menubar > li:active {
+      background-color: #9fc3ef;
+    }
+
+    .menubar > li > a:hover, header.backend .menubar > li > a:hover {
+      color: white;
+    }
+  }
+
+  /*layout changes at this breakpoint (around tablet size)*/
+  @media only screen and (width <= 860px) {
+    header {
+      height: 4rem;
+    }
+
+    .header-container {
+      margin: 0;
+    }
+
+    #logo {
+      width: clamp(3rem, 4vw, 4rem);
+    }
+
+    header h1 {
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+    }
+
+    header .text {
+      margin-left: clamp(1rem, 2.5vw, 2rem);
+    }
+
+    header .text p {
+      font-size: clamp(0.6rem, 2vw, 0.8rem);
+    }
+
+    .menubar {
+      margin-top: 4rem;
+    }
+
+    .menu-button,
+    .menu-button::before,
+    .menu-button::after {
+      width: 25px;
+    }
+
+
+}
+
+
+@media only screen and (width <= 650px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .left-container, .right-container {
+    width: 100%;
+  }
+}
+
+  
